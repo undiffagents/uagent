@@ -1,6 +1,11 @@
 # uagent
 Full Undifferentiated Agent, v1
 
+Git Logistics:
+	Develop is the main branch from which we'll be working. This is where all the features/modules everyone is working on will be integrated to create the full UA. Each individual feature will be worked on it's own branch.
+	To reduce the amount of merging issues, this branch will be protected - when you update your module, you can issue a pull-request to the develop branch.
+	We will also need to set standards for how often each feature branch must pull from develop (to make sure features aren't be worked on from very old forks)
+	Master will be the 'release' branch -- representing bigger, stables changes across develop
 
 Files:
 
