@@ -3,9 +3,7 @@ Full Undifferentiated Agent, v1
 
 Git Logistics:
 
-Develop is the main branch from which we'll be working. This is where all the features/modules everyone is working on will be integrated to create the full UA. Each individual feature will be worked on it's own branch.
-
-We will need to set standards for how often each feature branch must pull from develop (to make sure features aren't be worked on from very old forks)
+Develop is the main branch from which we'll be working, where all the features/modules will be integrated to create the full UA. Each individual feature will be worked on it's own branch. When a feature is ready to be merged into develop, submit a pull (merge) request on github. 
 
 Master will be the 'release' branch -- representing bigger, stables changes across develop
 
