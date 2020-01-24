@@ -120,438 +120,431 @@
       57.400      agent.memory            recalling [predicate=isPartOf, object=Target]
       57.500      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
       57.500      agent                   find [isa=Letter, seen=False]
-      57.550      agent.vision            find failed
-      57.550      agent                   recall [predicate=isPartOf, object=Letter]
-      57.600      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      58.600      agent.memory            recall failed
-      58.600      agent                   recall [isa=rule]
-      58.650      agent.memory            recalling [isa=rule]
-      58.750      agent.memory            recalled <rule>{'isa': 'rule'}
-      58.750      agent                   recall [isa=condition, last=rule]
-      58.800      agent.memory            recalling [isa=condition, last=rule]
-      58.900      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      58.900      agent                   find [isa=Target, seen=False]
-      58.950      agent.vision            find failed
-      58.950      agent                   recall [predicate=isPartOf, object=Target]
-      59.000      agent.memory            recalling [predicate=isPartOf, object=Target]
-      59.100      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      59.100      agent                   find [isa=Letter, seen=False]
-      59.150      agent.vision            find failed
-      59.150      agent                   recall [predicate=isPartOf, object=Letter]
-      59.200      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      60.200      agent.memory            recall failed
-      60.200      agent                   recall [isa=rule]
-      60.250      agent.memory            recalling [isa=rule]
-      60.350      agent.memory            recalled <rule>{'isa': 'rule'}
-      60.350      agent                   recall [isa=condition, last=rule]
-      60.400      agent.memory            recalling [isa=condition, last=rule]
-      60.500      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      60.500      agent                   find [isa=Target, seen=False]
-      60.550      agent.vision            find failed
-      60.550      agent                   recall [predicate=isPartOf, object=Target]
-      60.600      agent.memory            recalling [predicate=isPartOf, object=Target]
-      60.700      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      60.700      agent                   find [isa=Letter, seen=False]
-      60.750      agent.vision            find failed
-      60.750      agent                   recall [predicate=isPartOf, object=Letter]
-      60.800      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      61.800      agent.memory            recall failed
-      61.800      agent                   recall [isa=rule]
-      61.850      agent.memory            recalling [isa=rule]
-      61.950      agent.memory            recalled <rule>{'isa': 'rule'}
-      61.950      agent                   recall [isa=condition, last=rule]
-      62.000      agent.memory            recalling [isa=condition, last=rule]
-      62.100      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      62.100      agent                   find [isa=Target, seen=False]
-      62.150      agent.vision            find failed
-      62.150      agent                   recall [predicate=isPartOf, object=Target]
-      62.200      agent.memory            recalling [predicate=isPartOf, object=Target]
-      62.300      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      62.300      agent                   find [isa=Letter, seen=False]
-      62.350      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      62.350      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      62.535      agent.vision            encoded A
-      62.535      agent                   recall [isa=condition, last=condition]
-      62.585      agent.memory            recalling [isa=condition, last=condition]
-      63.585      agent.memory            recall failed
-      63.585      agent                   recall [isa=action, last=rule]
-      63.635      agent.memory            recalling [isa=action, last=rule]
-      63.735      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
-      63.735      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      63.785      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      63.785      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      63.970      agent.vision            encoded A
-      64.043      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      64.043      agent                   click mouse
-      64.093      agent.mouse             clicking mouse
-      64.243      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      64.243      agent                   recall [isa=action, last=action]
-      64.293      agent.memory            recalling [isa=action, last=action]
-      64.393      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
-      64.393      agent                   recall [isa=action, last=action~10]
-      64.443      agent.memory            recalling [isa=action, last=action~10]
-      65.443      agent.memory            recall failed
-      65.443      agent                   recall [isa=rule]
-      65.493      agent.memory            recalling [isa=rule]
-      65.593      agent.memory            recalled <rule>{'isa': 'rule'}
-      65.593      agent                   recall [isa=condition, last=rule]
-      65.643      agent.memory            recalling [isa=condition, last=rule]
-      65.743      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      65.743      agent                   find [isa=Target, seen=False]
-      65.793      agent.vision            find failed
-      65.793      agent                   recall [predicate=isPartOf, object=Target]
-      65.843      agent.memory            recalling [predicate=isPartOf, object=Target]
-      65.943      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      65.943      agent                   find [isa=Letter, seen=False]
-      65.993      agent.vision            find failed
-      65.993      agent                   recall [predicate=isPartOf, object=Letter]
-      66.043      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      67.043      agent.memory            recall failed
-      67.043      agent                   recall [isa=rule]
-      67.093      agent.memory            recalling [isa=rule]
-      67.193      agent.memory            recalled <rule>{'isa': 'rule'}
-      67.193      agent                   recall [isa=condition, last=rule]
-      67.243      agent.memory            recalling [isa=condition, last=rule]
-      67.343      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      67.343      agent                   find [isa=Target, seen=False]
-      67.393      agent.vision            find failed
-      67.393      agent                   recall [predicate=isPartOf, object=Target]
-      67.443      agent.memory            recalling [predicate=isPartOf, object=Target]
-      67.543      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      67.543      agent                   find [isa=Letter, seen=False]
-      67.593      agent.vision            find failed
-      67.593      agent                   recall [predicate=isPartOf, object=Letter]
-      67.643      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      68.643      agent.memory            recall failed
-      68.643      agent                   recall [isa=rule]
-      68.693      agent.memory            recalling [isa=rule]
-      68.793      agent.memory            recalled <rule>{'isa': 'rule'}
-      68.793      agent                   recall [isa=condition, last=rule]
-      68.843      agent.memory            recalling [isa=condition, last=rule]
-      68.943      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      68.943      agent                   find [isa=Target, seen=False]
-      68.993      agent.vision            find failed
-      68.993      agent                   recall [predicate=isPartOf, object=Target]
-      69.043      agent.memory            recalling [predicate=isPartOf, object=Target]
-      69.143      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      69.143      agent                   find [isa=Letter, seen=False]
-      69.193      agent.vision            find failed
-      69.193      agent                   recall [predicate=isPartOf, object=Letter]
-      69.243      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      70.243      agent.memory            recall failed
-      70.243      agent                   recall [isa=rule]
-      70.293      agent.memory            recalling [isa=rule]
-      70.393      agent.memory            recalled <rule>{'isa': 'rule'}
-      70.393      agent                   recall [isa=condition, last=rule]
-      70.443      agent.memory            recalling [isa=condition, last=rule]
-      70.543      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      70.543      agent                   find [isa=Target, seen=False]
-      70.593      agent.vision            find failed
-      70.593      agent                   recall [predicate=isPartOf, object=Target]
-      70.643      agent.memory            recalling [predicate=isPartOf, object=Target]
-      70.743      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      70.743      agent                   find [isa=Letter, seen=False]
-      70.793      agent.vision            find failed
-      70.793      agent                   recall [predicate=isPartOf, object=Letter]
-      70.843      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      71.843      agent.memory            recall failed
-      71.843      agent                   recall [isa=rule]
-      71.893      agent.memory            recalling [isa=rule]
-      71.993      agent.memory            recalled <rule>{'isa': 'rule'}
-      71.993      agent                   recall [isa=condition, last=rule]
-      72.043      agent.memory            recalling [isa=condition, last=rule]
-      72.143      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      72.143      agent                   find [isa=Target, seen=False]
-      72.193      agent.vision            find failed
-      72.193      agent                   recall [predicate=isPartOf, object=Target]
-      72.243      agent.memory            recalling [predicate=isPartOf, object=Target]
-      72.343      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      72.343      agent                   find [isa=Letter, seen=False]
-      72.393      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      72.393      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      72.578      agent.vision            encoded A
-      72.578      agent                   recall [isa=condition, last=condition]
-      72.628      agent.memory            recalling [isa=condition, last=condition]
-      73.628      agent.memory            recall failed
-      73.628      agent                   recall [isa=action, last=rule]
-      73.678      agent.memory            recalling [isa=action, last=rule]
-      73.778      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
-      73.778      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      73.828      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      73.828      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      74.013      agent.vision            encoded A
-      74.028      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      74.028      agent                   click mouse
-      74.078      agent.mouse             clicking mouse
-      74.228      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      74.228      agent                   recall [isa=action, last=action]
-      74.278      agent.memory            recalling [isa=action, last=action]
-      74.378      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
-      74.378      agent                   recall [isa=action, last=action~10]
-      74.428      agent.memory            recalling [isa=action, last=action~10]
-      75.428      agent.memory            recall failed
-      75.428      agent                   recall [isa=rule]
-      75.478      agent.memory            recalling [isa=rule]
-      75.578      agent.memory            recalled <rule>{'isa': 'rule'}
-      75.578      agent                   recall [isa=condition, last=rule]
-      75.628      agent.memory            recalling [isa=condition, last=rule]
-      75.728      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      75.728      agent                   find [isa=Target, seen=False]
-      75.778      agent.vision            find failed
-      75.778      agent                   recall [predicate=isPartOf, object=Target]
-      75.828      agent.memory            recalling [predicate=isPartOf, object=Target]
-      75.928      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      75.928      agent                   find [isa=Letter, seen=False]
-      75.978      agent.vision            find failed
-      75.978      agent                   recall [predicate=isPartOf, object=Letter]
-      76.028      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      77.028      agent.memory            recall failed
-      77.028      agent                   recall [isa=rule]
-      77.078      agent.memory            recalling [isa=rule]
-      77.178      agent.memory            recalled <rule>{'isa': 'rule'}
-      77.178      agent                   recall [isa=condition, last=rule]
-      77.228      agent.memory            recalling [isa=condition, last=rule]
-      77.328      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      77.328      agent                   find [isa=Target, seen=False]
-      77.378      agent.vision            find failed
-      77.378      agent                   recall [predicate=isPartOf, object=Target]
-      77.428      agent.memory            recalling [predicate=isPartOf, object=Target]
-      77.528      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      77.528      agent                   find [isa=Letter, seen=False]
-      77.578      agent.vision            find failed
-      77.578      agent                   recall [predicate=isPartOf, object=Letter]
-      77.628      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      78.628      agent.memory            recall failed
-      78.628      agent                   recall [isa=rule]
-      78.678      agent.memory            recalling [isa=rule]
-      78.778      agent.memory            recalled <rule>{'isa': 'rule'}
-      78.778      agent                   recall [isa=condition, last=rule]
-      78.828      agent.memory            recalling [isa=condition, last=rule]
-      78.928      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      78.928      agent                   find [isa=Target, seen=False]
-      78.978      agent.vision            find failed
-      78.978      agent                   recall [predicate=isPartOf, object=Target]
-      79.028      agent.memory            recalling [predicate=isPartOf, object=Target]
-      79.128      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      79.128      agent                   find [isa=Letter, seen=False]
-      79.178      agent.vision            find failed
-      79.178      agent                   recall [predicate=isPartOf, object=Letter]
-      79.228      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      80.228      agent.memory            recall failed
-      80.228      agent                   recall [isa=rule]
-      80.278      agent.memory            recalling [isa=rule]
-      80.378      agent.memory            recalled <rule>{'isa': 'rule'}
-      80.378      agent                   recall [isa=condition, last=rule]
-      80.428      agent.memory            recalling [isa=condition, last=rule]
-      80.528      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      80.528      agent                   find [isa=Target, seen=False]
-      80.578      agent.vision            find failed
-      80.578      agent                   recall [predicate=isPartOf, object=Target]
-      80.628      agent.memory            recalling [predicate=isPartOf, object=Target]
-      80.728      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      80.728      agent                   find [isa=Letter, seen=False]
-      80.778      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      80.778      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      80.963      agent.vision            encoded A
-      80.963      agent                   recall [isa=condition, last=condition]
-      81.013      agent.memory            recalling [isa=condition, last=condition]
-      82.013      agent.memory            recall failed
-      82.013      agent                   recall [isa=action, last=rule]
-      82.063      agent.memory            recalling [isa=action, last=rule]
-      82.163      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
-      82.163      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      82.213      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      82.213      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      82.398      agent.vision            encoded A
-      82.413      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      82.413      agent                   click mouse
-      82.463      agent.mouse             clicking mouse
-      82.613      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      82.613      agent                   recall [isa=action, last=action]
-      82.663      agent.memory            recalling [isa=action, last=action]
-      82.763      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
-      82.763      agent                   recall [isa=action, last=action~10]
-      82.813      agent.memory            recalling [isa=action, last=action~10]
-      83.813      agent.memory            recall failed
-      83.813      agent                   recall [isa=rule]
-      83.863      agent.memory            recalling [isa=rule]
-      83.963      agent.memory            recalled <rule>{'isa': 'rule'}
-      83.963      agent                   recall [isa=condition, last=rule]
-      84.013      agent.memory            recalling [isa=condition, last=rule]
-      84.113      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      84.113      agent                   find [isa=Target, seen=False]
-      84.163      agent.vision            find failed
-      84.163      agent                   recall [predicate=isPartOf, object=Target]
-      84.213      agent.memory            recalling [predicate=isPartOf, object=Target]
-      84.313      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      84.313      agent                   find [isa=Letter, seen=False]
-      84.363      agent.vision            find failed
-      84.363      agent                   recall [predicate=isPartOf, object=Letter]
-      84.413      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      85.413      agent.memory            recall failed
-      85.413      agent                   recall [isa=rule]
-      85.463      agent.memory            recalling [isa=rule]
-      85.563      agent.memory            recalled <rule>{'isa': 'rule'}
-      85.563      agent                   recall [isa=condition, last=rule]
-      85.613      agent.memory            recalling [isa=condition, last=rule]
-      85.713      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      85.713      agent                   find [isa=Target, seen=False]
-      85.763      agent.vision            find failed
-      85.763      agent                   recall [predicate=isPartOf, object=Target]
-      85.813      agent.memory            recalling [predicate=isPartOf, object=Target]
-      85.913      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      85.913      agent                   find [isa=Letter, seen=False]
-      85.963      agent.vision            find failed
-      85.963      agent                   recall [predicate=isPartOf, object=Letter]
-      86.013      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      87.013      agent.memory            recall failed
-      87.013      agent                   recall [isa=rule]
-      87.063      agent.memory            recalling [isa=rule]
-      87.163      agent.memory            recalled <rule>{'isa': 'rule'}
-      87.163      agent                   recall [isa=condition, last=rule]
-      87.213      agent.memory            recalling [isa=condition, last=rule]
-      87.313      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      87.313      agent                   find [isa=Target, seen=False]
-      87.363      agent.vision            find failed
-      87.363      agent                   recall [predicate=isPartOf, object=Target]
-      87.413      agent.memory            recalling [predicate=isPartOf, object=Target]
-      87.513      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      87.513      agent                   find [isa=Letter, seen=False]
-      87.563      agent.vision            find failed
-      87.563      agent                   recall [predicate=isPartOf, object=Letter]
-      87.613      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      88.613      agent.memory            recall failed
-      88.613      agent                   recall [isa=rule]
-      88.663      agent.memory            recalling [isa=rule]
-      88.763      agent.memory            recalled <rule>{'isa': 'rule'}
-      88.763      agent                   recall [isa=condition, last=rule]
-      88.813      agent.memory            recalling [isa=condition, last=rule]
-      88.913      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      88.913      agent                   find [isa=Target, seen=False]
-      88.963      agent.vision            find failed
-      88.963      agent                   recall [predicate=isPartOf, object=Target]
-      89.013      agent.memory            recalling [predicate=isPartOf, object=Target]
-      89.113      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      89.113      agent                   find [isa=Letter, seen=False]
-      89.163      agent.vision            find failed
-      89.163      agent                   recall [predicate=isPartOf, object=Letter]
-      89.213      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      90.213      agent.memory            recall failed
-      90.213      agent                   recall [isa=rule]
-      90.263      agent.memory            recalling [isa=rule]
-      90.363      agent.memory            recalled <rule>{'isa': 'rule'}
-      90.363      agent                   recall [isa=condition, last=rule]
-      90.413      agent.memory            recalling [isa=condition, last=rule]
-      90.513      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      90.513      agent                   find [isa=Target, seen=False]
-      90.563      agent.vision            find failed
-      90.563      agent                   recall [predicate=isPartOf, object=Target]
-      90.613      agent.memory            recalling [predicate=isPartOf, object=Target]
-      90.713      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      90.713      agent                   find [isa=Letter, seen=False]
-      90.763      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      90.763      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      90.948      agent.vision            encoded A
-      90.948      agent                   recall [isa=condition, last=condition]
-      90.998      agent.memory            recalling [isa=condition, last=condition]
-      91.998      agent.memory            recall failed
-      91.998      agent                   recall [isa=action, last=rule]
-      92.048      agent.memory            recalling [isa=action, last=rule]
-      92.148      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
-      92.148      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      92.198      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      92.198      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      92.383      agent.vision            encoded A
-      92.398      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      92.398      agent                   click mouse
-      92.448      agent.mouse             clicking mouse
-      92.598      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-      92.598      agent                   recall [isa=action, last=action]
-      92.648      agent.memory            recalling [isa=action, last=action]
-      92.748      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
-      92.748      agent                   recall [isa=action, last=action~10]
-      92.798      agent.memory            recalling [isa=action, last=action~10]
-      93.798      agent.memory            recall failed
-      93.798      agent                   recall [isa=rule]
-      93.848      agent.memory            recalling [isa=rule]
-      93.948      agent.memory            recalled <rule>{'isa': 'rule'}
-      93.948      agent                   recall [isa=condition, last=rule]
-      93.998      agent.memory            recalling [isa=condition, last=rule]
-      94.098      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      94.098      agent                   find [isa=Target, seen=False]
-      94.148      agent.vision            find failed
-      94.148      agent                   recall [predicate=isPartOf, object=Target]
-      94.198      agent.memory            recalling [predicate=isPartOf, object=Target]
-      94.298      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      94.298      agent                   find [isa=Letter, seen=False]
-      94.348      agent.vision            find failed
-      94.348      agent                   recall [predicate=isPartOf, object=Letter]
-      94.398      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      95.398      agent.memory            recall failed
-      95.398      agent                   recall [isa=rule]
-      95.448      agent.memory            recalling [isa=rule]
-      95.548      agent.memory            recalled <rule>{'isa': 'rule'}
-      95.548      agent                   recall [isa=condition, last=rule]
-      95.598      agent.memory            recalling [isa=condition, last=rule]
-      95.698      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      95.698      agent                   find [isa=Target, seen=False]
-      95.748      agent.vision            find failed
-      95.748      agent                   recall [predicate=isPartOf, object=Target]
-      95.798      agent.memory            recalling [predicate=isPartOf, object=Target]
-      95.898      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      95.898      agent                   find [isa=Letter, seen=False]
-      95.948      agent.vision            find failed
-      95.948      agent                   recall [predicate=isPartOf, object=Letter]
-      95.998      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      96.998      agent.memory            recall failed
-      96.998      agent                   recall [isa=rule]
-      97.048      agent.memory            recalling [isa=rule]
-      97.148      agent.memory            recalled <rule>{'isa': 'rule'}
-      97.148      agent                   recall [isa=condition, last=rule]
-      97.198      agent.memory            recalling [isa=condition, last=rule]
-      97.298      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      97.298      agent                   find [isa=Target, seen=False]
-      97.348      agent.vision            find failed
-      97.348      agent                   recall [predicate=isPartOf, object=Target]
-      97.398      agent.memory            recalling [predicate=isPartOf, object=Target]
-      97.498      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      97.498      agent                   find [isa=Letter, seen=False]
-      97.548      agent.vision            find failed
-      97.548      agent                   recall [predicate=isPartOf, object=Letter]
-      97.598      agent.memory            recalling [predicate=isPartOf, object=Letter]
-      98.598      agent.memory            recall failed
-      98.598      agent                   recall [isa=rule]
-      98.648      agent.memory            recalling [isa=rule]
-      98.748      agent.memory            recalled <rule>{'isa': 'rule'}
-      98.748      agent                   recall [isa=condition, last=rule]
-      98.798      agent.memory            recalling [isa=condition, last=rule]
-      98.898      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
-      98.898      agent                   find [isa=Target, seen=False]
-      98.948      agent.vision            find failed
-      98.948      agent                   recall [predicate=isPartOf, object=Target]
-      98.998      agent.memory            recalling [predicate=isPartOf, object=Target]
-      99.098      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
-      99.098      agent                   find [isa=Letter, seen=False]
-      99.148      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      99.148      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
-      99.333      agent.vision            encoded A
-      99.333      agent                   recall [isa=condition, last=condition]
-      99.383      agent.memory            recalling [isa=condition, last=condition]
-     100.383      agent.memory            recall failed
-     100.383      agent                   recall [isa=action, last=rule]
-     100.433      agent.memory            recalling [isa=action, last=rule]
-     100.533      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
-     100.533      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-     100.583      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-     100.583      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-     100.768      agent.vision            encoded A
-     100.783      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-     100.783      agent                   click mouse
-     100.833      agent.mouse             clicking mouse
-     100.983      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
-     100.983      agent                   recall [isa=action, last=action]
-     101.033      agent.memory            recalling [isa=action, last=action]
-     101.133      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
-     101.133      agent                   recall [isa=action, last=action~10]
-     101.183      agent.memory            recalling [isa=action, last=action~10]
-     102.183      agent.memory            recall failed
+      57.550      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      57.550      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      57.735      agent.vision            encoded A
+      57.735      agent                   recall [isa=condition, last=condition]
+      57.785      agent.memory            recalling [isa=condition, last=condition]
+      58.785      agent.memory            recall failed
+      58.785      agent                   recall [isa=action, last=rule]
+      58.835      agent.memory            recalling [isa=action, last=rule]
+      58.935      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      58.935      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      58.985      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      58.985      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      59.170      agent.vision            encoded A
+      59.243      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      59.243      agent                   click mouse
+      59.293      agent.mouse             clicking mouse
+      59.443      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      59.443      agent                   recall [isa=action, last=action]
+      59.493      agent.memory            recalling [isa=action, last=action]
+      59.593      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      59.593      agent                   recall [isa=action, last=action~10]
+      59.643      agent.memory            recalling [isa=action, last=action~10]
+      60.643      agent.memory            recall failed
+      60.643      agent                   recall [isa=rule]
+      60.693      agent.memory            recalling [isa=rule]
+      60.793      agent.memory            recalled <rule>{'isa': 'rule'}
+      60.793      agent                   recall [isa=condition, last=rule]
+      60.843      agent.memory            recalling [isa=condition, last=rule]
+      60.943      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      60.943      agent                   find [isa=Target, seen=False]
+      60.993      agent.vision            find failed
+      60.993      agent                   recall [predicate=isPartOf, object=Target]
+      61.043      agent.memory            recalling [predicate=isPartOf, object=Target]
+      61.143      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      61.143      agent                   find [isa=Letter, seen=False]
+      61.193      agent.vision            find failed
+      61.193      agent                   recall [predicate=isPartOf, object=Letter]
+      61.243      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      62.243      agent.memory            recall failed
+      62.243      agent                   recall [isa=rule]
+      62.293      agent.memory            recalling [isa=rule]
+      62.393      agent.memory            recalled <rule>{'isa': 'rule'}
+      62.393      agent                   recall [isa=condition, last=rule]
+      62.443      agent.memory            recalling [isa=condition, last=rule]
+      62.543      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      62.543      agent                   find [isa=Target, seen=False]
+      62.593      agent.vision            find failed
+      62.593      agent                   recall [predicate=isPartOf, object=Target]
+      62.643      agent.memory            recalling [predicate=isPartOf, object=Target]
+      62.743      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      62.743      agent                   find [isa=Letter, seen=False]
+      62.793      agent.vision            find failed
+      62.793      agent                   recall [predicate=isPartOf, object=Letter]
+      62.843      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      63.843      agent.memory            recall failed
+      63.843      agent                   recall [isa=rule]
+      63.893      agent.memory            recalling [isa=rule]
+      63.993      agent.memory            recalled <rule>{'isa': 'rule'}
+      63.993      agent                   recall [isa=condition, last=rule]
+      64.043      agent.memory            recalling [isa=condition, last=rule]
+      64.143      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      64.143      agent                   find [isa=Target, seen=False]
+      64.193      agent.vision            find failed
+      64.193      agent                   recall [predicate=isPartOf, object=Target]
+      64.243      agent.memory            recalling [predicate=isPartOf, object=Target]
+      64.343      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      64.343      agent                   find [isa=Letter, seen=False]
+      64.393      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      64.393      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      64.578      agent.vision            encoded A
+      64.578      agent                   recall [isa=condition, last=condition]
+      64.628      agent.memory            recalling [isa=condition, last=condition]
+      65.628      agent.memory            recall failed
+      65.628      agent                   recall [isa=action, last=rule]
+      65.678      agent.memory            recalling [isa=action, last=rule]
+      65.778      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      65.778      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      65.828      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      65.828      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      66.013      agent.vision            encoded A
+      66.028      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      66.028      agent                   click mouse
+      66.078      agent.mouse             clicking mouse
+      66.228      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      66.228      agent                   recall [isa=action, last=action]
+      66.278      agent.memory            recalling [isa=action, last=action]
+      66.378      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      66.378      agent                   recall [isa=action, last=action~10]
+      66.428      agent.memory            recalling [isa=action, last=action~10]
+      67.428      agent.memory            recall failed
+      67.428      agent                   recall [isa=rule]
+      67.478      agent.memory            recalling [isa=rule]
+      67.578      agent.memory            recalled <rule>{'isa': 'rule'}
+      67.578      agent                   recall [isa=condition, last=rule]
+      67.628      agent.memory            recalling [isa=condition, last=rule]
+      67.728      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      67.728      agent                   find [isa=Target, seen=False]
+      67.778      agent.vision            find failed
+      67.778      agent                   recall [predicate=isPartOf, object=Target]
+      67.828      agent.memory            recalling [predicate=isPartOf, object=Target]
+      67.928      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      67.928      agent                   find [isa=Letter, seen=False]
+      67.978      agent.vision            find failed
+      67.978      agent                   recall [predicate=isPartOf, object=Letter]
+      68.028      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      69.028      agent.memory            recall failed
+      69.028      agent                   recall [isa=rule]
+      69.078      agent.memory            recalling [isa=rule]
+      69.178      agent.memory            recalled <rule>{'isa': 'rule'}
+      69.178      agent                   recall [isa=condition, last=rule]
+      69.228      agent.memory            recalling [isa=condition, last=rule]
+      69.328      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      69.328      agent                   find [isa=Target, seen=False]
+      69.378      agent.vision            find failed
+      69.378      agent                   recall [predicate=isPartOf, object=Target]
+      69.428      agent.memory            recalling [predicate=isPartOf, object=Target]
+      69.528      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      69.528      agent                   find [isa=Letter, seen=False]
+      69.578      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      69.578      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      69.763      agent.vision            encoded A
+      69.763      agent                   recall [isa=condition, last=condition]
+      69.813      agent.memory            recalling [isa=condition, last=condition]
+      70.813      agent.memory            recall failed
+      70.813      agent                   recall [isa=action, last=rule]
+      70.863      agent.memory            recalling [isa=action, last=rule]
+      70.963      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      70.963      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      71.013      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      71.013      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      71.198      agent.vision            encoded A
+      71.213      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      71.213      agent                   click mouse
+      71.263      agent.mouse             clicking mouse
+      71.413      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      71.413      agent                   recall [isa=action, last=action]
+      71.463      agent.memory            recalling [isa=action, last=action]
+      71.563      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      71.563      agent                   recall [isa=action, last=action~10]
+      71.613      agent.memory            recalling [isa=action, last=action~10]
+      72.613      agent.memory            recall failed
+      72.613      agent                   recall [isa=rule]
+      72.663      agent.memory            recalling [isa=rule]
+      72.763      agent.memory            recalled <rule>{'isa': 'rule'}
+      72.763      agent                   recall [isa=condition, last=rule]
+      72.813      agent.memory            recalling [isa=condition, last=rule]
+      72.913      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      72.913      agent                   find [isa=Target, seen=False]
+      72.963      agent.vision            find failed
+      72.963      agent                   recall [predicate=isPartOf, object=Target]
+      73.013      agent.memory            recalling [predicate=isPartOf, object=Target]
+      73.113      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      73.113      agent                   find [isa=Letter, seen=False]
+      73.163      agent.vision            find failed
+      73.163      agent                   recall [predicate=isPartOf, object=Letter]
+      73.213      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      74.213      agent.memory            recall failed
+      74.213      agent                   recall [isa=rule]
+      74.263      agent.memory            recalling [isa=rule]
+      74.363      agent.memory            recalled <rule>{'isa': 'rule'}
+      74.363      agent                   recall [isa=condition, last=rule]
+      74.413      agent.memory            recalling [isa=condition, last=rule]
+      74.513      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      74.513      agent                   find [isa=Target, seen=False]
+      74.563      agent.vision            find failed
+      74.563      agent                   recall [predicate=isPartOf, object=Target]
+      74.613      agent.memory            recalling [predicate=isPartOf, object=Target]
+      74.713      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      74.713      agent                   find [isa=Letter, seen=False]
+      74.763      agent.vision            find failed
+      74.763      agent                   recall [predicate=isPartOf, object=Letter]
+      74.813      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      75.813      agent.memory            recall failed
+      75.813      agent                   recall [isa=rule]
+      75.863      agent.memory            recalling [isa=rule]
+      75.963      agent.memory            recalled <rule>{'isa': 'rule'}
+      75.963      agent                   recall [isa=condition, last=rule]
+      76.013      agent.memory            recalling [isa=condition, last=rule]
+      76.113      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      76.113      agent                   find [isa=Target, seen=False]
+      76.163      agent.vision            find failed
+      76.163      agent                   recall [predicate=isPartOf, object=Target]
+      76.213      agent.memory            recalling [predicate=isPartOf, object=Target]
+      76.313      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      76.313      agent                   find [isa=Letter, seen=False]
+      76.363      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      76.363      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      76.548      agent.vision            encoded A
+      76.548      agent                   recall [isa=condition, last=condition]
+      76.598      agent.memory            recalling [isa=condition, last=condition]
+      77.598      agent.memory            recall failed
+      77.598      agent                   recall [isa=action, last=rule]
+      77.648      agent.memory            recalling [isa=action, last=rule]
+      77.748      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      77.748      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      77.798      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      77.798      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      77.983      agent.vision            encoded A
+      77.998      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      77.998      agent                   click mouse
+      78.048      agent.mouse             clicking mouse
+      78.198      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      78.198      agent                   recall [isa=action, last=action]
+      78.248      agent.memory            recalling [isa=action, last=action]
+      78.348      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      78.348      agent                   recall [isa=action, last=action~10]
+      78.398      agent.memory            recalling [isa=action, last=action~10]
+      79.398      agent.memory            recall failed
+      79.398      agent                   recall [isa=rule]
+      79.448      agent.memory            recalling [isa=rule]
+      79.548      agent.memory            recalled <rule>{'isa': 'rule'}
+      79.548      agent                   recall [isa=condition, last=rule]
+      79.598      agent.memory            recalling [isa=condition, last=rule]
+      79.698      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      79.698      agent                   find [isa=Target, seen=False]
+      79.748      agent.vision            find failed
+      79.748      agent                   recall [predicate=isPartOf, object=Target]
+      79.798      agent.memory            recalling [predicate=isPartOf, object=Target]
+      79.898      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      79.898      agent                   find [isa=Letter, seen=False]
+      79.948      agent.vision            find failed
+      79.948      agent                   recall [predicate=isPartOf, object=Letter]
+      79.998      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      80.998      agent.memory            recall failed
+      80.998      agent                   recall [isa=rule]
+      81.048      agent.memory            recalling [isa=rule]
+      81.148      agent.memory            recalled <rule>{'isa': 'rule'}
+      81.148      agent                   recall [isa=condition, last=rule]
+      81.198      agent.memory            recalling [isa=condition, last=rule]
+      81.298      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      81.298      agent                   find [isa=Target, seen=False]
+      81.348      agent.vision            find failed
+      81.348      agent                   recall [predicate=isPartOf, object=Target]
+      81.398      agent.memory            recalling [predicate=isPartOf, object=Target]
+      81.498      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      81.498      agent                   find [isa=Letter, seen=False]
+      81.548      agent.vision            find failed
+      81.548      agent                   recall [predicate=isPartOf, object=Letter]
+      81.598      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      82.598      agent.memory            recall failed
+      82.598      agent                   recall [isa=rule]
+      82.648      agent.memory            recalling [isa=rule]
+      82.748      agent.memory            recalled <rule>{'isa': 'rule'}
+      82.748      agent                   recall [isa=condition, last=rule]
+      82.798      agent.memory            recalling [isa=condition, last=rule]
+      82.898      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      82.898      agent                   find [isa=Target, seen=False]
+      82.948      agent.vision            find failed
+      82.948      agent                   recall [predicate=isPartOf, object=Target]
+      82.998      agent.memory            recalling [predicate=isPartOf, object=Target]
+      83.098      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      83.098      agent                   find [isa=Letter, seen=False]
+      83.148      agent.vision            find failed
+      83.148      agent                   recall [predicate=isPartOf, object=Letter]
+      83.198      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      84.198      agent.memory            recall failed
+      84.198      agent                   recall [isa=rule]
+      84.248      agent.memory            recalling [isa=rule]
+      84.348      agent.memory            recalled <rule>{'isa': 'rule'}
+      84.348      agent                   recall [isa=condition, last=rule]
+      84.398      agent.memory            recalling [isa=condition, last=rule]
+      84.498      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      84.498      agent                   find [isa=Target, seen=False]
+      84.548      agent.vision            find failed
+      84.548      agent                   recall [predicate=isPartOf, object=Target]
+      84.598      agent.memory            recalling [predicate=isPartOf, object=Target]
+      84.698      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      84.698      agent                   find [isa=Letter, seen=False]
+      84.748      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      84.748      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      84.933      agent.vision            encoded A
+      84.933      agent                   recall [isa=condition, last=condition]
+      84.983      agent.memory            recalling [isa=condition, last=condition]
+      85.983      agent.memory            recall failed
+      85.983      agent                   recall [isa=action, last=rule]
+      86.033      agent.memory            recalling [isa=action, last=rule]
+      86.133      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      86.133      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      86.183      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      86.183      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      86.368      agent.vision            encoded A
+      86.383      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      86.383      agent                   click mouse
+      86.433      agent.mouse             clicking mouse
+      86.583      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      86.583      agent                   recall [isa=action, last=action]
+      86.633      agent.memory            recalling [isa=action, last=action]
+      86.733      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      86.733      agent                   recall [isa=action, last=action~10]
+      86.783      agent.memory            recalling [isa=action, last=action~10]
+      87.783      agent.memory            recall failed
+      87.783      agent                   recall [isa=rule]
+      87.833      agent.memory            recalling [isa=rule]
+      87.933      agent.memory            recalled <rule>{'isa': 'rule'}
+      87.933      agent                   recall [isa=condition, last=rule]
+      87.983      agent.memory            recalling [isa=condition, last=rule]
+      88.083      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      88.083      agent                   find [isa=Target, seen=False]
+      88.133      agent.vision            find failed
+      88.133      agent                   recall [predicate=isPartOf, object=Target]
+      88.183      agent.memory            recalling [predicate=isPartOf, object=Target]
+      88.283      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      88.283      agent                   find [isa=Letter, seen=False]
+      88.333      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      88.333      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      88.518      agent.vision            encoded A
+      88.518      agent                   recall [isa=condition, last=condition]
+      88.568      agent.memory            recalling [isa=condition, last=condition]
+      89.568      agent.memory            recall failed
+      89.568      agent                   recall [isa=action, last=rule]
+      89.618      agent.memory            recalling [isa=action, last=rule]
+      89.718      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      89.718      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      89.768      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      89.768      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      89.953      agent.vision            encoded A
+      89.968      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      89.968      agent                   click mouse
+      90.018      agent.mouse             clicking mouse
+      90.168      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      90.168      agent                   recall [isa=action, last=action]
+      90.218      agent.memory            recalling [isa=action, last=action]
+      90.318      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      90.318      agent                   recall [isa=action, last=action~10]
+      90.368      agent.memory            recalling [isa=action, last=action~10]
+      91.368      agent.memory            recall failed
+      91.368      agent                   recall [isa=rule]
+      91.418      agent.memory            recalling [isa=rule]
+      91.518      agent.memory            recalled <rule>{'isa': 'rule'}
+      91.518      agent                   recall [isa=condition, last=rule]
+      91.568      agent.memory            recalling [isa=condition, last=rule]
+      91.668      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      91.668      agent                   find [isa=Target, seen=False]
+      91.718      agent.vision            find failed
+      91.718      agent                   recall [predicate=isPartOf, object=Target]
+      91.768      agent.memory            recalling [predicate=isPartOf, object=Target]
+      91.868      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      91.868      agent                   find [isa=Letter, seen=False]
+      91.918      agent.vision            find failed
+      91.918      agent                   recall [predicate=isPartOf, object=Letter]
+      91.968      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      92.968      agent.memory            recall failed
+      92.968      agent                   recall [isa=rule]
+      93.018      agent.memory            recalling [isa=rule]
+      93.118      agent.memory            recalled <rule>{'isa': 'rule'}
+      93.118      agent                   recall [isa=condition, last=rule]
+      93.168      agent.memory            recalling [isa=condition, last=rule]
+      93.268      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      93.268      agent                   find [isa=Target, seen=False]
+      93.318      agent.vision            find failed
+      93.318      agent                   recall [predicate=isPartOf, object=Target]
+      93.368      agent.memory            recalling [predicate=isPartOf, object=Target]
+      93.468      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      93.468      agent                   find [isa=Letter, seen=False]
+      93.518      agent.vision            find failed
+      93.518      agent                   recall [predicate=isPartOf, object=Letter]
+      93.568      agent.memory            recalling [predicate=isPartOf, object=Letter]
+      94.568      agent.memory            recall failed
+      94.568      agent                   recall [isa=rule]
+      94.618      agent.memory            recalling [isa=rule]
+      94.718      agent.memory            recalled <rule>{'isa': 'rule'}
+      94.718      agent                   recall [isa=condition, last=rule]
+      94.768      agent.memory            recalling [isa=condition, last=rule]
+      94.868      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      94.868      agent                   find [isa=Target, seen=False]
+      94.918      agent.vision            find failed
+      94.918      agent                   recall [predicate=isPartOf, object=Target]
+      94.968      agent.memory            recalling [predicate=isPartOf, object=Target]
+      95.068      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      95.068      agent                   find [isa=Letter, seen=False]
+      95.118      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      95.118      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      95.303      agent.vision            encoded A
+      95.303      agent                   recall [isa=condition, last=condition]
+      95.353      agent.memory            recalling [isa=condition, last=condition]
+      96.353      agent.memory            recall failed
+      96.353      agent                   recall [isa=action, last=rule]
+      96.403      agent.memory            recalling [isa=action, last=rule]
+      96.503      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+      96.503      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      96.553      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      96.553      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      96.738      agent.vision            encoded A
+      96.753      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      96.753      agent                   click mouse
+      96.803      agent.mouse             clicking mouse
+      96.953      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+      96.953      agent                   recall [isa=action, last=action]
+      97.003      agent.memory            recalling [isa=action, last=action]
+      97.103      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+      97.103      agent                   recall [isa=action, last=action~10]
+      97.153      agent.memory            recalling [isa=action, last=action~10]
+      98.153      agent.memory            recall failed
+      98.153      agent                   recall [isa=rule]
+      98.203      agent.memory            recalling [isa=rule]
+      98.303      agent.memory            recalled <rule>{'isa': 'rule'}
+      98.303      agent                   recall [isa=condition, last=rule]
+      98.353      agent.memory            recalling [isa=condition, last=rule]
+      98.453      agent.memory            recalled <condition>{'isa': 'condition', 'predicate': 'appearsIn', 'subject': 'Target', 'object': 'Box', 'last': 'rule'}
+      98.453      agent                   find [isa=Target, seen=False]
+      98.503      agent.vision            find failed
+      98.503      agent                   recall [predicate=isPartOf, object=Target]
+      98.553      agent.memory            recalling [predicate=isPartOf, object=Target]
+      98.653      agent.memory            recalled <fact~9>{'isa': 'fact', 'predicate': 'isPartOf', 'subject': 'Letter', 'object': 'Target'}
+      98.653      agent                   find [isa=Letter, seen=False]
+      98.703      agent.vision            found {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      98.703      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': False}
+      98.888      agent.vision            encoded A
+      98.888      agent                   recall [isa=condition, last=condition]
+      98.938      agent.memory            recalling [isa=condition, last=condition]
+      99.938      agent.memory            recall failed
+      99.938      agent                   recall [isa=action, last=rule]
+      99.988      agent.memory            recalling [isa=action, last=rule]
+     100.088      agent.memory            recalled <action>{'isa': 'action', 'predicate': 'click', 'subject': 'Subject', 'object': 'Acknowledge', 'last': 'rule'}
+     100.088      agent                   move mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+     100.138      agent.mouse             moving mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+     100.138      agent                   encode {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+     100.323      agent.vision            encoded A
+     100.338      agent.hands             moved mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+     100.338      agent                   click mouse
+     100.388      agent.mouse             clicking mouse
+     100.538      agent.hands             click mouse {'isa': 'Letter', 'x': 50, 'y': 50, 'w': 20, 'h': 20, 'seen': True}
+     100.538      agent                   recall [isa=action, last=action]
+     100.588      agent.memory            recalling [isa=action, last=action]
+     100.688      agent.memory            recalled <action~10>{'isa': 'action', 'predicate': 'remember', 'subject': 'Subject', 'object': 'Letter', 'last': 'action'}
+     100.688      agent                   recall [isa=action, last=action~10]
+     100.738      agent.memory            recalling [isa=action, last=action~10]
+     101.738      agent.memory            recall failed

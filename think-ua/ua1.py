@@ -6,10 +6,9 @@
 # 'do_outlog = False' defaults back to original script design (logs to console)
 
 from tasks.pvt import DRS_INSTRUCTIONS, PVTTask
-from think import World
+from think import World, get_think_logger
 from ua import DRSUndifferentiatedAgent
 import logging
-from think.core.logger import get_think_logger
 import os, importlib, glob #directory pathing, reload modules, filename globbing
 
 

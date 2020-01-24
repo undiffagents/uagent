@@ -17,9 +17,12 @@ from think import (Agent, Audition, Aural, Chunk, Hands, Item, Language,
 #         pass
 
 
+#CK 2020-01-24 - updated agent to allow passing in of output argument, 
+#which is the text logfile (or defaults back to original behavior, output to
+#the python console)
 class DRSUndifferentiatedAgent(Agent):
 
-    def __init__(self):
+    def __init__(self, output=True):
         """Initializes the agent"""
         super().__init__(output=True)
         self.memory = Memory(self)
