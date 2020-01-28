@@ -14,7 +14,7 @@ import os, importlib, glob #directory pathing, reload modules, filename globbing
 
 if __name__ == "__main__":
     
-    do_outlog = True    #indicator: log to a textfile (or not)
+    do_outlog = False    #indicator: log to a textfile (or not)
     psep = os.path.sep  #path separator of current OS
     
     if do_outlog:
