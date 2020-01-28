@@ -1,8 +1,11 @@
 # %% Main Task
 # Undifferentiated Agent, v1
+# Should be run with uagent/think-ua/ as the current working directory
+#
 # CK 2020-01-23
 # Updated logging:
-# 'do_outlog = True' (first line in main code), logging is sent to a textfile (named 'log#.txt', # = number of existing logs + 1) in the logs folder (logs/).
+# 'do_outlog = True' (first line in main code), logging is sent to a textfile
+# ('log#.txt', # = number of existing logs + 1) in the logs folder (logs/).
 # 'do_outlog = False' defaults back to original script design (logs to console)
 
 from tasks.pvt import DRS_INSTRUCTIONS, PVTTask
@@ -31,7 +34,7 @@ if __name__ == "__main__":
         logging.shutdown();  importlib.reload(logging)
     
     else:
-        #original pvt_owl.py code
+        #original pvt_drs.py code
         agent = DRSUndifferentiatedAgent()
         task = PVTTask(agent, instructions=DRS_INSTRUCTIONS)
         World(task, agent).run(100)

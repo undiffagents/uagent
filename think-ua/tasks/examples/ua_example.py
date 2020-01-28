@@ -107,7 +107,6 @@ class ExampleTask:
                     loc = line[1]
                     pointer.move(loc[0], loc[1])
         #CK 2020-01-28 agent.run -> agent.run_thread (as in other examples)
-#        agent.run(stimulus_thread)
         agent.run_thread(stimulus_thread)
 
         # on the main thread, start the instruction-following process
