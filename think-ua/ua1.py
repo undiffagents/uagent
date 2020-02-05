@@ -9,7 +9,7 @@
 # 'do_outlog = False' defaults back to original script design (logs to console)
 
 from tasks.pvt import DRS_INSTRUCTIONS, PVTTask
-from think import World, get_think_logger
+from think import World, get_think_logger #importing logger itself gives w
 from ua import DRSUndifferentiatedAgent
 import logging
 import os, importlib, glob #directory pathing, reload modules, filename globbing
@@ -18,7 +18,7 @@ import os, importlib, glob #directory pathing, reload modules, filename globbing
 if __name__ == "__main__":
     
     do_outlog = False    #indicator: log to a textfile (or not)
-    psep = os.path.sep  #path separator of current OS
+    psep = os.path.sep   #path separator of current OS
     
     if do_outlog:
         #should be robust across computers and OSes
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         task = PVTTask(agent, instructions=DRS_INSTRUCTIONS)
         World(task, agent).run(100)
         
-        #shutdown and reset logging - faster to implement than updating/fixing handlers between executions. Also ensures no cross-contamination of logging configuration across multiple executions (if the logging gets more complex in the future)
+        #shutdown and reset logging - faster to implement than updating/fixing handlers between executions. 
         logging.shutdown();  importlib.reload(logging)
     
     else:
