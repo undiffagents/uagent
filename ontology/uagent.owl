@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.uganet.com/ontology"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.uganet.com/ontology"
+     versionIRI="http://www.uganet.com/ontology/1.0.0">
+    <Prefix name="" IRI="http://www.uganet.com/ontology"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="opla" IRI="http://ontologydesignpatterns.org/opla#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Action"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ActionInstruction"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ActionType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Affordance"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AffordanceType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DescriptionInstruction"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ISR-MATBExperiment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ISR-MATBTask"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Instruction"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Item"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemColor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemDescription"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemLocation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemRole"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemRoleType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemShape"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ItemType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Location"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RelativeCondition"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RelativeConditionType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SituationDescription"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TransitionDescription"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#affords"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#assumedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#contributesTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasAffordanceType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasCurrentCondition"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasEarlierCondition"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasFirstItem"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasInstruction"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasLocation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasPostSituationDescription"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasPreSituationDescription"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasSecondItem"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasTask"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#informs"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ofActionType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ofItem"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ofItemRoleType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ofRelativeConditionType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#prescribes"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#providesRole"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#refersTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#refersToItemColor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#refersToItemLocation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#refersToItemShape"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#refersToItemType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#triggers"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#asACEString"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#asDRSString"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#asString"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasItemName"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasName"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#isPresent"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Action"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty IRI="#ofActionType"/>
+            <Class IRI="#ActionType"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ActionInstruction"/>
+        <Class IRI="#Instruction"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ActionInstruction"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#prescribes"/>
+            <Class IRI="#TransitionDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Affordance"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#informs"/>
+            <Class IRI="#ISR-MATBTask"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Affordance"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#providesRole"/>
+            <Class IRI="#ItemRole"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Affordance"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty IRI="#hasAffordanceType"/>
+            <Class IRI="#AffordanceType"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Affordance"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#hasName"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#DescriptionInstruction"/>
+        <Class IRI="#Instruction"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#DescriptionInstruction"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#contributesTo"/>
+            <Class IRI="#SituationDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBExperiment"/>
+        <ObjectMaxCardinality cardinality="4">
+            <ObjectProperty IRI="#hasTask"/>
+            <Class IRI="#ISR-MATBTask"/>
+        </ObjectMaxCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBExperiment"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asACEString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBExperiment"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asDRSString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBExperiment"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#asString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBTask"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#hasInstruction"/>
+            <Class IRI="#Instruction"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBTask"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asACEString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBTask"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asDRSString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ISR-MATBTask"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#asString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Instruction"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asACEString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Instruction"/>
+        <DataMinCardinality cardinality="0">
+            <DataProperty IRI="#asDRSString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Instruction"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#asString"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#ofItem"/>
+            <Class IRI="#Item"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <ObjectMinCardinality cardinality="0">
+            <ObjectProperty IRI="#refersToItemColor"/>
+            <Class IRI="#ItemColor"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <ObjectMinCardinality cardinality="0">
+            <ObjectProperty IRI="#refersToItemLocation"/>
+            <Class IRI="#ItemLocation"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <ObjectMinCardinality cardinality="0">
+            <ObjectProperty IRI="#refersToItemShape"/>
+            <Class IRI="#ItemShape"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <ObjectMinCardinality cardinality="0">
+            <ObjectProperty IRI="#refersToItemType"/>
+            <Class IRI="#ItemType"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemDescription"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="#isPresent"/>
+            <Datatype abbreviatedIRI="xsd:boolean"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemRole"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#assumedBy"/>
+            <Class IRI="#Item"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ItemRole"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#assumedBy"/>
+            <Class IRI="#Item"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RelativeCondition"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasFirstItem"/>
+            <Class IRI="#ItemDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RelativeCondition"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasSecondItem"/>
+            <Class IRI="#ItemDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SituationDescription"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasCurrentCondition"/>
+            <ObjectUnionOf>
+                <Class IRI="#ItemDescription"/>
+                <Class IRI="#RelativeCondition"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SituationDescription"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasEarlierCondition"/>
+            <Class IRI="#ItemDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#affords"/>
+            <Class IRI="#Affordance"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasLocation"/>
+            <Class IRI="#Location"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasPostSituationDescription"/>
+            <Class IRI="#SituationDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasPreSituationDescription"/>
+            <Class IRI="#SituationDescription"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#ofItemRoleType"/>
+            <Class IRI="#ItemRoleType"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#ofRelativeConditionType"/>
+            <Class IRI="#RelativeConditionType"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#refersToItemColor"/>
+            <Class IRI="#ItemColor"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#refersToItemLocation"/>
+            <Class IRI="#ItemLocation"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#refersToItemShape"/>
+            <Class IRI="#ItemShape"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#refersToItemType"/>
+            <Class IRI="#ItemType"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="#hasItemName"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="owl:Thing"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="#hasName"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <DataPropertyRange>
+        <DataProperty IRI="#asACEString"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#asDRSString"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#asString"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
