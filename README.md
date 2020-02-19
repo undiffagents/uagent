@@ -3,17 +3,18 @@ Full Undifferentiated Agent, v1
 
 Git Logistics:
 
-Develop is the main branch from which we'll be working, where all the features/modules will be integrated to create the full UA. Each individual feature will be worked on it's own branch. When a feature is ready to be merged into develop, submit a pull (merge) request on github. 
+Develop is the main branch from which we'll be working, where all the features/modules will be integrated to create the full UA. Each individual feature will be worked on it's own branch. When a feature is ready to be merged into develop, submit a pull (merge) request on github (and preferably, let the curator -- currently Colin -- know on Slack).
 
 Master will be the 'release' branch -- representing bigger, stables changes across develop
 
-Files:
+Running Agents:
 
-	uagent.py
-		The main runfile, acting as the 'master' process. It instantiates a think-agent and runs an experimental task, calling upon other modules as appropriate. Loosely, this is the 'executive control' of the UAgent. 
+	run/pvt_ua1.py
+		Execute: python3 run/pvt_ua1.py (that is, run it from the base uagent directory).
+		The main runfile, acting as the 'master' process. It instantiates the think uagent and runs it for the PVT.
 
-	README.md
-		Inception.
+	run/pvt_non_ua.py
+		Runs the non-undiff PVT agent. (Again, execute from base uagent directory).
 
 Modules:
 	
@@ -21,37 +22,33 @@ Modules:
 		Purpose: Integration and training of UAgent in ARES framework
 		Primaries: Colin, Daylond, Benji
 
-	cake
-		Purpose: Print cakes. Idea is to parlay the UAgent's processing and learning capabilities into a new type of UAgent (MARS?) that can act as the experimenter controlling an ARES experiment campaign.
+	ares/cake
+		Purpose: Print cakes. Parlay UAgent processing/learning capabilities to act as experimenter controlling an ARES experiment campaign.
 		Primaries: ? Pascal, Cogan ?
 
-	gap-res
+	gap_res
 		Purpose: Knowledge Gap Resolution
 		Primaries: Aaron, Daniel
 
-	inst-process
-		Purpose: Instruction Understanding. Processes input in the form of Attempto Controlled English (ACE), in order to populate the OntologyDB
+	inst_process
+		Purpose: Instruction Understanding. Processes input in the form of Attempto Controlled English (ACE), in order to populate the Ontology
 		Primaries: Aaron, Stevens
 
-	inst-exec-learn
-		Purpose: Executing instructions in the UA, and allowing the UA to "learn"
-		Primaries: Dario (+Colin, later)
-
-	ontology-db (+DaSe API)
+	ontology (+DaSe API)
 		Purpose: Formalized structure of UAgent "knowledge." The DaSe API is how other modules will interact with the OntologyDB.
 		Primaries: Cogan, Aaron (Pascal?)
 
-	task
+	tasks
 		Purpose: Tasks to be run by the UA
-		Primaries: Olivia, Stevens (Dario, Colin?)
+		Primaries: Dario, Olivia, Stevens (Colin?)
 
-	think-ua
-		Purpose: The think architecture, an adaptation of ACT-R to be run in Python.
+	think
+		Purpose: The Think architecture, an adaptation of ACT-R to be run in Python.
 		Primaries: Dario (+Colin, later)
 
-	trained-agents
-		Purpose: External agents (hand-coded, etc) to allow for active comparisons of the UAgent to more traditional 
-		Primaries: Stevens
+	ua
+		Purpose: Code specifically for the UAgent. Currently just ua.py, which has the UndifferentiatedAgent class (for use with Think).
+		Primaries: Dario (+Colin)
 
 
 

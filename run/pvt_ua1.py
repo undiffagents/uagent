@@ -29,8 +29,9 @@ if __name__ == "__main__":
 
     if do_outlog:
         #should be robust across computers and OSes
-        curlog = os.path.join('logs', 'log' +
-                              str(1+len(glob.glob(os.path.join('logs', 'log*.txt')))) + '.txt')
+        
+        curlog = os.path.join('data','logs', 'log' +
+                              str(1+len(glob.glob(os.path.join('data','logs', 'log*.txt')))) + '.txt')
         thinklog = get_think_logger(logfilename=curlog, uselogfile=True)
 
         run_agent()
