@@ -15,6 +15,5 @@ def addACEinput(ACE):
 
 def addDRSinput(DRS):
 	string = getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asDRSString '" + ";".join(DRS.read().splitlines()) + "' .\n}"
-	#print(string)
 	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',string])
 	DRS.close()
