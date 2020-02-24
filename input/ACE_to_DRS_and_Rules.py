@@ -255,4 +255,4 @@ def readACEFile(filename,drsName):
     
     Dapylog(menu=False)   
 
-    return  "./input/Rules.txt"
+    return  rules
