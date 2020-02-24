@@ -20,6 +20,6 @@ startServer()
 
 addACEinput(open(ACE,"r"))
 addDRSinput(open(DRS,"r"))
-#addRulesinput(open(rules,"r"))    #need to update ontology
+#addRulesinput(rules)    #need to update ontology
 
 # start think
