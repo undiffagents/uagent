@@ -1,501 +1,679 @@
 <?xml version="1.0"?>
-<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+<rdf:RDF xmlns="http://www.uganet.com/ontology#"
      xml:base="http://www.uganet.com/ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     ontologyIRI="http://www.uganet.com/ontology"
-     versionIRI="http://www.uganet.com/ontology/1.0.0">
-    <Prefix name="" IRI="http://www.uganet.com/ontology"/>
-    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
-    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
-    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
-    <Prefix name="opla" IRI="http://ontologydesignpatterns.org/opla#"/>
-    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Declaration>
-        <Class IRI="#Action"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ActionInstruction"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ActionType"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Affordance"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#AffordanceType"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#DescriptionInstruction"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ISR-MATBExperiment"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ISR-MATBTask"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Instruction"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Item"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemColor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemDescription"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemLocation"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemRole"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemRoleType"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemShape"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ItemType"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Location"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#RelativeCondition"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#RelativeConditionType"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#SituationDescription"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#TransitionDescription"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#affords"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#assumedBy"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#contributesTo"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasAffordanceType"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasCurrentCondition"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasEarlierCondition"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasFirstItem"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasInstruction"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasLocation"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasPostSituationDescription"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasPreSituationDescription"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasSecondItem"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#hasTask"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#informs"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ofActionType"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ofItem"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ofItemRoleType"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ofRelativeConditionType"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#prescribes"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#providesRole"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#refersTo"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#refersToItemColor"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#refersToItemLocation"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#refersToItemShape"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#refersToItemType"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#triggers"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#asACEString"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#asDRSString"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#asString"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#hasItemName"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#hasName"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#isPresent"/>
-    </Declaration>
-    <SubClassOf>
-        <Class IRI="#Action"/>
-        <ObjectExactCardinality cardinality="1">
-            <ObjectProperty IRI="#ofActionType"/>
-            <Class IRI="#ActionType"/>
-        </ObjectExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ActionInstruction"/>
-        <Class IRI="#Instruction"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ActionInstruction"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#prescribes"/>
-            <Class IRI="#TransitionDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Affordance"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#informs"/>
-            <Class IRI="#ISR-MATBTask"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Affordance"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#providesRole"/>
-            <Class IRI="#ItemRole"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Affordance"/>
-        <ObjectExactCardinality cardinality="1">
-            <ObjectProperty IRI="#hasAffordanceType"/>
-            <Class IRI="#AffordanceType"/>
-        </ObjectExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Affordance"/>
-        <DataExactCardinality cardinality="1">
-            <DataProperty IRI="#hasName"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#DescriptionInstruction"/>
-        <Class IRI="#Instruction"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#DescriptionInstruction"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#contributesTo"/>
-            <Class IRI="#SituationDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBExperiment"/>
-        <ObjectMaxCardinality cardinality="4">
-            <ObjectProperty IRI="#hasTask"/>
-            <Class IRI="#ISR-MATBTask"/>
-        </ObjectMaxCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBExperiment"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asACEString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBExperiment"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asDRSString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBExperiment"/>
-        <DataExactCardinality cardinality="1">
-            <DataProperty IRI="#asString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBTask"/>
-        <ObjectMinCardinality cardinality="1">
-            <ObjectProperty IRI="#hasInstruction"/>
-            <Class IRI="#Instruction"/>
-        </ObjectMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBTask"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asACEString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBTask"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asDRSString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ISR-MATBTask"/>
-        <DataExactCardinality cardinality="1">
-            <DataProperty IRI="#asString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Instruction"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asACEString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Instruction"/>
-        <DataMinCardinality cardinality="0">
-            <DataProperty IRI="#asDRSString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Instruction"/>
-        <DataExactCardinality cardinality="1">
-            <DataProperty IRI="#asString"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#ofItem"/>
-            <Class IRI="#Item"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <ObjectMinCardinality cardinality="0">
-            <ObjectProperty IRI="#refersToItemColor"/>
-            <Class IRI="#ItemColor"/>
-        </ObjectMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <ObjectMinCardinality cardinality="0">
-            <ObjectProperty IRI="#refersToItemLocation"/>
-            <Class IRI="#ItemLocation"/>
-        </ObjectMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <ObjectMinCardinality cardinality="0">
-            <ObjectProperty IRI="#refersToItemShape"/>
-            <Class IRI="#ItemShape"/>
-        </ObjectMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <ObjectMinCardinality cardinality="0">
-            <ObjectProperty IRI="#refersToItemType"/>
-            <Class IRI="#ItemType"/>
-        </ObjectMinCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemDescription"/>
-        <DataExactCardinality cardinality="1">
-            <DataProperty IRI="#isPresent"/>
-            <Datatype abbreviatedIRI="xsd:boolean"/>
-        </DataExactCardinality>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemRole"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#assumedBy"/>
-            <Class IRI="#Item"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#ItemRole"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#assumedBy"/>
-            <Class IRI="#Item"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#RelativeCondition"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasFirstItem"/>
-            <Class IRI="#ItemDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#RelativeCondition"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasSecondItem"/>
-            <Class IRI="#ItemDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#SituationDescription"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasCurrentCondition"/>
-            <ObjectUnionOf>
-                <Class IRI="#ItemDescription"/>
-                <Class IRI="#RelativeCondition"/>
-            </ObjectUnionOf>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#SituationDescription"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasEarlierCondition"/>
-            <Class IRI="#ItemDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#affords"/>
-            <Class IRI="#Affordance"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasLocation"/>
-            <Class IRI="#Location"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasPostSituationDescription"/>
-            <Class IRI="#SituationDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#hasPreSituationDescription"/>
-            <Class IRI="#SituationDescription"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#ofItemRoleType"/>
-            <Class IRI="#ItemRoleType"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#ofRelativeConditionType"/>
-            <Class IRI="#RelativeConditionType"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#refersToItemColor"/>
-            <Class IRI="#ItemColor"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#refersToItemLocation"/>
-            <Class IRI="#ItemLocation"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#refersToItemShape"/>
-            <Class IRI="#ItemShape"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <ObjectAllValuesFrom>
-            <ObjectProperty IRI="#refersToItemType"/>
-            <Class IRI="#ItemType"/>
-        </ObjectAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <DataAllValuesFrom>
-            <DataProperty IRI="#hasItemName"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataAllValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class abbreviatedIRI="owl:Thing"/>
-        <DataAllValuesFrom>
-            <DataProperty IRI="#hasName"/>
-            <Datatype abbreviatedIRI="xsd:string"/>
-        </DataAllValuesFrom>
-    </SubClassOf>
-    <DataPropertyRange>
-        <DataProperty IRI="#asACEString"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="#asDRSString"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="#asString"/>
-        <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-</Ontology>
+     xmlns:opla="http://ontologydesignpatterns.org/opla#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.uganet.com/ontology">
+        <owl:versionIRI rdf:resource="http://www.uganet.com/ontology/1.0.0"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.uganet.com/ontology#affords -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#affords"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#assumedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#assumedBy"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#contributesTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#contributesTo"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasAffordanceType -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasAffordanceType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasCurrentCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasCurrentCondition"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasEarlierCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasEarlierCondition"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasFirstItem -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasFirstItem"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasInstruction -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasInstruction"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasLocation"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasPostSituationDescription -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasPostSituationDescription"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasPreSituationDescription -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasPreSituationDescription"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasSecondItem -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasSecondItem"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasTask -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#hasTask"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#informs -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#informs"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ofActionType -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#ofActionType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ofItem -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#ofItem"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ofItemRoleType -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#ofItemRoleType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ofRelativeConditionType -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#ofRelativeConditionType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#prescribes -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#prescribes"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#providesRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#providesRole"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#refersTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#refersTo"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#refersToItemColor -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#refersToItemColor"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#refersToItemLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#refersToItemLocation"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#refersToItemShape -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#refersToItemShape"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#refersToItemType -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#refersToItemType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#triggers -->
+
+    <owl:ObjectProperty rdf:about="http://www.uganet.com/ontology#triggers"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.uganet.com/ontology#asACEString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asACEString">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.uganet.com/ontology#asDRSString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asDRSString">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.uganet.com/ontology#asString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asString">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasItemName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#hasItemName"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#hasName"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#isPresent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#isPresent"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.uganet.com/ontology#Action -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#Action">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#ofActionType"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ActionType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ActionInstruction -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ActionInstruction">
+        <rdfs:subClassOf rdf:resource="http://www.uganet.com/ontology#Instruction"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#prescribes"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#TransitionDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ActionType -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ActionType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#Affordance -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#Affordance">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#informs"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ISR-MATBTask"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#providesRole"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemRole"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasAffordanceType"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#AffordanceType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#AffordanceType -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#AffordanceType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#DescriptionInstruction -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#DescriptionInstruction">
+        <rdfs:subClassOf rdf:resource="http://www.uganet.com/ontology#Instruction"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#contributesTo"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#SituationDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ISR-MATBExperiment -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ISR-MATBExperiment">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasTask"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ISR-MATBTask"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asACEString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asDRSString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asString"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ISR-MATBTask -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ISR-MATBTask">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasInstruction"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#Instruction"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asACEString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asDRSString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asString"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#Instruction -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#Instruction">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asACEString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asDRSString"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#asString"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#Item -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#Item"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemColor -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemColor"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemDescription -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemDescription">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#ofItem"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#Item"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemColor"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ItemColor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemLocation"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ItemLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemShape"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ItemShape"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemType"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.uganet.com/ontology#ItemType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#isPresent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemLocation -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemLocation"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemRole -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemRole">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#assumedBy"/>
+                <owl:someValuesFrom rdf:resource="http://www.uganet.com/ontology#Item"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#assumedBy"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#Item"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemRoleType -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemRoleType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemShape -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemShape"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#ItemType -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#ItemType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#Location -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#Location"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#RelativeCondition -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#RelativeCondition">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasFirstItem"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasSecondItem"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#RelativeConditionType -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#RelativeConditionType"/>
+    
+
+
+    <!-- http://www.uganet.com/ontology#SituationDescription -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#SituationDescription">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasCurrentCondition"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.uganet.com/ontology#ItemDescription"/>
+                            <rdf:Description rdf:about="http://www.uganet.com/ontology#RelativeCondition"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasEarlierCondition"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.uganet.com/ontology#TransitionDescription -->
+
+    <owl:Class rdf:about="http://www.uganet.com/ontology#TransitionDescription"/>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#affords"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#Affordance"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#Location"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasPostSituationDescription"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#SituationDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasPreSituationDescription"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#SituationDescription"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#ofItemRoleType"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemRoleType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#ofRelativeConditionType"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#RelativeConditionType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemColor"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemColor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemLocation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemShape"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemShape"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#refersToItemType"/>
+                <owl:allValuesFrom rdf:resource="http://www.uganet.com/ontology#ItemType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasItemName"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uganet.com/ontology#hasName"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+</rdf:RDF>
 
 
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.7.2018-12-02T02:23:35Z) https://github.com/owlcs/owlapi -->
 

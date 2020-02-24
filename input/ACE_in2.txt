@@ -1,0 +1,13 @@
+p:psychomotorvigilance is a task.
+There is a subject that v:isPartOf the task.
+p:present is a key that v:isPartOf the task.
+p:absent is a key that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+p:goal is a target.
+p:distractor is a letter.
+Every target is a letter.
+If there is a letter then the letter is a:color.
+If there is a letter then the letter is unique.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then the letter v:appearsOn the screen.
+If a letter v:appearsOn the screen then the subject presses a key.
