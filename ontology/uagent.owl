@@ -207,6 +207,31 @@
     
 
 
+    <!-- http://www.uganet.com/ontology#asFactString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asFactString">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.uganet.com/ontology#asReasonerFactString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asReasonerFactString">
+        <rdfs:subPropertyOf rdf:resource="http://www.uganet.com/ontology#asFactString"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.uganet.com/ontology#asRuleString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asRuleString">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.uganet.com/ontology#asString -->
 
     <owl:DatatypeProperty rdf:about="http://www.uganet.com/ontology#asString">
