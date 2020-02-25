@@ -19,7 +19,6 @@ addRulesinput(facts,rules,reasonerFacts)
 
 '''
 AVAILABLE QUERIES
-
 getInitialFacts() - returns a set() with all the instruction facts
 getInitialRules() - returns a set() with all the instruction rules
 getReasonerFacts() - returnss a set() with all the reasoner facts learned from the facts and rules

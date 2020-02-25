@@ -39,14 +39,14 @@ def addRulesinput(facts,rules,newFacts):
 	for newFact in newFacts:
 		addNewFact(newFact)
 
-def getInitialRules():
-	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }"
-	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+def query(query):
+	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 
+def getInitialRules():
+	return query(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }")
+	
 def getInitialFacts():
-	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }"
-	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+	return query(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }")
 
 def getReasonerFacts():
-	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }"
-	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+	return query(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }")
