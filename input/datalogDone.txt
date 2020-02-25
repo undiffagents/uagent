@@ -1,4 +1,3 @@
-
 Database Facts:
 task(psychomotorvigilance)
 key(present)
@@ -16,8 +15,8 @@ Database Rules:
 target(Q) -> letter(Q)
 letter(R) -> hasProperty(R,color)
 letter(R) -> hasProperty(R,unique)
-subject(C) ^ isPartOf(C,A) ^ task(A) -> hasProperty(A,active)
-screen(K) ^ letter(O) ^ task(A) ^ hasProperty(A,active) -> appearsOn(O,K)
+task(A) ^ subject(C) ^ isPartOf(C,A) -> hasProperty(A,active)
+letter(O) ^ screen(K) ^ hasProperty(A,active) ^ task(A) -> appearsOn(O,K)
 letter(R) ^ screen(K) ^ appearsOn(R,K) ^ subject(C) ^ key(H1) -> press(C,H1)
 
 New Facts:
@@ -29,8 +28,3 @@ hasProperty(goal,unique)
 hasProperty(psychomotorvigilance,active)
 appearsOn(distractor,screen)
 appearsOn(goal,screen)
-
-New Rules:
-
-No new rules
-

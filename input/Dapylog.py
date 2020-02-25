@@ -94,7 +94,7 @@ class Program:
         self.rulesGiven+=1
 
     def display(self):
-        display = "\nDatabase Facts:\n"
+        display = "Database Facts:\n"
         for i in range(0,self.factsGiven):
             if self.facts[i][3]: display += self.predToStr(self.facts[i]) + "\n"
         display += "\nDatabase Rules:\n"
@@ -105,15 +105,22 @@ class Program:
             for i in range(self.factsGiven,len(self.facts)):
                 display += self.predToStr(self.facts[i]) + "\n"
         else:
-            display+="\nNo new facts\n\n"
-        display += "\nNew Rules:\n"
-        if len(self.rules) > self.rulesGiven:
-            for i in range(self.rulesGiven,len(self.rules)):
-                display += self.ruleToStr(self.rules[i]) + "\n"
-        else:
-            display+="\nNo new rules\n\n"   
+            display+="\nNo new facts\n\n"  
         return display
-        
+    
+    def getFacts(self):
+        f = []
+        for i in range(0,self.factsGiven):
+            f.append(self.predToStr(self.facts[i]))
+        return f    
+    
+    def getNewFacts(self):
+        nf = []
+        if len(self.facts) > self.factsGiven:
+            for i in range(self.factsGiven,len(self.facts)):
+                nf.append(self.predToStr(self.facts[i]))
+        return nf
+    
     def predToStr(self,pred):
         string = str(pred[0]) + "("
         num = 0
@@ -272,6 +279,12 @@ class Reasoner:
         head.append(True)
         return head
 
+    def getFacts(self):
+        return self.program.getFacts()    
+
+    def getNewFacts(self):
+        return self.program.getNewFacts()
+
     def addHead(self,rule,var):    
         newFact = self.groundHead(rule[0],var)
         if self.isFact(newFact): return True
@@ -296,6 +309,12 @@ class Dapylog:
         f = open("./input/datalogDone.txt", 'w+')
         f.write(self.reasoner.display())
         f.close()
+        
+    def getFacts(self):
+        return self.reasoner.getFacts()  
+    
+    def getNewFacts(self):
+        return self.reasoner.getNewFacts()    
     
     def showMenu(self):
         self.menuSwitch(self.intSafe(input("\nChoose one:\n\n1\tDisplay Current Database\n2\tRun Reasoner on Database\n3\tAdd Fact To Database\n4\tAdd Rule To Database\n5\tDelete Fact From Database\n6\tDelete Rule From Database\n7\tReset Database\n8\tLoad New File\n9\tSave Program to File\n10\tExit Program\n:")))

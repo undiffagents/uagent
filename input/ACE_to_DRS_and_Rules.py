@@ -253,6 +253,7 @@ def readACEFile(filename,drsName):
 
     datalogfile.close()
     
-    Dapylog(menu=False)   
+    reasoner = Dapylog(menu=False)
+    newFacts = reasoner.getNewFacts()
 
-    return  rules
+    return  facts,rules,newFacts
