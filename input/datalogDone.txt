@@ -15,8 +15,8 @@ Database Rules:
 target(Q) -> letter(Q)
 letter(R) -> hasProperty(R,color)
 letter(R) -> hasProperty(R,unique)
-subject(C) ^ isPartOf(C,A) ^ task(A) -> hasProperty(A,active)
-letter(O) ^ task(A) ^ hasProperty(A,active) ^ screen(K) -> appearsOn(O,K)
+task(A) ^ isPartOf(C,A) ^ subject(C) -> hasProperty(A,active)
+hasProperty(A,active) ^ task(A) ^ letter(O) ^ screen(K) -> appearsOn(O,K)
 letter(R) ^ screen(K) ^ appearsOn(R,K) ^ subject(C) ^ key(H1) -> press(C,H1)
 
 New Facts:

@@ -1,6 +1,6 @@
 import subprocess,time,json
 
-def queryOntology(query):
+def queryOntologyForObject(query):
 	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 
 def addToOntology(inputs):
@@ -23,28 +23,28 @@ def addDRSFileInput(DRSFile):
 	addToOntology(getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asDRSString '" + ";".join(DRSFile.read().splitlines()) + "' .\n}")
 	DRSFile.close()
 
-def addRule(rule):
+def addInitialRule(rule):
 	addToOntology(getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asRuleString '" + rule + "' .\n}")
 
-def addFact(fact):
+def addInitialFact(fact):
 	addToOntology(getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asFactString '" + fact + "' .\n}")
 
-def addNewFact(newFact):
+def addInitialReasonerFact(newFact):
 	addToOntology(getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asReasonerFactString '" + newFact + "' .\n}")
 
 def addRulesInput(facts,rules,newFacts):
 	for fact in facts:
-		addFact(fact)
+		addInitialFact(fact)
 	for rule in rules:
-		addRule(rule)
+		addInitialRule(rule)
 	for newFact in newFacts:
-		addNewFact(newFact)
+		addInitialReasonerFact(newFact)
 
 def getInitialRules():
-	return queryOntology(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }")
+	return queryOntologyForObject(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }")
 	
 def getInitialFacts():
-	return queryOntology(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }")
+	return queryOntologyForObject(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }")
 
-def getReasonerFacts():
-	return queryOntology(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }")
+def getInitialReasonerFacts():
+	return queryOntologyForObject(getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }")
