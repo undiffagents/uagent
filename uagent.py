@@ -16,7 +16,7 @@ ACE = "./input/ACE_in2.txt"
 DRS = "./input/DRS.txt"
 facts,rules,reasonerFacts = readACEFile(ACE,DRS)
 
-startServer()
+startServer(here)
 
 addACEinput(open(ACE,"r"))
 addDRSinput(open(DRS,"r"))
