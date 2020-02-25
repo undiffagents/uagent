@@ -1,12 +1,12 @@
-import subprocess,time
+import subprocess,time,json
 
 def getPrefix():
-	return 'PREFIX :      <http://www.uganet.com/ontology#>\nPREFIX opla:  <http://ontologydesignpatterns.org/opla#>\nPREFIX owl:   <http://www.w3.org/2002/07/owl#>\nPREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n'
+	return 'PREFIX :      <http://www.uagent.com/ontology#>\nPREFIX opla:  <http://ontologydesignpatterns.org/opla#>\nPREFIX owl:   <http://www.w3.org/2002/07/owl#>\nPREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n'
 
 def startServer(here):
 	print("Starting Fuseki server\n")
 	subprocess.call(['gnome-terminal','--','java', '-jar', './ontology/fuseki-server.jar','--update'])
-	time.sleep(2)
+	time.sleep(3)
 	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update', "LOAD <file:///"+here+"/ontology/uagent.owl>" ])
 
 def addACEinput(ACE):
@@ -38,3 +38,15 @@ def addRulesinput(facts,rules,newFacts):
 		addRule(rule)
 	for newFact in newFacts:
 		addNewFact(newFact)
+
+def getInitialRules():
+	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }"
+	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+
+def getInitialFacts():
+	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }"
+	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+
+def getReasonerFacts():
+	string = getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }"
+	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',string], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])

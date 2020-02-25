@@ -1,13 +1,8 @@
 import os,sys
 
 here = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0,here+"/input")
-sys.path.insert(0,here+"/ares")
 sys.path.insert(0,here+"/ontology")
-sys.path.insert(0,here+"/think")
 sys.path.insert(0,here+"/input")
-sys.path.insert(0,here+"/tasks")
-sys.path.insert(0,here+"/ua")
 
 from ACE_to_DRS_and_Rules import *
 from ontology import *
@@ -21,5 +16,15 @@ startServer(here)
 addACEinput(open(ACE,"r"))
 addDRSinput(open(DRS,"r"))
 addRulesinput(facts,rules,reasonerFacts)
+
+'''
+AVAILABLE QUERIES
+
+getInitialFacts() - returns a set() with all the instruction facts
+getInitialRules() - returns a set() with all the instruction rules
+getReasonerFacts() - returnss a set() with all the reasoner facts learned from the facts and rules
+# NOTE # These three are returned by the readACEFile() function and the data is already available
+
+'''
 
 # start think

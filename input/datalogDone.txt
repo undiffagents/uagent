@@ -16,7 +16,7 @@ target(Q) -> letter(Q)
 letter(R) -> hasProperty(R,color)
 letter(R) -> hasProperty(R,unique)
 subject(C) ^ task(A) ^ isPartOf(C,A) -> hasProperty(A,active)
-screen(K) ^ hasProperty(A,active) ^ task(A) ^ letter(O) -> appearsOn(O,K)
+hasProperty(A,active) ^ task(A) ^ screen(K) ^ letter(O) -> appearsOn(O,K)
 letter(R) ^ screen(K) ^ appearsOn(R,K) ^ subject(C) ^ key(H1) -> press(C,H1)
 
 New Facts:

@@ -256,4 +256,4 @@ def readACEFile(filename,drsName):
     reasoner = Dapylog(menu=False)
     newFacts = reasoner.getNewFacts()
 
-    return  facts,rules,newFacts
+    return  set(facts),set(rules),set(newFacts)
