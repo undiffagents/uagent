@@ -17,3 +17,23 @@ def addDRSinput(DRS):
 	string = getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asDRSString '" + ";".join(DRS.read().splitlines()) + "' .\n}"
 	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',string])
 	DRS.close()
+
+def addRule(rule):
+	string = getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asRuleString '" + rule + "' .\n}"
+	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',string])
+
+def addFact(fact):
+	string = getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asFactString '" + fact + "' .\n}"
+	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',string])
+
+def addNewFact(newFact):
+	string = getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asReasonerFactString '" + newFact + "' .\n}"
+	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',string])
+
+def addRulesinput(facts,rules,newFacts):
+	for fact in facts:
+		addFact(fact)
+	for rule in rules:
+		addRule(rule)
+	for newFact in newFacts:
+		addNewFact(newFact)

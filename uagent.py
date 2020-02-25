@@ -14,12 +14,12 @@ from ontology import *
 
 ACE = "./input/ACE_in2.txt"
 DRS = "./input/DRS.txt"
-facts,rules,newFacts = readACEFile(ACE,DRS)
+facts,rules,reasonerFacts = readACEFile(ACE,DRS)
 
 startServer()
 
 addACEinput(open(ACE,"r"))
 addDRSinput(open(DRS,"r"))
-#addRulesinput(facts,rules,newFacts)    #need to update ontology
+addRulesinput(facts,rules,reasonerFacts)
 
 # start think
