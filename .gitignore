@@ -1,4 +1,10 @@
-.gitignorebuild/
+*~
+*.log
+*.pyc
+.vscode
+*.egg-info
+*.DS_Store
+build/
 dist/
 __pycache__
 playground.py
