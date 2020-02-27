@@ -7,11 +7,11 @@ sys.path.insert(0,here+"/input")
 from ACE_to_DRS_and_Rules import *
 from ontology import *
 
-ACE = "./input/ACE_in2.txt"
-DRS = "./input/DRS.txt"
+ACE = "input/ACE_in2.txt"
+DRS = "input/DRS.txt"
 facts,rules,reasonerFacts = readACEFile(ACE,DRS)
 
-startServer(here)
+serverThread = startServer(here)
 
 addACEFileInput(open(ACE,"r"))
 addDRSFileInput(open(DRS,"r"))

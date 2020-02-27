@@ -155,7 +155,7 @@ def readACEFile(filename,drsName):
     tmp = "tmp_DRS.txt"
     drsFile = drsName
 
-    os.system('"./input/APE/ape.exe" -file {} -cdrspp > {}'.format(aceFile,tmp))
+    os.system('"input/APE/ape.exe" -file {} -cdrspp > {}'.format(aceFile,tmp))
     stripXML(drsFile,tmp)
     
     varlist = []
@@ -231,8 +231,8 @@ def readACEFile(filename,drsName):
     
     drsfile.close()
     
-    rulesfile = open("./input/Rules.txt","w")
-    datalogfile = open("./input/datalog.dl","w")
+    rulesfile = open("input/Rules.txt","w")
+    datalogfile = open("input/datalog.dl","w")
     
     rulesfile.write("Facts:\n")
     datalogfile.write("%facts\n")

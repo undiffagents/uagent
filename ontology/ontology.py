@@ -1,19 +1,28 @@
-import subprocess,time,json
+import subprocess,time,json,threading
 
+class OntologyServer(threading.Thread):
+	def __init__(self):
+		threading.Thread.__init__(self)
+
+	def run(self):
+		subprocess.call(['java', '-jar', 'ontology/fuseki-server.jar','--update'])
+		
 def queryOntologyForObject(query):
-	return set([ x['object']['value'] for x in json.loads(subprocess.run(['./ontology/s-query','--service','http://localhost:3030/uagent/query',query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+	return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query',query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 
 def addToOntology(inputs):
-	subprocess.call(['./ontology/s-update','--service=http://localhost:3030/uagent/update',inputs])
+	subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',inputs])
 
 def getPrefix():
 	return 'PREFIX :      <http://www.uagent.com/ontology#>\nPREFIX opla:  <http://ontologydesignpatterns.org/opla#>\nPREFIX owl:   <http://www.w3.org/2002/07/owl#>\nPREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n'
 
 def startServer(here):
 	print("Starting Fuseki server\n")
-	subprocess.call(['gnome-terminal','--','java', '-jar', './ontology/fuseki-server.jar','--update'])
+	server = OntologyServer()
+	server.start()
 	time.sleep(3)
-	addToOntology("LOAD <file:///"+here+"/ontology/uagent.owl>")
+	addToOntology("LOAD <file://"+here+"/ontology/uagent.owl>")
+	return server
 
 def addACEFileInput(ACEFile):
 	addToOntology(getPrefix()+'INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asACEString "' + " ".join(ACEFile.read().splitlines()) + '" .\n}')	
