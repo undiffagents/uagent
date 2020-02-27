@@ -1,4 +1,4 @@
-import re,os,subprocess,tempfile
+import re,os,subprocess
 from Dapylog import *
 
 def lowercase(s):
