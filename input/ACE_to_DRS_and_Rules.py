@@ -1,4 +1,4 @@
-import re,os,subprocess
+import re,os,subprocess,tempfile
 from Dapylog import *
 
 def lowercase(s):
@@ -131,7 +131,7 @@ def checkVars(atom,head,body):
         vrsBody = determineVars(body)
         vrsHead = determineVars(head)   
 
-def stripXML(new,tmp):
+def stripXML(new,tmpFile):
     newFile = open(new,"w")
     tmpFile = open(tmp,"r")
     started=False
@@ -154,8 +154,9 @@ def readACEFile(filename,drsName):
     aceFile = filename
     tmp = "tmp_DRS.txt"
     drsFile = drsName
+    
+    subprocess.call(['input/APE/ape.exe', '-file', aceFile,'-cdrspp'],stdout=open(tmp,"w"))
 
-    os.system('"input/APE/ape.exe" -file {} -cdrspp > {}'.format(aceFile,tmp))
     stripXML(drsFile,tmp)
     
     varlist = []
