@@ -1,0 +1,4 @@
+.gitignorebuild/
+dist/
+__pycache__
+playground.py
