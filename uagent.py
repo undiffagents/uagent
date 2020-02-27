@@ -11,7 +11,7 @@ ACE = "input/ACE_in2.txt"
 DRS = "input/DRS.txt"
 facts,rules,reasonerFacts = readACEFile(ACE,DRS)
 
-serverThread = startServer(here)
+ontologyThread = startServer(here)
 
 addACEFileInput(open(ACE,"r"))
 addDRSFileInput(open(DRS,"r"))
