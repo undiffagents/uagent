@@ -9,7 +9,7 @@ Master will be the 'release' branch -- representing bigger, stables changes acro
 
 ## Dependencies
 
-Versions listed work for CNK, on 2020/02/28\
+Versions listed work for CNK, on 2020/02/28
 
 - /input/APE/ must be setup on each machine
 	- Install SWI-Prolog - http://www.swi-prolog.org
@@ -28,7 +28,7 @@ Versions listed work for CNK, on 2020/02/28\
 	- Runs the non-undiff PVT agent. 
 
 - uagent.py
-	- Processes ACE input to populate the Ontology, then instantiates a local query server. See comments in script for manual query example.
+	- Processes ACE input to populate the Ontology, then instantiates a local query server. (Note: if run from terminal, said server runs until manually killed). See comments in script for manual query example.
 
 ## Modules
 	
