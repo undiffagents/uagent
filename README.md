@@ -30,8 +30,8 @@ Modules:
 		Purpose: Knowledge Gap Resolution
 		Primaries: Aaron, Daniel
 
-	inst_process
-		Purpose: Instruction Understanding. Processes input in the form of Attempto Controlled English (ACE), in order to populate the Ontology
+	input
+		Purpose: Instruction Understanding. Processes input in the form of Attempto Controlled English (ACE), in order to populate the Ontology. Checks instructions with simple reasoner to see if they make sense.
 		Primaries: Aaron, Stevens
 
 	ontology (+DaSe API)
