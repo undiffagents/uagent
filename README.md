@@ -7,17 +7,17 @@ Develop is the main branch from which we'll be working, where all the features/m
 
 Master will be the 'release' branch -- representing bigger, stables changes across develop
 
-Running Agents:
+Running Agents (from the /agents/ folder):
 
-	run/pvt_ua1.py
+	agents/pvt_ua1.py
 		Execute: python3 run/pvt_ua1.py (that is, run it from the base uagent directory).
 		The main runfile, acting as the 'master' process. It instantiates the think uagent and runs it for the PVT.
 
-	run/pvt_non_ua.py
+	agents/pvt_non_ua.py
 		Runs the non-undiff PVT agent. (Again, execute from base uagent directory).
 
 Modules:
-	
+
 	ares
 		Purpose: Integration and training of UAgent in ARES framework
 		Primaries: Colin, Daylond, Benji
@@ -49,6 +49,14 @@ Modules:
 	ua
 		Purpose: Code specifically for the UAgent. Currently just ua.py, which has the UndifferentiatedAgent class (for use with Think).
 		Primaries: Dario (+Colin)
+
+Other Directories:
+
+	run
+		Directory used as the local 'server' for the in input process. (The agent runfiles are now in /agents/).
+
+	webapp
+		Used in input processing.
 
 
 
