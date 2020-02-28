@@ -131,9 +131,9 @@ def checkVars(atom,head,body):
         vrsBody = determineVars(body)
         vrsHead = determineVars(head)   
 
-def stripXML(new,tmpFile):
+def stripXML(new,tmp):
     newFile = open(new,"w")
-    tmpFile = open(tmp,"r")
+    tmpFile = open(tmp,'r')
     started=False
     for line in tmpFile:
         if "</drspp>" in line:
