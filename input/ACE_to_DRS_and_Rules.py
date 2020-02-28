@@ -133,7 +133,6 @@ def checkVars(atom,head,body):
 
 def stripXML(new,tmpFile):
     newFile = open(new,"w")
-    tmpFile = open(tmp,"r")
     started=False
     for line in tmpFile:
         if "</drspp>" in line:
@@ -145,8 +144,7 @@ def stripXML(new,tmpFile):
             line=line.replace("&gt;",">")
         if started: newFile.write(line)
     newFile.close()
-    tmpFile.close()
-    os.remove(tmp)
+    os.remove(tmpFile)
 
 def readACEFile(filename,drsName):
     print("Reading ACE file to make DRS and Rules")    
