@@ -15,6 +15,6 @@ Rules:
 target(Q) => letter(Q)
 letter(R) => hasProperty(R,color)
 letter(R) => hasProperty(R,unique)
-subject(C),task(A),isPartOf(C,A) => hasProperty(A,active)
-screen(K),letter(O),task(A),hasProperty(A,active) => appearsOn(O,K)
+task(A),isPartOf(C,A),subject(C) => hasProperty(A,active)
+hasProperty(A,active),task(A),screen(K),letter(O) => appearsOn(O,K)
 letter(R),screen(K),appearsOn(R,K),subject(C),key(H1) => press(C,H1)
