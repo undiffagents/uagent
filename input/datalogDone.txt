@@ -1,8 +1,30 @@
 Database Facts:
+task(psychomotorvigilance)
+key(present)
+key(absent)
+target(goal)
+letter(distractor)
+subject(subject)
+screen(screen)
+isPartOf(subject,psychomotorvigilance)
+isPartOf(present,psychomotorvigilance)
+isPartOf(absent,psychomotorvigilance)
+isPartOf(screen,psychomotorvigilance)
 
 Database Rules:
+target(Q) -> letter(Q)
+letter(R) -> hasProperty(R,color)
+letter(R) -> hasProperty(R,unique)
+subject(C) ^ isPartOf(C,A) ^ task(A) -> hasProperty(A,active)
+screen(K) ^ letter(O) ^ task(A) ^ hasProperty(A,active) -> appearsOn(O,K)
+letter(R) ^ screen(K) ^ appearsOn(R,K) ^ subject(C) ^ key(H1) -> press(C,H1)
 
 New Facts:
-
-No new facts
-
+letter(goal)
+hasProperty(distractor,color)
+hasProperty(goal,color)
+hasProperty(distractor,unique)
+hasProperty(goal,unique)
+hasProperty(psychomotorvigilance,active)
+appearsOn(distractor,screen)
+appearsOn(goal,screen)
