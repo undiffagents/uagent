@@ -34,6 +34,7 @@ class Program:
     
         self.facts = []
         self.rules = []
+        self.groundRules = []
         self.factsGiven = 0
         self.rulesGiven = 0
         
@@ -100,12 +101,17 @@ class Program:
         display += "\nDatabase Rules:\n"
         for i in range(0,self.rulesGiven):
             if self.rules[i][2]: display += self.ruleToStr(self.rules[i])
-        display += "\nNew Facts:\n"
+        
         if len(self.facts) > self.factsGiven:
+            display += "\nNew Facts:\n"
             for i in range(self.factsGiven,len(self.facts)):
                 display += self.predToStr(self.facts[i]) + "\n"
         else:
-            display+="\nNo new facts\n\n"  
+            display+="\nNo new facts\n"  
+        if len(self.groundRules) > 0:
+            display += "\nNew Ground Rules:\n{}".format([rule for rule in self.groundRules])
+        else:
+            display+="\nNo ground rules\n\n" 
         return display
     
     def getFacts(self):
@@ -120,6 +126,9 @@ class Program:
             for i in range(self.factsGiven,len(self.facts)):
                 nf.append(self.predToStr(self.facts[i]))
         return nf
+    
+    def getGroundRules(self):
+        return self.groundRules
     
     def predToStr(self,pred):
         string = str(pred[0]) + "("
@@ -136,8 +145,8 @@ class Program:
         for term in rule[1]:
             string += self.predToStr(rule[1][num])
             num+=1            
-            string += " ^ " if num < len(rule[1]) else " -> "
-        return string + self.predToStr(rule[0]) + "\n"
+            string += "," if num < len(rule[1]) else " => "
+        return string + self.predToStr(rule[0])
     
     def copyRule(self,rule):
         active = True if rule[2] else False
@@ -281,6 +290,9 @@ class Reasoner:
 
     def getFacts(self):
         return self.program.getFacts()    
+    
+    def getGroundRules(self):
+        return self.program.getGroundRules()    
 
     def getNewFacts(self):
         return self.program.getNewFacts()
@@ -288,7 +300,9 @@ class Reasoner:
     def addHead(self,rule,var):    
         newFact = self.groundHead(rule[0],var)
         if self.isFact(newFact): return True
-        if self.show: print("Solved Rule:\t"+self.program.ruleToStr([newFact,list(map(lambda atom: self.switchTerms(atom,var),rule[1])),rule[2]])+"Added Fact:\t"+self.program.predToStr(newFact)+"\n")
+        groundRule = self.program.ruleToStr([newFact,list(map(lambda atom: self.switchTerms(atom,var),rule[1])),rule[2]])
+        self.program.groundRules.append(groundRule)        
+        if self.show:print("Solved Rule:\t"+groundRule+"Added Fact:\t"+self.program.predToStr(newFact)+"\n")
         self.program.facts.append(newFact)
         return True
     
@@ -315,6 +329,9 @@ class Dapylog:
     
     def getNewFacts(self):
         return self.reasoner.getNewFacts()    
+    
+    def getGroundRules(self):
+        return self.reasoner.getGroundRules()        
     
     def showMenu(self):
         self.menuSwitch(self.intSafe(input("\nChoose one:\n\n1\tDisplay Current Database\n2\tRun Reasoner on Database\n3\tAdd Fact To Database\n4\tAdd Rule To Database\n5\tDelete Fact From Database\n6\tDelete Rule From Database\n7\tReset Database\n8\tLoad New File\n9\tSave Program to File\n10\tExit Program\n:")))
@@ -349,6 +366,7 @@ class Dapylog:
         original = self.reasoner.program.factsGiven
         while len(facts) > original: del facts[len(facts)-1]
         self.analyzed = False
+        self.reasoner.groundRules = []
         for fact in self.reasoner.program.facts: fact[3] = True
         for rule in self.reasoner.program.rules: rule[2] = True
         print("\nDatabase Reset To Initial State\n")

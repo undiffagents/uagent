@@ -1,2 +1,2 @@
 #from .ontology import OntologyDatabase
-from .ontology import OntologyServer
+from .ontology import Ontology
