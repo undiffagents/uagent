@@ -12,7 +12,13 @@ isPartOf(absent,psychomotorvigilance)
 isPartOf(screen,psychomotorvigilance)
 
 Database Rules:
-target(Q) => letter(Q)letter(R) => hasProperty(R,color)letter(R) => hasProperty(R,unique)task(A),subject(C),isPartOf(C,A) => hasProperty(A,active)task(A),letter(O),screen(K),hasProperty(A,active) => appearsOn(O,K)letter(R),screen(K),appearsOn(R,K),subject(C),key(H1) => press(C,H1)
+target(Q) => letter(Q)
+letter(R) => hasProperty(R,color)
+letter(R) => hasProperty(R,unique)
+isPartOf(C,A),subject(C),task(A) => hasProperty(A,active)
+screen(K),hasProperty(A,active),letter(O),task(A) => appearsOn(O,K)
+letter(R),screen(K),appearsOn(R,K),subject(C),key(1) => press(1)
+
 New Facts:
 letter(goal)
 hasProperty(distractor,color)
@@ -22,6 +28,17 @@ hasProperty(goal,unique)
 hasProperty(psychomotorvigilance,active)
 appearsOn(distractor,screen)
 appearsOn(goal,screen)
+press(present)
+press(absent)
 
 New Ground Rules:
-['target(goal) => letter(goal)', 'letter(distractor) => hasProperty(distractor,color)', 'letter(goal) => hasProperty(goal,color)', 'letter(distractor) => hasProperty(distractor,unique)', 'letter(goal) => hasProperty(goal,unique)', 'task(psychomotorvigilance),subject(subject),isPartOf(subject,psychomotorvigilance) => hasProperty(psychomotorvigilance,active)', 'task(psychomotorvigilance),letter(distractor),screen(screen),hasProperty(psychomotorvigilance,active) => appearsOn(distractor,screen)', 'task(psychomotorvigilance),letter(goal),screen(screen),hasProperty(psychomotorvigilance,active) => appearsOn(goal,screen)']
+target(goal) => letter(goal)
+letter(distractor) => hasProperty(distractor,color)
+letter(goal) => hasProperty(goal,color)
+letter(distractor) => hasProperty(distractor,unique)
+letter(goal) => hasProperty(goal,unique)
+isPartOf(subject,psychomotorvigilance),subject(subject),task(psychomotorvigilance) => hasProperty(psychomotorvigilance,active)
+screen(screen),hasProperty(psychomotorvigilance,active),letter(distractor),task(psychomotorvigilance) => appearsOn(distractor,screen)
+screen(screen),hasProperty(psychomotorvigilance,active),letter(goal),task(psychomotorvigilance) => appearsOn(goal,screen)
+letter(distractor),screen(screen),appearsOn(distractor,screen),subject(subject),key(present) => press(present)
+letter(distractor),screen(screen),appearsOn(distractor,screen),subject(subject),key(absent) => press(absent)

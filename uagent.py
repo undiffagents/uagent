@@ -9,6 +9,11 @@ ontology = Ontology(os.path.dirname(os.path.abspath(__file__)))
 
 facts,rules,groundRules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),open(ACE,"r"),open(DRS,"r"))
 
+open("facts.txt","w").write("\n".join([str(fact) for fact in facts]))
+open("rules.txt","w").write("\n".join([str(rule) for rule in rules]))
+open("groundRules.txt","w").write("\n".join([str(fact) for fact in groundRules]))
+open("reasonerFacts.txt","w").write("\n".join([str(fact) for fact in reasonerFacts]))
+
 '''
 QUERIES
 

@@ -1,0 +1,6 @@
+letter(R) => hasProperty(R,unique)
+target(Q) => letter(Q)
+screen(K),hasProperty(A,active),letter(O),task(A) => appearsOn(O,K)
+letter(R) => hasProperty(R,color)
+isPartOf(C,A),subject(C),task(A) => hasProperty(A,active)
+letter(R),screen(K),appearsOn(R,K),subject(C),key(H1) => press(C,H1)

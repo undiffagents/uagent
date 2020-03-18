@@ -26,7 +26,7 @@ Datalog comments don't work either.
 Maybe put them in the python file?
 Author: Aaron Eberhart
 '''
-import os,sys
+import os,sys,re
 
 class Program:
 
@@ -73,10 +73,14 @@ class Program:
         data[1] = (data[1].replace(")","")).split(",")
         #data[1] = data[1]
         if data[1][0] == '': data[1] = []
+        
         for term in data[1]:
+            if re.match("[A-Z].\d*",term):
+                ####### FIXME #######
+                term = term[1:]
+                data[1] = term
             if len(term) == 1:
                 ground = False
-                break
         data.append(ground)
         data.append(True)
         return data
@@ -100,7 +104,7 @@ class Program:
             if self.facts[i][3]: display += self.predToStr(self.facts[i]) + "\n"
         display += "\nDatabase Rules:\n"
         for i in range(0,self.rulesGiven):
-            if self.rules[i][2]: display += self.ruleToStr(self.rules[i])
+            if self.rules[i][2]: display += self.ruleToStr(self.rules[i]) + "\n"
         
         if len(self.facts) > self.factsGiven:
             display += "\nNew Facts:\n"
@@ -109,7 +113,7 @@ class Program:
         else:
             display+="\nNo new facts\n"  
         if len(self.groundRules) > 0:
-            display += "\nNew Ground Rules:\n{}".format([rule for rule in self.groundRules])
+            display += "\nNew Ground Rules:\n{}".format("\n".join([rule for rule in self.groundRules]))
         else:
             display+="\nNo ground rules\n\n" 
         return display
