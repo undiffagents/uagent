@@ -16,59 +16,67 @@ class Ontology:
 		server = FusekiServer()
 		server.start()
 		time.sleep(3)
-		self.addToOntology("LOAD <file://"+here+"/ontology/uagent.owl>")
+		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+here+"/ontology/uagent.owl>"])
 		return server
 	
 	def queryOntologyForObject(self,query):
-		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query',query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query',self.getPrefix()+"SELECT ?object WHERE"+query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 	
 	def addToOntology(self,inputs):
-		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',inputs])
+		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',self.getPrefix()+"INSERT DATA "+inputs])
 	
 	def getPrefix(self):
 		return 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla:  <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n'
 	
 	def addACEFileInput(self,ACEFile):
-		self.addToOntology(self.getPrefix()+'INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asACEString "' + "\\n".join(ACEFile.read().splitlines()) + '" .\n}')	
+		self.addToOntology('{ :initialInstruction rdf:type :Instruction . :initialInstruction :asACEString "' + "\\n".join(ACEFile.read().splitlines()) + '" .}')	
 		ACEFile.close()
 	
 	def addDRSFileInput(self,DRSFile):
-		self.addToOntology(self.getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asDRSString '" + "\\n".join(DRSFile.read().splitlines()) + "' .\n}")
+		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asDRSString '" + "\\n".join(DRSFile.read().splitlines()) + "' . }")
 		DRSFile.close()
 	
 	def addInitialRule(self,rule):
-		self.addToOntology(self.getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asRuleString '" + rule + "' .\n}")
+		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asRuleString '" + rule + "' . }")
+		
+	def addInitialGroundRule(self,rule):
+		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asGroundRuleString '" + rule + "' . }")	
 	
 	def addInitialFact(self,fact):
-		self.addToOntology(self.getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asFactString '" + fact + "' .\n}")
+		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asFactString '" + fact + "' . }")
 	
 	def addInitialReasonerFact(self,newFact):
-		self.addToOntology(self.getPrefix()+"INSERT DATA\n{\n:initialInstruction rdf:type :Instruction .\n:initialInstruction :asReasonerFactString '" + newFact + "' .\n}")
+		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asReasonerFactString '" + newFact + "' . }")
 		
 	def addInputsToOntology(self,aceFileOutput,aceFileIn,drsFileIn):
-		facts,rules,newFacts = aceFileOutput
+		facts,rules,groundRules,newFacts = aceFileOutput
 		for fact in facts:
 			self.addInitialFact(fact)
 		for rule in rules:
 			self.addInitialRule(rule)
+		for rule in groundRules:
+			self.addInitialGroundRule(rule)
 		for newFact in newFacts:
 			self.addInitialReasonerFact(newFact)
 		self.addACEFileInput(aceFileIn)
 		self.addDRSFileInput(drsFileIn)
-		return facts,rules,newFacts
+		return facts,rules,groundRules,newFacts
 	
 	def getInitialRules(self):
-		return self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asRuleString ?object . }")
+		return self.queryOntologyForObject("{ :initialInstruction :asRuleString ?object . }")
+	
+	def getInitialGroundRules(self):
+		return self.queryOntologyForObject("{ :initialInstruction :asGroundRuleString ?object . }")	
 		
 	def getInitialFacts(self):
-		return self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asFactString ?object . }")
+		return self.queryOntologyForObject("{ :initialInstruction :asFactString ?object . }")
 	
 	def getInitialReasonerFacts(self):
-		return self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }")
+		return self.queryOntologyForObject("{ :initialInstruction :asReasonerFactString ?object . }")
   
 	def getDRS(self):
-		return "".join(self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asDRSString ?object . }"))
+		return "".join(self.queryOntologyForObject("{ :initialInstruction :asDRSString ?object . }"))
 	
 	def getACE(self):
-		return "".join(self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asACEString ?object . }"))	
+		return "".join(self.queryOntologyForObject("{ :initialInstruction :asACEString ?object . }"))	
 

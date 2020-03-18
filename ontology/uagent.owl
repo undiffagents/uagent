@@ -215,6 +215,15 @@
     
 
 
+    <!-- http://www.uagent.com/ontology#asGroundRuleString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asGroundRuleString">
+        <rdfs:subPropertyOf rdf:resource="http://www.uagent.com/ontology#asRuleString"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.uagent.com/ontology#asReasonerFactString -->
 
     <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asReasonerFactString">
