@@ -30,7 +30,7 @@ class UndifferentiatedAgent(Agent):
 
         # self.instruction = Instruction(
         #     self, self.memory, self.audition, self.language)
-        # self.instruction.add_executor(self.execute)
+        # self.instruction.add_executor(self.execute)   
 
     # def _interpret_predicate(self, text, isa='fact', last=None):
     #     chunk = None

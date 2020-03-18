@@ -65,9 +65,10 @@ class Ontology:
 	
 	def getInitialReasonerFacts(self):
 		return self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asReasonerFactString ?object . }")
-
+  
 	def getDRS(self):
 		return "".join(self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asDRSString ?object . }"))
 	
 	def getACE(self):
 		return "".join(self.queryOntologyForObject(self.getPrefix()+"SELECT ?object WHERE { :initialInstruction :asACEString ?object . }"))	
+
