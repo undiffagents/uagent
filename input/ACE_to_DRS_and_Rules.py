@@ -1,5 +1,5 @@
 import re,os,subprocess
-from input.Dapylog import *
+from input.Dapylog import Dapylog
 
 def lowercase(s):
     return s[:1].lower() + s[1:] if s else ''
