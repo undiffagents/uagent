@@ -16,5 +16,10 @@ target(Q)->letter(Q)
 letter(R)->hasProperty(R,color)
 letter(R)->hasProperty(R,unique)
 task(A)^isPartOf(C,A)^subject(C)->hasProperty(A,active)
+<<<<<<< HEAD
 screen(K)^task(A)^letter(O)^hasProperty(A,active)->appearsOn(O,K)
 letter(R)^screen(K)^appearsOn(R,K)^subject(C)^key(H1)->press(C,H1)
+=======
+task(A)^screen(K)^hasProperty(A,active)^letter(O)->appearsOn(O,K)
+letter(R)^screen(K)^appearsOn(R,K)^subject(C)^key(H1)->press(C,H1)
+>>>>>>> 512b01aac7bb482799431a9a0c8453b41781e978
