@@ -1,28 +1,23 @@
-import os,sys
-
-here = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0,here+"/ontology")
-sys.path.insert(0,here+"/input")
-
-from ACE_to_DRS_and_Rules import *
-from ontology import *
+import os
+from input.ACE_to_DRS_and_Rules import readACEFile
+from ontology.ontology import Ontology
 
 ACE = "input/ACE_in2.txt"
 DRS = "input/DRS.txt"
-facts,rules,reasonerFacts = readACEFile(ACE,DRS)
 
-ontologyThread = startServer(here)
+ontology = Ontology(os.path.dirname(os.path.abspath(__file__)))
 
-addACEFileInput(open(ACE,"r"))
-addDRSFileInput(open(DRS,"r"))
-addRulesInput(facts,rules,reasonerFacts)
+facts,rules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),open(ACE,"r"),open(DRS,"r"))
 
 '''
-AVAILABLE QUERIES
-getInitialFacts() - returns a set() with all the instruction facts
-getInitialRules() - returns a set() with all the instruction rules
-getInitialReasonerFacts() - returnss a set() with all the reasoner facts learned from the facts and rules
-# NOTE # These three are returned by the readACEFile() function and the data is already available
+QUERIES
+
+ontology.getACE() - returns the string read from the ACE file
+ontology.getDRS() - returns the string read from the DRS file
+
+ontology.getInitialFacts() - returns a set() with all the instruction facts as strings
+ontology.getInitialRules() - returns a set() with all the instruction rules as strings
+ontology.getInitialReasonerFacts() - returns a set() with all the reasoner facts learned from the facts and rules as strings
 '''
 
 # start think
