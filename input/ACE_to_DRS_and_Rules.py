@@ -16,7 +16,7 @@ def lookupObject(letter,objs):
         if pair[0] == letter: return pair[1].lower()
     return False
 
-def falseNegCheck(name):
+def falseNegCheck(name,objs):
     for pair in objs:
         if pair[1] == name: return pair[1].lower()
     return False    
@@ -59,8 +59,7 @@ def parsePropertyLine(line):
     return(line[0],line[1])
 
 def isVar(st):
-    if len(st) == 1: return False
-    return len(st) > 2
+    return not st.isupper()
 
 def parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround):
     line=(line.split('(',1)[1]).split(',')[1:]
@@ -70,12 +69,12 @@ def parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,conseq
         b = line[1]
         a = lookupObject(line[2],objs)
         if not a:
-            a = falseNegCheck(line[1])
-            b = lookupProperty(line[2])
+            a = falseNegCheck(line[1],objs)
+            b = lookupProperty(line[2],props)
             return 'hasProperty({},{})'.format(a,b)
         else:
             subObject(line[2],lowercase(b),objs,unnamedFacts,namedFacts)
-            return '{}({})'.format(a,b)
+            return '{}({})'.format(a.lower(),b)
     elif line[0] == 'be': 
         b = lookupObject(line[2],objs)
         a = lookupObject(line[1],objs)   
@@ -129,7 +128,7 @@ def checkVars(atom,head,body):
                 body.append(atom)
         
         vrsBody = determineVars(body)
-        vrsHead = determineVars(head)   
+        vrsHead = determineVars(head)
 
 def stripXML(new,tmp):
     newFile = open(new,"w")
@@ -226,6 +225,8 @@ def readACEFile(filename,drsName):
                 head.append(a)
     
     if len(body) > 0 and len(head) > 0: 
+        for a in body:
+            if a in head: head.remove(a)
         rules.append('{} => {}'.format(','.join(body),','.join(head)))
         for atom in head:
             datalog.append('{}->{}'.format('^'.join(body),atom))

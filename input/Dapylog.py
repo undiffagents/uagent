@@ -26,7 +26,7 @@ Datalog comments don't work either.
 Maybe put them in the python file?
 Author: Aaron Eberhart
 '''
-import os,sys
+import os,sys,re
 
 class Program:
 
@@ -73,8 +73,9 @@ class Program:
         data[1] = (data[1].replace(")","")).split(",")
         #data[1] = data[1]
         if data[1][0] == '': data[1] = []
+        
         for term in data[1]:
-            if len(term) == 1:
+            if term.isupper():
                 ground = False
                 break
         data.append(ground)
@@ -100,7 +101,7 @@ class Program:
             if self.facts[i][3]: display += self.predToStr(self.facts[i]) + "\n"
         display += "\nDatabase Rules:\n"
         for i in range(0,self.rulesGiven):
-            if self.rules[i][2]: display += self.ruleToStr(self.rules[i])
+            if self.rules[i][2]: display += self.ruleToStr(self.rules[i]) + "\n"
         
         if len(self.facts) > self.factsGiven:
             display += "\nNew Facts:\n"
@@ -109,7 +110,7 @@ class Program:
         else:
             display+="\nNo new facts\n"  
         if len(self.groundRules) > 0:
-            display += "\nNew Ground Rules:\n{}".format([rule for rule in self.groundRules])
+            display += "\nNew Ground Rules:\n{}".format("\n".join([rule for rule in self.groundRules]))
         else:
             display+="\nNo ground rules\n\n" 
         return display
@@ -168,8 +169,7 @@ class Program:
         return [string,terms,ground,active]   
                
     def termIsGround(self,term):
-        if len(term) > 1: return True
-        return False
+        return not term.isupper()
             
 class Reasoner:
 
@@ -208,9 +208,12 @@ class Reasoner:
     def substitute(self,rule,fact,dic,k):
         newBody = self.program.copyBody(rule[1]) 
         for i in range(0,len(newBody[k][1])):
+            if len(newBody[k][1][i]) > 1:
+                pass            
             if newBody[k][1][i] in dic.keys() and dic[newBody[k][1][i]] == fact[1][i]:
                 continue
-            elif newBody[k][1][i] not in dic.keys() and len(newBody[k][1][i]) == 1:
+            elif newBody[k][1][i] not in dic.keys() and newBody[k][1][i].isupper():
+                
                 dic[newBody[k][1][i]] = fact[1][i]
             newBody[k][2] = True
         active = True if rule[2] else False
@@ -234,7 +237,7 @@ class Reasoner:
       
     def isGround(self,terms):
         for item in terms:
-            if len(item) == 1: 
+            if item.isupper(): 
                 return False
         return True
     
@@ -259,7 +262,7 @@ class Reasoner:
     def partialMatch(self,atom,fact):
         if not fact[3] or atom[0]!=fact[0]: return False
         for i in range(0,min(len(atom[1]),len(fact[1]))):
-            if len(atom[1][i]) != 1 and atom[1][i] != fact[1][i]:
+            if not atom[1][i].isupper() and atom[1][i] != fact[1][i]:
                 return False
         return True
     
