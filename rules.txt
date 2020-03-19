@@ -1,7 +1,0 @@
-letter(W) => hasProperty(W,unique)
-letter(W),screen(M),task(A),hasProperty(A,active) => appearsOn(W,M)
-button(C1),hasProperty(C1,negative),letter(W),screen(M),appearsOn(W,M),letter(W),hasProperty(W,incorrect),subject(K) => press(K,C1)
-hasProperty(W,correct),subject(K),appearsOn(W,M),button(C1),screen(M),letter(W),hasProperty(C1,positive) => press(K,C1)
-isPartOf(K,A),subject(K),task(A) => hasProperty(A,active)
-button(C1),task(A) => isPartOf(C1,A)
-letter(W) => hasProperty(W,color)
