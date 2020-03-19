@@ -75,12 +75,9 @@ class Program:
         if data[1][0] == '': data[1] = []
         
         for term in data[1]:
-            if re.match("[A-Z].\d*",term):
-                ####### FIXME #######
-                term = term[1:]
-                data[1] = term
-            if len(term) == 1:
+            if term.isupper():
                 ground = False
+                break
         data.append(ground)
         data.append(True)
         return data
@@ -172,8 +169,7 @@ class Program:
         return [string,terms,ground,active]   
                
     def termIsGround(self,term):
-        if len(term) > 1: return True
-        return False
+        return not term.isupper()
             
 class Reasoner:
 
@@ -212,9 +208,12 @@ class Reasoner:
     def substitute(self,rule,fact,dic,k):
         newBody = self.program.copyBody(rule[1]) 
         for i in range(0,len(newBody[k][1])):
+            if len(newBody[k][1][i]) > 1:
+                pass            
             if newBody[k][1][i] in dic.keys() and dic[newBody[k][1][i]] == fact[1][i]:
                 continue
-            elif newBody[k][1][i] not in dic.keys() and len(newBody[k][1][i]) == 1:
+            elif newBody[k][1][i] not in dic.keys() and newBody[k][1][i].isupper():
+                
                 dic[newBody[k][1][i]] = fact[1][i]
             newBody[k][2] = True
         active = True if rule[2] else False
@@ -238,7 +237,7 @@ class Reasoner:
       
     def isGround(self,terms):
         for item in terms:
-            if len(item) == 1: 
+            if item.isupper(): 
                 return False
         return True
     
@@ -263,7 +262,7 @@ class Reasoner:
     def partialMatch(self,atom,fact):
         if not fact[3] or atom[0]!=fact[0]: return False
         for i in range(0,min(len(atom[1]),len(fact[1]))):
-            if len(atom[1][i]) != 1 and atom[1][i] != fact[1][i]:
+            if not atom[1][i].isupper() and atom[1][i] != fact[1][i]:
                 return False
         return True
     
