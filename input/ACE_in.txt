@@ -1,9 +1,0 @@
-p:psychomotorvigilance is a task.
-There is a subject that v:isPartOf the task.
-p:acknowledge is a button that v:isPartOf the task.
-There is a box that v:isPartOf the task.
-There is at least one target that v:isPartOf the task.
-Every target is a letter.
-If the subject v:isPartOf the task then the task is active.
-If the target v:appearsIn the box then the subject clicks the button and the subject remembers the target.
-If the task is active then the target v:appearsIn the box.
