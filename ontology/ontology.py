@@ -23,8 +23,12 @@ class Ontology:
 		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+path+">"])
 		return self
 	
-	def queryOntologyForObject(self,query):
-		return set([ x['object']['value'] for x in json.loads(subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+	def queryOntologyForObject(self, query):
+		results = subprocess.run(['lib/fuseki/s-query', '--service', 'http://localhost:3030/uagent/query',
+								  '{} SELECT ?object WHERE {{ {} }}'.format(self.prefix, query)],
+                                  stdout=subprocess.PIPE).stdout.decode('utf-8')
+		bindings = json.loads(str(results))['results']['bindings']
+		return set([x['object']['value'] for x in bindings])
 	
 	def addToOntology(self,inputs):
 		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update','{} INSERT DATA  {{ {} }}'.format(self.prefix,inputs)])

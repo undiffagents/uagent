@@ -8,8 +8,9 @@ ontology = Ontology()
 
 facts,rules,groundRules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),ACE,DRS)
 
-for rule in ontology.getInitialRules():
+for rule in ontology.getInitialGroundRules():
     print(rule)
+
 
 '''
 QUERIES
