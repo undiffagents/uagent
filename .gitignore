@@ -4,6 +4,7 @@
 .vscode
 *.egg-info
 *.DS_Store
+*.exe
 build/
 dist/
 __pycache__
