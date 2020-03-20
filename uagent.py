@@ -1,11 +1,10 @@
-import os
 from input.ACE_to_DRS_and_Rules import readACEFile
 from ontology.ontology import Ontology
 
 ACE = "input/ACE.txt"
 DRS = "input/DRS.txt"
 
-ontology = Ontology(os.path.dirname(os.path.abspath(__file__)))
+ontology = Ontology()
 
 facts,rules,groundRules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),ACE,DRS)
 

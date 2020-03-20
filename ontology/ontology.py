@@ -1,12 +1,8 @@
-import subprocess,time,json,threading
+import json
+import os
 import socket
+import subprocess
 
-# class FusekiServer(threading.Thread):
-# 	def __init__(self):
-# 		threading.Thread.__init__(self)
-
-# 	def run(self):
-# 		subprocess.call(['java', '-jar', 'ontology/fuseki-server.jar','--update'])
 
 class Ontology:
 	
@@ -14,24 +10,18 @@ class Ontology:
 	initialInstruction = ':initialInstruction'
 	initialInstructionType = '{} rdf:type :Instruction .'.format(initialInstruction)
 
-	def __init__(self,here):
-		self.ontology = self.startServer(here)
+	def __init__(self, filename='uagent.owl'):
+		self._load(filename)
 
-	def is_server_connected(self):
-		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-			return s.connect_ex(('localhost', 3030)) == 0
-
-	def startServer(self,here):
-		# print("Starting ontology server...")
-		# server = FusekiServer()
-		# server.start()
-		# time.sleep(3)
+	def _load(self, filename):
 		print('Waiting for ontology server...')
-		while not self.is_server_connected():
-			pass
+		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+			while s.connect_ex(('localhost', 3030)) > 0:
+				pass
 		print('Loading ontology...')
-		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+here+"/ontology/uagent.owl>"])
-		return None # server
+		path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+path+">"])
+		return self
 	
 	def queryOntologyForObject(self,query):
 		return set([ x['object']['value'] for x in json.loads(subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
@@ -89,4 +79,3 @@ class Ontology:
 	
 	def getACE(self):
 		return "".join(self.queryOntologyForObject(":initialInstruction :asACEString ?object ."))	
-
