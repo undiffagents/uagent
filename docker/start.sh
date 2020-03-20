@@ -4,10 +4,10 @@ BASE=$PWD
 
 echo "Base directory: $BASE"
 
-echo "Stopping servers???"
+# echo "Stopping servers..."
 # pkill -f python3
 
-echo "Starting servers???"
+# echo "Starting servers..."
 # can start various servers here
 
 echo "Starting run..."
