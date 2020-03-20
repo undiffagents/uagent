@@ -6,6 +6,6 @@ echo "Building container..."
 docker build -t uagent .
 
 echo "Running container..."
-docker run -it -p 3030:3030 uagent
+docker run -it uagent
 
 eval $(docker-machine env -u)
