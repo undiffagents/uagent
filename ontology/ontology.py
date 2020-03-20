@@ -1,12 +1,13 @@
 import subprocess,time,json,threading
+import socket
 
-class FusekiServer(threading.Thread):
-	def __init__(self):
-		threading.Thread.__init__(self)
+# class FusekiServer(threading.Thread):
+# 	def __init__(self):
+# 		threading.Thread.__init__(self)
 
-	def run(self):
-		subprocess.call(['java', '-jar', 'ontology/fuseki-server.jar','--update'])
-		
+# 	def run(self):
+# 		subprocess.call(['java', '-jar', 'ontology/fuseki-server.jar','--update'])
+
 class Ontology:
 	
 	prefix = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
@@ -15,14 +16,22 @@ class Ontology:
 
 	def __init__(self,here):
 		self.ontology = self.startServer(here)
-		
+
+	def is_server_connected(self):
+		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+			return s.connect_ex(('localhost', 3030)) == 0
+
 	def startServer(self,here):
-		print("Starting Ontology server\n")
-		server = FusekiServer()
-		server.start()
-		time.sleep(3)
+		# print("Starting ontology server...")
+		# server = FusekiServer()
+		# server.start()
+		# time.sleep(3)
+		print('Waiting for ontology server...')
+		while not self.is_server_connected():
+			pass
+		print('Loading ontology...')
 		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+here+"/ontology/uagent.owl>"])
-		return server
+		return None # server
 	
 	def queryOntologyForObject(self,query):
 		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])

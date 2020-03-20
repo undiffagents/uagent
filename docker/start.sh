@@ -1,14 +1,7 @@
 #!/bin/bash
 
-BASE=$PWD
+echo "Starting ontology server..."
+java -jar ontology/fuseki-server.jar --update &
 
-echo "Base directory: $BASE"
-
-# echo "Stopping servers..."
-# pkill -f python3
-
-# echo "Starting servers..."
-# can start various servers here
-
-echo "Starting run..."
+echo "Starting agent..."
 python3 uagent.py
