@@ -8,6 +8,11 @@ class FusekiServer(threading.Thread):
 		subprocess.call(['java', '-jar', 'ontology/fuseki-server.jar','--update'])
 		
 class Ontology:
+	
+	prefix = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
+	initialInstruction = ':initialInstruction'
+	initialInstructionType = '{} rdf:type :Instruction .'.format(initialInstruction)
+
 	def __init__(self,here):
 		self.ontology = self.startServer(here)
 		
@@ -20,35 +25,31 @@ class Ontology:
 		return server
 	
 	def queryOntologyForObject(self,query):
-		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query',self.getPrefix()+"SELECT ?object WHERE"+query], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 	
 	def addToOntology(self,inputs):
-		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',self.getPrefix()+"INSERT DATA "+inputs])
+		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update','{} INSERT DATA  {{ {} }}'.format(self.prefix,inputs)])
 	
-	def getPrefix(self):
-		return 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla:  <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n'
+	def addACEFileInput(self,ACE):
+		self.addToOntology('{} {} :asACEString "{}" .'.format(self.initialInstructionType,self.initialInstruction,"\\n".join(open(ACE,"r").read().splitlines())))
 	
-	def addACEFileInput(self,ACEFile):
-		self.addToOntology('{ :initialInstruction rdf:type :Instruction . :initialInstruction :asACEString "' + "\\n".join(ACEFile.read().splitlines()) + '" .}')	
-		ACEFile.close()
-	
-	def addDRSFileInput(self,DRSFile):
-		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asDRSString '" + "\\n".join(DRSFile.read().splitlines()) + "' . }")
-		DRSFile.close()
+	def addDRSFileInput(self,DRS):
+		self.addToOntology('{} {} :asDRSString "{}" .'.format(self.initialInstructionType,self.initialInstruction,"\\n".join(open(DRS,"r").read().splitlines())))
 	
 	def addInitialRule(self,rule):
-		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asRuleString '" + rule + "' . }")
+		self.addToOntology('{} {} :asRuleString "{}" .'.format(self.initialInstructionType,self.initialInstruction,rule))
 		
 	def addInitialGroundRule(self,rule):
-		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asGroundRuleString '" + rule + "' . }")	
+		self.addToOntology('{} {} :asGroundRuleString "{}" .'.format(self.initialInstructionType,self.initialInstruction,rule))	
 	
 	def addInitialFact(self,fact):
-		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asFactString '" + fact + "' . }")
+		self.addToOntology('{} {} :asFactString "{}" .'.format(self.initialInstructionType,self.initialInstruction,fact))
 	
 	def addInitialReasonerFact(self,newFact):
-		self.addToOntology("{ :initialInstruction rdf:type :Instruction . :initialInstruction :asReasonerFactString '" + newFact + "' . }")
+		self.addToOntology('{} {} :asReasonerFactString "{}" .'.format(self.initialInstructionType,self.initialInstruction,newFact))
 		
 	def addInputsToOntology(self,aceFileOutput,aceFileIn,drsFileIn):
+		print("Adding Inputs To Ontology\n")
 		facts,rules,groundRules,newFacts = aceFileOutput
 		for fact in facts:
 			self.addInitialFact(fact)
@@ -63,20 +64,20 @@ class Ontology:
 		return facts,rules,groundRules,newFacts
 	
 	def getInitialRules(self):
-		return self.queryOntologyForObject("{ :initialInstruction :asRuleString ?object . }")
+		return self.queryOntologyForObject(":initialInstruction :asRuleString ?object .")
 	
 	def getInitialGroundRules(self):
-		return self.queryOntologyForObject("{ :initialInstruction :asGroundRuleString ?object . }")	
+		return self.queryOntologyForObject(":initialInstruction :asGroundRuleString ?object .")	
 		
 	def getInitialFacts(self):
-		return self.queryOntologyForObject("{ :initialInstruction :asFactString ?object . }")
+		return self.queryOntologyForObject(":initialInstruction :asFactString ?object .")
 	
 	def getInitialReasonerFacts(self):
-		return self.queryOntologyForObject("{ :initialInstruction :asReasonerFactString ?object . }")
+		return self.queryOntologyForObject(":initialInstruction :asReasonerFactString ?object .")
   
 	def getDRS(self):
-		return "".join(self.queryOntologyForObject("{ :initialInstruction :asDRSString ?object . }"))
+		return "".join(self.queryOntologyForObject(":initialInstruction :asDRSString ?object ."))
 	
 	def getACE(self):
-		return "".join(self.queryOntologyForObject("{ :initialInstruction :asACEString ?object . }"))	
+		return "".join(self.queryOntologyForObject(":initialInstruction :asACEString ?object ."))	
 

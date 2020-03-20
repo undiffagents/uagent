@@ -1,5 +1,4 @@
 import re,os,subprocess
-from input.Dapylog import Dapylog
 
 def lowercase(s):
     return s[:1].lower() + s[1:] if s else ''
@@ -61,7 +60,7 @@ def parsePropertyLine(line):
 def isVar(st):
     return not st.isupper()
 
-def parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround):
+def parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround):
     line=(line.split('(',1)[1]).split(',')[1:]
     line[2]=line[2].split(')')[0]
     if isVar(line[1]): line[-2]=(line[-2].split('(')[1]).split(')')[0]
@@ -82,7 +81,7 @@ def parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,conseq
             return 'hasProperty({},{})'.format(lookupTerm(line[1],objs,namedFacts,antecedent,head,body,unGround),lookupProperty(line[2],props))
         else:
             rules.append('{}({}) => {}({})'.format(a,line[1],b,line[1]))
-            datalog.append('{}({})->{}({})'.format(a,line[1],b,line[1]))
+            prolog.append([atom,body])
             body = [] ; head= []
             return
     elif not antecedent and not consequent:
@@ -148,11 +147,12 @@ def stripXML(new,tmp):
     os.remove(tmp)
 
 def readACEFile(filename,drsName):
-    print("Reading ACE file to make DRS and Rules")    
+    print("Reading ACE file to make DRS and Rules\n")    
 
     aceFile = filename
     tmp = "tmp_DRS.txt"
-    drsFile = drsName
+    drsFile = drsName        
+    prologfile = "input/prolog.pl"     
     
     subprocess.call(['input/APE/ape.exe', '-file', aceFile,'-cdrspp'],stdout=open(tmp,"w"))
 
@@ -166,7 +166,7 @@ def readACEFile(filename,drsName):
     
     facts = []
     rules = []
-    datalog = []
+    prolog = []
     body = []
     head = []
     
@@ -182,7 +182,7 @@ def readACEFile(filename,drsName):
                 objs.append(parseObjectLine(line))
                 unnamedFacts.append(objs[-1][1])
             elif 'named' in line or 'string' in line:
-                preds.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround))
+                preds.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround))
             elif 'property' in line:
                 props.append(parsePropertyLine(line))
     
@@ -203,24 +203,24 @@ def readACEFile(filename,drsName):
                             if a in head: head.remove(a)
                         rules.append('{} => {}'.format(','.join(body),','.join(head))) 
                         for atom in head:
-                            datalog.append('{}->{}'.format('^'.join(body),atom))
+                            prolog.append([atom,body])
                     body = [] ; head= []
         elif ' object' in line:
             objs.append(parseObjectLine(line)) 
         elif ' property' in line:
             props.append(parsePropertyLine(line))
         elif 'predicate' in line and not ('named' in line or 'string' in line):
-            if not antecedent and not consequent: preds.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround))
+            if not antecedent and not consequent: preds.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround))
             elif antecedent: 
-                body.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround))
+                body.append(parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround))
             elif len(body) == 0 and len(head) == 0:  
-                a = parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround)
+                a = parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround)
                 if len(head) > 0: 
                     body = head
                     head = []
                     head.append(a)
             elif len(body) > 0:
-                a = parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,datalog,head,body,unGround)
+                a = parsePredicateLine(line,props,objs,unnamedFacts,namedFacts,antecedent,consequent,rules,prolog,head,body,unGround)
                 checkVars(a,head,body)
                 head.append(a)
     
@@ -229,32 +229,36 @@ def readACEFile(filename,drsName):
             if a in head: head.remove(a)
         rules.append('{} => {}'.format(','.join(body),','.join(head)))
         for atom in head:
-            datalog.append('{}->{}'.format('^'.join(body),atom))
+            prolog.append([atom,body])
     
-    drsfile.close()
+    drsfile.close()  
     
-    rulesfile = open("input/Rules.txt","w")
-    datalogfile = open("input/datalog.dl","w")
+    print("Reasoning\n")
     
-    rulesfile.write("Facts:\n")
-    datalogfile.write("%facts\n")
+    reasonerFacts,groundRules = runProlog(facts,prolog,prologfile)
+    
+    os.remove(prologfile)
 
-    for fact in facts:
-        rulesfile.write('{}\n'.format(fact))
-        datalogfile.write('{}\n'.format(fact))
-    
-    rulesfile.write('\nRules:\n')
-    datalogfile.write("\n%rules\n")
-    
-    for rule in rules:
-        rulesfile.write('{}\n'.format(rule))
-    for rule in datalog:
-        datalogfile.write('{}\n'.format(rule))
-    
-    rulesfile.close()
+    return set(facts),set(rules),set(groundRules),set(reasonerFacts)
 
-    datalogfile.close()
+def writePrologFile(facts,prolog,prologfile,factFile,groundFile):
+    program = sorted(prolog+facts, key = lambda x: x[0])
     
-    reasoner = Dapylog(menu=False)
-
-    return  set(facts),set(rules),set(reasoner.getGroundRules()),set(reasoner.getNewFacts())
+    open(prologfile,"w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}.\n'.format( '{} :- {}'.format(thing[0],",".join(thing[1])) if isinstance(thing,list) else thing) for thing in program]),factFile,groundFile,''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]),'{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff,'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]),thing[0],thing[0])) for thing in prolog])))
+ 
+def runProlog(facts,prolog,prologfile):
+    
+    factFile = "reasonerFacts.txt"
+    groundFile = "groundRules.txt"
+    
+    writePrologFile(facts,prolog,prologfile,factFile,groundFile)
+    
+    subprocess.call(['swipl', prologfile,'-cdrspp'])
+    
+    reasonerFacts = open(factFile,"r").read().splitlines()
+    groundRules = open(groundFile,"r").read().splitlines()
+    
+    os.remove(factFile)
+    os.remove(groundFile)
+    
+    return reasonerFacts,groundRules
