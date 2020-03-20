@@ -30,14 +30,14 @@ class Ontology:
 		while not self.is_server_connected():
 			pass
 		print('Loading ontology...')
-		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+here+"/ontology/uagent.owl>"])
+		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update',"LOAD <file://"+here+"/ontology/uagent.owl>"])
 		return None # server
 	
 	def queryOntologyForObject(self,query):
-		return set([ x['object']['value'] for x in json.loads(subprocess.run(['ontology/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
+		return set([ x['object']['value'] for x in json.loads(subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query','{} SELECT ?object WHERE {{ {} }}'.format(self.prefix,query)], capture_output=True).stdout.decode('utf-8'))['results']['bindings'] ])
 	
 	def addToOntology(self,inputs):
-		subprocess.call(['ontology/s-update','--service=http://localhost:3030/uagent/update','{} INSERT DATA  {{ {} }}'.format(self.prefix,inputs)])
+		subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update','{} INSERT DATA  {{ {} }}'.format(self.prefix,inputs)])
 	
 	def addACEFileInput(self,ACE):
 		self.addToOntology('{} {} :asACEString "{}" .'.format(self.initialInstructionType,self.initialInstruction,"\\n".join(open(ACE,"r").read().splitlines())))

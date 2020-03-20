@@ -24,9 +24,9 @@ WORKDIR /usr/src/uagent
 COPY docker/requirements.txt ./docker/requirements.txt
 RUN pip3 install --no-cache-dir -r docker/requirements.txt
 
-# install APE
-COPY input input
-RUN cd input/APE && make build
+# install libraries
+COPY lib lib
+RUN cd lib/ape && make build
 
 # copy all files to container
 COPY . .

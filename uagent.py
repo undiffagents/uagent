@@ -9,6 +9,9 @@ ontology = Ontology(os.path.dirname(os.path.abspath(__file__)))
 
 facts,rules,groundRules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),ACE,DRS)
 
+for rule in ontology.getInitialRules():
+    print(rule)
+
 '''
 QUERIES
 

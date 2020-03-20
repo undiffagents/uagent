@@ -1,0 +1,9 @@
+dev
+.git
+.vscode
+*.pyc
+.gitignore
+.gitlab-ci.yml
+MANIFEST.in
+__pycache__
+.DS_Store

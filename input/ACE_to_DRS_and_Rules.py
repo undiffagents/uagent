@@ -154,7 +154,7 @@ def readACEFile(filename,drsName):
     drsFile = drsName        
     prologfile = "input/prolog.pl"     
     
-    subprocess.call(['input/APE/ape.exe', '-file', aceFile,'-cdrspp'],stdout=open(tmp,"w"))
+    subprocess.call(['lib/ape/ape.exe', '-file', aceFile,'-cdrspp'],stdout=open(tmp,"w"))
 
     stripXML(drsFile,tmp)
     
