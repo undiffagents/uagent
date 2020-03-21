@@ -14,8 +14,8 @@ RUN mkdir -p /usr/src/uagent
 WORKDIR /usr/src/uagent
 
 # install python packages
-COPY docker/requirements.txt ./docker/requirements.txt
-RUN pip3 install --no-cache-dir -r docker/requirements.txt
+COPY docker/python.txt ./docker/python.txt
+RUN pip3 install --no-cache-dir -r docker/python.txt
 
 # install project libraries
 COPY lib lib
@@ -25,4 +25,4 @@ RUN cd lib/ape && make build
 COPY . .
 
 # run entry script
-ENTRYPOINT [ "bash", "docker/start.sh" ]
+ENTRYPOINT [ "bash", "run.sh" ]
