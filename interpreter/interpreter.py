@@ -186,15 +186,39 @@ def strip_xml(xml_string):
     return new_string
 
 
-def readACEFile(ace_filename, drs_filename):
+def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
+    program = sorted(prolog+facts, key=lambda x: x[0])
+
+    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}.\n'.format('{} :- {}'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else thing) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(
+        thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
+
+
+def runProlog(facts, prolog, prologfile):
+
+    factFile = "reasonerFacts.txt"
+    groundFile = "groundRules.txt"
+
+    writePrologFile(facts, prolog, prologfile, factFile, groundFile)
+
+    subprocess.call(['swipl', prologfile, '-cdrspp'])
+
+    reasonerFacts = open(factFile, "r").read().splitlines()
+    groundRules = open(groundFile, "r").read().splitlines()
+
+    os.remove(factFile)
+    os.remove(groundFile)
+
+    return reasonerFacts, groundRules
+
+
+def interpret_ace(text):
     print("Reading ACE file to make DRS and rules...")
 
-    aceFile = ace_filename
-    drsFile = drs_filename
-    prologfile = "input/prolog.pl"
-
-    ace_drs = subprocess.run(['lib/ape/ape.exe', '-file', aceFile, '-cdrspp'],
-                             stdout=subprocess.PIPE).stdout.decode('utf-8')
+    process = subprocess.Popen(['lib/ape/ape.exe', '-cdrspp'],
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    process.stdin.write(text.encode('utf-8'))
+    ace_drs = process.communicate()[0].decode('utf-8')
+    process.stdin.close()
 
     ace_drs = strip_xml(ace_drs)
     print(ace_drs)
@@ -282,32 +306,18 @@ def readACEFile(ace_filename, drs_filename):
             prolog.append([atom, body])
 
     print("Reasoning...")
+    prologfile = "input/prolog.pl"
     reasonerFacts, groundRules = runProlog(facts, prolog, prologfile)
     os.remove(prologfile)
 
     return set(facts), set(rules), set(groundRules), set(reasonerFacts)
 
 
-def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
-    program = sorted(prolog+facts, key=lambda x: x[0])
+class Interpreter:
 
-    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}.\n'.format('{} :- {}'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else thing) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(
-        thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
+    def __init__(self, ontology):
+        self.ontology = ontology
 
-
-def runProlog(facts, prolog, prologfile):
-
-    factFile = "reasonerFacts.txt"
-    groundFile = "groundRules.txt"
-
-    writePrologFile(facts, prolog, prologfile, factFile, groundFile)
-
-    subprocess.call(['swipl', prologfile, '-cdrspp'])
-
-    reasonerFacts = open(factFile, "r").read().splitlines()
-    groundRules = open(groundFile, "r").read().splitlines()
-
-    os.remove(factFile)
-    os.remove(groundFile)
-
-    return reasonerFacts, groundRules
+    def interpret_ace(self, ace):
+        '''Interprets ACE text and adds the resulting knowledge to the ontology database'''
+        self.ontology.add_inputs(interpret_ace(ace))

@@ -63,7 +63,7 @@ class Ontology:
         with open(path, 'r') as f:
             self.add('\\n'.join(f.read().splitlines()), as_type)
 
-    def add_inputs(self, ace_output, ace_file, drs_file):
+    def add_inputs(self, ace_output):
         print("Adding inputs to ontology...")
         facts, rules, ground_rules, new_facts = ace_output
         for fact in facts:
@@ -74,9 +74,12 @@ class Ontology:
             self.add(ground_rule, ':asGroundRuleString')
         for new_fact in new_facts:
             self.add(new_fact, ':asReasonerFactString')
-        self.add_file(ace_file, ':asACEString')
-        self.add_file(drs_file, ':asDRSString')
         return facts, rules, ground_rules, new_facts
+
+    # def add_input_files(self, ace_file, drs_file):
+    #     print("Adding input files to ontology...")
+    #     self.add_file(ace_file, ':asACEString')
+    #     self.add_file(drs_file, ':asDRSString')
 
     def query(self, query):
         results = subprocess.run(['lib/fuseki/s-query', '--service', 'http://localhost:3030/uagent/query',
