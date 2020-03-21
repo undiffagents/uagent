@@ -42,9 +42,9 @@ class UndifferentiatedAgent(Agent):
                 return True
         return False
 
-    def execute_condition(self, cond, context):
-        print(cond.pred)
+    def check_condition(self, cond, context):
         if cond.pred == 'appearsOn':
+            self.think('check condition "{}"'.format(cond))
             isa = cond.obj(0)
             visual = self.vision.find(isa=isa)
             if visual:
@@ -57,7 +57,7 @@ class UndifferentiatedAgent(Agent):
 
     def execute_action(self, action, context):
         if action.obj(0) == 'subject':
-            print('**************  ' + action.obj(1))
+            self.think('execute action "{}"'.format(action))
 
             if action.pred == 'press':
                 visual = self.vision.find(isa=action.obj(1))
@@ -70,10 +70,11 @@ class UndifferentiatedAgent(Agent):
             elif action.pred == 'remember':
                 pass
 
-    def execute(self, rule, context):
+    def process(self, rule, context):
         if self.is_action(rule):
+            self.think('process rule "{}"'.format(rule))
             for cond in rule.conditions:
-                if not self.execute_condition(cond, context):
+                if not self.check_condition(cond, context):
                     return False
             for action in rule.actions:
                 self.execute_action(action, context)
@@ -87,6 +88,5 @@ class UndifferentiatedAgent(Agent):
 
         while self.time() < time:
             context = Chunk()
-            for rule in self.memory.recall_ground_rules():
-                self.execute(rule, context)
-                self.wait(1.0)
+            for rule in self.memory.recall_rules():
+                self.process(rule, context)

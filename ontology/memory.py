@@ -37,6 +37,8 @@ class Rule(Chunk):
 
 class OntologyMemory(Memory):
 
+    DEFAULT_DURATION = .200
+
     def __init__(self, agent, decay=None):
         super().__init__(agent, decay=decay)
         self.ontology = Ontology().load()
@@ -44,22 +46,20 @@ class OntologyMemory(Memory):
     def add_knowledge(self, ace_output):
         self.ontology.add_knowledge(ace_output)
 
-    def _recall_ontology(self, name, ont_fn):
+    def _ontology_recall(self, name, get):
         self.think('recall {}'.format(name))
         self.log('recalling {}'.format(name))
         results = set([Rule(s) if ' => ' in s else Fact(s)
-                       for s in ont_fn()])
+                       for s in get()])
+        self.wait(OntologyMemory.DEFAULT_DURATION)
         self.log('recalled {}'.format(name))
         return results
 
     def recall_facts(self):
-        return self._recall_ontology('facts', self.ontology.get_facts)
+        return self._ontology_recall('facts', self.ontology.get_facts)
 
     def recall_reasoner_facts(self):
-        return self._recall_ontology('reasoner facts', self.ontology.get_reasoner_facts)
+        return self._ontology_recall('reasoner facts', self.ontology.get_reasoner_facts)
 
     def recall_rules(self):
-        return self._recall_ontology('rules', self.ontology.get_rules)
-
-    def recall_ground_rules(self):
-        return self._recall_ontology('ground rules', self.ontology.get_ground_rules)
+        return self._ontology_recall('rules', self.ontology.get_ground_rules)
