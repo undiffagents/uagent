@@ -1,7 +1,37 @@
 import json
 import os
+import re
 import socket
 import subprocess
+
+
+class Fact:
+
+    def __init__(self, string):
+        self.string = string
+        self.pred = string[:string.find('(')]
+        self.objs = string[string.find('(')+1:string.find(')')].split(',')
+
+    def __len__(self):
+        return len(self.objs)
+
+    def __getitem__(self, i):
+        return self.objs[i]
+
+    def __str__(self):
+        return self.pred + '(' + ','.join(self.objs) + ')'
+
+
+class Rule:
+
+    def __init__(self, string):
+        self.string = string
+        parts = string.split(' => ')
+        self.lhs = [Fact(x) for x in re.findall(r'\w+\([\w,_-]*\)', parts[0])]
+        self.rhs = [Fact(x) for x in re.findall(r'\w+\([\w,_-]*\)', parts[1])]
+
+    def __str__(self):
+        return ', '.join([str(x) for x in self.lhs]) + ' => ' + ', '.join([str(x) for x in self.rhs])
 
 
 class Ontology:
@@ -58,14 +88,14 @@ class Ontology:
     def get(self, as_type):
         return self.query(':initialInstruction {} ?object .'.format(as_type))
 
-    def get_rules(self):
-        return self.get(':asRuleString')
-
-    def get_ground_rules(self):
-        return self.get(':asGroundRuleString')
-
     def get_facts(self):
-        return self.get(':asFactString')
+        return set([Fact(x) for x in self.get(':asFactString')])
 
     def get_reasoner_facts(self):
-        return self.get(':asReasonerFactString')
+        return set([Fact(x) for x in self.get(':asReasonerFactString')])
+
+    def get_rules(self):
+        return set([Rule(x) for x in self.get(':asRuleString')])
+
+    def get_ground_rules(self):
+        return set([Rule(x) for x in self.get(':asGroundRuleString')])

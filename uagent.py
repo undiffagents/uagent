@@ -8,7 +8,7 @@ ontology = Ontology()
 
 ontology.add_inputs(readACEFile(ACE, DRS), ACE, DRS)
 
-for rule in ontology.get_facts():
+for rule in ontology.get_ground_rules():
     print(rule)
 
 
