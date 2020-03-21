@@ -5,36 +5,6 @@ import socket
 import subprocess
 
 
-class Fact:
-
-    def __init__(self, string):
-        self.string = string
-        self.pred = string[:string.find('(')]
-        self.objs = string[string.find('(')+1:string.find(')')].split(',')
-
-    def obj(self, i):
-        return self.objs[i]
-
-    def __str__(self):
-        return self.pred + '(' + ','.join(self.objs) + ')'
-
-
-class Rule:
-
-    def __init__(self, string):
-        self.string = string
-        parts = string.split(' => ')
-        self.conditions = [Fact(x)
-                           for x in re.findall(r'\w+\([\w,_-]*\)', parts[0])]
-        self.actions = [Fact(x)
-                        for x in re.findall(r'\w+\([\w,_-]*\)', parts[1])]
-
-    def __str__(self):
-        return (', '.join([str(x) for x in self.conditions]) +
-                ' => ' +
-                ', '.join([str(x) for x in self.actions]))
-
-
 class Ontology:
 
     PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
@@ -93,13 +63,13 @@ class Ontology:
         return self.query(':initialInstruction {} ?object .'.format(as_type))
 
     def get_facts(self):
-        return set([Fact(x) for x in self.get(':asFactString')])
+        return self.get(':asFactString')
 
     def get_reasoner_facts(self):
-        return set([Fact(x) for x in self.get(':asReasonerFactString')])
+        return self.get(':asReasonerFactString')
 
     def get_rules(self):
-        return set([Rule(x) for x in self.get(':asRuleString')])
+        return self.get(':asRuleString')
 
     def get_ground_rules(self):
-        return set([Rule(x) for x in self.get(':asGroundRuleString')])
+        return self.get(':asGroundRuleString')

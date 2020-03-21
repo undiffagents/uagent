@@ -315,9 +315,9 @@ def interpret_ace(text):
 
 class Interpreter:
 
-    def __init__(self, ontology):
-        self.ontology = ontology
+    def __init__(self, memory):
+        self.memory = memory
 
     def interpret_ace(self, ace):
-        '''Interprets ACE text and adds the resulting knowledge to the ontology database'''
-        self.ontology.add_knowledge(interpret_ace(ace))
+        '''Interprets ACE text and adds the resulting knowledge to memory'''
+        self.memory.add_knowledge(interpret_ace(ace))

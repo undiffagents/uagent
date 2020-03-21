@@ -1,7 +1,7 @@
 import re
 
 from interpreter import Interpreter
-from ontology import Ontology
+from ontology import OntologyMemory
 from think import (Agent, Audition, Aural, Chunk, Hands, Item, Language,
                    Memory, Mousing, Query, Typing, Vision)
 
@@ -11,14 +11,14 @@ class UndifferentiatedAgent(Agent):
     def __init__(self, machine, output=True):
         super().__init__(output=output)
 
+        self.memory = OntologyMemory(self)
         self.vision = Vision(self, machine.display)
         self.audition = Audition(self)
         self.hands = Hands(self)
         self.mousing = Mousing(self, machine.mouse, self.vision, self.hands)
         self.typing = Typing(self, machine.keyboard, self.hands)
 
-        self.ontology = Ontology().load()
-        self.interpreter = Interpreter(self.ontology)
+        self.interpreter = Interpreter(self.memory)
 
         self.language = Language(self)
         self.language.add_interpreter(self.interpreter.interpret_ace)
@@ -87,6 +87,6 @@ class UndifferentiatedAgent(Agent):
 
         while self.time() < time:
             context = Chunk()
-            for rule in self.ontology.get_ground_rules():
+            for rule in self.memory.recall_ground_rules():
                 self.execute(rule, context)
                 self.wait(1.0)
