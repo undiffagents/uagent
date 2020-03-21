@@ -1,10 +1,7 @@
 import re
-from urllib import parse, request
-from xml.dom import minidom
-from xml.etree import ElementTree
 
-from inst_process import InstructionProcessor
-from ontology import OntologyDatabase
+from interpreter import Interpreter
+from ontology import Ontology
 from think import (Agent, Audition, Aural, Chunk, Hands, Item, Language,
                    Memory, Mousing, Query, Typing, Vision)
 
@@ -21,8 +18,8 @@ class UndifferentiatedAgent(Agent):
         self.mousing = Mousing(self, machine.mouse, self.vision, self.hands)
         self.typing = Typing(self, machine.keyboard, self.hands)
 
-        self.ontology_db = OntologyDatabase()
-        self.interpreter = InstructionProcessor(self.ontology_db)
+        self.ontology = Ontology()
+        self.interpreter = Interpreter(self.ontology)
 
         self.language = Language(self)
         self.language.add_interpreter(
@@ -30,7 +27,7 @@ class UndifferentiatedAgent(Agent):
 
         # self.instruction = Instruction(
         #     self, self.memory, self.audition, self.language)
-        # self.instruction.add_executor(self.execute)   
+        # self.instruction.add_executor(self.execute)
 
     # def _interpret_predicate(self, text, isa='fact', last=None):
     #     chunk = None
@@ -132,7 +129,7 @@ class UndifferentiatedAgent(Agent):
         self.language.interpret(instructions)
 
         while self.time() < time:
-            instr = self.ontology_db.get_next_instruction()
+            instr = self.ontology.get_next_instruction()
             if instr:
                 # execute instruction
                 pass

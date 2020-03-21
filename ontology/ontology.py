@@ -63,8 +63,8 @@ class Ontology:
         with open(path, 'r') as f:
             self.add('\\n'.join(f.read().splitlines()), as_type)
 
-    def add_inputs(self, ace_output):
-        print("Adding inputs to ontology...")
+    def add_knowledge(self, ace_output):
+        print("Adding knowledge to ontology...")
         facts, rules, ground_rules, new_facts = ace_output
         for fact in facts:
             self.add(fact, ':asFactString')

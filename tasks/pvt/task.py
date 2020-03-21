@@ -3,7 +3,7 @@ import random
 from think import Task
 
 ACE_INSTRUCTIONS = \
-'''Psychomotor-Vigilance is a task X1.
+    '''Psychomotor-Vigilance is a task X1.
 Acknowledge is a button X2.
 X1 has a box X3 and a target X4.
 X1 has a box X3.
@@ -30,7 +30,7 @@ If X1 is active then X4 appears in X3.'''
 
 
 class PVTTask(Task):
-    """Psychomotor Vigilance Task"""
+    '''Psychomotor Vigilance Task'''
 
     def __init__(self, machine, instructions=ACE_INSTRUCTIONS):
         super().__init__()

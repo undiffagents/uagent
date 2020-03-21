@@ -212,7 +212,7 @@ def runProlog(facts, prolog, prologfile):
 
 
 def interpret_ace(text):
-    print("Reading ACE file to make DRS and rules...")
+    print("Interpreting ACE...")
 
     process = subprocess.Popen(['lib/ape/ape.exe', '-cdrspp'],
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -306,7 +306,7 @@ def interpret_ace(text):
             prolog.append([atom, body])
 
     print("Reasoning...")
-    prologfile = "input/prolog.pl"
+    prologfile = "interpreter/prolog.pl"
     reasonerFacts, groundRules = runProlog(facts, prolog, prologfile)
     os.remove(prologfile)
 
@@ -320,4 +320,4 @@ class Interpreter:
 
     def interpret_ace(self, ace):
         '''Interprets ACE text and adds the resulting knowledge to the ontology database'''
-        self.ontology.add_inputs(interpret_ace(ace))
+        self.ontology.add_knowledge(interpret_ace(ace))
