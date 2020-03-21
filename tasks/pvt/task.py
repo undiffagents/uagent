@@ -51,5 +51,5 @@ class PVTTask(Task):
 
         while self.time() < time:
             self.wait(random.randint(2.0, 10.0))
-            self.display.add(50, 50, 20, 20, 'Letter', 'A')
+            self.display.add(50, 50, 20, 20, 'letter', 'A')
             self.record('stimulus')

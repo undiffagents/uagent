@@ -37,47 +37,47 @@ class UndifferentiatedAgent(Agent):
     # press(subject,absent)
 
     def is_action(self, rule):
-        for fact in rule.rhs:
-            if fact.pred == 'press':
+        for action in rule.actions:
+            if action.pred == 'press':
                 return True
         return False
 
-    # def _execute_condition(self, cond, context):
-    #     if cond.predicate == 'appearsIn':
-    #         visual = self._deep_find(cond.subject)
-    #         if visual:
-    #             context.set('visual', visual)
-    #             visobj = self.vision.encode(visual)
-    #             context.set(cond.subject, visobj)
-    #             return True
-    #     return False
+    def execute_condition(self, cond, context):
+        print(cond.pred)
+        if cond.pred == 'appearsOn':
+            isa = cond.obj(0)
+            visual = self.vision.find(isa=isa)
+            if visual:
+                context.set('visual', visual)
+                visobj = self.vision.encode(visual)
+                context.set(isa, visobj)
+            else:
+                return False
+        return True
 
-    # def _execute_action(self, action, context):
-    #     if action.subject == 'Subject':
-    #         print('**************  ' + action.predicate)
+    def execute_action(self, action, context):
+        if action.obj(0) == 'subject':
+            print('**************  ' + action.obj(1))
 
-    #         if action.predicate == 'click':
-    #             visual = context.get('visual')
-    #             self.mouse.point_and_click(visual)
+            if action.pred == 'press':
+                visual = self.vision.find(isa=action.obj(1))
+                self.mouse.point_and_click(visual)
 
-    #         elif action.predicate == 'remember':
-    #             pass
+            if action.pred == 'click':
+                visual = context.get('visual')
+                self.mouse.point_and_click(visual)
 
-    # def execute(self, chunk, context):
-    #     if chunk.isa == 'rule':
+            elif action.pred == 'remember':
+                pass
 
-    #         cond = self.memory.recall(isa='condition', last=chunk.id)
-    #         while cond:
-    #             if not self._execute_condition(cond, context):
-    #                 return False
-    #             cond = self.memory.recall(isa='condition', last=cond.id)
-
-    #         act = self.memory.recall(isa='action', last=chunk.id)
-    #         while act:
-    #             self._execute_action(act, context)
-    #             act = self.memory.recall(isa='action', last=act.id)
-
-    #         return True
+    def execute(self, rule, context):
+        if self.is_action(rule):
+            for cond in rule.conditions:
+                if not self.execute_condition(cond, context):
+                    return False
+            for action in rule.actions:
+                self.execute_action(action, context)
+            return True
 
     def run(self, time=60):
 
@@ -86,7 +86,7 @@ class UndifferentiatedAgent(Agent):
         self.language.interpret(instructions)
 
         while self.time() < time:
+            context = Chunk()
             for rule in self.ontology.get_ground_rules():
-                if self.is_action(rule):
-                    print(rule)
+                self.execute(rule, context)
                 self.wait(1.0)

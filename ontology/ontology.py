@@ -12,10 +12,7 @@ class Fact:
         self.pred = string[:string.find('(')]
         self.objs = string[string.find('(')+1:string.find(')')].split(',')
 
-    def __len__(self):
-        return len(self.objs)
-
-    def __getitem__(self, i):
+    def obj(self, i):
         return self.objs[i]
 
     def __str__(self):
@@ -27,11 +24,15 @@ class Rule:
     def __init__(self, string):
         self.string = string
         parts = string.split(' => ')
-        self.lhs = [Fact(x) for x in re.findall(r'\w+\([\w,_-]*\)', parts[0])]
-        self.rhs = [Fact(x) for x in re.findall(r'\w+\([\w,_-]*\)', parts[1])]
+        self.conditions = [Fact(x)
+                           for x in re.findall(r'\w+\([\w,_-]*\)', parts[0])]
+        self.actions = [Fact(x)
+                        for x in re.findall(r'\w+\([\w,_-]*\)', parts[1])]
 
     def __str__(self):
-        return ', '.join([str(x) for x in self.lhs]) + ' => ' + ', '.join([str(x) for x in self.rhs])
+        return (', '.join([str(x) for x in self.conditions]) +
+                ' => ' +
+                ', '.join([str(x) for x in self.actions]))
 
 
 class Ontology:
