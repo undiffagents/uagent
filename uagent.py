@@ -6,9 +6,9 @@ DRS = "input/DRS.txt"
 
 ontology = Ontology()
 
-facts,rules,groundRules,reasonerFacts = ontology.addInputsToOntology(readACEFile(ACE,DRS),ACE,DRS)
+ontology.add_inputs(readACEFile(ACE, DRS), ACE, DRS)
 
-for rule in ontology.getInitialGroundRules():
+for rule in ontology.get_facts():
     print(rule)
 
 
