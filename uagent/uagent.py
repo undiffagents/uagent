@@ -11,14 +11,13 @@ class UndifferentiatedAgent(Agent):
     def __init__(self, machine, output=True):
         """Initializes the agent"""
         super().__init__(output=True)
-        self.memory = Memory(self)
         self.vision = Vision(self, machine.display)
         self.audition = Audition(self)
         self.hands = Hands(self)
         self.mousing = Mousing(self, machine.mouse, self.vision, self.hands)
         self.typing = Typing(self, machine.keyboard, self.hands)
 
-        self.ontology = Ontology()
+        self.ontology = Ontology().load()
         self.interpreter = Interpreter(self.ontology)
 
         self.language = Language(self)
@@ -122,6 +121,12 @@ class UndifferentiatedAgent(Agent):
 
     #         return True
 
+    def has_action(self, rule):
+        for fact in rule.rhs:
+            if fact.pred == 'press':
+                return True
+        return False
+
     def run(self, time=60):
 
         instr_visual = self.vision.wait_for(isa='instructions')
@@ -129,9 +134,7 @@ class UndifferentiatedAgent(Agent):
         self.language.interpret(instructions)
 
         while self.time() < time:
-            instr = self.ontology.get_next_instruction()
-            if instr:
-                # execute instruction
-                pass
-            else:
-                self.wait(10)
+            for rule in self.ontology.get_ground_rules():
+                if self.has_action(rule):
+                    print(rule)
+                self.wait(1.0)
