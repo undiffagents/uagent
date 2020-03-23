@@ -1,13 +1,18 @@
 FROM ubuntu:18.04
 
-# install software
+# install python
 RUN apt-get update --fix-missing && apt-get install -y \
-    software-properties-common \
-    python3.7 python3.7-dev python3-pip \
+    python3.7 \
+    python3.7-dev \
+    python3-pip \
+    && rm -fr /var/lib/apt/lists/*
+
+# install other
+RUN apt-get update --fix-missing && apt-get install -y \
     openjdk-11-jdk \
     ruby-full \
     swi-prolog \
- && rm -fr /var/lib/apt/lists/*
+    && rm -fr /var/lib/apt/lists/*
 
 # make base directory
 RUN mkdir -p /usr/src/uagent
