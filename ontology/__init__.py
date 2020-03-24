@@ -1,2 +1,2 @@
-#from .ontology import OntologyDatabase
+from .memory import OntologyMemory
 from .ontology import Ontology

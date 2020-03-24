@@ -4,7 +4,12 @@
 .vscode
 *.egg-info
 *.DS_Store
+*.exe
 build/
 dist/
 __pycache__
 playground.py
+catalog-v001.xml
+ape.exe
+tmp_DRS.txt
+tdb.lock
