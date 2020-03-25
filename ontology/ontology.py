@@ -61,11 +61,11 @@ class Ontology:
 
     def query(self,query):
         results = subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query',query],stdout=subprocess.PIPE).stdout.decode('utf-8')
-        bindings = json.loads(str(results))['results']['bindings']
-        return set([x['object']['value'] for x in bindings])
+        return json.loads(str(results))['results']['bindings']
 
     def query_for_object(self,subject,predicate):
-        return self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))
+        result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))        
+        return set([x['object']['value'] for x in result])
 
     def get_instruction_facts(self):
         if self.initialized: return self.query_for_object(self.initialInstruction,':asFactString')
