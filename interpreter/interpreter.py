@@ -221,6 +221,7 @@ def interpret_ace(text):
     process.stdin.close()
 
     ace_drs = strip_xml(ace_drs)
+    print(ace_drs)
 
     varlist = []
     unGround = []
