@@ -30,7 +30,7 @@ class Ontology:
     def add_string(self, subject,predicate,string):
         self.add('{} {} "{}" .'.format(subject,predicate,string))
 
-    def add_file(self,path,subject,predicate):
+    def add_file_object(self,path,subject,predicate):
         with open(path, 'r') as f:
             self.add_string(subject,predicate,'\\n'.join(f.read().splitlines()))
 
