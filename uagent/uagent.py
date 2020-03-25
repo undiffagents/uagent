@@ -2,8 +2,7 @@ import re
 
 from interpreter import Interpreter
 from ontology import OntologyMemory
-from think import (Agent, Audition, Aural, Chunk, Hands, Item, Language,
-                   Memory, Mousing, Query, Typing, Vision)
+from think import Agent, Audition, Chunk, Language, Memory, Motor, Vision
 
 
 class UndifferentiatedAgent(Agent):
@@ -13,15 +12,14 @@ class UndifferentiatedAgent(Agent):
 
         self.memory = OntologyMemory(self)
         self.vision = Vision(self, machine.display)
-        self.audition = Audition(self)
-        self.hands = Hands(self)
-        self.mousing = Mousing(self, machine.mouse, self.vision, self.hands)
-        self.typing = Typing(self, machine.keyboard, self.hands)
+        self.audition = Audition(self, machine.speakers)
+        self.motor = Motor(self, self.vision, machine)
 
         self.interpreter = Interpreter(self.memory)
 
         self.language = Language(self)
-        self.language.add_interpreter(self.interpreter.interpret_ace)
+        self.language.add_interpreter(lambda words:
+                                      self.interpreter.interpret_ace(' '.join(words)))
 
     # subject(subject), screen(screen), letter(target),
     # hasProperty(present,positive), hasProperty(target,correct),
@@ -46,7 +44,7 @@ class UndifferentiatedAgent(Agent):
         if cond.pred == 'appearsOn':
             self.think('check condition "{}"'.format(cond))
             isa = cond.obj(0)
-            visual = self.vision.find(isa=isa)
+            visual = self.vision.find(isa=isa, seen=False)
             if visual:
                 context.set('visual', visual)
                 visobj = self.vision.encode(visual)
@@ -61,11 +59,11 @@ class UndifferentiatedAgent(Agent):
 
             if action.pred == 'press':
                 visual = self.vision.find(isa=action.obj(1))
-                self.mouse.point_and_click(visual)
+                self.motor.point_and_click(visual)
 
             if action.pred == 'click':
                 visual = context.get('visual')
-                self.mouse.point_and_click(visual)
+                self.motor.point_and_click(visual)
 
             elif action.pred == 'remember':
                 pass
