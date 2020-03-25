@@ -43,8 +43,7 @@ class OntologyMemory(Memory):
         super().__init__(agent, decay=decay)
         self.ontology = Ontology().load()
 
-    def add_knowledge(self, ace_output, ace):
-        '''If we ever want to add other knowledge, we need to change this'''
+    def add_instruction_knowledge(self, ace_output):
         self.ontology.add_instruction_knowledge(ace_output)
 
     def _ontology_recall(self, name, get):

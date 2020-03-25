@@ -320,4 +320,4 @@ class Interpreter:
 
     def interpret_ace(self,ace):
         '''Interprets ACE text and adds the resulting knowledge to memory'''
-        self.memory.add_knowledge(interpret_ace(ace),ace)
+        self.memory.add_instruction_knowledge(interpret_ace(ace))
