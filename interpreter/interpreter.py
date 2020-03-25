@@ -221,7 +221,6 @@ def interpret_ace(text):
     process.stdin.close()
 
     ace_drs = strip_xml(ace_drs)
-    print(ace_drs)
 
     varlist = []
     unGround = []
@@ -318,6 +317,6 @@ class Interpreter:
     def __init__(self, memory):
         self.memory = memory
 
-    def interpret_ace(self, ace):
+    def interpret_ace(self,ace):
         '''Interprets ACE text and adds the resulting knowledge to memory'''
-        self.memory.add_knowledge(interpret_ace(ace))
+        self.memory.add_knowledge(interpret_ace(ace),ace)

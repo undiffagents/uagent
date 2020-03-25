@@ -1,14 +1,11 @@
 p:psychomotor-vigilance is a task.
-p:present is a button and is positive.
-p:absent is a button and is negative.
+There is a button that v:isPartOf the task.
 There is a subject that v:isPartOf the task.
 There is a screen that v:isPartOf the task.
 The p:target is a letter and is correct.
 The p:distractor is a letter and is incorrect.
 Every letter is unique.
 Every letter is a:color.
-Every button v:isPartOf the task.
 If the subject v:isPartOf the task then the task is active.
 If the task is active then a letter v:appearsOn the screen.
-If a button is positive and a letter v:appearsOn the screen and it is correct then the subject presses the button.
-If a button is negative and a letter v:appearsOn the screen and it is incorrect then the subject presses the button.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.
