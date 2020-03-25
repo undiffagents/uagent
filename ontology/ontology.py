@@ -52,8 +52,8 @@ class Ontology:
             for newFact in newFacts:
                 self.add_string(self.initialInstruction,':asReasonerFactString',newFact)
             
-            # self.add_string(self.initialInstruction,':asFactString',aceFile)
-            # self.add_string(self.initialInstruction,':asFactString',drsFileIn)
+            # self.add_string(self.initialInstruction,':asFactString',aceFile/Str)
+            # self.add_string(self.initialInstruction,':asFactString',drsFile/Str)
             
             self.initialized = True
             
