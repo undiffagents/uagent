@@ -1,16 +1,18 @@
 import unittest
 
-from think import (Agent, Audition, Aural, Hands, Instruction, Item, Language,
-                   Memory, Query, Typing, Vision, Visual)
+from think import (Agent, Audition, Aural, Instruction, Item, Language,
+                   Machine, Memory, Motor, Query, Vision, Visual)
 
 
 class InstructionTest(unittest.TestCase):
 
     def test_instruction_type(self, output=False):
         agent = Agent(output=output)
-        vision = Vision(agent)
+        machine = Machine()
         memory = Memory(agent)
-        audition = Audition(agent)
+        vision = Vision(agent, machine.display)
+        audition = Audition(agent, machine.speakers)
+        motor = Motor(agent, vision, machine)
 
         def interpreter(words):
             if words[0] == 'read':
@@ -33,7 +35,7 @@ class InstructionTest(unittest.TestCase):
                 query = Query(x=action.x, y=action.y)
                 context.set(action.object, vision.find_and_encode(query))
             elif action.type == 'type':
-                typing.type(context.get(action.object))
+                motor.type(context.get(action.object))
 
         instruction = Instruction(agent, memory, audition, language)
         instruction.add_executor(executor)
@@ -43,8 +45,7 @@ class InstructionTest(unittest.TestCase):
         def type_handler(key):
             typed.append(key)
 
-        typing = Typing(Hands(agent))
-        typing.add_type_fn(type_handler)
+        machine.keyboard.add_type_fn(type_handler)
 
         vision.add(Visual(50, 50, 20, 20, 'text'), 'a')
         pointer = Visual(50, 50, 1, 1, 'pointer')
@@ -80,9 +81,10 @@ class InstructionTest(unittest.TestCase):
 
     def test_instruction_read(self, output=False):
         agent = Agent(output=output)
-        vision = Vision(agent)
         memory = Memory(agent)
-        audition = Audition(agent)
+        machine = Machine()
+        vision = Vision(agent, machine.display)
+        audition = Audition(agent, machine.speakers)
 
         def interpreter(words):
             if words[0] == 'read':

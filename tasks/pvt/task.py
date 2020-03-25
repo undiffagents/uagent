@@ -39,17 +39,21 @@ class PVTTask(Task):
         self.instructions = instructions
 
     def run(self, time=60):
+        stimulus = None
 
         def handle_key(key):
-            self.display.clear()
-            self.record('response')
+            if stimulus:
+                self.display.remove(stimulus)
 
         self.keyboard.add_type_fn(handle_key)
 
         self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
         self.wait(10.0)
 
+        self.display.clear()
+        self.display.add(10, 100, 40, 20, 'present', 'Present')
+        self.display.add(60, 100, 40, 20, 'absent', 'Absent')
+
         while self.time() < time:
             self.wait(random.randint(2.0, 10.0))
-            self.display.add(50, 50, 20, 20, 'letter', 'A')
-            self.record('stimulus')
+            stimulus = self.display.add(50, 50, 20, 20, 'target', 'A')

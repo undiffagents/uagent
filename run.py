@@ -13,7 +13,7 @@ def run_pvt():
     machine = Machine()
     task = PVTTask(machine, instructions)
     agent = UndifferentiatedAgent(machine)
-    World(task, agent).run(60)
+    World(task, agent).run(30)
 
 
 if __name__ == '__main__':
