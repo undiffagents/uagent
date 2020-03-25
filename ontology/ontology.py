@@ -80,7 +80,7 @@ class Ontology:
         if self.initialized: return self.query_for_object(self.initialInstruction,':asGroundRuleString')
 
     def get_DRS(self):
-        return "".join(self.query_for_object(self.initialInstruction,":asDRSString"))
+        if self.initialized: return "".join(self.query_for_object(self.initialInstruction,":asDRSString"))
 
     def get_ACE(self):
-        return "".join(self.query_for_object(self.initialInstruction,":asACEString"))
+        if self.initialized: return "".join(self.query_for_object(self.initialInstruction,":asACEString"))
