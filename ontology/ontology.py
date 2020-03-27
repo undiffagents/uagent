@@ -63,8 +63,32 @@ class Ontology:
         results = subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query',query],stdout=subprocess.PIPE).stdout.decode('utf-8')
         return json.loads(str(results))['results']['bindings']
 
+    def query_count_predicate(self,predicate):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ ?subject {} ?object . }} GROUP BY ?count'.format(self.PREFIX,predicate))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
+    def query_count_subject(self,subject):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ {} ?predicate ?object . }} GROUP BY ?count'.format(self.PREFIX,subject))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
+    def query_count_object(self,object):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ ?subject ?predicate {} . }} GROUP BY ?count'.format(self.PREFIX,object))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
+    def query_count_subject_predicate(self,subject,predicate):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ {} {} ?object . }} GROUP BY ?count'.format(self.PREFIX,subject,predicate))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
+    def query_count_subject_object(self,subject,object):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ {} ?predicate {} . }} GROUP BY ?count'.format(self.PREFIX,subject,object))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
+    def query_count_predicate_object(self,predicate,object):
+        result = self.query('{} SELECT (COUNT(*) AS ?count) WHERE {{ ?subject {} {} . }} GROUP BY ?count'.format(self.PREFIX,predicate,object))
+        return int(result[0]['count']['value']) if len(result) == 1 else 0
+
     def query_for_object(self,subject,predicate):
-        result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))        
+        result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))
         return set([x['object']['value'] for x in result])
 
     def get_instruction_facts(self):
