@@ -86,5 +86,5 @@ class UndifferentiatedAgent(Agent):
 
         while self.time() < time:
             context = Chunk()
-            for rule in self.memory.recall_rules():
+            for rule in self.memory.recall_ground_rules():
                 self.process(rule, context)

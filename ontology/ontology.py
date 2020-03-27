@@ -8,9 +8,11 @@ import subprocess
 class Ontology:
 
     PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
+    initialInstruction = ':initialInstruction'
+    initialInstructionType = '{} rdf:type :Instruction .'.format(initialInstruction)
 
     def __init__(self):
-        pass
+        self.initialized = False
 
     def load(self, filename='uagent.owl'):
         print('Waiting for ontology server...')
@@ -18,58 +20,67 @@ class Ontology:
             while s.connect_ex(('localhost', 3030)) > 0:
                 pass
         print('Loading ontology...')
-        path = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), filename)
-        subprocess.call(['lib/fuseki/s-update',
-                         '--service=http://localhost:3030/uagent/update', "LOAD <file://"+path+">"])
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+        subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update', "LOAD <file://{}>".format(path)])
         return self
 
-    def add(self, input_string, as_type):
-        inputs = (':initialInstruction rdf:type :Instruction . :initialInstruction {} "{}" .'.format(
-            as_type, input_string))
-        subprocess.call(['lib/fuseki/s-update', '--service=http://localhost:3030/uagent/update',
-                         '{} INSERT DATA  {{ {} }}'.format(self.PREFIX, inputs)])
+    def add(self,data):
+        subprocess.call(['lib/fuseki/s-update', '--service=http://localhost:3030/uagent/update','{} INSERT DATA  {{ {} }}'.format(self.PREFIX,data)])
 
-    def add_file(self, path, as_type):
+    def add_string(self, subject,predicate,string):
+        self.add('{} {} "{}" .'.format(subject,predicate,string))
+
+    def add_file_object(self,path,subject,predicate):
         with open(path, 'r') as f:
-            self.add('\\n'.join(f.read().splitlines()), as_type)
+            self.add_string(subject,predicate,'\\n'.join(f.read().splitlines()))
 
-    def add_knowledge(self, ace_output):
-        print("Adding knowledge to ontology...")
-        facts, rules, ground_rules, new_facts = ace_output
-        for fact in facts:
-            self.add(fact, ':asFactString')
-        for rule in rules:
-            self.add(rule, ':asRuleString')
-        for ground_rule in ground_rules:
-            self.add(ground_rule, ':asGroundRuleString')
-        for new_fact in new_facts:
-            self.add(new_fact, ':asReasonerFactString')
-        return facts, rules, ground_rules, new_facts
+    def add_instruction_knowledge(self,ace_output):
+        if not self.initialized:
+        
+            print("Adding knowledge to ontology...")
+            
+            facts,rules,groundRules,newFacts = ace_output
 
-    # def add_input_files(self, ace_file, drs_file):
-    #     print("Adding input files to ontology...")
-    #     self.add_file(ace_file, ':asACEString')
-    #     self.add_file(drs_file, ':asDRSString')
+            self.add(self.initialInstructionType)
 
-    def query(self, query):
-        results = subprocess.run(['lib/fuseki/s-query', '--service', 'http://localhost:3030/uagent/query',
-                                  '{} SELECT ?object WHERE {{ {} }}'.format(self.PREFIX, query)],
-                                 stdout=subprocess.PIPE).stdout.decode('utf-8')
-        bindings = json.loads(str(results))['results']['bindings']
-        return set([x['object']['value'] for x in bindings])
+            for fact in facts:
+                self.add_string(self.initialInstruction,':asFactString',fact)
+            for rule in rules:
+                self.add_string(self.initialInstruction,':asRuleString',rule)
+            for rule in groundRules:
+                self.add_string(self.initialInstruction,':asGroundRuleString',rule)
+            for newFact in newFacts:
+                self.add_string(self.initialInstruction,':asReasonerFactString',newFact)
+            
+            # self.add_string(self.initialInstruction,':asFactString',aceFile/Str)
+            # self.add_string(self.initialInstruction,':asFactString',drsFile/Str)
+            
+            self.initialized = True
+            
+            return facts,rules,groundRules,newFacts
 
-    def get(self, as_type):
-        return self.query(':initialInstruction {} ?object .'.format(as_type))
+    def query(self,query):
+        results = subprocess.run(['lib/fuseki/s-query','--service','http://localhost:3030/uagent/query',query],stdout=subprocess.PIPE).stdout.decode('utf-8')
+        return json.loads(str(results))['results']['bindings']
 
-    def get_facts(self):
-        return self.get(':asFactString')
+    def query_for_object(self,subject,predicate):
+        result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))        
+        return set([x['object']['value'] for x in result])
 
-    def get_reasoner_facts(self):
-        return self.get(':asReasonerFactString')
+    def get_instruction_facts(self):
+        if self.initialized: return self.query_for_object(self.initialInstruction,':asFactString')
 
-    def get_rules(self):
-        return self.get(':asRuleString')
+    def get_instruction_reasoner_facts(self):
+        if self.initialized: return self.query_for_object(self.initialInstruction,':asReasonerFactString')
 
-    def get_ground_rules(self):
-        return self.get(':asGroundRuleString')
+    def get_instruction_rules(self):
+        if self.initialized: return self.query_for_object(self.initialInstruction,':asRuleString')
+
+    def get_instruction_ground_rules(self):
+        if self.initialized: return self.query_for_object(self.initialInstruction,':asGroundRuleString')
+
+    def get_DRS(self):
+        if self.initialized: return "".join(self.query_for_object(self.initialInstruction,":asDRSString"))
+
+    def get_ACE(self):
+        if self.initialized: return "".join(self.query_for_object(self.initialInstruction,":asACEString"))

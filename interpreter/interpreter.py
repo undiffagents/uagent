@@ -318,6 +318,6 @@ class Interpreter:
     def __init__(self, memory):
         self.memory = memory
 
-    def interpret_ace(self, ace):
+    def interpret_ace(self,ace):
         '''Interprets ACE text and adds the resulting knowledge to memory'''
-        self.memory.add_knowledge(interpret_ace(ace))
+        self.memory.add_instruction_knowledge(interpret_ace(ace))
