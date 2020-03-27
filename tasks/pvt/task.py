@@ -51,8 +51,7 @@ class PVTTask(Task):
         self.wait(10.0)
 
         self.display.clear()
-        self.display.add(10, 100, 40, 20, 'present', 'Present')
-        self.display.add(60, 100, 40, 20, 'absent', 'Absent')
+        self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')
 
         while self.time() < time:
             self.wait(random.randint(2.0, 10.0))
