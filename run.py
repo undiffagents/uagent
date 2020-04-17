@@ -1,6 +1,7 @@
 from uagent import UndifferentiatedAgent
 from think import Machine, World
 from tasks.pvt import PVTTask
+from tasks.vs import VSTask
 
 
 def load_text(path):
@@ -16,5 +17,17 @@ def run_pvt():
     World(task, agent).run(30)
 
 
+def run_vs():
+    instructions = load_text('tasks/vs/ace.txt')
+    machine = Machine()
+    task = VSTask(machine, instructions)
+    agent = UndifferentiatedAgent(machine)
+    World(task, agent).run(30)
+
 if __name__ == '__main__':
-    run_pvt()
+    #refactor later; easy testing for now
+    taskID = 2
+    if taskID == 1:
+        run_pvt()
+    elif taskID == 2:
+        run_vs()
