@@ -13,8 +13,6 @@ class VSAgent(Agent):
         while self.time() < time:
             visual = self.vision.wait_for(seen=False)
             #def search_for(self, query, target):
-            self.vision.search_for(visual,,'X') #how does query work?
-            
-
+            self.vision.search_for(visual,'isa','target') #how does query work?
             self.motor.type('j')
             self.vision.get_encoded()

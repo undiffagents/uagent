@@ -1,7 +1,8 @@
 from uagent import UndifferentiatedAgent
-from think import Machine, World
+from think import Machine, World, get_think_logger
 from tasks.pvt import PVTTask
 from tasks.vs import VSTask
+from datetime import datetime
 
 
 def load_text(path):
@@ -24,9 +25,17 @@ def run_vs():
     agent = UndifferentiatedAgent(machine)
     World(task, agent).run(30)
 
+
 if __name__ == '__main__':
+    do_outlog = 1
+    taskID = 2 # = PVT, 2 = VS
+    taskText = ["","PVT","VS"]
+
+    if do_outlog:
+        thinklog = get_think_logger(logfilename=''.join(['data/logs/',taskText[taskID],"_",datetime.now().strftime("%Y-%M-%d_%H-%M-%S"),'.txt']), uselogfile=True)
+
+
     #refactor later; easy testing for now
-    taskID = 2
     if taskID == 1:
         run_pvt()
     elif taskID == 2:
