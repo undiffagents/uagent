@@ -1,5 +1,6 @@
 import networkx
 from Constants import *
+import re
 
 
 # Create Graph
@@ -10,6 +11,8 @@ def generateItemGraph(graphNumber):
     itemGraph.add_node(CONST_ITEM_AFFORDANCE_NODE + str(graphNumber), value='')
     itemGraph.add_node(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), value='')
     itemGraph.add_node(CONST_ITEM_ROLE_NODE + str(graphNumber), value='')
+    itemGraph.add_node(CONST_ITEM_OP_NODE + str(graphNumber), value='')
+    itemGraph.add_node(CONST_ITEM_COUNT_NODE + str(graphNumber), value='')
 
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_NAME_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_NAME_EDGE)
@@ -19,6 +22,10 @@ def generateItemGraph(graphNumber):
                        value=CONST_ITEM_HAS_DESCRIPTION_EDGE)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_ROLE_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_ROLE_EDGE)
+    itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_OP_NODE + str(graphNumber),
+                       value=CONST_ITEM_HAS_OP_EDGE)
+    itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_COUNT_NODE + str(graphNumber),
+                       value=CONST_ITEM_HAS_COUNT_EDGE)
 
     return itemGraph
 
@@ -68,6 +75,20 @@ def generateModPPGraph(graphNumber):
     return modPPGraph
 
 
+def generateRelationGraph(graphNumber):
+    relationGraph = networkx.MultiDiGraph()
+    relationGraph.add_node(CONST_RELATION_NODE + str(graphNumber), value=CONST_RELATION_NODE + str(graphNumber))
+
+    return relationGraph
+
+
+def generateConditionalGraph(graphNumber):
+    conditionalGraph = networkx.MultiDiGraph()
+    conditionalGraph.add_node(CONST_CONDITIONAL_NODE + str(graphNumber), value=CONST_CONDITIONAL_NODE + str(graphNumber))
+
+    return conditionalGraph
+
+
 class ItemGraph(object):
     # Constructor
     def __init__(self, graphNumber):
@@ -83,7 +104,12 @@ class ItemGraph(object):
         if currentValue == '':
             updatedValue = newValue
         else:
-            updatedValue = currentValue + '|' + newValue
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
         self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
 
     # Generic replace method based on whatever target is passed in
@@ -121,12 +147,23 @@ class ItemGraph(object):
     def replaceItemRole(self, newRole):
         self.__replace(CONST_ITEM_ROLE_NODE, newRole)
 
+    def appendItemOp(self, newOp):
+        self.__append(CONST_ITEM_OP_NODE, newOp)
+
+    def replaceItemOp(self, newOp):
+        self.__replace(CONST_ITEM_OP_NODE, newOp)
+
+    def appendItemCount(self, newCount):
+        self.__append(CONST_ITEM_COUNT_NODE, newCount)
+
+    def replaceItemCount(self, newCount):
+        self.__replace(CONST_ITEM_COUNT_NODE, newCount)
+
     # Method to find a node containing a given value
     def FindItemWithValue(self, valueToFind):
         if self.graph is not None:
             # iterate through all graph nodes
             for node, values in self.graph.nodes.data():
-                # print(node, values)
                 # If the current Node's value = the value passed in
                 if values[CONST_NODE_VALUE_KEY] == valueToFind:
                     return node
@@ -150,8 +187,8 @@ class ItemGraph(object):
 
     # Methods to add different types of edges between nodes
     def addActionPerformerEdges(self, performerNode, actionNode):
-        self.graph.add_edge(performerNode, actionNode, value=CONST_PERFORMS_EDGE)
-        self.graph.add_edge(actionNode, performerNode, value=CONST_IS_PERFORMED_EDGE)
+        self.graph.add_edge(performerNode, actionNode, value=CONST_IS_SOURCE_EDGE)
+        self.graph.add_edge(actionNode, performerNode, value=CONST_HAS_SOURCE_EDGE)
 
     def addActionTargetEdges(self, actionNode, targetNode):
         self.graph.add_edge(actionNode, targetNode, value=CONST_HAS_TARGET_EDGE)
@@ -165,14 +202,63 @@ class ItemGraph(object):
         self.graph.add_edge(modifierNode, objectNode, value=CONST_MODIFIES_OBJECT_EDGE)
         self.graph.add_edge(objectNode, modifierNode, value=CONST_IS_MODIFIED_EDGE)
 
+    def addRelationAttributeEdges(self, attributeNode, relationNode):
+        self.graph.add_edge(attributeNode, relationNode, value=CONST_RELATION_IS_ATTRIBUTE_EDGE)
+        self.graph.add_edge(relationNode, attributeNode, value=CONST_RELATION_HAS_PARENT_EDGE)
+
+    def addRelationParentEdges(self, parentNode, relationNode):
+        self.graph.add_edge(parentNode, relationNode, value=CONST_RELATION_IS_PARENT_EDGE)
+        self.graph.add_edge(relationNode, parentNode, value=CONST_RELATION_HAS_ATTRIBUTE_EDGE)
+
+    # Add positive conditional trigger edge between nodes - POSSIBLY DEPRECATED
     def addConditionalTriggerEdges(self, ifNodeValue, thenNodeValue):
         ifNode = self.FindItemWithValue(ifNodeValue)
         thenNode = self.FindItemWithValue(thenNodeValue)
         # We only want to trigger actions, not statement
         if ifNode is not None and thenNode is not None:
             if CONST_ACTION_NODE in thenNode:
-                self.graph.add_edge(ifNode, thenNode, value=CONST_TRIGGERS_EDGE)
+                self.graph.add_edge(ifNode, thenNode, value=CONST_TRIGGERS_IF_TRUE_EDGE)
                 self.graph.add_edge(thenNode, ifNode, value=CONST_TRIGGERED_BY_EDGE)
+
+    # Add negative conditional trigger edge between nodes - POSSIBLY DEPRECATED
+    def addConditionalNegationTriggerEdges(self, ifNodeValue, thenNodeValue):
+        ifNode = self.FindItemWithValue(ifNodeValue)
+        thenNode = self.FindItemWithValue(thenNodeValue)
+        # We only want to trigger actions, not statement
+        if ifNode is not None and thenNode is not None:
+            if CONST_ACTION_NODE in thenNode:
+                self.graph.add_edge(ifNode, thenNode, value=CONST_TRIGGERS_IF_FALSE_EDGE)
+                self.graph.add_edge(thenNode, ifNode, value=CONST_TRIGGERED_BY_EDGE)
+
+    # Add positive condition edge between if node and conditional node
+    def addConditionalConditionEdges(self, ifNodeValue, conditionalNodeValue):
+        ifNode = self.FindItemWithValue(ifNodeValue)
+        conditionalNode = self.FindItemWithValue(conditionalNodeValue)
+        # We only want to trigger conditionals, not statement
+        if ifNode is not None and conditionalNode is not None:
+            if CONST_CONDITIONAL_NODE in conditionalNode:
+                self.graph.add_edge(ifNode, conditionalNode, value=CONST_TRUE_CONDITION_OF_EDGE)
+                self.graph.add_edge(conditionalNode, ifNode, value=CONST_HAS_TRUE_CONDITION_EDGE)
+
+    # Add negative condition edge between if node and conditional node
+    def addConditionalNegationConditionEdges(self, ifNodeValue, conditionalNodeValue):
+        ifNode = self.FindItemWithValue(ifNodeValue)
+        conditionalNode = self.FindItemWithValue(conditionalNodeValue)
+        # We only want to trigger conditionals, not statement
+        if ifNode is not None and conditionalNode is not None:
+            if CONST_CONDITIONAL_NODE in conditionalNode:
+                self.graph.add_edge(ifNode, conditionalNode, value=CONST_FALSE_CONDITION_OF_EDGE)
+                self.graph.add_edge(conditionalNode, ifNode, value=CONST_HAS_FALSE_CONDITION_EDGE)
+
+    # Add consequence edge between then node and conditional node
+    def addConditionalConsequenceEdges(self, thenNodeValue, conditionalNodeValue):
+        thenNode = self.FindItemWithValue(thenNodeValue)
+        conditionalNode = self.FindItemWithValue(conditionalNodeValue)
+        # We only want to trigger conditionals, not statement
+        if thenNode is not None and conditionalNode is not None:
+            if CONST_CONDITIONAL_NODE in conditionalNode:
+                self.graph.add_edge(thenNode, conditionalNode, value=CONST_CONSEQUENCE_OF_EDGE)
+                self.graph.add_edge(conditionalNode, thenNode, value=CONST_HAS_CONSEQUENCE_EDGE)
 
     # Methods to replace values of specific nodes
     def ReplaceItemAffordanceAtSpecificNode(self, nodeToAddAffordance, newAffordance):
@@ -189,6 +275,7 @@ class ItemGraph(object):
             print("No node with direct object reference as value found")
             return False
 
+    # TODO: UPDATE THIS TO USE __append
     # Methods to replace values of specific nodes
     def AppendItemAffordanceAtSpecificNode(self, nodeToAddAffordance, newAffordance):
         node = self.FindItemWithValue(nodeToAddAffordance)
@@ -202,7 +289,12 @@ class ItemGraph(object):
                     if currentValue == '':
                         updatedValue = newAffordance
                     else:
-                        updatedValue = currentValue + '|' + newAffordance
+                        # Check if new value is already in the current value
+                        newValuePattern = re.compile(r"(^|\|)" + newAffordance + r"(\||$)")
+                        if re.search(newValuePattern, currentValue):
+                            updatedValue = currentValue
+                        else:
+                            updatedValue = currentValue + '|' + newAffordance
                     self.graph.nodes(data=True)[endNode][CONST_NODE_VALUE_KEY] = updatedValue
                     return True
         else:
@@ -216,7 +308,12 @@ class ItemGraph(object):
         if currentValue == '':
             updatedValue = newValue
         else:
-            updatedValue = currentValue + '|' + newValue
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
         self.graph.nodes(data=True)[nodeToAddValue][CONST_NODE_VALUE_KEY] = updatedValue
         return True
 
@@ -252,7 +349,12 @@ class PropertyGraph(object):
         if currentValue == '':
             updatedValue = newValue
         else:
-            updatedValue = currentValue + '|' + newValue
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
         self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
 
     # Generic replace method based on whatever target is passed in
@@ -322,7 +424,12 @@ class ActionGraph(object):
         if currentValue == '':
             updatedValue = newValue
         else:
-            updatedValue = currentValue + '|' + newValue
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
         self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
 
     # Generic replace method based on whatever target is passed in
@@ -369,7 +476,12 @@ class ModifierPPGraph(object):
         if currentValue == '':
             updatedValue = newValue
         else:
-            updatedValue = currentValue + '|' + newValue
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
         self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
 
     # Generic replace method based on whatever target is passed in
@@ -399,3 +511,80 @@ class ModifierPPGraph(object):
                     return node
         return None
 
+
+# Relation Graph
+class RelationGraph(object):
+    # Constructor
+    def __init__(self, graphNumber):
+        self.graphNumber = graphNumber
+        if graphNumber is not None:
+            self.graph = generateRelationGraph(self.graphNumber)
+        else:
+            self.graph = None
+
+    # Generic append method based on whatever target is passed in
+    def __append(self, target, newValue):
+        currentValue = self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY]
+        if currentValue == '':
+            updatedValue = newValue
+        else:
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
+        self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
+
+    # Generic replace method based on whatever target is passed in
+    def __replace(self, target, newValue):
+        self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = newValue
+
+    # Method to find a node containing a given value
+    def FindRelationWithValue(self, valueToFind):
+        if self.graph is not None:
+            # iterate through all graph nodes
+            for node, values in self.graph.nodes.data():
+                # If the current Node's value = the value passed in
+                if values[CONST_NODE_VALUE_KEY] == valueToFind:
+                    return node
+        return None
+
+
+# Relation Graph
+class ConditionalGraph(object):
+    # Constructor
+    def __init__(self, graphNumber):
+        self.graphNumber = graphNumber
+        if graphNumber is not None:
+            self.graph = generateConditionalGraph(self.graphNumber)
+        else:
+            self.graph = None
+
+    # Generic append method based on whatever target is passed in
+    def __append(self, target, newValue):
+        currentValue = self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY]
+        if currentValue == '':
+            updatedValue = newValue
+        else:
+            # Check if new value is already in the current value
+            newValuePattern = re.compile('\\b' + newValue + '\\b')
+            if re.search(newValuePattern, currentValue):
+                updatedValue = currentValue
+            else:
+                updatedValue = currentValue + '|' + newValue
+        self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = updatedValue
+
+    # Generic replace method based on whatever target is passed in
+    def __replace(self, target, newValue):
+        self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = newValue
+
+    # Method to find a node containing a given value
+    def FindConditionalWithValue(self, valueToFind):
+        if self.graph is not None:
+            # iterate through all graph nodes
+            for node, values in self.graph.nodes.data():
+                # If the current Node's value = the value passed in
+                if values[CONST_NODE_VALUE_KEY] == valueToFind:
+                    return node
+        return None
