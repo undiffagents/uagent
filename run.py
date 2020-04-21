@@ -9,6 +9,7 @@ def load_text(path):
     with open(path, 'r') as f:
         return f.read()
 
+#CK 4/16 - updated to allow for both PVT and VS task definitions
 
 def run_pvt():
     instructions = load_text('tasks/pvt/ace.txt')
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     taskText = ["","PVT","VS"]
 
     if do_outlog:
+        #log now indicates taskText, and time started
         thinklog = get_think_logger(logfilename=''.join(['data/logs/',taskText[taskID],"_",datetime.now().strftime("%Y-%M-%d_%H-%M-%S"),'.txt']), uselogfile=True)
 
 
