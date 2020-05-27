@@ -1,0 +1,31 @@
+       0.000      agent                   wait for [isa=instructions]
+       0.050      agent.vision            found {'isa': 'instructions', 'x': 10, 'y': 10, 'w': 100, 'h': 100, 'seen': False}
+       0.050      agent                   encode {'isa': 'instructions', 'x': 10, 'y': 10, 'w': 100, 'h': 100, 'seen': False}
+       0.235      agent.vision            encoded p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+The p:target is a letter and is correct.
+The p:distractor is a letter and is incorrect.
+Every letter is unique.
+Every letter is a:color.
+The p:target is X.
+The p:distractor is O.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.
+
+       0.235      agent.language          interpreting "p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+The p:target is a letter and is correct.
+The p:distractor is a letter and is incorrect.
+Every letter is unique.
+Every letter is a:color.
+The p:target is X.
+The p:distractor is O.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.
+"
