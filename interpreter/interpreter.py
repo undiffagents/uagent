@@ -32,9 +32,9 @@ def strip_xml(xml_string):
         elif "<drspp>" in line:
             line = line.split(">")[1]
             started = True
-        elif '&gt;' in line:
-            line = line.replace("&gt;", ">")
+        #elif '&gt;' in line: line = line.replace("&gt;", ">")
         if started:
+            line = line.replace("&gt;", ">")
             new_string.append(line)
     return new_string
 
