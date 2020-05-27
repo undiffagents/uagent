@@ -77,13 +77,13 @@ def interpret_ace(ace):
         if re.match(impPat,line):
             continue
         ma = re.match(objPat,line)
-        if ma: parseObject(ma)
+        if ma: parseObject(ma.groups())
         else: 
             ma = re.match(predPat,line)
-            if ma: parsePredicate(ma)
+            if ma: parsePredicate(ma.groups())
             else:
                 ma = re.match(propPat,line)
-                if ma: parseProperty(ma)
+                if ma: parseProperty(ma.groups())
                 else: raise
         for group in ma.groups(): print(group)
     
