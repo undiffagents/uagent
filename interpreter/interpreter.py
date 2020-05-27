@@ -55,7 +55,7 @@ def interpret_ace(ace):
     
     drs = getDRSFromACE(ace)    
     print(drs)
-    #makeDRSFile(drs)
+    makeDRSFile(drs)
     
     '''REWRITING PARSER HERE'''
     
