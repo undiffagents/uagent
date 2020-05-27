@@ -24,19 +24,16 @@ def runProlog(facts, prolog, prologfile):
     return reasonerFacts, groundRules
 
 def strip_xml(xml_string):
-    new_string = []
-    started = False
+    drsLines = []
+    drs = False
     for line in xml_string.splitlines():
         if "</drspp>" in line:
             break
         elif "<drspp>" in line:
             line = line.split(">")[1]
-            started = True
-        #elif '&gt;' in line: line = line.replace("&gt;", ">")
-        if started:
-            line = line.replace("&gt;", ">")
-            new_string.append(line)
-    return new_string
+            drs = True
+        if drs: drsLines.append(line.replace("&gt;", ">"))
+    return drsLines
 
 def getDRSFromACE(ace):
     print("Interpreting ACE...")
@@ -51,13 +48,44 @@ def getDRSFromACE(ace):
 def makeDRSFile(drs):
     open("interpreter/DRS.txt","w").write("\n".join(drs))
 
+def parseObject(obj):
+    pass
+
+def parsePredicate(pred):
+    pass
+
+def parseProperty(prop):
+    pass
+
 def interpret_ace(ace):
     
     drs = getDRSFromACE(ace)    
-    print(drs)
+    #print(drs)
     makeDRSFile(drs)
     
-    '''REWRITING PARSER HERE'''
+    '''REWRITING PARSER'''
+    
+    varsPat = re.compile("(\s*)\[([A-Z0-9\,]+)\].*")
+    objPat = re.compile("(\s*)object\(([A-Z0-9]+),(.+),(.+),(.+),(.+),(.+)\)-(\d+/\d+)\s*")
+    predPat = re.compile("(\s*)predicate\(([A-Z0-9]+),(.+),(.+),([A-Z0-9]+)\)-(\d+/\d+)\s*")
+    propPat = re.compile("(\s*)property\(([A-Z0-9]+),(.+),(.+)\)-(\d+/\d+)\s*")
+    impPat = re.compile("(\s+)(=>).*")
+    
+    for line in drs:
+        if re.match(varsPat,line):
+            continue
+        if re.match(impPat,line):
+            continue
+        ma = re.match(objPat,line)
+        if ma: parseObject(ma)
+        else: 
+            ma = re.match(predPat,line)
+            if ma: parsePredicate(ma)
+            else:
+                ma = re.match(propPat,line)
+                if ma: parseProperty(ma)
+                else: raise
+        for group in ma.groups(): print(group)
     
     print("Reasoning...")
     prologfile = "interpreter/prolog.pl"
