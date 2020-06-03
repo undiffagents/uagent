@@ -1,5 +1,0 @@
-hasProperty(target,unique)
-hasProperty(target,color)
-hasProperty(visual-search,active)
-appearsOn(target,screen)
-press(subject,button)

@@ -1,5 +1,0 @@
-letter(target) => hasProperty(target,unique)
-letter(target) => hasProperty(target,color)
-isPartOf(subject,visual-search),subject(subject),task(visual-search) => hasProperty(visual-search,active)
-hasProperty(visual-search,active),letter(target),screen(screen),task(visual-search) => appearsOn(target,screen)
-appearsOn(target,screen),hasProperty(target,correct),letter(target),subject(subject),button(button),screen(screen) => press(subject,button)
