@@ -15,3 +15,4 @@ tmp_DRS.txt
 tdb.lock
 data/logs/*
 interpreter/*.txt
+interpreter/*.pl
