@@ -34,6 +34,26 @@ ___ indicates the CV term is used in the link description.
 	- audible
 	- visible
 
+## THINK CV
+Terms explicitly defined within uagent/uagent.py
+(XX) indicates terms not defined in the Ontology
+- action_list
+	- press (XX)
+	- click
+	- remember (XX)
+- condition_list (basically affordance in Ontology at the moment)
+	- appearsOn (XX)
+	- visible (treated identically to appearsOn for now)
+- item_role_list
+	- target
+	- stimulus
+	- distractor
+	- responseButton
+	- infoButton
+- agent_synonym_list (XX) (terms that let the UAgent know it is the subject of an action/rule/whatever)
+	- subject
+	- participant
+	- you
 
 ## Potential CV Additions
 CV terms likely to be necessary, which can be added to existing Ontology structures.
@@ -41,12 +61,10 @@ CV terms likely to be necessary, which can be added to existing Ontology structu
 - Action; :ofType
 	- typing
 	- pressing
-	- ?
 	CK: what about more general actions (responding), which are then mapped with other words?
 - Affordance; :ofType
 	- pressable
 	- typable (??)
-	- ?
 
 
 ## Potential CV Expansions
