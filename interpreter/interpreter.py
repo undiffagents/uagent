@@ -210,7 +210,8 @@ def makeDRSFile(drs):
 
 def groundExpressions(predicates,objects,properties,fact=True):
     '''performs a "grounding" on DRS objects so that the proper terms
-    are uniformly substituted in accordance with the semantics'''
+    are uniformly substituted in accordance with the semantics to
+    obtain Classes and Roles for use in a logic or rules-based program'''
     
     for i in range(len(predicates)):
         predicates[i] = groundPredicate(predicates[i],objects,properties)
