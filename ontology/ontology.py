@@ -3,6 +3,7 @@ import os
 import re
 import socket
 import subprocess
+import time
 
 
 class Ontology:
@@ -38,11 +39,11 @@ class Ontology:
 
     def add_instruction_knowledge(self,ace_output):
         if not self.initialized:
-        
+            
             print("Adding knowledge to ontology...")
             
             facts,rules,groundRules,newFacts = ace_output
-
+            
             string = self.initialInstructionType
 
             for fact in facts:
@@ -60,6 +61,8 @@ class Ontology:
             # self.add_string(self.initialInstruction,':asFactString',drsFile/Str)
             
             self.initialized = True
+            
+            print(self.get_instruction_facts())
             
             return facts,rules,groundRules,newFacts
 

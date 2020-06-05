@@ -11,8 +11,10 @@ class Class:
         self.inst = self.term(inst)
         
     def term(self,term):
-        m = re.match("(?:named|string)\((.*)\)",term)
-        if m: return '"' + m.groups()[0] + '"'
+        m = re.match("string\((.*)\)",term)
+        if m: return "'" + m.groups()[0] + "'"
+        m = re.match("named\((.*)\)",term)
+        if m: return m.groups()[0]        
         return term 
     
     def name(self,name):
@@ -33,8 +35,10 @@ class Role:
         self.obj = self.term(obj)
         
     def term(self,term):
-        m = re.match("(?:named|string)\((.*)\)",term)
-        if m: return '"' + m.groups()[0] + '"'
+        m = re.match("string\((.*)\)",term)
+        if m: return "'" + m.groups()[0] + "'"
+        m = re.match("named\((.*)\)",term)
+        if m: return m.groups()[0] 
         return term 
     
     def name(self,name):
@@ -186,8 +190,8 @@ def runProlog(facts, prolog, prologfile):
     reasonerFacts = open(factFile, "r").read().splitlines()
     groundRules = open(groundFile, "r").read().splitlines()
 
-    os.remove(factFile)
-    os.remove(groundFile)
+    #os.remove(factFile)
+    #os.remove(groundFile)
 
     return reasonerFacts, groundRules
 
@@ -326,7 +330,7 @@ def interpret_ace(ace):
     
     drs = getDRSFromACE(ace)    
     print('\n'.join(drs))
-    #makeDRSFile(drs)
+    makeDRSFile(drs)
     
     predicates = []
     objects = ObjectList()    
