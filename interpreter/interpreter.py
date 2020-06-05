@@ -2,17 +2,17 @@ import os
 import re
 import subprocess
 
+
 class Class:
-    
+    '''Corresponds to both a Descrioption logic Class and a prolog predicate arity /1'''
     def __init__(self,letter,name,inst):
         self.letter = letter
         self.name = self.name(name)
         self.inst = self.term(inst)
         
     def term(self,term):
-        m = re.match("named\((.*)\)",term)
-        if m:
-            return m.groups()[0]
+        m = re.match("(?:named|string)\((.*)\)",term)
+        if m: return '"' + m.groups()[0] + '"'
         return term 
     
     def name(self,name):
@@ -25,7 +25,7 @@ class Class:
         return self.name + "(" + self.inst + ")"    
 
 class Role:
-    
+    '''Corresponds to both a Descrioption logic Role and a prolog predicate arity /2'''
     def __init__(self,letter,name,subj,obj):
         self.letter = letter
         self.name = self.name(name)
@@ -33,8 +33,8 @@ class Role:
         self.obj = self.term(obj)
         
     def term(self,term):
-        m = re.match("named\((.*)\)",term)
-        if m: return m.groups()[0]
+        m = re.match("(?:named|string)\((.*)\)",term)
+        if m: return '"' + m.groups()[0] + '"'
         return term 
     
     def name(self,name):
@@ -47,7 +47,7 @@ class Role:
         return self.name + "(" + self.subj + "," + self.obj + ")"
         
 class Object:
-    
+    '''DRS object'''
     def __init__(self,letter,name,quant,stuff1,stuff2,stuff3):
         self.letter = letter
         self.name = name
@@ -60,7 +60,7 @@ class Object:
         return self.name
 
 class ObjectList:
-    
+    '''List of DRS objects'''
     def __init__(self):
         self.objs = []
         self.var = {}
@@ -81,7 +81,7 @@ class ObjectList:
         return "[" + ",".join([str(x) for x in self.objs]) + "]"    
         
 class Property:
-    
+    '''DRS property.'''
     def __init__(self,letter,name,type):
         self.letter = letter
         self.name = name
@@ -94,7 +94,7 @@ class Property:
         return self.name   
 
 class PropertyList:
-    
+    '''List of DRS properties'''
     def __init__(self):
         self.props = []
         self.var = {}
@@ -111,6 +111,7 @@ class PropertyList:
         return "[" + ",".join([str(x) for x in self.props]) + "]"        
 
 class Body:
+    '''Body of a prolog rule. append and remove maintain a list of terms for verification.'''
     def __init__(self):
         self.body = []
         self.var = set()
@@ -126,6 +127,7 @@ class Body:
         oldVars = set()
         if isinstance(pred,Class): oldVars.add(pred.inst)
         if isinstance(pred,Role): oldVars.add(pred.subj) ; oldVars.add(pred.obj)
+        print(self.var)
         self.body.remove(pred)
         for pred in self.body:
             if isinstance(pred,Class) and pred.inst in oldVars:
@@ -139,6 +141,7 @@ class Body:
                 if len(oldVars) == 0: return
         for var in oldVars:
             self.var.remove(var)
+        print(self.var)
         
     
     def __str__(self):        
@@ -148,7 +151,7 @@ class Body:
         return ",".join([str(x) for x in self.body])  
 
 class Implication:
-    
+    '''Prolog Rule'''
     def __init__(self,body,head):
         self.head = head
         self.body = body
@@ -163,11 +166,16 @@ class Implication:
         return str(self.head) + ":-" + ",".join([str(x) for x in self.body.body])
     
 def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
+    '''writes a prolog file that executes a logic program built from 
+    the instructions that will produce all facts it enatils in one 
+    file and all rules it entails in another'''    
     program = sorted(prolog+facts, key=lambda x: x[0])
-    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}.\n'.format('{} :- {}'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else thing) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
+    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {},!.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
 
 def runProlog(facts, prolog, prologfile):
-
+    '''runs the prolog file and reads and discards its output files
+    returns the lines from the files it discards'''
+    
     factFile = "interpreter/reasonerFacts.txt"
     groundFile = "interpreter/groundRules.txt"
 
@@ -178,39 +186,32 @@ def runProlog(facts, prolog, prologfile):
     reasonerFacts = open(factFile, "r").read().splitlines()
     groundRules = open(groundFile, "r").read().splitlines()
 
-    #os.remove(factFile)
-    #os.remove(groundFile)
+    os.remove(factFile)
+    os.remove(groundFile)
 
     return reasonerFacts, groundRules
 
-def strip_xml(xml_string):
-    drsLines = []
-    drs = False
-    for line in xml_string.splitlines():
-        if "</drspp>" in line:
-            break
-        elif "<drspp>" in line:
-            line = line.split(">")[1]
-            drs = True
-        if drs: drsLines.append(line.replace("&gt;", ">"))
-    return drsLines
-
 def getDRSFromACE(ace):
+    '''Runs APE on the ACE file and returns the lines of the DRS it created'''    
     print("Interpreting ACE...")
     
     process = subprocess.Popen(['lib/ape/ape.exe', '-cdrspp'],stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     process.stdin.write(ace.encode('utf-8'))
-    drs = strip_xml(process.communicate()[0].decode('utf-8'))
+    drs = process.communicate()[0].decode('utf-8').splitlines()
     process.stdin.close()  # possibly unnecessary when function returns? not great at subprocess
     
     return drs
 
 def makeDRSFile(drs):
+    '''Self explanatory'''    
     open("interpreter/DRS.txt","w").write("\n".join(drs))
 
 def groundExpressions(predicates,objects,properties,fact=True):
+    '''performs a "grounding" on DRS objects so that the proper terms
+    are uniformly substituted in accordance with the semantics'''
+    
     for i in range(len(predicates)):
-        predicates[i] = groundPred(predicates[i],objects,properties)
+        predicates[i] = groundPredicate(predicates[i],objects,properties)
     if fact:
         classes = set([y.name for y in list(filter(lambda x: isinstance(x,Class),predicates))])
         for obj in objects.objs:
@@ -224,51 +225,64 @@ def groundExpressions(predicates,objects,properties,fact=True):
             
     return predicates
 
-def groundPred(pred,objects,properties):
-    m = re.match("([A-Z]+[0-9]*)",pred.subj)
-    m = None if not m else m.groups()[0]
-    n  = re.match("([A-Z]+[0-9]*)",pred.obj)
-    n = None if not n else n.groups()[0]
-    if m and n:        
+def groundPredicate(pred,objects,properties):
+    '''"Grounds" one DRS predicate'''
+    
+    subjectVar = re.match("([A-Z][0-9]*)",pred.subj)
+    objectVar  = re.match("([A-Z][0-9]*)",pred.obj)
+    
+    subjectVar = None if not subjectVar else subjectVar.groups()[0]    
+    objectVar = None if not objectVar else objectVar.groups()[0]
+    if subjectVar and objectVar:
         for var in objects.var:           
-            if var == m:
-                if objects.var[var] in objects.var and objects.var[objects.var[var]] not in objects.var:
-                    pred.subj = objects.var[objects.var[var]]
-                else:
-                    pred.subj = objects.var[var]
-                m = None
-            if var == n:
-                if objects.var[var] in objects.var and objects.var[objects.var[var]] not in objects.var:
-                    pred.obj = objects.var[objects.var[var]]
-                else:
-                    pred.obj = objects.var[var]
-                n = None
-            if m == None and n == None: return pred
+            if var == subjectVar:
+                pred.subj = objects.var[var]
+                subjectVar = None
+            if var == objectVar:
+                pred.obj = objects.var[var]
+                objectVar = None
+            if subjectVar == None and objectVar == None:
+                if pred.name == 'be': return Class(pred.letter,pred.obj,pred.subj)
+                else: return pred
         for var in properties.var:
-            if var == n:
-                pred = Role(pred.letter,"hasProperty",pred.subj,properties.var[var])
-    elif n:
-        for var in objects.var:
-            if var == n:
-                newName = objects.var[var] if objects.var[var] not in objects.var else objects.var[objects.var[var]]
-                objects.var[newName] = pred.subj
-                return Class(pred.letter,newName,pred.subj)
-        for var in properties.var:
-            if var == n:
+            if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])
-    elif m: raise
-    return pred
+        return pred
+    elif objectVar:   
+        for var in objects.var:
+            if var == objectVar:
+                objects.var[pred.subj] = objects.var[var]
+                objects.var[var] = pred.subj
+                return Class(pred.letter,objects.var[pred.subj],objects.var[var])
+        for var in properties.var:
+            if var == objectVar:
+                return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])
+        return pred
+    elif subjectVar: 
+        for var in objects.var:
+            if var == subjectVar:
+                return Role(pred.letter,"sameThings",objects.var[pred.subj],pred.obj)
+        for var in properties.var:
+            if var == objectVar:
+                return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])   
+    
+    raise Exception("Undefined Semantics",pred)
 
 def addGlobalValuesToPredicateList(l,globalObjects,globalProperties):
-    l[2].props.extend(globalProperties.props)
+    '''Extend local variables in implications with the global variables from the DRS'''
+    
+    # properties are global
     l[2].var.update(globalProperties.var)
+    # objects are local    
     keys = [k for k in l[1].var]
     for k in keys:
         if l[1].var[k] in globalObjects.var.values():
-            l[1].var = l[1].var.pop(k)
+            l[1].var.pop(k)
     return l
 
 def removeDuplicates(body):
+    '''Self explanatory'''
+    
     noDups = []
     for atom in body.body:
         unique = True
@@ -279,36 +293,36 @@ def removeDuplicates(body):
     return body
 
 def groundImplications(implications,globalObjects,globalProperties):
+    '''performs a "grounding" on each DRS object in an implication'''
+    
     newImps = []
-    for head,body in implications:
+    for head,body in implications:    
         head = set(groundExpressions(*addGlobalValuesToPredicateList(head,globalObjects,globalProperties),False))        
         newBody = Body()
         for pred in groundExpressions(*addGlobalValuesToPredicateList(body,globalObjects,globalProperties),False):
             newBody.append(pred)
         for pred in set(filter(lambda x: isinstance(x,Class),head)):
-            if re.match("[A-Z]+[0-9]*",pred.inst) and pred.inst not in newBody.var:
+            if re.match("[A-Z][0-9]*",pred.inst) and pred.inst not in newBody.var:
                 newBody.append(pred)
                 head.remove(pred)
         for pred in set(filter(lambda x: isinstance(x,Role),head)):
-            if (re.match("[A-Z]+[0-9]*",pred.subj) and pred.subj not in newBody.var):
-                if pred.subj in globalObjects.var:
-                    newBody.append(Class(pred.subj,globalObjects.var[pred.subj],pred.subj))
-            if (re.match("[A-Z]+[0-9]*",pred.obj) and pred.obj not in newBody.var):
-                newBody.append(Class(pred.obj,globalObjects.var[pred.obj],pred.obj))
+            if re.match("[A-Z][0-9]*",pred.subj) and pred.subj not in newBody.var and pred.subj in globalObjects.var: 
+                newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
+            if (re.match("[A-Z][0-9]*",pred.obj) and pred.obj not in newBody.var): 
+                newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
         for pred in set(filter(lambda x: isinstance(x,Class),newBody.body)):
-            if pred.inst in globalObjects.var:
-                newBody.append(Class(pred.inst,globalObjects.var[pred.inst],pred.inst))
+            if pred.inst in globalObjects.var: newBody.append(Class(pred.inst,globalObjects.var[pred.inst],pred.inst))
         for pred in set(filter(lambda x: isinstance(x,Role),newBody.body)):
             if pred.subj in globalObjects.var:
-                newBody.append(Class(pred.subj,globalObjects.var[pred.subj],pred.subj))
+                newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
             if pred.obj in globalObjects.var:
-                newBody.append(Class(pred.obj,globalObjects.var[pred.obj],pred.obj))
+                newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
         for atom in head:
             newImps.append(Implication(removeDuplicates(newBody),atom))
-        
     return newImps
 
 def interpret_ace(ace):
+    '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
     
     drs = getDRSFromACE(ace)    
     print('\n'.join(drs))
@@ -325,22 +339,30 @@ def interpret_ace(ace):
     head = []
     body = [] 
     twice = False
-        
-    varsPat = re.compile("\[([A-Z0-9\,]+)\].*")   
-    objPat = re.compile("object\(([A-Z0-9]+),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    predPat = re.compile("predicate\(([A-Z0-9]+),(.+),(.+),([A-Z0-9]+)\)-(\d+)/(\d+)\s*")
-    propPat = re.compile("property\(([A-Z0-9]+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    impVarsPat = re.compile("\s+\[([A-Z0-9\,]+)\].*")
-    impSignPat = re.compile("\s+(=>)\s*")
-    impObjPat = re.compile("\s+object\(([A-Z0-9]+),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    impPredPat = re.compile("\s+predicate\(([A-Z0-9]+),(.+),(.+),([A-Z0-9]+)\)-(\d+)/(\d+)\s*")
-    impPropPat = re.compile("\s+property\(([A-Z0-9]+),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
+    # these match all possible DRS lines as defined by the current semantics
+    xmlBeforeDRSPattern = re.compile("^\s*(?:<.*>)?$")
+    variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    objectPattern = re.compile("object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    predicatePattern = re.compile("predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    propertyPattern = re.compile("property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
+    doneReadingPattern = re.compile("^\s*</drspp>.*") 
+    
+    # implications have the same stuff, they are just indented (\s+)
+    implicationVariablesPattern = re.compile("\s+\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    implicationSignPattern = re.compile("\s+(=&gt;)\s*")
+    implicationObjectPattern = re.compile("\s+object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPredicatePattern = re.compile("\s+predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPropertyPattern = re.compile("\s+property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
     for line in drs:
-        if re.match(varsPat,line):
+        if re.match(doneReadingPattern,line):
+            break
+        if re.match(xmlBeforeDRSPattern,line):
+            continue        
+        if re.match(variablesPattern,line):
             continue
-        elif re.match(impVarsPat,line):
+        elif re.match(implicationVariablesPattern,line):
             if len(body) == 0: 
                 continue
             elif twice:
@@ -352,30 +374,30 @@ def interpret_ace(ace):
                 twice = False
             else:
                 twice = True                
-        elif re.match(impSignPat,line):
+        elif re.match(implicationSignPattern,line):
             body = (impRoles,impObjects,impProperties)
             impObjects = ObjectList()    
             impProperties = PropertyList()    
             impRoles = []
         else:
-            ma = re.match(objPat,line)
+            ma = re.match(objectPattern,line)
             if ma: objects.append(ma.groups()[:-2])
             else: 
-                ma = re.match(predPat,line)
+                ma = re.match(predicatePattern,line)
                 if ma: predicates.append(Role(*ma.groups()[:-2]))
                 else:
-                    ma = re.match(propPat,line)
+                    ma = re.match(propertyPattern,line)
                     if ma: properties.append(ma.groups()[:-2])
                     else: 
-                        ma = re.match(impObjPat,line)
+                        ma = re.match(implicationObjectPattern,line)
                         if ma: impObjects.append(ma.groups()[:-2])
                         else: 
-                            ma = re.match(impPredPat,line)
+                            ma = re.match(implicationPredicatePattern,line)
                             if ma: impRoles.append(Role(*ma.groups()[:-2]))
                             else:
-                                ma = re.match(impPropPat,line)
+                                ma = re.match(implicationPropertyPattern,line)
                                 if ma: impProperties.append(ma.groups()[:-2])
-                                else: raise
+                                else: raise Exception("Undefined DRS Expression",line)
     
     if len(body) != 0: implications.append([(impRoles,impObjects,impProperties),body])
     
