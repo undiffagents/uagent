@@ -408,7 +408,7 @@ def interpret_ace(ace):
     print("Reasoning...")
     prologfile = "interpreter/prolog.pl"
     reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile)
-    #os.remove(prologfile)
+    os.remove(prologfile)
 
     return set(facts), set([imp.toRule() for imp in implications]), set(groundRules), set(reasonerFacts)
 
