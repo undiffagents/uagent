@@ -170,7 +170,7 @@ class Implication:
 def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
     '''writes a prolog file that executes a logic program built from 
     the instructions that will produce all facts it enatils in one 
-    file and all rules it entails in another'''    
+    file and all solved rules it used to obtain enatilments facts in another'''    
     program = sorted(prolog+facts, key=lambda x: x[0])
     open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {},!.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
 
