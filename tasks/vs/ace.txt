@@ -2,12 +2,12 @@ p:Visual-Search is a task.
 There is a button that v:isPartOf the task.
 There is a subject that v:isPartOf the task.
 There is a screen that v:isPartOf the task.
-The p:target is a letter and is correct.
-The p:distractor is a letter and is incorrect.
-The p:target is "X".
+The target is a letter and is correct.
+The n:distractor is a letter and is incorrect.
+The target is "X".
 Every letter is unique.
 Every letter is a:color.
-The p:distractor is "O".
+The n:distractor is "O".
 If the subject v:isPartOf the task then the task is active.
 If the task is active then a letter v:appearsOn the screen.
 If a letter v:appearsOn the screen and it is correct then the subject presses the button.
