@@ -188,8 +188,8 @@ def runProlog(facts, prolog, prologfile):
     reasonerFacts = open(factFile, "r").read().splitlines()
     groundRules = open(groundFile, "r").read().splitlines()
 
-    #os.remove(factFile)
-    #os.remove(groundFile)
+    os.remove(factFile)
+    os.remove(groundFile)
 
     return reasonerFacts, groundRules
 
