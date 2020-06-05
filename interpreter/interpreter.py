@@ -131,7 +131,6 @@ class Body:
         oldVars = set()
         if isinstance(pred,Class): oldVars.add(pred.inst)
         if isinstance(pred,Role): oldVars.add(pred.subj) ; oldVars.add(pred.obj)
-        print(self.var)
         self.body.remove(pred)
         for pred in self.body:
             if isinstance(pred,Class) and pred.inst in oldVars:
@@ -145,7 +144,6 @@ class Body:
                 if len(oldVars) == 0: return
         for var in oldVars:
             self.var.remove(var)
-        print(self.var)
         
     
     def __str__(self):        
