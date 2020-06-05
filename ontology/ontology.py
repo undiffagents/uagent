@@ -62,8 +62,6 @@ class Ontology:
             
             self.initialized = True
             
-            print(self.get_instruction_facts())
-            
             return facts,rules,groundRules,newFacts
 
     def query(self,query):
