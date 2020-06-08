@@ -352,7 +352,7 @@ def groundImplications(implications,globalObjects,globalProperties):
             newImps.append(Implication(removeDuplicates(newBody),atom))
     return newImps
 
-def interpret_ace(ace,makeDRSFile = True):
+def interpret_ace(ace,makeDRSFile = False):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
     
     drs = getDRSFromACE(ace)   
@@ -455,7 +455,7 @@ def interpret_ace(ace,makeDRSFile = True):
     print("Reasoning...")
     prologfile = "interpreter/prolog.pl"
     reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile)
-    #os.remove(prologfile)
+    os.remove(prologfile)
 
     return set(facts), set([imp.toRule() for imp in implications]), set(groundRules), set(reasonerFacts)
 
