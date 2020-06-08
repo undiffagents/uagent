@@ -52,7 +52,7 @@ class Role:
         
 class Object:
     '''DRS object'''
-    def __init__(self,letter,name,quant,stuff1,stuff2,stuff3):
+    def __init__(self,indent,letter,name,quant,stuff1,stuff2,stuff3):
         self.letter = letter
         self.name = name
         self.quant = quant
@@ -86,7 +86,7 @@ class ObjectList:
         
 class Property:
     '''DRS property.'''
-    def __init__(self,letter,name,type):
+    def __init__(self,indent,letter,name,type):
         self.letter = letter
         self.name = name
         self.type = type
@@ -172,7 +172,7 @@ def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
     the instructions that will produce all facts it enatils in one 
     file and all solved rules it used to obtain enatilments facts in another'''    
     program = sorted(prolog+facts, key=lambda x: x[0])
-    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {},!.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),write(Stream2,{}),write(Stream2,"\\n"),write(Stream,{}),write(Stream,"\\n")'.format(''.join(['write(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
+    open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),writeq(Stream2,{}),writeln(Stream2,""),writeq(Stream,{}),writeln(Stream,"")'.format(''.join(['writeq(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
 
 def runProlog(facts, prolog, prologfile):
     '''runs the prolog file and reads and discards its output files
@@ -204,28 +204,56 @@ def getDRSFromACE(ace):
     
     return drs
 
-def makeDRSFile(drs):
+def appendToDRSFile(drsline):
     '''Self explanatory'''    
-    open("interpreter/DRS.txt","w").write("\n".join(drs))
+    open("interpreter/DRS.txt","a").write(drsline + '\n')
 
 def groundExpressions(predicates,objects,properties,fact=True):
     '''performs a "grounding" on DRS objects so that the proper terms
     are uniformly substituted in accordance with the semantics to
     obtain Classes and Roles for use in a logic or rules-based program'''
     
+    sameThings = []
+    
     for i in range(len(predicates)):
         predicates[i] = groundPredicate(predicates[i],objects,properties)
+        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])    
+        
+    if fact: classes = set([y.name for y in list(filter(lambda x: isinstance(x,Class),predicates))])    
+    
+    sameNames = []
+    for same in sameThings:
+        for pred in predicates:
+            if pred.name == 'sameThings': continue
+            if isinstance(pred,Class):
+                if pred.inst == same.obj and pred.inst != same.subj:
+                    classes.add(pred.inst)
+                    sameNames.append(Class(pred.letter,pred.name,same.subj))
+                elif pred.inst == same.subj and pred.inst != same.obj:
+                    classes.add(pred.inst)
+                    sameNames.append(Class(pred.letter,pred.name,same.obj))
+            elif isinstance(pred,Role): 
+                if pred.obj == same.obj and pred.obj != same.subj:
+                    sameNames.append(Role(pred.letter,pred.name,pred.subj,same.subj))
+                elif pred.obj == same.subj and pred.obj != same.obj:
+                    sameNames.append(Role(pred.letter,pred.name,pred.subj,same.obj))    
+                if pred.subj == same.obj and pred.subj != same.subj:
+                    sameNames.append(Role(pred.letter,pred.name,same.subj,pred.obj))
+                elif pred.subj == same.subj and pred.subj != same.obj:
+                    sameNames.append(Role(pred.letter,pred.name,same.obj,pred.obj))
+                    
     if fact:
-        classes = set([y.name for y in list(filter(lambda x: isinstance(x,Class),predicates))])
         for obj in objects.objs:
-            if obj.name in classes: continue
+            if obj.name in classes or obj.name == 'sameThings': continue
             else: 
                 predicates.append(Class(obj.letter,obj.name,obj.name))
             classes.add(obj.name)
     else:
         for obj in objects.objs: 
             predicates.append(Class(obj.letter,obj.name,obj.letter)) 
-            
+    
+    predicates = predicates + sameNames   
+        
     return predicates
 
 def groundPredicate(pred,objects,properties):
@@ -324,12 +352,11 @@ def groundImplications(implications,globalObjects,globalProperties):
             newImps.append(Implication(removeDuplicates(newBody),atom))
     return newImps
 
-def interpret_ace(ace):
+def interpret_ace(ace,makeDRSFile = True):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
     
-    drs = getDRSFromACE(ace)    
-    print('\n'.join(drs))
-    makeDRSFile(drs)
+    drs = getDRSFromACE(ace)   
+    if makeDRSFile and os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")
     
     predicates = []
     objects = ObjectList()    
@@ -346,28 +373,30 @@ def interpret_ace(ace):
     # these match all possible DRS lines as defined by the current semantics
     xmlBeforeDRSPattern = re.compile("^\s*(?:<.*>)?$")
     variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
-    objectPattern = re.compile("object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    predicatePattern = re.compile("predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    propertyPattern = re.compile("property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
+    objectPattern = re.compile("()object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    predicatePattern = re.compile("()predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    propertyPattern = re.compile("()property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
     doneReadingPattern = re.compile("^\s*</drspp>.*") 
     
     # implications have the same stuff, they are just indented (\s+)
-    implicationVariablesPattern = re.compile("\s+\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
-    implicationSignPattern = re.compile("\s+(=&gt;)\s*")
-    implicationObjectPattern = re.compile("\s+object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    implicationPredicatePattern = re.compile("\s+predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    implicationPropertyPattern = re.compile("\s+property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
+    implicationVariablesPattern = re.compile("(\s+)\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    implicationSignPattern = re.compile("(\s+)(=&gt;)\s*")
+    implicationObjectPattern = re.compile("(\s+)object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPredicatePattern = re.compile("(\s+)predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
     for line in drs:
         if re.match(doneReadingPattern,line):
             break
         if re.match(xmlBeforeDRSPattern,line):
-            continue        
-        if re.match(variablesPattern,line):
+            continue       
+        m = re.match(variablesPattern,line)
+        if m:
+            if makeDRSFile: appendToDRSFile('['+m.groups()[0]+']')
             continue
-        elif re.match(implicationVariablesPattern,line):
-            if len(body) == 0: 
-                continue
+        if re.match(implicationVariablesPattern,line):
+            if makeDRSFile: appendToDRSFile(line)
+            if len(body) == 0: continue
             elif twice:
                 implications.append(((impRoles,impObjects,impProperties),body))
                 impObjects = ObjectList()    
@@ -375,32 +404,47 @@ def interpret_ace(ace):
                 impRoles = []                
                 body = []
                 twice = False
-            else:
-                twice = True                
-        elif re.match(implicationSignPattern,line):
+            else: twice = True 
+            continue
+        m = re.match(implicationSignPattern,line)
+        if re.match(implicationSignPattern,line):
+            if makeDRSFile: appendToDRSFile(m.groups()[0]+'=>')
             body = (impRoles,impObjects,impProperties)
             impObjects = ObjectList()    
             impProperties = PropertyList()    
             impRoles = []
-        else:
-            ma = re.match(objectPattern,line)
-            if ma: objects.append(ma.groups()[:-2])
-            else: 
-                ma = re.match(predicatePattern,line)
-                if ma: predicates.append(Role(*ma.groups()[:-2]))
-                else:
-                    ma = re.match(propertyPattern,line)
-                    if ma: properties.append(ma.groups()[:-2])
-                    else: 
-                        ma = re.match(implicationObjectPattern,line)
-                        if ma: impObjects.append(ma.groups()[:-2])
-                        else: 
-                            ma = re.match(implicationPredicatePattern,line)
-                            if ma: impRoles.append(Role(*ma.groups()[:-2]))
-                            else:
-                                ma = re.match(implicationPropertyPattern,line)
-                                if ma: impProperties.append(ma.groups()[:-2])
-                                else: raise Exception("Undefined DRS Expression",line)
+            continue
+        ma = re.match(objectPattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            objects.append(ma.groups()[:-2])
+            continue
+        ma = re.match(predicatePattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            predicates.append(Role(*ma.groups()[1:-2]))
+            continue
+        ma = re.match(propertyPattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            properties.append(ma.groups()[:-2])
+            continue
+        ma = re.match(implicationObjectPattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            impObjects.append(ma.groups()[:-2])
+            continue
+        ma = re.match(implicationPredicatePattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            impRoles.append(Role(*ma.groups()[1:-2]))
+            continue
+        ma = re.match(implicationPropertyPattern,line)
+        if ma: 
+            if makeDRSFile: appendToDRSFile(line)
+            impProperties.append(ma.groups()[:-2])
+            continue
+        raise Exception("Undefined DRS Expression",line)
     
     if len(body) != 0: implications.append([(impRoles,impObjects,impProperties),body])
     
@@ -411,7 +455,7 @@ def interpret_ace(ace):
     print("Reasoning...")
     prologfile = "interpreter/prolog.pl"
     reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile)
-    os.remove(prologfile)
+    #os.remove(prologfile)
 
     return set(facts), set([imp.toRule() for imp in implications]), set(groundRules), set(reasonerFacts)
 
