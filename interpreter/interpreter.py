@@ -174,7 +174,7 @@ def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
     program = sorted(prolog+facts, key=lambda x: x[0])
     open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(['forall(({}),({})),\n'.format(thing[0]+","+",".join(thing[1]), '{}write(Stream2," => "),writeq(Stream2,{}),writeln(Stream2,""),writeq(Stream,{}),writeln(Stream,"")'.format(''.join(['writeq(Stream2,{}),{}'.format(stuff, 'write(Stream2,","),' if not stuff == thing[1][-1] else "") for stuff in thing[1]]), thing[0], thing[0])) for thing in prolog])))
 
-def runProlog(facts, prolog, prologfile):
+def runProlog(facts, prolog, prologfile,makeFiles):
     '''runs the prolog file and reads and discards its output files
     returns the lines from the files it discards'''
     
@@ -188,8 +188,8 @@ def runProlog(facts, prolog, prologfile):
     reasonerFacts = open(factFile, "r").read().splitlines()
     groundRules = open(groundFile, "r").read().splitlines()
 
-    os.remove(factFile)
-    os.remove(groundFile)
+    if not makeFiles: os.remove(factFile)
+    if not makeFiles: os.remove(groundFile)
 
     return reasonerFacts, groundRules
 
@@ -244,7 +244,7 @@ def groundExpressions(predicates,objects,properties,fact=True):
                     
     if fact:
         for obj in objects.objs:
-            if obj.name in classes or obj.name == 'sameThings': continue
+            if obj.name in classes: continue
             else: 
                 predicates.append(Class(obj.letter,obj.name,obj.name))
             classes.add(obj.name)
@@ -352,11 +352,11 @@ def groundImplications(implications,globalObjects,globalProperties):
             newImps.append(Implication(removeDuplicates(newBody),atom))
     return newImps
 
-def interpret_ace(ace,makeDRSFile = False):
+def interpret_ace(ace,makeFiles = False):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
     
     drs = getDRSFromACE(ace)   
-    if makeDRSFile and os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")
+    if makeFiles and os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")
     
     predicates = []
     objects = ObjectList()    
@@ -386,16 +386,17 @@ def interpret_ace(ace,makeDRSFile = False):
     implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
     for line in drs:
+        
         if re.match(doneReadingPattern,line):
             break
         if re.match(xmlBeforeDRSPattern,line):
             continue       
         m = re.match(variablesPattern,line)
         if m:
-            if makeDRSFile: appendToDRSFile('['+m.groups()[0]+']')
+            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
             continue
         if re.match(implicationVariablesPattern,line):
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             if len(body) == 0: continue
             elif twice:
                 implications.append(((impRoles,impObjects,impProperties),body))
@@ -408,7 +409,7 @@ def interpret_ace(ace,makeDRSFile = False):
             continue
         m = re.match(implicationSignPattern,line)
         if re.match(implicationSignPattern,line):
-            if makeDRSFile: appendToDRSFile(m.groups()[0]+'=>')
+            if makeFiles: appendToDRSFile(m.groups()[0]+'=>')
             body = (impRoles,impObjects,impProperties)
             impObjects = ObjectList()    
             impProperties = PropertyList()    
@@ -416,32 +417,32 @@ def interpret_ace(ace,makeDRSFile = False):
             continue
         ma = re.match(objectPattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             objects.append(ma.groups()[:-2])
             continue
         ma = re.match(predicatePattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             predicates.append(Role(*ma.groups()[1:-2]))
             continue
         ma = re.match(propertyPattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             properties.append(ma.groups()[:-2])
             continue
         ma = re.match(implicationObjectPattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             impObjects.append(ma.groups()[:-2])
             continue
         ma = re.match(implicationPredicatePattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             impRoles.append(Role(*ma.groups()[1:-2]))
             continue
         ma = re.match(implicationPropertyPattern,line)
         if ma: 
-            if makeDRSFile: appendToDRSFile(line)
+            if makeFiles: appendToDRSFile(line)
             impProperties.append(ma.groups()[:-2])
             continue
         raise Exception("Undefined DRS Expression",line)
@@ -454,8 +455,8 @@ def interpret_ace(ace,makeDRSFile = False):
     
     print("Reasoning...")
     prologfile = "interpreter/prolog.pl"
-    reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile)
-    os.remove(prologfile)
+    reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile,makeFiles)
+    if not makeFiles: os.remove(prologfile)
 
     return set(facts), set([imp.toRule() for imp in implications]), set(groundRules), set(reasonerFacts)
 
@@ -469,4 +470,4 @@ class Interpreter:
         self.memory.add_instruction_knowledge(interpret_ace(ace))
 
 if __name__ == "__main__":
-    interpret_ace(open("interpreter/ace.txt","r").read())
+    interpret_ace(open("interpreter/ace.txt","r").read(),True)
