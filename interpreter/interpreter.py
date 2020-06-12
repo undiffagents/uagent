@@ -379,23 +379,20 @@ def interpret_ace(ace,makeFiles = False):
     doneReadingPattern = re.compile("^\s*</drspp>.*") 
     
     # implications have the same stuff, they are just indented (\s+)
-    implicationVariablesPattern = re.compile("(\s+)\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    implicationVariablesPattern = re.compile("(\s+)\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)?\].*")
     implicationSignPattern = re.compile("(\s+)(=&gt;)\s*")
     implicationObjectPattern = re.compile("(\s+)object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
     implicationPredicatePattern = re.compile("(\s+)predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
     implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
-    for line in drs:
-        
-        if re.match(doneReadingPattern,line):
+    for line in drs:        
+        if m := re.match(doneReadingPattern,line): 
             break
-        if re.match(xmlBeforeDRSPattern,line):
-            continue       
-        m = re.match(variablesPattern,line)
-        if m:
-            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
+        elif m := re.match(xmlBeforeDRSPattern,line): 
             continue
-        if re.match(implicationVariablesPattern,line):
+        elif m := re.match(variablesPattern,line):
+            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
+        elif m := re.match(implicationVariablesPattern,line):
             if makeFiles: appendToDRSFile(line)
             if len(body) == 0: continue
             elif twice:
@@ -405,47 +402,33 @@ def interpret_ace(ace,makeFiles = False):
                 impRoles = []                
                 body = []
                 twice = False
-            else: twice = True 
-            continue
-        m = re.match(implicationSignPattern,line)
-        if re.match(implicationSignPattern,line):
+            else: twice = True
+        elif m := re.match(implicationSignPattern,line):
             if makeFiles: appendToDRSFile(m.groups()[0]+'=>')
             body = (impRoles,impObjects,impProperties)
             impObjects = ObjectList()    
             impProperties = PropertyList()    
             impRoles = []
-            continue
-        ma = re.match(objectPattern,line)
-        if ma: 
+        elif m := re.match(objectPattern,line): 
             if makeFiles: appendToDRSFile(line)
-            objects.append(ma.groups()[:-2])
-            continue
-        ma = re.match(predicatePattern,line)
-        if ma: 
+            objects.append(m.groups()[:-2])
+        elif m := re.match(predicatePattern,line): 
             if makeFiles: appendToDRSFile(line)
-            predicates.append(Role(*ma.groups()[1:-2]))
-            continue
-        ma = re.match(propertyPattern,line)
-        if ma: 
+            predicates.append(Role(*m.groups()[1:-2]))
+        elif m := re.match(propertyPattern,line): 
             if makeFiles: appendToDRSFile(line)
-            properties.append(ma.groups()[:-2])
-            continue
-        ma = re.match(implicationObjectPattern,line)
-        if ma: 
+            properties.append(m.groups()[:-2])
+        elif m := re.match(implicationObjectPattern,line): 
             if makeFiles: appendToDRSFile(line)
-            impObjects.append(ma.groups()[:-2])
-            continue
-        ma = re.match(implicationPredicatePattern,line)
-        if ma: 
+            impObjects.append(m.groups()[:-2])
+        elif m:= re.match(implicationPredicatePattern,line): 
             if makeFiles: appendToDRSFile(line)
-            impRoles.append(Role(*ma.groups()[1:-2]))
-            continue
-        ma = re.match(implicationPropertyPattern,line)
-        if ma: 
+            impRoles.append(Role(*m.groups()[1:-2]))
+        elif m := re.match(implicationPropertyPattern,line): 
             if makeFiles: appendToDRSFile(line)
-            impProperties.append(ma.groups()[:-2])
-            continue
-        raise Exception("Undefined DRS Expression",line)
+            impProperties.append(m.groups()[:-2])
+        else:
+            raise Exception("Undefined Interpretation for DRS Expression",line)
     
     if len(body) != 0: implications.append([(impRoles,impObjects,impProperties),body])
     
