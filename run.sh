@@ -7,4 +7,4 @@ echo "Starting ontology server..."
 java -jar lib/fuseki/fuseki-server.jar --update &
 
 echo "Starting simulation..."
-python3 run.py
+python3.8 run.py
