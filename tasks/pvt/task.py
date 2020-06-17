@@ -42,8 +42,7 @@ class PVTTask(Task):
         stimulus = None
 
         def handle_key(key):
-            if stimulus:
-                self.display.remove(stimulus)
+            self.display.clear()
 
         self.keyboard.add_type_fn(handle_key)
 
