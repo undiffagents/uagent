@@ -11,8 +11,8 @@ docker build \
 echo "Running container..."
 docker run \
     -it \
-    -v uagent-run:/usr/src/app/run \
-    -v uagent-webapp:/usr/src/app/webapp \
+    -v uagent-run:/usr/src/uagent/run \
+    -v uagent-webapp:/usr/src/uagent/webapp \
     uagent
 
 eval $(docker-machine env -u)
