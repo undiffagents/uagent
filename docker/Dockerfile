@@ -2,8 +2,8 @@ FROM ubuntu:18.04
 
 # install python
 RUN apt-get update --fix-missing && apt-get install -y \
-    python3.7 \
-    python3.7-dev \
+    python3.8 \
+    python3.8-dev \
     python3-pip \
     && rm -fr /var/lib/apt/lists/*
 
