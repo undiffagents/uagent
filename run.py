@@ -1,5 +1,5 @@
 from uagent import UndifferentiatedAgent
-from think import Machine, World, get_think_logger
+from think import Environment, World, get_think_logger
 from tasks.pvt import PVTTask
 from tasks.vs import VSTask
 from datetime import datetime
@@ -12,17 +12,17 @@ def load_text(path):
 #to run this task, set taskID to 1 in '__main__'
 def run_pvt():
     instructions = load_text('tasks/pvt/ace.txt')
-    machine = Machine()
-    task = PVTTask(machine, instructions)
-    agent = UndifferentiatedAgent(machine)
+    env = Environment()
+    task = PVTTask(env, instructions)
+    agent = UndifferentiatedAgent(env)
     World(task, agent).run(30)
 
 #to run this task, set taskID to 2 in '__main__'
 def run_vs():
     instructions = load_text('tasks/vs/ace.txt')
-    machine = Machine()
-    task = VSTask(machine, instructions)
-    agent = UndifferentiatedAgent(machine)
+    env = Environment()
+    task = VSTask(env, instructions)
+    agent = UndifferentiatedAgent(env)
     World(task, agent).run(30)
 
 

@@ -14,7 +14,7 @@ import logging
 import os
 
 from tasks.pvt import PVTTask
-from think import Machine, World, get_think_logger
+from think import Environment, World, get_think_logger
 from ua import UndifferentiatedAgent
 
 if __name__ == "__main__":
@@ -22,9 +22,9 @@ if __name__ == "__main__":
     do_outlog = False
 
     def run_agent():
-        machine = Machine()
-        task = PVTTask(machine)
-        agent = UndifferentiatedAgent(machine)
+        env = Environment()
+        task = PVTTask(env)
+        agent = UndifferentiatedAgent(env)
         World(task, agent).run(60)
 
     if do_outlog:

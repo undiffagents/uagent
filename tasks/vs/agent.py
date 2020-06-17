@@ -3,11 +3,11 @@ from think import Agent, Motor, Vision
 
 class VSAgent(Agent):
 
-    def __init__(self, machine):
+    def __init__(self, env):
         """Initializes the agent"""
         super().__init__(output=True)
-        self.vision = Vision(self, machine.display)
-        self.motor = Motor(self, self.vision, machine)
+        self.vision = Vision(self, env.display)
+        self.motor = Motor(self, self.vision, env)
 
     def run(self, time=60):
         while self.time() < time:

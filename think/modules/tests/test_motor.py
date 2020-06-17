@@ -1,25 +1,25 @@
 import random
 import unittest
 
-from think import Agent, Machine, Motor, Query, Vision, Visual
+from think import Agent, Environment, Motor, Query, Vision, Visual
 
 
 class TypingTest(unittest.TestCase):
 
     def test_typing(self, output=False):
         agent = Agent(output=output)
-        machine = Machine()
-        vision = Vision(agent, machine.display)
-        motor = Motor(agent, vision, machine)
+        env = Environment()
+        vision = Vision(agent, env.display)
+        motor = Motor(agent, vision, env)
         motor.type('Hello there. What\'s up?')
         agent.wait_for_all()
         self.assertAlmostEqual(6.597, agent.time(), 1)
 
     def test_timing(self, output=False):
         agent = Agent(output=output)
-        machine = Machine()
-        vision = Vision(agent, machine.display)
-        motor = Motor(agent, vision, machine)
+        env = Environment()
+        vision = Vision(agent, env.display)
+        motor = Motor(agent, vision, env)
         self.assertAlmostEqual(6.597, motor.typing_time(
             'Hello there. What\'s up?'), 1)
 
@@ -28,9 +28,9 @@ class MouseTest(unittest.TestCase):
 
     def test_mouse(self, output=False):
         agent = Agent(output=output)
-        machine = Machine()
-        vision = Vision(agent, machine.display)
-        motor = Motor(agent, vision, machine)
+        env = Environment()
+        vision = Vision(agent, env.display)
+        motor = Motor(agent, vision, env)
         self.button = None
         end = 20.0
 
@@ -39,17 +39,17 @@ class MouseTest(unittest.TestCase):
                 def fn():
                     vision.clear()
                     agent.wait(1.0)
-                    self.button = Visual(random.randint(
-                        0, 500), random.randint(0, 500), 30, 30, 'button')
-                    vision.add(self.button, 'X')
+                    self.button = env.display.add_button(
+                        random.randint(0, 500), random.randint(0, 500), 'X')
                 agent.run_thread(fn)
+
         update()
 
-        def fn(obj):
-            if obj == 'X':
+        def fn(visual):
+            if visual.obj == 'X':
                 update()
 
-        machine.mouse.add_click_fn(fn)
+        env.mouse.add_click_fn(fn)
         while agent.time() < end:
             visual = vision.wait_for(isa='button')
             motor.point_and_click(visual)

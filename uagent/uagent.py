@@ -7,13 +7,13 @@ from think import Agent, Audition, Chunk, Language, Memory, Motor, Vision
 
 class UndifferentiatedAgent(Agent):
 
-    def __init__(self, machine, output=True):
+    def __init__(self, env, output=True):
         super().__init__(output=output)
 
         self.memory = OntologyMemory(self)
-        self.vision = Vision(self, machine.display)
-        self.audition = Audition(self, machine.speakers)
-        self.motor = Motor(self, self.vision, machine)
+        self.vision = Vision(self, env.display)
+        self.audition = Audition(self, env.speakers)
+        self.motor = Motor(self, self.vision, env)
 
         self.interpreter = Interpreter(self.memory)
 
