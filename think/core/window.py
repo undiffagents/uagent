@@ -1,12 +1,97 @@
+import pickle
+import socket
+import struct
+import sys
+import threading
+import time
+
+
+class Messenger:
+    SOCKET_PORT = 4321
+
+    def __init__(self, name, server=False):
+        self.name = name
+        self.server = server
+        self.sock = None
+
+    def startup(self):
+        if self.server:
+            try:
+                print('[server] Binding {} socket to port {}...'.format(
+                    self.name, self.SOCKET_PORT))
+                self.sock = socket.socket(
+                    socket.AF_INET, socket.SOCK_STREAM)
+                self.sock.bind(('', self.SOCKET_PORT))
+                self.conn = None
+            except OSError as e:
+                print(
+                    '[server] Could not bind {} socket - port already in use'.format(self.name))
+                sys.exit(1)
+        else:
+            try:
+                print('[client] Connecting {} socket to port {}...'.format(
+                    self.name, self.SOCKET_PORT))
+                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.sock.connect(('192.168.254.71', self.SOCKET_PORT))
+            except OSError as e:
+                print(
+                    '[client] Could not connect {} socket - is the window server running?'.format(self.name))
+                sys.exit(1)
+        return self
+
+    def wait_for_client(self):
+        print('[server] Waiting for client to connect...')
+        self.sock.listen(1)
+        self.conn, _ = self.sock.accept()
+        print('[server] Connected')
+
+    def send(self, *msg):
+        print('[client] Sending {} {}()'.format(self.name, msg[0]))
+        msg_bytes = pickle.dumps(msg)
+        len_bytes = struct.pack('>I', len(msg_bytes))
+        self.sock.sendall(len_bytes)
+        self.sock.sendall(msg_bytes)
+
+    def receive(self):
+        len_bytes = self.conn.recv(4)
+        if not len_bytes:
+            return None
+        length = struct.unpack('>I', len_bytes)[0]
+        msg_bytes = self.conn.recv(length)
+        msg = pickle.loads(msg_bytes)
+        print('[server] Received {} {}()'.format(self.name, msg[0]))
+        return msg
+
+    def close(self):
+        print('[server] Closing {} socket'.format(self.name))
+        self.sock.close()
+
+
+class ClientWindow:
+
+    def __init__(self):
+        self.messenger = Messenger('window').startup()
+
+    def set_attend(self, visual):
+        self.messenger.send('set_attend', visual)
+
+    def set_pointer(self, visual):
+        self.messenger.send('set_pointer', visual)
+
+    def set_click(self, visual):
+        self.messenger.send('set_click', visual)
+
+    def update(self, visuals):
+        self.messenger.send('update', visuals)
+
+
 try:
 
     import os
     os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
     import pygame
 
-    from .item import Area
-
-    class DisplayIcon:
+    class WindowIcon:
 
         def __init__(self, size):
             self.visual = None
@@ -20,14 +105,14 @@ try:
                             (self.visual.x + (self.visual.w // 2) - (sw // 2),
                              self.visual.y + (self.visual.h // 2) - (sh // 2)))
 
-    class AttendIcon(DisplayIcon):
+    class AttendIcon(WindowIcon):
 
         def __init__(self):
             super().__init__((30, 30))
             pygame.draw.circle(self.surface,
                                (255, 255, 0, 128), (15, 15), 15)
 
-    class PointerIcon(DisplayIcon):
+    class PointerIcon(WindowIcon):
 
         def __init__(self):
             super().__init__((18, 17))
@@ -41,7 +126,7 @@ try:
             draw_pointer(2, 0, (255, 255, 255))
             draw_pointer(1, 0, (0, 0, 255))
 
-    class ClickIcon(DisplayIcon):
+    class ClickIcon(WindowIcon):
 
         def __init__(self):
             super().__init__((30, 30))
@@ -54,16 +139,17 @@ try:
                 for sy in [-1, +1]:
                     draw_line(sx, sy)
 
-    class DisplayWindow:
+    class Window:
 
-        def __init__(self, display, size=(500, 500)):
-            self.display = display
+        def __init__(self, size=(500, 500)):
             pygame.init()
             self.screen = pygame.display.set_mode(size)
             self.font = pygame.font.Font('freesansbold.ttf', 16)
+            self.visuals = []
             self.attend = AttendIcon()
             self.pointer = PointerIcon()
             self.click = ClickIcon()
+            self.updated = False
 
         def set_attend(self, visual):
             self.attend.visual = visual
@@ -78,10 +164,14 @@ try:
             self.click.visual = visual
             self.draw()
 
+        def update(self, visuals):
+            self.visuals = visuals
+            self.draw()
+
         def draw(self):
             self.screen.fill((255, 255, 255))
 
-            for v in self.display.visuals:
+            for v in self.visuals:
                 if v.isa == 'text' or v.isa == 'letter' or v.isa == 'button':
                     self.draw_text(v)
                     if v.isa == 'button':
@@ -116,10 +206,54 @@ try:
                            visual.y + (visual.h // 2))
             self.screen.blit(surface, rect)
 
+        def reset(self):
+            self.visuals = []
+            self.attend.visual = None
+            self.pointer.visual = None
+            self.click.visual = None
+            self.draw()
+
+    class ServerWindow(Window):
+
+        def __init__(self, size=(500, 500)):
+            super().__init__(size=size)
+            self.messenger = Messenger('window', server=True).startup()
+
+        def run(self):
+
+            def loop():
+                try:
+
+                    while True:
+                        self.messenger.wait_for_client()
+                        self.reset()
+
+                        msg = self.messenger.receive()
+                        while msg:
+                            if msg[0] == 'set_attend':
+                                self.set_attend(msg[1])
+                            elif msg[0] == 'set_pointer':
+                                self.set_pointer(msg[1])
+                            elif msg[0] == 'set_click':
+                                self.set_click(msg[1])
+                            elif msg[0] == 'update':
+                                self.update(msg[1])
+                            msg = self.messenger.receive()
+
+                finally:
+                    self.messenger.close()
+
+            threading.Thread(target=loop).start()
+
 
 except ImportError as e:
 
-    class DisplayWindow:
+    class Window:
 
-        def __init__(self, size=(500, 500)):
+        def __init__(self, size=(500, 500), client=False):
+            raise Exception('pygame must be installed to draw display window')
+
+    class ServerWindow(Window):
+
+        def __init__(self, size=(500, 500), client=False):
             raise Exception('pygame must be installed to draw display window')

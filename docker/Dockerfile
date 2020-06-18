@@ -30,4 +30,6 @@ RUN cd lib/ape && make build
 COPY . .
 
 # run entry script
+ARG ARGS
+ENV UAGENT_ARGS=$ARGS
 ENTRYPOINT [ "bash", "run.sh" ]

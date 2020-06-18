@@ -2,7 +2,7 @@ import math
 import threading
 
 from .item import Area, Location
-from .window import DisplayWindow
+from .window import Window
 
 
 class DisplayVisual(Area):
@@ -21,15 +21,15 @@ class Display:
         self.visuals = []
         self.viewing_distance = viewing_distance
         self.pixels_per_inch = pixels_per_inch
-        self.window = DisplayWindow(self, size=window) if window else None
+        self.window = window
 
     def set_vision(self, vision):
         self.vision = vision
         return self
 
-    def _draw_if_window(self):
+    def _update_window(self):
         if self.window:
-            self.window.draw()
+            self.window.update(self.visuals)
 
     def pixels_to_inches(self, pixels):
         return pixels / self.pixels_per_inch
@@ -44,7 +44,7 @@ class Display:
         visual = DisplayVisual(x, y, w, h, isa, obj)
         self.visuals.append(visual)
         self.vision.check_wait_for(visual)
-        self._draw_if_window()
+        self._update_window()
         return visual
 
     def add_text(self, x, y, text, isa='text'):
@@ -56,7 +56,7 @@ class Display:
 
     def clear(self):
         self.visuals = []
-        self._draw_if_window()
+        self._update_window()
         return self
 
     def set_attend(self, visual):
