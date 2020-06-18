@@ -40,12 +40,22 @@ class Display:
     def degrees_to_pixels(self, angle):
         return self.viewing_distance * math.tan(math.radians(angle)) * self.pixels_per_inch
 
-    def add(self, x, y, w, h, isa, obj):
-        visual = DisplayVisual(x, y, w, h, isa, obj)
+    def add_visual(self, visual):
         self.visuals.append(visual)
         self.vision.check_wait_for(visual)
         self._update_window()
         return visual
+
+    def add_visuals(self, visuals):
+        for visual in visuals:
+            self.visuals.append(visual)
+            self.vision.check_wait_for(visual)
+        self._update_window()
+        return visuals
+
+    def add(self, x, y, w, h, isa, obj):
+        visual = DisplayVisual(x, y, w, h, isa, obj)
+        return self.add_visual(visual)
 
     def add_text(self, x, y, text, isa='text'):
         text = str(text)

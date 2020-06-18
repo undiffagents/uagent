@@ -9,10 +9,18 @@ class VSAgent(Agent):
         self.vision = Vision(self, env.display)
         self.motor = Motor(self, self.vision, env)
 
-    def run(self, time=60):
+    def run(self, time):
         while self.time() < time:
-            visual = self.vision.wait_for(seen=False)
-            #def search_for(self, query, target):
-            self.vision.search_for(visual,'isa','target') #how does query work?
-            self.motor.type('j')
-            self.vision.get_encoded()
+            visual = self.vision.wait_for(kind='stimulus', seen=False)
+            obj = self.vision.encode(visual) if visual else None
+            while visual and obj != 'X':
+                visual = self.vision.find(kind='stimulus', color='red', seen=False)
+                obj = self.vision.encode(visual) if visual else None
+            if obj == 'X':
+                # self.log('target present')
+                self.motor.type('w')
+                self.wait(1.0)
+            else:
+                # self.log('target absent')
+                self.motor.type('r')
+                self.wait(1.0)

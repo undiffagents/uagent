@@ -1,6 +1,6 @@
 import random
 
-from think import Task
+from think import DisplayVisual, Task
 
 ACE_INSTRUCTIONS = \
     '''Psychomotor-Vigilance is a task X1.
@@ -37,12 +37,15 @@ class PVTTask(Task):
         self.display = env.display
         self.keyboard = env.keyboard
         self.instructions = instructions
+        self.visual = None
 
     def run(self, time=60):
-        stimulus = None
+        self.stimulus = None
 
         def handle_key(key):
-            self.display.clear()
+            if key == ' ':
+                self.display.clear()
+                self.visual = None
 
         self.keyboard.add_type_fn(handle_key)
 
@@ -54,4 +57,7 @@ class PVTTask(Task):
 
         while self.time() < time:
             self.wait(random.randint(2.0, 10.0))
-            stimulus = self.display.add(50, 50, 20, 20, 'target', 'A')
+            self.visual = DisplayVisual(50, 50, 20, 20, 'target', 
+                                        random.choice(['X', 'O']))
+            self.visual.set('color', random.choice(['red', 'black']))
+            self.display.add_visual(self.visual)

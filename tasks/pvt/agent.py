@@ -13,5 +13,5 @@ class PVTAgent(Agent):
         while self.time() < time:
             visual = self.vision.wait_for(seen=False)
             self.vision.start_encode(visual)
-            self.motor.type('j')
+            self.motor.type(' ')
             self.vision.get_encoded()

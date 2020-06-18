@@ -138,6 +138,13 @@ try:
             for sx in [-1, +1]:
                 for sy in [-1, +1]:
                     draw_line(sx, sy)
+    
+    def visual_color(visual):
+        if visual.has('color'):
+            color_name = visual.get('color')
+            if color_name in pygame.color.THECOLORS:
+                return pygame.color.THECOLORS[color_name]
+        return (0, 0, 0)
 
     class Window:
 
@@ -186,13 +193,13 @@ try:
             pygame.display.update()
 
         def draw_rect(self, visual, dw=0, dh=0, color=(0, 0, 0), stroke=1):
-            pygame.draw.rect(self.screen, color,
+            pygame.draw.rect(self.screen, visual_color(visual),
                              (visual.x - (dw // 2), visual.y - (dh // 2),
                               visual.w + dw, visual.h + dh),
                              stroke)
 
         def draw_circle(self, visual, dr=0, color=(0, 0, 0), stroke=1):
-            pygame.draw.circle(self.screen, color,
+            pygame.draw.circle(self.screen, visual_color(visual),
                                (visual.x + (visual.w // 2),
                                 visual.y + (visual.h // 2)),
                                max(visual.w, visual.h) + dr,
@@ -200,7 +207,7 @@ try:
 
         def draw_text(self, visual, text=None):
             text = text or str(visual.obj)
-            surface = self.font.render(text, True, (0, 0, 0))
+            surface = self.font.render(text, True, visual_color(visual))
             rect = surface.get_rect()
             rect.center = (visual.x + (visual.w // 2),
                            visual.y + (visual.h // 2))

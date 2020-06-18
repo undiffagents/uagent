@@ -162,7 +162,7 @@ class Vision(Module):
         obj = self.encode(visual)
         while (visual is not None
                and obj is not None
-               and not obj.equals(target)):
+               and not obj == target):
             visual = self.find(query)
             obj = self.encode(visual)
         if obj is not None and obj.equals(target):

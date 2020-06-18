@@ -1,6 +1,6 @@
 import random
 
-from think import Task
+from think import DisplayVisual, Task
 
 ACE_INSTRUCTIONS = \
     '''Psychomotor-Vigilance is a task X1.
@@ -39,11 +39,10 @@ class VSTask(Task):
         self.instructions = instructions
 
     def run(self, time=60):
-        stimulus = None
 
         def handle_key(key):
-            if stimulus:
-                self.display.remove(stimulus)
+            print('------ Key pressed: {}'.format(key))
+            self.display.clear()
 
         self.keyboard.add_type_fn(handle_key)
 
@@ -51,14 +50,21 @@ class VSTask(Task):
         self.wait(10.0)
 
         self.display.clear()
-        self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')
+        self.display.add(50, 200, 40, 20, 'button', 'Acknowledge')
+
+        def create_visual(color, obj):
+            visual = DisplayVisual(random.randint(20, 280), random.randint(20, 280),
+                                   20, 20, 'text', obj)
+            visual.set('kind', 'stimulus')
+            visual.set('color', color)
+            return visual
 
         while self.time() < time:
             self.wait(random.randint(2.0, 5.0))
-            stimulus = self.display.add(50, 50, 20, 20, 'target', 'X')
-            stimulus = self.display.add(100, 50, 20, 20, 'distractor', 'O')
-            stimulus = self.display.add(50, 100, 20, 20, 'distractor', 'O')
-            stimulus = self.display.add(100, 100, 20, 20, 'distractor', 'O')
-            #need to add some form of 'wait_for_response'
-            #ask Dario best approach
-            
+            visuals = []
+            visuals.append(create_visual('red', 'X'))
+            for _ in range(10):
+                visuals.append(create_visual('blue', 'X'))
+                visuals.append(create_visual('red', 'O'))
+            random.shuffle(visuals)
+            self.display.add_visuals(visuals)
