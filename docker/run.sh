@@ -14,9 +14,6 @@ docker build \
 echo "Running container..."
 docker run \
     -it \
-    -v uagent-data:/usr/src/uagent/data \
-    -v uagent-run:/usr/src/uagent/run \
-    -v uagent-webapp:/usr/src/uagent/webapp \
     -p 4321:4321 \
     uagent
 
