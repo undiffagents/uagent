@@ -13,6 +13,11 @@ class DisplayVisual(Area):
         self.freq = None
         self.obj = obj
 
+    def __eq__(self, visual):
+        return (self.x == visual.x and self.y == visual.y
+                and self.w == visual.w and self.h == visual.h
+                and self.isa == visual.isa and self.obj == visual.obj)
+
 
 class Display:
 
@@ -63,6 +68,17 @@ class Display:
 
     def add_button(self, x, y, text):
         return self.add_text(x, y, text, isa='button')
+
+    def remove_visual(self, visual):
+        self.visuals.remove(visual)
+        self._update_window()
+        return visual
+
+    def remove_visuals(self, visuals):
+        for visual in visuals:
+            self.visuals.remove(visual)
+        self._update_window()
+        return visuals
 
     def clear(self):
         self.visuals = []
