@@ -29,8 +29,7 @@ class VSAgent(Agent):
 
     def run(self, time):
         while self.time() < time:
-            self.vision.wait_for(isa='letter', color='blue',
-                                 region='vs', seen=False)
+            self.vision.wait_for(isa='letter', seen=False)
             visual = self.vision.search_for(
                 Query(isa='letter', color='red', region='vs'), 'X')
             if visual:
