@@ -152,7 +152,7 @@ try:
             pygame.init()
             pygame.display.set_caption(title)
             self.screen = pygame.display.set_mode(size)
-            self.font = pygame.font.SysFont('arialnarrow', 16)
+            self.font = pygame.font.SysFont('arial', 16)
             self.visuals = []
             self.attend = AttendIcon()
             self.pointer = PointerIcon()
