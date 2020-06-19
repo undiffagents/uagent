@@ -2,35 +2,9 @@ import random
 
 from think import DisplayVisual, Task
 
-ACE_INSTRUCTIONS = \
-    '''Psychomotor-Vigilance is a task X1.
-Acknowledge is a button X2.
-X1 has a box X3 and a target X4.
-X1 has a box X3.
-X1 has a target X4.
-X4 is a letter X5.
-If X4 appears in X3 then a subject X6 clicks X2 and X6 remembers X5.
-If X1 is active then X4 appears in X3.'''
-
-
-# DRS_INSTRUCTIONS = [
-#     'task(Psychomotor-Vigilance)',
-#     'button(Acknowledge)',
-#     'box(Box)',
-#     'target(Target)',
-#     'letter(Letter)',
-#     'subject(Subject)',
-#     'isPartOf(Box,Psychomotor-Vigilance)',
-#     'isPartOf(Target,Psychomotor-Vigilance)',
-#     'isPartOf(Letter,Target)',
-#     # 'hasProperty(Psychomotor-Vigilance,active)=>appearsIn(Target,Box)',
-#     'appearsIn(Target,Box)=>click(Subject,Acknowledge),remember(Subject,Letter)',
-#     'done(Psychomotor-Vigilance)'
-# ]
-
 
 class VSTask(Task):
-    '''Psychomotor Vigilance Task'''
+    '''Visual Search Task'''
 
     def __init__(self, env, instructions=None):
         super().__init__()
