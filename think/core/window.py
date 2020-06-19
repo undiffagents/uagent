@@ -225,7 +225,7 @@ try:
 
     class ServerWindow(Window):
 
-        def __init__(self, size=(500, 500)):
+        def __init__(self, size=(500, 500), title='Think Window'):
             super().__init__(size=size)
             self.messenger = Messenger('window', server=True).startup()
 
