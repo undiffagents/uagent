@@ -32,7 +32,7 @@ If X1 is active then X4 appears in X3.'''
 class PVTTask(Task):
     '''Psychomotor Vigilance Task'''
 
-    def __init__(self, env, instructions=ACE_INSTRUCTIONS):
+    def __init__(self, env, instructions=None):
         super().__init__()
         self.display = env.display
         self.keyboard = env.keyboard
@@ -49,8 +49,9 @@ class PVTTask(Task):
 
         self.keyboard.add_type_fn(handle_key)
 
-        self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
-        self.wait(10.0)
+        if self.instructions:
+            self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
+            self.wait(10.0)
 
         self.display.clear()
         self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')

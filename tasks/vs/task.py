@@ -32,7 +32,7 @@ If X1 is active then X4 appears in X3.'''
 class VSTask(Task):
     '''Psychomotor Vigilance Task'''
 
-    def __init__(self, env, instructions=ACE_INSTRUCTIONS):
+    def __init__(self, env, instructions=None):
         super().__init__()
         self.display = env.display
         self.keyboard = env.keyboard
@@ -46,8 +46,10 @@ class VSTask(Task):
 
         self.keyboard.add_type_fn(handle_key)
 
-        self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
-        self.wait(10.0)
+        if self.instructions:
+            self.display.add(10, 10, 100, 100, 'instructions',
+                             self.instructions)
+            self.wait(10.0)
 
         self.display.clear()
         self.display.add(50, 200, 40, 20, 'button', 'Acknowledge')
@@ -60,9 +62,10 @@ class VSTask(Task):
             return visual
 
         while self.time() < time:
-            self.wait(random.randint(2.0, 5.0))
+            self.wait(random.randint(6.0, 8.0))
             visuals = []
-            visuals.append(create_visual('red', 'X'))
+            if random.random() < .8:
+                visuals.append(create_visual('red', 'X'))
             for _ in range(10):
                 visuals.append(create_visual('blue', 'X'))
                 visuals.append(create_visual('red', 'O'))

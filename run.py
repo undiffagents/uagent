@@ -46,11 +46,13 @@ if __name__ == '__main__':
 
     # create task
     if task_name == 'pvt':
-        instructions = load_text('tasks/pvt/ace.txt')
-        task = PVTTask(env, instructions)
+        task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
+                if agent_name == 'uagent' else
+                PVTTask(env))
     elif task_name == 'vs':
-        instructions = load_text('tasks/vs/ace.txt')
-        task = VSTask(env, instructions)
+        task = (VSTask(env, load_text('tasks/vs/ace.txt'))
+                if agent_name == 'uagent' else
+                VSTask(env))
     else:
         print('Unknown task name: {}'.format(task_name))
         sys.exit(1)
