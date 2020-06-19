@@ -48,7 +48,6 @@ class VSTask(Task):
                              self.instructions)
             self.wait(10.0)
 
-        self.display.clear()
         self.display.add(50, 200, 40, 20, 'button', 'Acknowledge')
 
         self.wait(1.0)
