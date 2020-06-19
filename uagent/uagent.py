@@ -2,7 +2,8 @@ import re
 
 from interpreter import Interpreter
 from ontology import OntologyMemory
-from think import Agent, Audition, Chunk, Language, Memory, Motor, Vision
+from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
+                   Vision)
 
 
 class UndifferentiatedAgent(Agent):
@@ -72,7 +73,8 @@ class UndifferentiatedAgent(Agent):
                 if cond.pred == 'appearsOn' or cond.pred == 'visible':
                     self.think('check condition "{}"'.format(cond))
                     isa = cond.obj(0)
-                    visual = self.vision.find(isa=isa, seen=False)
+                    # visual = self.vision.find(isa=isa, seen=False)
+                    visual = self.vision.search_for(Query(isa=isa, seen=False), None)
                     if visual:
                         context.set('visual', visual)
                         visobj = self.vision.encode(visual)

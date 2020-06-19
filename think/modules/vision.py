@@ -159,13 +159,11 @@ class Vision(Module):
             query = Query()
         query = query.eq('seen', False)
         visual = self.find(query)
-        obj = self.encode(visual)
-        while (visual is not None
-               and obj is not None
-               and not obj == target):
+        obj = self.encode(visual) if visual else None
+        while visual and target and obj != target:
             visual = self.find(query)
-            obj = self.encode(visual)
-        if obj is not None and obj.equals(target):
+            obj = self.encode(visual) if visual else None
+        if obj and obj == target:
             return visual
         else:
             return None
