@@ -151,7 +151,7 @@ try:
         def __init__(self, size=(500, 500)):
             pygame.init()
             self.screen = pygame.display.set_mode(size)
-            self.font = pygame.font.Font('freesansbold.ttf', 16)
+            self.font = pygame.font.SysFont('arial', 16)
             self.visuals = []
             self.attend = AttendIcon()
             self.pointer = PointerIcon()
