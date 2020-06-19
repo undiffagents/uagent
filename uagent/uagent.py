@@ -86,9 +86,11 @@ class UndifferentiatedAgent(Agent):
         for potential_syn in self.agent_synonym_list:
             if action.obj(0) == potential_syn:
                 self.think('execute action "{}"'.format(action))
+
                 if action.pred == 'press':
                     visual = self.vision.find(isa=action.obj(1))
-                    self.motor.point_and_click(visual)
+                    if visual:
+                        self.motor.point_and_click(visual)
 
                 if action.pred == 'click':
                     visual = context.get('visual')
@@ -109,7 +111,7 @@ class UndifferentiatedAgent(Agent):
 
     def run(self, time=60):
 
-        instr_visual = self.vision.wait_for(isa='instructions')
+        instr_visual = self.vision.wait_for(isa='text')
         instructions = self.vision.encode(instr_visual)
         self.language.interpret(instructions)
 

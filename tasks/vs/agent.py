@@ -11,10 +11,12 @@ class VSAgent(Agent):
 
     def run(self, time):
         while self.time() < time:
-            visual = self.vision.wait_for(kind='stimulus', color='red', seen=False)
+            visual = self.vision.wait_for(
+                isa='letter', color='red', region='vs', seen=False)
             obj = self.vision.encode(visual) if visual else None
             while visual and obj != 'X':
-                visual = self.vision.find(kind='stimulus', color='red', seen=False)
+                visual = self.vision.find(
+                    isa='letter', color='red', region='vs', seen=False)
                 obj = self.vision.encode(visual) if visual else None
             if obj == 'X':
                 # self.log('target present')

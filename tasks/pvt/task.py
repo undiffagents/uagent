@@ -13,13 +13,13 @@ class PVTTask(Task):
         self.instructions = instructions
         self.stimulus = None
 
-    def run(self, time=60):
+    def run(self, time=30):
 
         def start_trial():
             end_trial()
-            self.stimulus = DisplayVisual(140, 130, 20, 20, 'text',
+            self.stimulus = DisplayVisual(140, 130, 20, 20, 'letter',
                                           random.choice(['X', 'O']))
-            self.stimulus.set('kind', 'stimulus')
+            self.stimulus.set('region', 'pvt')
             self.stimulus.set('color', random.choice(['red', 'black']))
             self.display.add_visual(self.stimulus)
 
@@ -35,9 +35,9 @@ class PVTTask(Task):
         self.keyboard.add_type_fn(handle_key)
 
         if self.instructions:
-            self.display.add(10, 10, 100, 100, 'instructions',
-                             self.instructions)
+            self.display.add(10, 10, 100, 100, 'text', self.instructions)
             self.wait(10.0)
+            self.display.clear()
 
         self.display.add(20, 20, 260, 260, 'rectangle', '')
         self.display.add(80, 240, 101, 30, 'button', 'Acknowledge')

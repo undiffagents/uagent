@@ -17,8 +17,8 @@ class VSTask(Task):
 
         def create_visual(color, obj):
             visual = DisplayVisual(random.randint(30, 250), random.randint(30, 210),
-                                   20, 20, 'text', obj)
-            visual.set('kind', 'stimulus')
+                                   20, 20, 'letter', obj)
+            visual.set('region', 'vs')
             visual.set('color', color)
             return visual
 
@@ -38,15 +38,15 @@ class VSTask(Task):
                 self.stimuli = []
 
         def handle_key(key):
-            print('------ Key pressed: {}'.format(key))
-            end_trial()
+            if key == 'w' or key == 'r':
+                end_trial()
 
         self.keyboard.add_type_fn(handle_key)
 
         if self.instructions:
-            self.display.add(30, 30, 200, 200, 'instructions',
-                             self.instructions)
+            self.display.add(30, 30, 200, 200, 'text', self.instructions)
             self.wait(10.0)
+            self.display.clear()
 
         self.display.add(20, 20, 260, 260, 'rectangle', '')
         self.display.add(50, 240, 61, 30, 'button', 'Present')
