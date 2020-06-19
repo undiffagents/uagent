@@ -138,7 +138,7 @@ try:
             for sx in [-1, +1]:
                 for sy in [-1, +1]:
                     draw_line(sx, sy)
-    
+
     def visual_color(visual):
         if visual.has('color'):
             color_name = visual.get('color')
@@ -257,10 +257,10 @@ except ImportError as e:
 
     class Window:
 
-        def __init__(self, size=(500, 500), client=False):
+        def __init__(self, size=(500, 500)):
             raise Exception('pygame must be installed to draw display window')
 
     class ServerWindow(Window):
 
-        def __init__(self, size=(500, 500), client=False):
+        def __init__(self, size=(500, 500)):
             raise Exception('pygame must be installed to draw display window')
