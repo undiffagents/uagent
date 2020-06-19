@@ -1,93 +1,32 @@
-import pickle
-import socket
-import struct
 import sys
 import threading
 import time
+from multiprocessing.connection import Client, Listener
 
-
-class Messenger:
-    SOCKET_PORT = 4321
-
-    def __init__(self, name, server_mode=False, host='localhost'):
-        self.name = name
-        self.server_mode = server_mode
-        self.host = host
-        self.sock = None
-
-    def startup(self):
-        if self.server_mode:
-            try:
-                print('[server] Binding {} socket to port {}...'.format(
-                    self.name, self.SOCKET_PORT))
-                self.sock = socket.socket(
-                    socket.AF_INET, socket.SOCK_STREAM)
-                self.sock.bind((self.host, self.SOCKET_PORT))
-                self.sock.settimeout(30.0)
-                self.conn = None
-            except OSError as e:
-                print(
-                    '[server] Could not bind {} socket - port already in use'.format(self.name))
-                sys.exit(1)
-        else:
-            try:
-                print('[client] Connecting {} socket to port {}...'.format(
-                    self.name, self.SOCKET_PORT))
-                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.sock.connect((self.host, self.SOCKET_PORT))
-            except OSError as e:
-                print(
-                    '[client] Could not connect {} socket - is the window server running?'.format(self.name))
-                sys.exit(1)
-        return self
-
-    def wait_for_client(self):
-        print('[server] Waiting for client to connect...')
-        self.sock.listen(1)
-        self.conn, _ = self.sock.accept()
-        print('[server] Connected')
-
-    def send(self, *msg):
-        print('[client] Sending {} {}()'.format(self.name, msg[0]))
-        print(' --- {}'.format(msg))
-        msg_bytes = pickle.dumps(msg)
-        len_bytes = struct.pack('>I', len(msg_bytes))
-        self.sock.sendall(len_bytes)
-        self.sock.sendall(msg_bytes)
-
-    def receive(self):
-        len_bytes = self.conn.recv(4)
-        if not len_bytes:
-            return None
-        length = struct.unpack('>I', len_bytes)[0]
-        msg_bytes = self.conn.recv(length)
-        print(len(msg_bytes))
-        msg = pickle.loads(msg_bytes)
-        print('[server] Received {} {}()'.format(self.name, msg[0]))
-        print(' --- {}'.format(msg))
-        return msg
-
-    def close(self):
-        print('[server] Closing {} socket'.format(self.name))
-        self.sock.close()
+WINDOW_PORT = 4321
 
 
 class ClientWindow:
 
     def __init__(self, host='localhost'):
-        self.messenger = Messenger('window', host=host).startup()
+        print('[client] Connecting to \'{}\' port {}...'.format(host, WINDOW_PORT))
+        self.client = Client((host, WINDOW_PORT))
+
+    def _send(self, *msg):
+        print('[client] Sending {}()'.format(msg[0]))
+        self.client.send(msg)
 
     def set_attend(self, visual):
-        self.messenger.send('set_attend', visual)
+        self._send('set_attend', visual)
 
     def set_pointer(self, visual):
-        self.messenger.send('set_pointer', visual)
+        self._send('set_pointer', visual)
 
     def set_click(self, visual):
-        self.messenger.send('set_click', visual)
+        self._send('set_click', visual)
 
     def update(self, visuals):
-        self.messenger.send('update', visuals)
+        self._send('update', visuals)
 
 
 try:
@@ -232,19 +171,31 @@ try:
 
         def __init__(self, size=(500, 500), title='Think Window', host='localhost'):
             super().__init__(size=size, title=title)
-            self.messenger = Messenger('window', server_mode=True,
-                                       host=host).startup()
+            print('[server] Opening channel on \'{}\' port {}...'.format(
+                host, WINDOW_PORT))
+            self.listener = Listener((host, WINDOW_PORT))
 
         def run(self):
 
             def loop():
                 try:
+                    conn = None
 
                     while True:
-                        self.messenger.wait_for_client()
+                        print('[server] Waiting for client to connect...')
+                        conn = self.listener.accept()
+                        print('[server] Connected')
                         self.reset()
 
-                        msg = self.messenger.receive()
+                        def receive():
+                            try:
+                                msg = conn.recv()
+                                print('[server] Received {}()'.format(msg[0]))
+                                return msg
+                            except EOFError:
+                                return None
+
+                        msg = receive()
                         while msg:
                             if msg[0] == 'set_attend':
                                 self.set_attend(msg[1])
@@ -254,10 +205,11 @@ try:
                                 self.set_click(msg[1])
                             elif msg[0] == 'update':
                                 self.update(msg[1])
-                            msg = self.messenger.receive()
+                            msg = receive()
 
                 finally:
-                    self.messenger.close()
+                    if conn:
+                        conn.close()
 
             threading.Thread(target=loop).start()
 
@@ -267,9 +219,9 @@ except ImportError as e:
     class Window:
 
         def __init__(self, size=(500, 500), title='Think Window'):
-            raise Exception('pygame must be installed to draw display window')
+            raise Exception('pygame must be installed to draw window')
 
     class ServerWindow(Window):
 
         def __init__(self, size=(500, 500), title='Think Window', host='localhost'):
-            raise Exception('pygame must be installed to draw display window')
+            raise Exception('pygame must be installed to draw window')
