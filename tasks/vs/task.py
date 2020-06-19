@@ -24,7 +24,7 @@ class VSTask(Task):
 
         def start_trial():
             end_trial()
-            if random.random() < .01:
+            if random.random() < .80:
                 self.stimuli.append(create_visual('red', 'X'))
             for _ in range(10):
                 self.stimuli.append(create_visual('blue', 'X'))
