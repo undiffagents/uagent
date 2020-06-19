@@ -16,7 +16,7 @@ class VSTask(Task):
     def run(self, time=60):
 
         def create_visual(color, obj):
-            visual = DisplayVisual(random.randint(20, 280), random.randint(20, 280),
+            visual = DisplayVisual(random.randint(30, 250), random.randint(30, 210),
                                    20, 20, 'text', obj)
             visual.set('kind', 'stimulus')
             visual.set('color', color)
@@ -44,11 +44,15 @@ class VSTask(Task):
         self.keyboard.add_type_fn(handle_key)
 
         if self.instructions:
-            self.display.add(10, 10, 100, 100, 'instructions',
+            self.display.add(30, 30, 200, 200, 'instructions',
                              self.instructions)
             self.wait(10.0)
 
-        self.display.add(50, 200, 40, 20, 'button', 'Acknowledge')
+        self.display.add(20, 20, 260, 260, 'rectangle', '')
+        self.display.add(50, 240, 61, 30, 'button', 'Present')
+        self.display.add(110, 240, 30, 30, 'button', 'w')
+        self.display.add(160, 240, 61, 30, 'button', 'Absent')
+        self.display.add(220, 240, 30, 30, 'button', 'r')
 
         self.wait(1.0)
         start_trial()

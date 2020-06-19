@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     # create window (if needed)
     if window_name == 'window':
-        window = Window()
+        window = Window(size=(300, 300), title='Task Window')
     elif window_name == 'socket':
         window = ClientWindow()
     elif window_name == 'none':

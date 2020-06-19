@@ -148,10 +148,11 @@ try:
 
     class Window:
 
-        def __init__(self, size=(500, 500)):
+        def __init__(self, size=(500, 500), title='Think Window'):
             pygame.init()
+            pygame.display.set_caption(title)
             self.screen = pygame.display.set_mode(size)
-            self.font = pygame.font.SysFont('arial', 16)
+            self.font = pygame.font.SysFont('arialnarrow', 16)
             self.visuals = []
             self.attend = AttendIcon()
             self.pointer = PointerIcon()
@@ -182,9 +183,11 @@ try:
                 if v.isa == 'text' or v.isa == 'letter' or v.isa == 'button':
                     self.draw_text(v)
                     if v.isa == 'button':
-                        self.draw_rect(v, dw=20, dh=20, color=(16, 16, 16))
+                        self.draw_rect(v, color=(128, 128, 128), stroke=1)
+                elif v.isa == 'rectangle':
+                    self.draw_rect(v, stroke=1)
                 else:
-                    self.draw_rect(v, stroke=3)
+                    self.draw_rect(v, stroke=1)
 
             self.pointer.draw(self.screen, center=False)
             self.click.draw(self.screen)

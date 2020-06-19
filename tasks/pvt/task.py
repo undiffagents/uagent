@@ -17,7 +17,7 @@ class PVTTask(Task):
 
         def start_trial():
             end_trial()
-            self.stimulus = DisplayVisual(50, 50, 20, 20, 'text',
+            self.stimulus = DisplayVisual(140, 130, 20, 20, 'text',
                                           random.choice(['X', 'O']))
             self.stimulus.set('kind', 'stimulus')
             self.stimulus.set('color', random.choice(['red', 'black']))
@@ -39,7 +39,9 @@ class PVTTask(Task):
                              self.instructions)
             self.wait(10.0)
 
-        self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')
+        self.display.add(20, 20, 260, 260, 'rectangle', '')
+        self.display.add(80, 240, 101, 30, 'button', 'Acknowledge')
+        self.display.add(180, 240, 40, 30, 'button', 'sb')
 
         self.wait(1.0)
         start_trial()
