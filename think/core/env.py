@@ -89,6 +89,10 @@ class Display:
         if self.window:
             self.window.set_attend(visual)
 
+    def set_eye(self, loc):
+        if self.window:
+            self.window.set_eye(loc)
+
     def set_pointer(self, visual):
         if self.window:
             self.window.set_pointer(visual)

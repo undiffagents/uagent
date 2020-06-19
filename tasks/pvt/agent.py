@@ -1,4 +1,4 @@
-from think import Agent, Motor, Vision
+from think import Agent, Eyes, Motor, Vision
 
 
 class PVTAgent(Agent):
@@ -6,7 +6,7 @@ class PVTAgent(Agent):
     def __init__(self, env):
         """Initializes the agent"""
         super().__init__(output=True)
-        self.vision = Vision(self, env.display)
+        self.vision = Vision(self, env.display, eyes=Eyes(self))
         self.motor = Motor(self, self.vision, env)
 
     def run(self, time=60):

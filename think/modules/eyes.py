@@ -72,6 +72,7 @@ class Eyes(Module):
                 if rem_dur > 0:
                     self.vision.start_encode_thread(visual, rem_dur)
                     self.prepare(visual, self.time(), rem_dur)
+            self.vision.display.set_eye(self.loc)
             for fn in self.fixate_fns:
                 fn(self.loc)
 

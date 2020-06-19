@@ -19,6 +19,9 @@ class ClientWindow:
     def set_attend(self, visual):
         self._send('set_attend', visual)
 
+    def set_eye(self, loc):
+        self._send('set_eye', loc)
+
     def set_pointer(self, visual):
         self._send('set_pointer', visual)
 
@@ -56,6 +59,21 @@ try:
             pygame.draw.circle(self.surface,
                                (255, 255, 0, 128), (15, 15), 15)
 
+    class EyeIcon(WindowIcon):
+
+        def __init__(self):
+            super().__init__((14, 14))
+            pygame.draw.circle(self.surface,
+                               (0, 0, 255, 128), (7, 7), 7)
+            self.loc = None
+
+        def draw(self, screen, center=True):
+            if self.loc:
+                sw, sh = self.surface.get_size() if center else (0, 0)
+                screen.blit(self.surface,
+                            (self.loc.x - (sw // 2),
+                             self.loc.y - (sh // 2)))
+
     class PointerIcon(WindowIcon):
 
         def __init__(self):
@@ -83,12 +101,10 @@ try:
                 for sy in [-1, +1]:
                     draw_line(sx, sy)
 
-    def visual_color(visual):
-        if visual.has('color'):
-            color_name = visual.get('color')
-            if color_name in pygame.color.THECOLORS:
-                return pygame.color.THECOLORS[color_name]
-        return (0, 0, 0)
+    def get_color(color_name):
+        return pygame.color.THECOLORS[color_name
+                                      if color_name in pygame.color.THECOLORS else
+                                      'black']
 
     class Window:
 
@@ -99,12 +115,17 @@ try:
             self.font = pygame.font.SysFont('arial', 16)
             self.visuals = []
             self.attend = AttendIcon()
+            self.eye = EyeIcon()
             self.pointer = PointerIcon()
             self.click = ClickIcon()
             self.updated = False
 
         def set_attend(self, visual):
             self.attend.visual = visual
+            self.draw()
+
+        def set_eye(self, loc):
+            self.eye.loc = loc
             self.draw()
 
         def set_pointer(self, visual):
@@ -125,36 +146,41 @@ try:
 
             for v in self.visuals:
                 if v.isa == 'text' or v.isa == 'letter' or v.isa == 'button':
-                    self.draw_text(v)
                     if v.isa == 'button':
-                        self.draw_rect(v, color=(128, 128, 128), stroke=1)
+                        self.draw_rect(v, fill='gray94',
+                                       stroke='darkgray', thick=1)
+                    self.draw_text(v)
                 elif v.isa == 'rectangle':
-                    self.draw_rect(v, stroke=1)
+                    self.draw_rect(v, stroke='darkgray', thick=1)
                 else:
-                    self.draw_rect(v, stroke=1)
+                    self.draw_rect(v, thick=1)
 
             self.pointer.draw(self.screen, center=False)
             self.click.draw(self.screen)
             self.attend.draw(self.screen)
+            self.eye.draw(self.screen)
 
             pygame.display.update()
 
-        def draw_rect(self, visual, dw=0, dh=0, color=(0, 0, 0), stroke=1):
-            pygame.draw.rect(self.screen, visual_color(visual),
-                             (visual.x - (dw // 2), visual.y - (dh // 2),
-                              visual.w + dw, visual.h + dh),
-                             stroke)
+        def draw_rect(self, visual, fill=None, stroke=None, thick=1):
+            if fill or visual.has('fill'):
+                pygame.draw.rect(self.screen, get_color(visual.get('fill') or fill),
+                                 (visual.x, visual.y, visual.w, visual.h), 0)
+            if stroke or visual.has('stroke'):
+                pygame.draw.rect(self.screen, get_color(visual.get('stroke') or stroke),
+                                 (visual.x, visual.y, visual.w, visual.h), thick)
 
-        def draw_circle(self, visual, dr=0, color=(0, 0, 0), stroke=1):
-            pygame.draw.circle(self.screen, visual_color(visual),
-                               (visual.x + (visual.w // 2),
-                                visual.y + (visual.h // 2)),
-                               max(visual.w, visual.h) + dr,
-                               stroke)
+        # def draw_circle(self, visual, dr=0, fill=None, stroke=None, thick=1):
+        #     pygame.draw.circle(self.screen, stroke or visual_color(visual),
+        #                        (visual.x + (visual.w // 2),
+        #                         visual.y + (visual.h // 2)),
+        #                        max(visual.w, visual.h) + dr,
+        #                        thick)
 
-        def draw_text(self, visual, text=None):
+        def draw_text(self, visual, text=None, color=None):
             text = text or str(visual.obj)
-            surface = self.font.render(text, True, visual_color(visual))
+            surface = self.font.render(
+                text, True, get_color(color or visual.get('color')))
             rect = surface.get_rect()
             rect.center = (visual.x + (visual.w // 2),
                            visual.y + (visual.h // 2))
@@ -163,6 +189,7 @@ try:
         def reset(self):
             self.visuals = []
             self.attend.visual = None
+            self.eye.loc = None
             self.pointer.visual = None
             self.click.visual = None
             self.draw()
