@@ -4,7 +4,7 @@ from datetime import datetime
 
 from tasks.pvt import PVTAgent, PVTTask
 from tasks.vs import VSAgent, VSTask
-from think import ClientWindow, Environment, World, get_think_logger
+from think import ClientWindow, Environment, Window, World, get_think_logger
 from uagent import UndifferentiatedAgent
 
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # set defaults
     task_name = 'pvt'
     agent_name = 'uagent'
-    use_window = False
+    window_name = 'none'
 
     # read arguments from command line
     args = sys.argv[1:]
@@ -29,20 +29,25 @@ if __name__ == '__main__':
         elif args[0] == '--task' and len(args) > 1:
             task_name = args[1]
             args = args[2:]
-        elif args[0] == '--window':
-            use_window = True
-            args = args[1:]
+        elif args[0] == '--window' and len(args) > 1:
+            window_name = args[1]
+            args = args[2:]
         else:
             print('Unknown arguments: {}'.format(args))
             print(
-                'Possible arguments: [--task <task-name>] [--agent <agent-name>] [--window]')
+                'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,socket,window}>]')
             sys.exit(1)
 
     # create environment
-    if use_window:
+    if window_name == 'window':
+        env = Environment(window=Window())
+    elif window_name == 'socket':
         env = Environment(window=ClientWindow())
-    else:
+    elif window_name == 'none':
         env = Environment()
+    else:
+        print('Unknown window argument: {}'.format(window_name))
+        sys.exit(1)
 
     # create task
     if task_name == 'pvt':
@@ -54,7 +59,7 @@ if __name__ == '__main__':
                 if agent_name == 'uagent' else
                 VSTask(env))
     else:
-        print('Unknown task name: {}'.format(task_name))
+        print('Unknown task argument: {}'.format(task_name))
         sys.exit(1)
 
     # create agent
@@ -65,7 +70,7 @@ if __name__ == '__main__':
     elif agent_name == 'vs':
         agent = VSAgent(env)
     else:
-        print('Unknown agent name: {}'.format(agent_name))
+        print('Unknown agent argument: {}'.format(agent_name))
         sys.exit(1)
 
     # 0 = don't log (console output), 1 = log (saves to /data/logs/)
