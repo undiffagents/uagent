@@ -9,19 +9,21 @@ import time
 class Messenger:
     SOCKET_PORT = 4321
 
-    def __init__(self, name, server=False):
+    def __init__(self, name, server_mode=False, host='localhost'):
         self.name = name
-        self.server = server
+        self.server_mode = server_mode
+        self.host = host
         self.sock = None
 
     def startup(self):
-        if self.server:
+        if self.server_mode:
             try:
                 print('[server] Binding {} socket to port {}...'.format(
                     self.name, self.SOCKET_PORT))
                 self.sock = socket.socket(
                     socket.AF_INET, socket.SOCK_STREAM)
-                self.sock.bind(('', self.SOCKET_PORT))
+                self.sock.bind((self.host, self.SOCKET_PORT))
+                self.sock.settimeout(30.0)
                 self.conn = None
             except OSError as e:
                 print(
@@ -32,7 +34,7 @@ class Messenger:
                 print('[client] Connecting {} socket to port {}...'.format(
                     self.name, self.SOCKET_PORT))
                 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.sock.connect(('192.168.254.71', self.SOCKET_PORT))
+                self.sock.connect((self.host, self.SOCKET_PORT))
             except OSError as e:
                 print(
                     '[client] Could not connect {} socket - is the window server running?'.format(self.name))
@@ -47,6 +49,7 @@ class Messenger:
 
     def send(self, *msg):
         print('[client] Sending {} {}()'.format(self.name, msg[0]))
+        print(' --- {}'.format(msg))
         msg_bytes = pickle.dumps(msg)
         len_bytes = struct.pack('>I', len(msg_bytes))
         self.sock.sendall(len_bytes)
@@ -58,8 +61,10 @@ class Messenger:
             return None
         length = struct.unpack('>I', len_bytes)[0]
         msg_bytes = self.conn.recv(length)
+        print(len(msg_bytes))
         msg = pickle.loads(msg_bytes)
         print('[server] Received {} {}()'.format(self.name, msg[0]))
+        print(' --- {}'.format(msg))
         return msg
 
     def close(self):
@@ -69,8 +74,8 @@ class Messenger:
 
 class ClientWindow:
 
-    def __init__(self):
-        self.messenger = Messenger('window').startup()
+    def __init__(self, host='localhost'):
+        self.messenger = Messenger('window', host=host).startup()
 
     def set_attend(self, visual):
         self.messenger.send('set_attend', visual)
@@ -225,9 +230,10 @@ try:
 
     class ServerWindow(Window):
 
-        def __init__(self, size=(500, 500), title='Think Window'):
-            super().__init__(size=size)
-            self.messenger = Messenger('window', server=True).startup()
+        def __init__(self, size=(500, 500), title='Think Window', host='localhost'):
+            super().__init__(size=size, title=title)
+            self.messenger = Messenger('window', server_mode=True,
+                                       host=host).startup()
 
         def run(self):
 
@@ -260,10 +266,10 @@ except ImportError as e:
 
     class Window:
 
-        def __init__(self, size=(500, 500)):
+        def __init__(self, size=(500, 500), title='Think Window'):
             raise Exception('pygame must be installed to draw display window')
 
     class ServerWindow(Window):
 
-        def __init__(self, size=(500, 500)):
+        def __init__(self, size=(500, 500), title='Think Window', host='localhost'):
             raise Exception('pygame must be installed to draw display window')

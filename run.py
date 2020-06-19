@@ -35,19 +35,16 @@ if __name__ == '__main__':
         else:
             print('Unknown arguments: {}'.format(args))
             print(
-                'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,socket,window}>]')
+                'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
             sys.exit(1)
 
     # create window (if needed)
     if window_name == 'window':
         window = Window(size=(300, 300), title='Task Window')
-    elif window_name == 'socket':
-        window = ClientWindow()
     elif window_name == 'none':
         window = None
     else:
-        print('Unknown window argument: {}'.format(window_name))
-        sys.exit(1)
+        window = ClientWindow(host=window_name)
 
     # create environment
     env = Environment(window=window)
