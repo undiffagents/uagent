@@ -38,16 +38,19 @@ if __name__ == '__main__':
                 'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,socket,window}>]')
             sys.exit(1)
 
-    # create environment
+    # create window (if needed)
     if window_name == 'window':
-        env = Environment(window=Window())
+        window = Window()
     elif window_name == 'socket':
-        env = Environment(window=ClientWindow())
+        window = ClientWindow()
     elif window_name == 'none':
-        env = Environment()
+        window = None
     else:
         print('Unknown window argument: {}'.format(window_name))
         sys.exit(1)
+
+    # create environment
+    env = Environment(window=window)
 
     # create task
     if task_name == 'pvt':
@@ -81,4 +84,5 @@ if __name__ == '__main__':
             ['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
 
     # run simulation
-    World(task, agent).run(30)
+    world = World(task, agent)
+    world.run(30, real_time=(window is not None))
