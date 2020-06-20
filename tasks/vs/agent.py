@@ -6,7 +6,7 @@ class VSAgent(Agent):
     def __init__(self, env):
         """Initializes the agent"""
         super().__init__(output=True)
-        self.vision = Vision(self, env.display, eyes=Eyes(self))
+        self.vision = Vision(self, env.display) #, eyes=Eyes(self))
         self.motor = Motor(self, self.vision, env)
 
     def run(self, time):
