@@ -145,7 +145,7 @@ try:
             self.screen.fill((255, 255, 255))
 
             for v in self.visuals:
-                if v.isa == 'text' or v.isa == 'letter' or v.isa == 'button':
+                if v.isa in ['text', 'letter', 'target', 'stimulus', 'button']:
                     if v.isa == 'button':
                         self.draw_rect(v, fill='gray94',
                                        stroke='darkgray', thick=1)

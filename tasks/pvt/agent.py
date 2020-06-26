@@ -12,7 +12,7 @@ class PVTAgent(Agent):
     def run(self, time=60):
         while self.time() < time:
             visual = self.vision.wait_for(
-                isa='letter', region='pvt', seen=False)
+                isa='target', region='pvt', seen=False)
             self.vision.start_encode(visual)
             self.motor.type(' ')
             self.vision.get_encoded()

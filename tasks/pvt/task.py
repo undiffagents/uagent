@@ -17,7 +17,7 @@ class PVTTask(Task):
 
         def start_trial():
             end_trial()
-            self.stimulus = DisplayVisual(140, 130, 20, 20, 'letter',
+            self.stimulus = DisplayVisual(140, 130, 20, 20, 'target',
                                           random.choice(['X', 'O']))
             self.stimulus.set('region', 'pvt')
             self.stimulus.set('color', random.choice(['red', 'black']))
