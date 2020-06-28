@@ -310,15 +310,10 @@ def addGlobalValuesToPredicateList(l,globalObjects,globalProperties):
     # properties are global
     l[2].var.update(globalProperties.var)
     
-    
+     # objects are local  (named instances whick may require renaming)
     for k in [k for k in filter(lambda x: not re.match("[A-Z][0-9]*",x),globalObjects.var)]:
         l[1].var[k] = globalObjects.var[k]
-    '''
-    # objects are local    
-    for k in [k for k in l[1].var]:
-        if l[1].var[k] in globalObjects.var.values():
-            l[1].var.pop(k)
-            '''
+        
     return l
 
 def removeDuplicates(body):
