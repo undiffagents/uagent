@@ -145,7 +145,6 @@ class Body:
         for var in oldVars:
             self.var.remove(var)
         
-    
     def __str__(self):        
         return ",".join([str(x) for x in self.body])
     
@@ -215,14 +214,17 @@ def groundExpressions(predicates,objects,properties,fact=True):
     
     sameThings = []
     
+    # ground all the predicates from DRS
     for i in range(len(predicates)):
         predicates[i] = groundPredicate(predicates[i],ObjectList() if not fact else objects,properties)
         if predicates[i].name == 'sameThings': sameThings.append(predicates[i])   
-        
+    
+    # figure out all the class and instance names
     if fact: 
         cs = list(filter(lambda x: isinstance(x,Class),predicates))
         classes = set([y.name for y in cs] + [y.inst for y in cs])    
     
+    # add predicates for anything that is a name for something else
     sameNames = []
     for same in sameThings:
         for pred in predicates:
@@ -243,13 +245,15 @@ def groundExpressions(predicates,objects,properties,fact=True):
                     sameNames.append(Role(pred.letter,pred.name,same.subj,pred.obj))
                 elif pred.subj == same.subj and pred.subj != same.obj:
                     sameNames.append(Role(pred.letter,pred.name,same.obj,pred.obj))
-                    
+                 
     if fact:
+        # add facts for objects that have no named instance
         for obj in objects.objs:
             if obj.name in classes: continue
             else: predicates.append(Class(obj.letter,obj.name,obj.name))
             classes.add(obj.name)
     else:
+        # add variable Classes for objects that have no named instance, renaming if a global instance
         for obj in objects.objs:
             predicates.append(Class(obj.letter,objects.var[obj.name] if obj.name in objects.var else obj.name,obj.letter)) 
     
@@ -265,6 +269,8 @@ def groundPredicate(pred,objects,properties):
     
     subjectVar = None if not subjectVar else subjectVar.groups()[0]    
     objectVar = None if not objectVar else objectVar.groups()[0]
+    
+    # both terms are variables
     if subjectVar and objectVar:
         for var in objects.var:           
             if var == subjectVar:
@@ -284,6 +290,7 @@ def groundPredicate(pred,objects,properties):
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])
         return pred
+    # object is a variable
     elif objectVar:   
         for var in objects.var:
             if var == objectVar:
@@ -294,6 +301,7 @@ def groundPredicate(pred,objects,properties):
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])
         return pred
+    # subject is a variable
     elif subjectVar: 
         for var in objects.var:
             if var == subjectVar:
@@ -302,6 +310,7 @@ def groundPredicate(pred,objects,properties):
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])   
     
+    # shouldn't ground a fact
     raise Exception("Undefined Semantics",pred)
 
 def addGlobalValuesToPredicateList(l,globalObjects,globalProperties):
@@ -332,11 +341,15 @@ def groundImplications(implications,globalObjects,globalProperties):
     '''performs a "grounding" on each DRS object in an implication'''
     
     newImps = []
-    for head,body in implications:    
+    for head,body in implications:
+        
+        # ground the head and body
         head = set(groundExpressions(*addGlobalValuesToPredicateList(head,globalObjects,globalProperties),False))        
         newBody = Body()
-        for pred in groundExpressions(*addGlobalValuesToPredicateList(body,globalObjects,globalProperties),False):
-            newBody.append(pred)                   
+        for pred in set(groundExpressions(*addGlobalValuesToPredicateList(body,globalObjects,globalProperties),False)):
+            newBody.append(pred)   
+            
+        # if a Class or Role in the head has a variable that isn't in the body, it should be moved to the body (language quirk)
         for pred in set(filter(lambda x: isinstance(x,Class),head)):
             if re.match("[A-Z][0-9]*",pred.inst) and pred.inst not in newBody.var:
                 newBody.append(pred)
@@ -346,6 +359,8 @@ def groundImplications(implications,globalObjects,globalProperties):
                 newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
             if (re.match("[A-Z][0-9]*",pred.obj) and pred.obj not in newBody.var):
                 newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
+        
+        # if a Class or Role in the body has a variable that is a DRS global variable, make a class with that variable in the body
         for pred in set(filter(lambda x: isinstance(x,Class),newBody.body)):
             if pred.inst in globalObjects.var:
                 newBody.append(Class(pred.inst,globalObjects.var[globalObjects.var[pred.inst]] if globalObjects.var[pred.inst] in globalObjects.var else globalObjects.var[pred.inst],pred.inst))
@@ -354,8 +369,11 @@ def groundImplications(implications,globalObjects,globalProperties):
                 newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
             if pred.obj in globalObjects.var:
                 newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
+        
+        # make an implication from each head with the same body
         for atom in head:
             newImps.append(Implication(removeDuplicates(newBody),atom))
+            
     return newImps
 
 def interpret_ace(ace,makeFiles = False):
@@ -393,6 +411,7 @@ def interpret_ace(ace,makeFiles = False):
     
     for line in drs:    
         if m := re.match(doneReadingPattern,line): 
+            if len(body) != 0: implications.append([(impRoles,impObjects,impProperties),body])
             break
         elif m := re.match(xmlBeforeDRSPattern,line): 
             continue
@@ -434,9 +453,9 @@ def interpret_ace(ace,makeFiles = False):
             if makeFiles: appendToDRSFile(line)
             impProperties.append(m.groups()[:-2])
         else:
+            # there are things we can add, depending on the requirements
+            # just need to define the behavior to fix this exception
             raise Exception("Undefined Interpretation for DRS Expression",line)
-    
-    if len(body) != 0: implications.append([(impRoles,impObjects,impProperties),body])
     
     facts = groundExpressions(predicates,objects,properties)
     
