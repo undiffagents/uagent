@@ -310,7 +310,7 @@ def addGlobalValuesToPredicateList(l,globalObjects,globalProperties):
     # properties are global
     l[2].var.update(globalProperties.var)
     
-     # objects are local  (named instances whick may require renaming)
+     # objects are local  (classes of named instances may require renaming)
     for k in [k for k in filter(lambda x: not re.match("[A-Z][0-9]*",x),globalObjects.var)]:
         l[1].var[k] = globalObjects.var[k]
         
