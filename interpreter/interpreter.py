@@ -11,10 +11,10 @@ class Class:
         self.inst = self.term(inst)
         
     def term(self,term):
-        m = re.match("string\((.*)\)",term)
-        if m: return "'" + m.groups()[0] + "'"
-        m = re.match("named\((.*)\)",term)
-        if m: return m.groups()[0]        
+        if m:= re.match("string\((.*)\)",term):
+            return "'" + m.groups()[0] + "'"
+        if m:= re.match("named\((.*)\)",term): 
+            return m.groups()[0]
         return term 
     
     def name(self,name):
@@ -35,10 +35,10 @@ class Role:
         self.obj = self.term(obj)
         
     def term(self,term):
-        m = re.match("string\((.*)\)",term)
-        if m: return "'" + m.groups()[0] + "'"
-        m = re.match("named\((.*)\)",term)
-        if m: return m.groups()[0] 
+        if m:= re.match("string\((.*)\)",term):
+            return "'" + m.groups()[0] + "'"
+        if m:= re.match("named\((.*)\)",term): 
+            return m.groups()[0]
         return term 
     
     def name(self,name):
@@ -217,7 +217,7 @@ def groundExpressions(predicates,objects,properties,fact=True):
     # ground all the predicates from DRS
     for i in range(len(predicates)):
         predicates[i] = groundPredicate(predicates[i],ObjectList() if not fact else objects,properties)
-        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])   
+        if predicates[i].name == 'equal': sameThings.append(predicates[i])   
     
     # figure out all the class and instance names
     if fact: 
@@ -227,8 +227,18 @@ def groundExpressions(predicates,objects,properties,fact=True):
     # add predicates for anything that is a name for something else
     sameNames = []
     for same in sameThings:
+        
+        # if it is an ininstantiated class, make this an instance of that class (since there won't be one)
+        if same.subj in objects.var.values() and same.subj not in classes: 
+            predicates.append(Class(same.letter,same.subj,same.obj))
+            classes.add(same.subj)
+        elif same.obj in objects.var.values() and same.obj not in classes: 
+            predicates.append(Class(same.letter,same.obj,same.subj))
+            classes.add(same.obj)
+        
+        # make the same facts about the thing as its equal
         for pred in predicates:
-            if pred.name == 'sameThings': continue
+            if pred.name == 'equal': continue
             if isinstance(pred,Class):
                 if pred.inst == same.obj and pred.inst != same.subj:
                     classes.add(pred.inst)
@@ -264,8 +274,8 @@ def groundExpressions(predicates,objects,properties,fact=True):
 def groundPredicate(pred,objects,properties):
     '''"Grounds" one DRS predicate'''
     
-    subjectVar = re.match("([A-Z][0-9]*)",pred.subj)
-    objectVar  = re.match("([A-Z][0-9]*)",pred.obj)
+    subjectVar = re.match("^([A-Z][0-9]*)$",pred.subj)
+    objectVar  = re.match("^([A-Z][0-9]*)$",pred.obj)
     
     subjectVar = None if not subjectVar else subjectVar.groups()[0]    
     objectVar = None if not objectVar else objectVar.groups()[0]
@@ -305,7 +315,7 @@ def groundPredicate(pred,objects,properties):
     elif subjectVar: 
         for var in objects.var:
             if var == subjectVar:
-                return Role(pred.letter,"sameThings",objects.var[pred.subj],pred.obj)
+                return Role(pred.letter,'equal',objects.var[pred.subj],pred.obj)
         for var in properties.var:
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])   
@@ -396,7 +406,7 @@ def interpret_ace(ace,makeFiles = False):
     
     # these match all possible DRS lines as defined by the current semantics
     xmlBeforeDRSPattern = re.compile("^\s*(?:<.*>)?$")
-    variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)?\].*")
     objectPattern = re.compile("()object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
     predicatePattern = re.compile("()predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
     propertyPattern = re.compile("()property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
@@ -416,7 +426,7 @@ def interpret_ace(ace,makeFiles = False):
         elif m := re.match(xmlBeforeDRSPattern,line): 
             continue
         elif m := re.match(variablesPattern,line):
-            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
+            if makeFiles: appendToDRSFile('['+('' if not m.groups()[0] else m.groups()[0])+']')
         elif m := re.match(implicationVariablesPattern,line):
             if makeFiles: appendToDRSFile(line)
             if len(body) == 0: continue
