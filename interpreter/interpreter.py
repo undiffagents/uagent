@@ -216,10 +216,12 @@ def groundExpressions(predicates,objects,properties,fact=True):
     sameThings = []
     
     for i in range(len(predicates)):
-        predicates[i] = groundPredicate(predicates[i],objects,properties)
-        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])    
+        predicates[i] = groundPredicate(predicates[i],ObjectList() if not fact else objects,properties)
+        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])   
         
-    if fact: classes = set([y.name for y in list(filter(lambda x: isinstance(x,Class),predicates))])    
+    if fact: 
+        cs = list(filter(lambda x: isinstance(x,Class),predicates))
+        classes = set([y.name for y in cs] + [y.inst for y in cs])    
     
     sameNames = []
     for same in sameThings:
@@ -245,15 +247,14 @@ def groundExpressions(predicates,objects,properties,fact=True):
     if fact:
         for obj in objects.objs:
             if obj.name in classes: continue
-            else: 
-                predicates.append(Class(obj.letter,obj.name,obj.name))
+            else: predicates.append(Class(obj.letter,obj.name,obj.name))
             classes.add(obj.name)
     else:
-        for obj in objects.objs: 
-            predicates.append(Class(obj.letter,obj.name,obj.letter)) 
+        for obj in objects.objs:
+            predicates.append(Class(obj.letter,objects.var[obj.name] if obj.name in objects.var else obj.name,obj.letter)) 
     
-    predicates = predicates + sameNames   
-        
+    predicates = predicates + sameNames
+    
     return predicates
 
 def groundPredicate(pred,objects,properties):
@@ -273,7 +274,11 @@ def groundPredicate(pred,objects,properties):
                 pred.obj = objects.var[var]
                 objectVar = None
             if subjectVar == None and objectVar == None:
-                if pred.name == 'be': return Class(pred.letter,pred.obj,pred.subj)
+                if pred.name == 'be': 
+                    objects.var[pred.subj] = pred.obj
+                    if var in objects.var:
+                        del objects.var[var]
+                    return Class(pred.letter,pred.obj,pred.subj)
                 else: return pred
         for var in properties.var:
             if var == objectVar:
@@ -304,11 +309,16 @@ def addGlobalValuesToPredicateList(l,globalObjects,globalProperties):
     
     # properties are global
     l[2].var.update(globalProperties.var)
+    
+    
+    for k in [k for k in filter(lambda x: not re.match("[A-Z][0-9]*",x),globalObjects.var)]:
+        l[1].var[k] = globalObjects.var[k]
+    '''
     # objects are local    
-    keys = [k for k in l[1].var]
-    for k in keys:
+    for k in [k for k in l[1].var]:
         if l[1].var[k] in globalObjects.var.values():
             l[1].var.pop(k)
+            '''
     return l
 
 def removeDuplicates(body):
@@ -331,18 +341,19 @@ def groundImplications(implications,globalObjects,globalProperties):
         head = set(groundExpressions(*addGlobalValuesToPredicateList(head,globalObjects,globalProperties),False))        
         newBody = Body()
         for pred in groundExpressions(*addGlobalValuesToPredicateList(body,globalObjects,globalProperties),False):
-            newBody.append(pred)
+            newBody.append(pred)                   
         for pred in set(filter(lambda x: isinstance(x,Class),head)):
             if re.match("[A-Z][0-9]*",pred.inst) and pred.inst not in newBody.var:
                 newBody.append(pred)
                 head.remove(pred)
         for pred in set(filter(lambda x: isinstance(x,Role),head)):
-            if re.match("[A-Z][0-9]*",pred.subj) and pred.subj not in newBody.var and pred.subj in globalObjects.var: 
+            if re.match("[A-Z][0-9]*",pred.subj) and pred.subj not in newBody.var and pred.subj in globalObjects.var:
                 newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
-            if (re.match("[A-Z][0-9]*",pred.obj) and pred.obj not in newBody.var): 
+            if (re.match("[A-Z][0-9]*",pred.obj) and pred.obj not in newBody.var):
                 newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
         for pred in set(filter(lambda x: isinstance(x,Class),newBody.body)):
-            if pred.inst in globalObjects.var: newBody.append(Class(pred.inst,globalObjects.var[pred.inst],pred.inst))
+            if pred.inst in globalObjects.var:
+                newBody.append(Class(pred.inst,globalObjects.var[globalObjects.var[pred.inst]] if globalObjects.var[pred.inst] in globalObjects.var else globalObjects.var[pred.inst],pred.inst))
         for pred in set(filter(lambda x: isinstance(x,Role),newBody.body)):
             if pred.subj in globalObjects.var:
                 newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
@@ -385,7 +396,7 @@ def interpret_ace(ace,makeFiles = False):
     implicationPredicatePattern = re.compile("(\s+)predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
     implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
     
-    for line in drs:        
+    for line in drs:    
         if m := re.match(doneReadingPattern,line): 
             break
         elif m := re.match(xmlBeforeDRSPattern,line): 
