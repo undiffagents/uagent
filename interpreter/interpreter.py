@@ -655,6 +655,7 @@ def interpret_ace(ace,makeFiles = False):
     properties = PropertyList()
     relations = []
     
+    # TODO - adjectives, adverbs, more connectives
     regexPatterns = compileRegexes()
     
     j = 0
