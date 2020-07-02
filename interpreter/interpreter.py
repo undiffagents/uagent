@@ -10,10 +10,10 @@ class Class:
         self.inst = self.term(inst)
         
     def term(self,term):
-        if m:= re.match("string\((.*)\)",term):
-            return "'" + m.groups()[0] + "'"
-        if m:= re.match("named\((.*)\)",term): 
-            return m.groups()[0]
+        m = re.match("string\((.*)\)",term)
+        if m: return "'" + m.groups()[0] + "'"
+        m = re.match("named\((.*)\)",term)
+        if m: return m.groups()[0]        
         return term 
     
     def name(self,name):
@@ -34,10 +34,10 @@ class Role:
         self.obj = self.term(obj)
         
     def term(self,term):
-        if m:= re.match("string\((.*)\)",term):
-            return "'" + m.groups()[0] + "'"
-        if m:= re.match("named\((.*)\)",term): 
-            return m.groups()[0]
+        m = re.match("string\((.*)\)",term)
+        if m: return "'" + m.groups()[0] + "'"
+        m = re.match("named\((.*)\)",term)
+        if m: return m.groups()[0] 
         return term 
     
     def name(self,name):
@@ -313,6 +313,7 @@ def groundExpressions(predicates,objects,properties,fact=True):
     
     # ground all the predicates from DRS
     for i in range(len(predicates)):
+<<<<<<< HEAD
         if isinstance(predicates[i],Predicate): continue
         predicates[i] = groundDRSPredicate(predicates[i],objects if fact else ObjectList(),properties)
         if predicates[i].name == 'equal': sameThings.append(predicates[i])
@@ -320,6 +321,10 @@ def groundExpressions(predicates,objects,properties,fact=True):
             objects.var[predicates[i].subj] = objects.var[predicates[i].obj]
             del objects.var[predicates[i].obj]
             predicates[i] = Class(predicates[i].letter,objects.var[predicates[i].subj],predicates[i].subj)
+=======
+        predicates[i] = groundPredicate(predicates[i],ObjectList() if not fact else objects,properties)
+        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])   
+>>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
     
     # figure out all the class and instance names
     if fact: 
@@ -329,6 +334,7 @@ def groundExpressions(predicates,objects,properties,fact=True):
     # add predicates for anything that is a name for something else
     sameNames = []
     for same in sameThings:
+<<<<<<< HEAD
         
         # if it is an ininstantiated class, make this an instance of that class (since there won't be one)
         if same.subj in objects.var.values() and same.subj not in classes:
@@ -341,6 +347,10 @@ def groundExpressions(predicates,objects,properties,fact=True):
         # make the same facts about the thing as its equal
         for pred in predicates:            
             if pred.name == 'equal': continue
+=======
+        for pred in predicates:
+            if pred.name == 'sameThings': continue
+>>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
             if isinstance(pred,Class):
                 if pred.inst == same.obj and pred.inst != same.subj:
                     classes.add(pred.inst)
@@ -380,8 +390,8 @@ def groundExpressions(predicates,objects,properties,fact=True):
 def groundDRSPredicate(pred,objects,properties):
     '''"Grounds" one DRS predicate'''
     
-    subjectVar = re.match("^([A-Z][0-9]*)$",pred.subj)
-    objectVar  = re.match("^([A-Z][0-9]*)$",pred.obj)
+    subjectVar = re.match("([A-Z][0-9]*)",pred.subj)
+    objectVar  = re.match("([A-Z][0-9]*)",pred.obj)
     
     subjectVar = None if not subjectVar else subjectVar.groups()[0]    
     objectVar = None if not objectVar else objectVar.groups()[0]
@@ -444,6 +454,7 @@ def groundDRSPredicate(pred,objects,properties):
     # subject is a variable
     elif subjectVar:        
         for var in objects.var:
+<<<<<<< HEAD
             if var == subjectVar and pred.name == 'be' and re.match("^\'.*\'$",pred.obj):
                 return Role(pred.letter,"equal",objects.var[pred.subj],pred.obj)             
             elif var == subjectVar and pred.name == 'be':
@@ -452,6 +463,10 @@ def groundDRSPredicate(pred,objects,properties):
                 return Class(pred.letter,objects.var[pred.subj],objects.var[var])                          
             elif var == objectVar:
                 return Role(pred.letter,pred.name,pred.subj,objects.var[var])  
+=======
+            if var == subjectVar:
+                return Role(pred.letter,"sameThings",objects.var[pred.subj],pred.obj)
+>>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
         for var in properties.var:
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])   
@@ -655,8 +670,25 @@ def interpret_ace(ace,makeFiles = False):
     properties = PropertyList()
     relations = []
     
+<<<<<<< HEAD
     # TODO - adjectives, adverbs, more connectives
     regexPatterns = compileRegexes()
+=======
+    # these match all possible DRS lines as defined by the current semantics
+    xmlBeforeDRSPattern = re.compile("^\s*(?:<.*>)?$")
+    variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
+    objectPattern = re.compile("()object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    predicatePattern = re.compile("()predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    propertyPattern = re.compile("()property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
+    doneReadingPattern = re.compile("^\s*</drspp>.*") 
+    
+    # implications have the same stuff, they are just indented (\s+)
+    implicationVariablesPattern = re.compile("(\s+)\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)?\].*")
+    implicationSignPattern = re.compile("(\s+)(=&gt;)\s*")
+    implicationObjectPattern = re.compile("(\s+)object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPredicatePattern = re.compile("(\s+)predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
+    implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
+>>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
     
     j = 0
     for i in range(len(drs)):        
@@ -666,9 +698,32 @@ def interpret_ace(ace,makeFiles = False):
             break
         elif m := re.match(regexPatterns['xmlBeforeDRS'],line): 
             continue
+<<<<<<< HEAD
         elif m := re.match(regexPatterns['variables'],line):
             if makeFiles: appendToDRSFile('['+('' if not m.groups()[0] else m.groups()[0])+']')
         elif m := re.match(regexPatterns['object'],line): 
+=======
+        elif m := re.match(variablesPattern,line):
+            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
+        elif m := re.match(implicationVariablesPattern,line):
+            if makeFiles: appendToDRSFile(line)
+            if len(body) == 0: continue
+            elif twice:
+                implications.append(((impRoles,impObjects,impProperties),body))
+                impObjects = ObjectList()    
+                impProperties = PropertyList()    
+                impRoles = []                
+                body = []
+                twice = False
+            else: twice = True
+        elif m := re.match(implicationSignPattern,line):
+            if makeFiles: appendToDRSFile(m.groups()[0]+'=>')
+            body = (impRoles,impObjects,impProperties)
+            impObjects = ObjectList()    
+            impProperties = PropertyList()    
+            impRoles = []
+        elif m := re.match(objectPattern,line): 
+>>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
             if makeFiles: appendToDRSFile(line)
             objects.append(m.groups()[:-2])
         elif m := re.match(regexPatterns['unaryPredicate'],line): 
