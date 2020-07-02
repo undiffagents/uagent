@@ -2,18 +2,19 @@ import re
 
 from interpreter import Interpreter
 from ontology import OntologyMemory
-from think import Agent, Audition, Chunk, Language, Memory, Motor, Vision
+from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
+                   Vision)
 
 
 class UndifferentiatedAgent(Agent):
 
-    def __init__(self, machine, output=True):
+    def __init__(self, env, output=True):
         super().__init__(output=output)
 
         self.memory = OntologyMemory(self)
-        self.vision = Vision(self, machine.display)
-        self.audition = Audition(self, machine.speakers)
-        self.motor = Motor(self, self.vision, machine)
+        self.vision = Vision(self, env.display)
+        self.audition = Audition(self, env.speakers)
+        self.motor = Motor(self, self.vision, env)
 
         self.interpreter = Interpreter(self.memory)
 
@@ -72,7 +73,8 @@ class UndifferentiatedAgent(Agent):
                 if cond.pred == 'appearsOn' or cond.pred == 'visible':
                     self.think('check condition "{}"'.format(cond))
                     isa = cond.obj(0)
-                    visual = self.vision.find(isa=isa, seen=False)
+                    # visual = self.vision.find(isa=isa, seen=False)
+                    visual = self.vision.search_for(Query(isa=isa, seen=False), None)
                     if visual:
                         context.set('visual', visual)
                         visobj = self.vision.encode(visual)
@@ -86,9 +88,11 @@ class UndifferentiatedAgent(Agent):
         for potential_syn in self.agent_synonym_list:
             if action.obj(0) == potential_syn:
                 self.think('execute action "{}"'.format(action))
+
                 if action.pred == 'press':
                     visual = self.vision.find(isa=action.obj(1))
-                    self.motor.point_and_click(visual)
+                    if visual:
+                        self.motor.point_and_click(visual)
 
                 if action.pred == 'click':
                     visual = context.get('visual')
@@ -109,7 +113,7 @@ class UndifferentiatedAgent(Agent):
 
     def run(self, time=60):
 
-        instr_visual = self.vision.wait_for(isa='instructions')
+        instr_visual = self.vision.wait_for(isa='text')
         instructions = self.vision.encode(instr_visual)
         self.language.interpret(instructions)
 

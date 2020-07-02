@@ -20,7 +20,6 @@ class Vision(Module):
         self.eyes = eyes
         if eyes is not None:
             eyes.set_vision(self)
-        self.visuals = {}
         self.find_buffer = Buffer('vision.find', self)
         self.encode_buffer = Buffer('vision.encode', self)
         self.encode_loc = Location(0, 0)
@@ -31,20 +30,9 @@ class Vision(Module):
         self.find_time = .000
         self.default_enc_time = .135
 
-    def add_from_display(self, area, obj):
-        return self.add(Visual(area.x, area.y, area.w, area.h, area.isa), obj)
-
-    def add(self, visual, obj):
-        self.visuals[visual] = obj
+    def check_wait_for(self, visual):
         if self.wait_for_query is not None and self.wait_for_query.matches(visual):
             self._finish_wait_for(visual)
-        return visual
-
-    def object_at(self, loc):
-        for visual in self.visuals.keys():
-            if visual.contains(loc):
-                return self.visuals[visual]
-        return None
 
     def remove(self, visual):
         del self.visuals[visual]
@@ -65,7 +53,7 @@ class Vision(Module):
     def _try_find(self, query):
         match = None
         match_dist = 0
-        for visual in self.visuals.keys():
+        for visual in self.display.visuals:
             if query is not None and query.matches(visual):
                 current = self.eyes.loc if self.eyes is not None else self.encode_loc
                 dist = current.distance_to(visual)
@@ -83,6 +71,7 @@ class Vision(Module):
         duration = self.find_time
         if match is not None:
             def fn():
+                self.display.set_attend(match)
                 for fn in self.attend_fns:
                     fn(match)
             self.find_buffer.set(match, duration, 'found {}'.format(match), fn)
@@ -114,8 +103,10 @@ class Vision(Module):
         duration = self.find_time
 
         def fn():
+            self.display.set_attend(visual)
             for fn in self.attend_fns:
                 fn(visual)
+
         self.find_buffer.set(visual, duration, 'found {}'.format(visual), fn)
 
     def wait_for(self, query=None, **kwargs):
@@ -124,30 +115,30 @@ class Vision(Module):
         self.start_wait_for(query)
         return self.get_found()
 
-    def start_encode_thread(self, visual, obj, duration):
+    def start_encode_thread(self, visual, duration):
         if self.last_encode_cancel is not None:
             self.last_encode_cancel.try_cancel()
 
         def fn():
-            self.log('encoded {}'.format(obj))
-            self.encode_buffer.set(obj)
+            self.log('encoded {}'.format(visual.obj))
+            self.encode_buffer.set(visual.obj)
             visual.set('seen', True)
             self.encode_loc = visual
             for fn in self.encode_fns:
-                fn(visual, object)
+                fn(visual)
+
         self.last_encode_cancel = self.run_thread_can_cancel(fn, duration)
 
     def start_encode(self, visual, suppress_think=False):
         self.encode_buffer.acquire()
         if not suppress_think:
             self.think('encode {}'.format(visual))
-        obj = self.visuals[visual]
         duration = self.eyes.compute_enc_time(
             visual) if self.eyes is not None else self.default_enc_time
-        if obj is not None:
-            self.start_encode_thread(visual, obj, duration)
+        if visual.obj is not None:
+            self.start_encode_thread(visual, duration)
             if self.eyes is not None:
-                self.eyes.prepare(visual, obj, self.time(), duration)
+                self.eyes.prepare(visual, self.time(), duration)
         else:
             self.encode_buffer.clear(duration, 'encode failed')
 
@@ -168,13 +159,11 @@ class Vision(Module):
             query = Query()
         query = query.eq('seen', False)
         visual = self.find(query)
-        obj = self.encode(visual)
-        while (visual is not None
-               and obj is not None
-               and not obj.equals(target)):
+        obj = self.encode(visual) if visual else None
+        while visual and target and obj != target:
             visual = self.find(query)
-            obj = self.encode(visual)
-        if obj is not None and obj.equals(target):
+            obj = self.encode(visual) if visual else None
+        if obj and obj == target:
             return visual
         else:
             return None

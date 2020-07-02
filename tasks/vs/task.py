@@ -1,64 +1,62 @@
 import random
 
-from think import Task
-
-ACE_INSTRUCTIONS = \
-    '''Psychomotor-Vigilance is a task X1.
-Acknowledge is a button X2.
-X1 has a box X3 and a target X4.
-X1 has a box X3.
-X1 has a target X4.
-X4 is a letter X5.
-If X4 appears in X3 then a subject X6 clicks X2 and X6 remembers X5.
-If X1 is active then X4 appears in X3.'''
-
-
-# DRS_INSTRUCTIONS = [
-#     'task(Psychomotor-Vigilance)',
-#     'button(Acknowledge)',
-#     'box(Box)',
-#     'target(Target)',
-#     'letter(Letter)',
-#     'subject(Subject)',
-#     'isPartOf(Box,Psychomotor-Vigilance)',
-#     'isPartOf(Target,Psychomotor-Vigilance)',
-#     'isPartOf(Letter,Target)',
-#     # 'hasProperty(Psychomotor-Vigilance,active)=>appearsIn(Target,Box)',
-#     'appearsIn(Target,Box)=>click(Subject,Acknowledge),remember(Subject,Letter)',
-#     'done(Psychomotor-Vigilance)'
-# ]
+from think import DisplayVisual, Task
 
 
 class VSTask(Task):
-    '''Psychomotor Vigilance Task'''
+    '''Visual Search Task'''
 
-    def __init__(self, machine, instructions=ACE_INSTRUCTIONS):
+    def __init__(self, env, instructions=None):
         super().__init__()
-        self.display = machine.display
-        self.keyboard = machine.keyboard
+        self.display = env.display
+        self.keyboard = env.keyboard
         self.instructions = instructions
+        self.stimuli = []
 
     def run(self, time=60):
-        stimulus = None
+
+        def create_visual(color, obj):
+            visual = DisplayVisual(random.randint(30, 250), random.randint(30, 210),
+                                   20, 20, 'letter', obj)
+            visual.set('region', 'vs')
+            visual.set('color', color)
+            return visual
+
+        def start_trial():
+            end_trial()
+            if random.random() < .80:
+                self.stimuli.append(create_visual('red', 'X'))
+            for _ in range(10):
+                self.stimuli.append(create_visual('blue', 'X'))
+                self.stimuli.append(create_visual('red', 'O'))
+            random.shuffle(self.stimuli)
+            self.display.add_visuals(self.stimuli)
+
+        def end_trial():
+            if self.stimuli:
+                self.display.remove_visuals(self.stimuli)
+                self.stimuli = []
 
         def handle_key(key):
-            if stimulus:
-                self.display.remove(stimulus)
+            if key == 'w' or key == 'r':
+                end_trial()
 
         self.keyboard.add_type_fn(handle_key)
 
-        self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
-        self.wait(10.0)
+        if self.instructions:
+            self.display.add(30, 30, 200, 200, 'text', self.instructions)
+            self.wait(10.0)
+            self.display.clear()
 
-        self.display.clear()
-        self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')
+        self.display.add(20, 20, 260, 260, 'rectangle', '')
+        self.display.add(50, 240, 61, 30, 'button', 'Present')
+        self.display.add(110, 240, 30, 30, 'button', 'w')
+        self.display.add(160, 240, 61, 30, 'button', 'Absent')
+        self.display.add(220, 240, 30, 30, 'button', 'r')
+
+        self.wait(1.0)
+        start_trial()
 
         while self.time() < time:
-            self.wait(random.randint(2.0, 5.0))
-            stimulus = self.display.add(50, 50, 20, 20, 'target', 'X')
-            stimulus = self.display.add(100, 50, 20, 20, 'distractor', 'O')
-            stimulus = self.display.add(50, 100, 20, 20, 'distractor', 'O')
-            stimulus = self.display.add(100, 100, 20, 20, 'distractor', 'O')
-            #need to add some form of 'wait_for_response'
-            #ask Dario best approach
-            
+            self.wait(random.randint(5.0, 8.0))
+            start_trial()

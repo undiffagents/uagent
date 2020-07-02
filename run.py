@@ -1,43 +1,85 @@
-from uagent import UndifferentiatedAgent
-from think import Machine, World, get_think_logger
-from tasks.pvt import PVTTask
-from tasks.vs import VSTask
+import os
+import sys
 from datetime import datetime
+
+from tasks.pvt import PVTAgent, PVTTask
+from tasks.vs import VSAgent, VSTask
+from think import ClientWindow, Environment, Window, World, get_think_logger
+from uagent import UndifferentiatedAgent
 
 
 def load_text(path):
     with open(path, 'r') as f:
         return f.read()
 
-#to run this task, set taskID to 1 in '__main__'
-def run_pvt():
-    instructions = load_text('tasks/pvt/ace.txt')
-    machine = Machine()
-    task = PVTTask(machine, instructions)
-    agent = UndifferentiatedAgent(machine)
-    World(task, agent).run(30)
-
-#to run this task, set taskID to 2 in '__main__'
-def run_vs():
-    instructions = load_text('tasks/vs/ace.txt')
-    machine = Machine()
-    task = VSTask(machine, instructions)
-    agent = UndifferentiatedAgent(machine)
-    World(task, agent).run(30)
-
 
 if __name__ == '__main__':
-    do_outlog = 1 #0 = don't log (console output), 1 = log (saves to /data/logs/)
-    taskID = 1 # 1 = PVT, 2 = VS
-    #taskID = int(input('Enter task ID (1=PVT, 2=VS): '))
-    taskText = ["","PVT","VS"]
 
+    # set defaults
+    task_name = 'pvt'
+    agent_name = 'uagent'
+    window_name = 'none'
+
+    # read arguments from command line
+    args = sys.argv[1:]
+    while args:
+        if args[0] == '--agent' and len(args) > 1:
+            agent_name = args[1]
+            args = args[2:]
+        elif args[0] == '--task' and len(args) > 1:
+            task_name = args[1]
+            args = args[2:]
+        elif args[0] == '--window' and len(args) > 1:
+            window_name = args[1]
+            args = args[2:]
+        else:
+            print('Unknown arguments: {}'.format(args))
+            print(
+                'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
+            sys.exit(1)
+
+    # create window (if needed)
+    if window_name == 'window':
+        window = Window(size=(300, 300), title='Task Window')
+    elif window_name == 'none':
+        window = None
+    else:
+        window = ClientWindow(host=window_name)
+
+    # create environment
+    env = Environment(window=window)
+
+    # create task
+    if task_name == 'pvt':
+        task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
+                if agent_name == 'uagent' else
+                PVTTask(env))
+    elif task_name == 'vs':
+        task = (VSTask(env, load_text('tasks/vs/ace.txt'))
+                if agent_name == 'uagent' else
+                VSTask(env))
+    else:
+        print('Unknown task argument: {}'.format(task_name))
+        sys.exit(1)
+
+    # create agent
+    if agent_name == 'uagent':
+        agent = UndifferentiatedAgent(env)
+    elif agent_name == 'pvt':
+        agent = PVTAgent(env)
+    elif agent_name == 'vs':
+        agent = VSAgent(env)
+    else:
+        print('Unknown agent argument: {}'.format(agent_name))
+        sys.exit(1)
+
+    # 0 = don't log (console output), 1 = log (saves to /data/logs/)
+    do_outlog = 1
     if do_outlog:
         #log now indicates taskText, and time started
-        thinklog = get_think_logger(logfilename=''.join(['data/logs/',taskText[taskID],"_",datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),'.txt']), uselogfile=True)
+        thinklog = get_think_logger(logfilename=''.join(
+            ['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
 
-    #refactor later; easy testing for now
-    if taskID == 1:
-        run_pvt()
-    elif taskID == 2:
-        run_vs()
+    # run simulation
+    world = World(task, agent)
+    world.run(30, real_time=(window is not None))

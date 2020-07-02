@@ -9,12 +9,12 @@ class Motor(Module):
     ON_MOUSE = 2
     DEFAULT_TYPING_WPM = 40
 
-    def __init__(self, agent, vision, machine, pos=None):
+    def __init__(self, agent, vision, env, pos=None):
         super().__init__('motor', agent)
         self.vision = vision
-        self.display = machine.display
-        self.keyboard = machine.keyboard
-        self.mouse = machine.mouse
+        self.display = env.display
+        self.keyboard = env.keyboard
+        self.mouse = env.mouse
         self.pos = pos or Motor.ON_KEYBOARD
         self.worker = Worker('motor', self)
         self.wpm(Motor.DEFAULT_TYPING_WPM)
@@ -94,14 +94,14 @@ class Motor(Module):
 
     # this is only movement, what about all time?
     def movement_time(self, from_loc, to_area):
-        d = self.vision.display.pixels_to_inches(from_loc.distance_to(to_area))
-        w = self.vision.display.pixels_to_inches(
+        d = self.display.pixels_to_inches(from_loc.distance_to(to_area))
+        w = self.display.pixels_to_inches(
             to_area.approach_width_from(from_loc))
         return self.mouse_init_time + max(self.mouse_burst_time, self.fitts(self.mouse_fitts_coeff, d, w))
 
     def calc_move_time(self, loc1, loc2):
-        d = self.vision.display.pixels_to_degrees(loc1.distance_to(loc2))
-        w = self.vision.display.pixels_to_degrees(
+        d = self.display.pixels_to_degrees(loc1.distance_to(loc2))
+        w = self.display.pixels_to_degrees(
             loc2.approach_width_from(loc1))
         return self.mouse_init_time + max(self.mouse_burst_time, self.fitts(self.mouse_fitts_coeff, d, w))
 
@@ -114,13 +114,15 @@ class Motor(Module):
 
         def fn():
             self.mouse_loc = visual
-            self.mouse.move(visual.x, visual.y)
+            self.mouse.move(visual)
+            self.display.set_pointer(visual)
 
         self.worker.run(duration, 'moved mouse {}'.format(visual), fn)
 
     def move_to(self, visual):
         self.start_move_to(visual)
         self.worker.wait_until_free()
+        self.vision.get_encoded()
         return self
 
     def calc_click_time(self):
@@ -134,9 +136,8 @@ class Motor(Module):
 
         def fn():
             if self.mouse_loc is not None:
-                for visual in self.vision.visuals:
-                    if visual.contains(self.mouse_loc):
-                        self.mouse.click()
+                self.mouse.click(self.mouse_loc)
+                self.display.set_click(self.mouse_loc)
 
         self.worker.run(duration, 'clicked mouse {}'.format(self.mouse_loc), fn)
 
@@ -146,5 +147,4 @@ class Motor(Module):
 
     def point_and_click(self, visual):
         self.move_to(visual)
-        self.vision.get_encoded()
         self.click()

@@ -1,58 +1,51 @@
 import random
 
-from think import Task
-
-ACE_INSTRUCTIONS = \
-    '''Psychomotor-Vigilance is a task X1.
-Acknowledge is a button X2.
-X1 has a box X3 and a target X4.
-X1 has a box X3.
-X1 has a target X4.
-X4 is a letter X5.
-If X4 appears in X3 then a subject X6 clicks X2 and X6 remembers X5.
-If X1 is active then X4 appears in X3.'''
-
-
-# DRS_INSTRUCTIONS = [
-#     'task(Psychomotor-Vigilance)',
-#     'button(Acknowledge)',
-#     'box(Box)',
-#     'target(Target)',
-#     'letter(Letter)',
-#     'subject(Subject)',
-#     'isPartOf(Box,Psychomotor-Vigilance)',
-#     'isPartOf(Target,Psychomotor-Vigilance)',
-#     'isPartOf(Letter,Target)',
-#     # 'hasProperty(Psychomotor-Vigilance,active)=>appearsIn(Target,Box)',
-#     'appearsIn(Target,Box)=>click(Subject,Acknowledge),remember(Subject,Letter)',
-#     'done(Psychomotor-Vigilance)'
-# ]
+from think import DisplayVisual, Task
 
 
 class PVTTask(Task):
     '''Psychomotor Vigilance Task'''
 
-    def __init__(self, machine, instructions=ACE_INSTRUCTIONS):
+    def __init__(self, env, instructions=None):
         super().__init__()
-        self.display = machine.display
-        self.keyboard = machine.keyboard
+        self.display = env.display
+        self.keyboard = env.keyboard
         self.instructions = instructions
+        self.stimulus = None
 
-    def run(self, time=60):
-        stimulus = None
+    def run(self, time=30):
+
+        def start_trial():
+            end_trial()
+            self.stimulus = DisplayVisual(140, 130, 20, 20, 'target',
+                                          random.choice(['X', 'O']))
+            self.stimulus.set('region', 'pvt')
+            self.stimulus.set('color', random.choice(['red', 'black']))
+            self.display.add_visual(self.stimulus)
+
+        def end_trial():
+            if self.stimulus:
+                self.display.remove_visual(self.stimulus)
+                self.stimulus = None
 
         def handle_key(key):
-            if stimulus:
-                self.display.remove(stimulus)
+            if key == ' ':
+                end_trial()
 
         self.keyboard.add_type_fn(handle_key)
 
-        self.display.add(10, 10, 100, 100, 'instructions', self.instructions)
-        self.wait(10.0)
+        if self.instructions:
+            self.display.add(10, 10, 100, 100, 'text', self.instructions)
+            self.wait(10.0)
+            self.display.clear()
 
-        self.display.clear()
-        self.display.add(10, 100, 40, 20, 'button', 'Acknowledge')
+        self.display.add(20, 20, 260, 260, 'rectangle', '')
+        self.display.add(80, 240, 101, 30, 'button', 'Acknowledge')
+        self.display.add(180, 240, 40, 30, 'button', 'sb')
+
+        self.wait(1.0)
+        start_trial()
 
         while self.time() < time:
-            self.wait(random.randint(2.0, 10.0))
-            stimulus = self.display.add(50, 50, 20, 20, 'target', 'A')
+            self.wait(random.randint(2.0, 5.0))
+            start_trial()

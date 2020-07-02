@@ -1,18 +1,18 @@
 import unittest
 
-from think import (Agent, Audition, Aural, Instruction, Item, Language,
-                   Machine, Memory, Motor, Query, Vision, Visual)
+from think import (Agent, Audition, Aural, Environment, Instruction, Item,
+                   Language, Memory, Motor, Query, Vision, Visual)
 
 
 class InstructionTest(unittest.TestCase):
 
     def test_instruction_type(self, output=False):
         agent = Agent(output=output)
-        machine = Machine()
+        env = Environment()
         memory = Memory(agent)
-        vision = Vision(agent, machine.display)
-        audition = Audition(agent, machine.speakers)
-        motor = Motor(agent, vision, machine)
+        vision = Vision(agent, env.display)
+        audition = Audition(agent, env.speakers)
+        motor = Motor(agent, vision, env)
 
         def interpreter(words):
             if words[0] == 'read':
@@ -45,11 +45,10 @@ class InstructionTest(unittest.TestCase):
         def type_handler(key):
             typed.append(key)
 
-        machine.keyboard.add_type_fn(type_handler)
+        env.keyboard.add_type_fn(type_handler)
 
-        vision.add(Visual(50, 50, 20, 20, 'text'), 'a')
-        pointer = Visual(50, 50, 1, 1, 'pointer')
-        vision.add(pointer, 'pointer')
+        env.display.add_text(50, 50,'a')
+        pointer = env.display.add(50, 50, 1, 1, 'pointer', 'pointer')
 
         speech = [
             'to type',
@@ -82,9 +81,9 @@ class InstructionTest(unittest.TestCase):
     def test_instruction_read(self, output=False):
         agent = Agent(output=output)
         memory = Memory(agent)
-        machine = Machine()
-        vision = Vision(agent, machine.display)
-        audition = Audition(agent, machine.speakers)
+        env = Environment()
+        vision = Vision(agent, env.display)
+        audition = Audition(agent, env.speakers)
 
         def interpreter(words):
             if words[0] == 'read':
@@ -111,9 +110,8 @@ class InstructionTest(unittest.TestCase):
 
         equation = ['3', 'x', '/', '12', '=', '15', '/', '4']
         for i in range(0, len(equation)):
-            vision.add(Visual(50 + 50 * i, 50, 20, 20, 'text'), equation[i])
-        pointer = Visual(50, 50, 1, 1, 'pointer')
-        vision.add(pointer, 'pointer')
+            env.display.add_text(50 + 50 * i, 50, equation[i])
+        pointer = env.display.add(50, 50, 1, 1, 'pointer', 'pointer')
 
         speech = [
             'to solve',
