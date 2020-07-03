@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+from operator import attrgetter
 
 class Class:
     '''Corresponds to both a Descrioption logic Class and a prolog predicate arity /1'''
@@ -10,10 +11,10 @@ class Class:
         self.inst = self.term(inst)
         
     def term(self,term):
-        m = re.match("string\((.*)\)",term)
-        if m: return "'" + m.groups()[0] + "'"
-        m = re.match("named\((.*)\)",term)
-        if m: return m.groups()[0]        
+        if m:= re.match("string\((.*)\)",term):
+            return "'" + m.groups()[0] + "'"
+        if m:= re.match("named\((.*)\)",term): 
+            return m.groups()[0]
         return term 
     
     def name(self,name):
@@ -34,10 +35,10 @@ class Role:
         self.obj = self.term(obj)
         
     def term(self,term):
-        m = re.match("string\((.*)\)",term)
-        if m: return "'" + m.groups()[0] + "'"
-        m = re.match("named\((.*)\)",term)
-        if m: return m.groups()[0] 
+        if m:= re.match("string\((.*)\)",term):
+            return "'" + m.groups()[0] + "'"
+        if m:= re.match("named\((.*)\)",term): 
+            return m.groups()[0]
         return term 
     
     def name(self,name):
@@ -71,7 +72,7 @@ class Predicate:
         return self.name + "(" + ",".join(self.terms) + ")"
     
     def __repr__(self):
-        return self.name + "(" ",".join(self.terms) + ")"  
+        return self.name + "(" + ",".join(self.terms) + ")"  
     
 class Object:
     '''DRS object'''
@@ -100,7 +101,15 @@ class ObjectList:
     def append(self,obj):
         o = Object(*obj)
         self.objs.append(o)
-        if not o.letter in self.var: self.var[o.letter] = o.name
+                       
+        if o.letter not in self.var: 
+            self.var[o.letter] = o.name
+    
+    def incName(self,name):
+        split = [i for i in re.split(r'([A-Za-z]+)', name) if i]
+        if len(split) == 1:
+            return name + str(1)
+        return ''.join(split[:-1]) + str(int(split[-1])+1)
         
     def remove(self,obj):
         self.objs.remove(obj)
@@ -167,7 +176,7 @@ class Body:
         self.var = set()
         
     def append(self,pred):
-        if not (isinstance(pred,Class) or isinstance(pred,Role)): raise
+        if not (isinstance(pred,Class) or isinstance(pred,Role) or isinstance(pred,Predicate)): raise
         self.body.append(pred)
         if isinstance(pred,Class) and not pred.inst in self.var: self.var.add(pred.inst)
         if isinstance(pred,Role) and not pred.subj in self.var: self.var.add(pred.subj)
@@ -226,7 +235,13 @@ class Disjunction:
     
     def __repr__(self):
         return str(self.first) + ";" + str(self.second)
-    
+
+def checkDictsForKey(key,*dicts):
+    for d in dicts:
+        if key in d:
+            return d[key] if d[key] not in d else d[d[key]]
+    return key
+ 
 def writePrologFile(facts, prolog, prologfile, factFile, groundFile):
     '''writes a prolog file that executes a logic program built from 
     the instructions that will produce all facts it enatils in one 
@@ -313,18 +328,26 @@ def groundExpressions(predicates,objects,properties,fact=True):
     
     # ground all the predicates from DRS
     for i in range(len(predicates)):
-<<<<<<< HEAD
-        if isinstance(predicates[i],Predicate): continue
-        predicates[i] = groundDRSPredicate(predicates[i],objects if fact else ObjectList(),properties)
+        if isinstance(predicates[i],Predicate): 
+            newTerms = []
+            for term in predicates[i].terms:
+                if fact and term in objects.var and term in objects.var.values():
+                    newTerms.append(term)
+                elif fact and term in objects.var:
+                    newTerms.append(objects.var[term])
+                elif term in properties.var:
+                    newTerms.append(properties.var[term])
+                else:
+                    newTerms.append(term)
+            predicates[i].terms = newTerms
+            continue
+        if isinstance(predicates[i],Role):
+            predicates[i] = groundDRSPredicate(predicates[i],objects if fact else ObjectList(),properties)
         if predicates[i].name == 'equal': sameThings.append(predicates[i])
-        elif predicates[i].name == 'be':            
+        elif predicates[i].name == 'be':
             objects.var[predicates[i].subj] = objects.var[predicates[i].obj]
             del objects.var[predicates[i].obj]
             predicates[i] = Class(predicates[i].letter,objects.var[predicates[i].subj],predicates[i].subj)
-=======
-        predicates[i] = groundPredicate(predicates[i],ObjectList() if not fact else objects,properties)
-        if predicates[i].name == 'sameThings': sameThings.append(predicates[i])   
->>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
     
     # figure out all the class and instance names
     if fact: 
@@ -334,7 +357,6 @@ def groundExpressions(predicates,objects,properties,fact=True):
     # add predicates for anything that is a name for something else
     sameNames = []
     for same in sameThings:
-<<<<<<< HEAD
         
         # if it is an ininstantiated class, make this an instance of that class (since there won't be one)
         if same.subj in objects.var.values() and same.subj not in classes:
@@ -347,10 +369,6 @@ def groundExpressions(predicates,objects,properties,fact=True):
         # make the same facts about the thing as its equal
         for pred in predicates:            
             if pred.name == 'equal': continue
-=======
-        for pred in predicates:
-            if pred.name == 'sameThings': continue
->>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
             if isinstance(pred,Class):
                 if pred.inst == same.obj and pred.inst != same.subj:
                     classes.add(pred.inst)
@@ -373,7 +391,10 @@ def groundExpressions(predicates,objects,properties,fact=True):
         for obj in objects.objs:
             if obj.name in classes: continue
             else: 
-                predicates.append(Class(obj.letter,obj.name,obj.name))
+                if objects.var[obj.letter] in objects.var:
+                    predicates.append(Class(obj.letter,objects.var[objects.var[obj.letter]],objects.var[obj.letter]))
+                else:
+                    predicates.append(Class(obj.letter,obj.name,obj.name))
                 if obj.letter in properties.var:
                     predicates.append(Role(obj.letter,"hasProperty",obj.name,properties.var[obj.letter]))
             classes.add(obj.name)
@@ -390,8 +411,8 @@ def groundExpressions(predicates,objects,properties,fact=True):
 def groundDRSPredicate(pred,objects,properties):
     '''"Grounds" one DRS predicate'''
     
-    subjectVar = re.match("([A-Z][0-9]*)",pred.subj)
-    objectVar  = re.match("([A-Z][0-9]*)",pred.obj)
+    subjectVar = re.match("^([A-Z][0-9]*)$",pred.subj)
+    objectVar  = re.match("^([A-Z][0-9]*)$",pred.obj)
     
     subjectVar = None if not subjectVar else subjectVar.groups()[0]    
     objectVar = None if not objectVar else objectVar.groups()[0]
@@ -418,7 +439,11 @@ def groundDRSPredicate(pred,objects,properties):
                     del objects.var[var]
                 return Class(pred.letter,pred.obj,pred.subj)      
             elif subjectVar == None and objectVar == None and pred.name == 'be':
-                if objects.var[var] == pred.subj:
+                if objects.var[var] in objects.var:
+                    return Class(pred.letter,objects.var[objects.var[var]],checkDictsForKey(var,objects.var))
+                elif pred.obj in objects.var:
+                    return Class(pred.letter,objects.var[objects.var[var]],objects.var[var])                
+                elif objects.var[var] == pred.subj:
                     objects.var[var] = pred.obj
                 else:
                     objects.var[var] = pred.subj
@@ -454,7 +479,6 @@ def groundDRSPredicate(pred,objects,properties):
     # subject is a variable
     elif subjectVar:        
         for var in objects.var:
-<<<<<<< HEAD
             if var == subjectVar and pred.name == 'be' and re.match("^\'.*\'$",pred.obj):
                 return Role(pred.letter,"equal",objects.var[pred.subj],pred.obj)             
             elif var == subjectVar and pred.name == 'be':
@@ -463,10 +487,6 @@ def groundDRSPredicate(pred,objects,properties):
                 return Class(pred.letter,objects.var[pred.subj],objects.var[var])                          
             elif var == objectVar:
                 return Role(pred.letter,pred.name,pred.subj,objects.var[var])  
-=======
-            if var == subjectVar:
-                return Role(pred.letter,"sameThings",objects.var[pred.subj],pred.obj)
->>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
         for var in properties.var:
             if var == objectVar:
                 return Role(pred.letter,"hasProperty",pred.subj,properties.var[var])   
@@ -534,19 +554,19 @@ def groundImplication(body,head,globalObjects,globalProperties):
             head.remove(pred)
     for pred in set(filter(lambda x: isinstance(x,Role),head)):
         if re.match("[A-Z][0-9]*",pred.subj) and pred.subj not in newBody.var and pred.subj in globalObjects.var:
-            newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
+            newBody.append(Class(pred.subj,checkDictsForKey(pred.subj,globalObjects.var),pred.subj))
         if (re.match("[A-Z][0-9]*",pred.obj) and pred.obj not in newBody.var):
-            newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
+            newBody.append(Class(pred.obj,checkDictsForKey(pred.obj,globalObjects.var),pred.obj))
     
     # if a Class or Role in the body has a variable that is a DRS global variable, make a class with that variable in the body
     for pred in set(filter(lambda x: isinstance(x,Class),newBody.body)):
         if pred.inst in globalObjects.var:
-            newBody.append(Class(pred.inst,globalObjects.var[globalObjects.var[pred.inst]] if globalObjects.var[pred.inst] in globalObjects.var else globalObjects.var[pred.inst],pred.inst))
+            newBody.append(Class(pred.inst,checkDictsForKey(pred.inst,globalObjects.var),pred.inst))
     for pred in set(filter(lambda x: isinstance(x,Role),newBody.body)):
         if pred.subj in globalObjects.var:
-            newBody.append(Class(pred.subj,globalObjects.var[globalObjects.var[pred.subj]] if globalObjects.var[pred.subj] in globalObjects.var else globalObjects.var[pred.subj],pred.subj))
+            newBody.append(Class(pred.subj,checkDictsForKey(pred.subj,globalObjects.var),pred.subj))
         if pred.obj in globalObjects.var:
-            newBody.append(Class(pred.obj,globalObjects.var[globalObjects.var[pred.obj]] if globalObjects.var[pred.obj] in globalObjects.var else globalObjects.var[pred.obj],pred.obj))
+            newBody.append(Class(pred.obj,checkDictsForKey(pred.obj,globalObjects.var),pred.obj))
     
     # make an implication from each head with the same body
     for atom in head:
@@ -584,12 +604,12 @@ def readExpression(space,drs,i,regexPatterns,makeFiles):
                 if makeFiles: appendToDRSFile(line)
                 notTwice = False
             elif antecedent:
-                return j,t,[t,antecedent,(collapseRelationsIntoPredicates(predicates,relations),objects,properties)]            
+                return j,t,[t,antecedent,(collapseRelationsIntoPredicates(predicates,relations,objects),objects,properties)]            
         elif m := re.match(regexPatterns['implicationSign'],line):
             if makeFiles: appendToDRSFile(m.groups()[0]+'=>')
             t = 'i'
             if not antecedent:
-                antecedent = (collapseRelationsIntoPredicates(predicates,relations),objects,properties)
+                antecedent = (collapseRelationsIntoPredicates(predicates,relations,objects),objects,properties)
                 objects = ObjectList()    
                 properties = PropertyList()    
                 predicates = []
@@ -597,7 +617,7 @@ def readExpression(space,drs,i,regexPatterns,makeFiles):
         elif m:= re.match(regexPatterns['disjunctionSign'],line):
             if makeFiles: appendToDRSFile(m.groups()[0])
             t = 'd'
-            antecedent = (collapseRelationsIntoPredicates(predicates,relations),objects,properties)
+            antecedent = (collapseRelationsIntoPredicates(predicates,relations,objects),objects,properties)
             objects = ObjectList()    
             properties = PropertyList()    
             predicates = [] 
@@ -617,8 +637,7 @@ def readExpression(space,drs,i,regexPatterns,makeFiles):
         elif m := re.match(regexPatterns['expressionRelation'],line):
             for ob in objects.objs:
                 if ob.letter == m.groups()[1]:
-                    relations.append(Relation(m.groups()[0],m.groups()[1],ob.name+m.groups()[2].capitalize(),m.groups()[3]))
-                    objects.remove(ob)
+                    predicates.append(Role(m.groups()[1],ob.name+m.groups()[2].capitalize(),m.groups()[1],m.groups()[3]))
         elif m := re.match(regexPatterns['expressionPreposition'],line):
             for pred in predicates:
                 if isinstance(pred,Class) and pred.letter == m.groups()[1]:
@@ -632,7 +651,7 @@ def readExpression(space,drs,i,regexPatterns,makeFiles):
                         predicates.append(Role(pred.letter,newName,pred.subj,m.groups()[3]))
                     else:
                         newName = ('is' if pred.name == 'be' else pred.name)+m.groups()[2][0].capitalize()+m.groups()[2][1:]
-                        predicates.append(Predicate(pred.letter,newName,objects.var[pred.subj] if pred.subj in objects.var else pred.subj,objects.var[pred.obj] if pred.obj in objects.var else pred.obj,objects.var[m.groups()[3]] if m.groups()[3] in objects.var else m.groups()[3]))
+                        predicates.append(Predicate(pred.letter,newName,pred.subj,pred.obj,m.groups()[3]))
                         predicates.remove(pred)
                     break       
         else:
@@ -640,21 +659,36 @@ def readExpression(space,drs,i,regexPatterns,makeFiles):
             # just need to define the behavior to fix this exception
             raise Exception("Undefined Interpretation for DRS Expression",line)        
 
-def collapseRelationsIntoPredicates(predicates,relations): 
+def splitter(data, pred):
+    yes, no = [], []
+    for d in data:
+        (yes if pred(d,data) else no).append(d)
+    return [yes] if 0 == len(no) else [yes] + splitter(no,pred)
+
+def collapseRelationsIntoPredicates(predicates,relations,objects): 
     
-    for rel in relations:
-        for pred in predicates:
-            if isinstance(pred,Class) and pred.inst == rel.letter:
-                raise Exception("Undefined Interpretation for DRS Expression",line)
-            elif isinstance(pred,Role):
-                if pred.subj == rel.letter:
-                    pass
-                if pred.obj == rel.letter:
-                    if pred.name == 'be': pred.name = 'is'
-                    predicates.remove(pred)
-                    predicates.append(Role(pred.letter,pred.name+rel.name[0].capitalize()+rel.name[1:],pred.subj,rel.to))
-            
-    return predicates
+    relations = sorted(relations, key=attrgetter('name','to'))
+    
+    relations = splitter(relations,(lambda x,y: x.name == y[0].name))
+    
+    newPreds = [] 
+    
+    for relType in relations:
+        for rel in relType:
+            for pred in predicates:
+                if isinstance(pred,Class) and pred.inst == rel.letter:
+                    raise Exception("Undefined Interpretation for DRS Expression",line)
+                elif isinstance(pred,Role):
+                    if pred.subj == rel.letter:
+                        if pred.name == 'be': pred.name = 'is'
+                        predicates.remove(pred)
+                        newPreds.append(Role(pred.letter,pred.name+rel.name[0].capitalize()+rel.name[1:],rel.to,pred.obj))             
+                    if pred.obj == rel.letter:
+                        if pred.name == 'be': pred.name = 'is'
+                        predicates.remove(pred)
+                        newPreds.append(Role(pred.letter,pred.name+rel.name[0].capitalize()+rel.name[1:],pred.subj,rel.to))
+                        
+    return predicates + newPreds
     
 def interpret_ace(ace,makeFiles = False):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
@@ -670,26 +704,9 @@ def interpret_ace(ace,makeFiles = False):
     properties = PropertyList()
     relations = []
     
-<<<<<<< HEAD
-    # TODO - adjectives, adverbs, more connectives
+    # TODO - fix relation, do adverbs, more connectives
     regexPatterns = compileRegexes()
-=======
-    # these match all possible DRS lines as defined by the current semantics
-    xmlBeforeDRSPattern = re.compile("^\s*(?:<.*>)?$")
-    variablesPattern = re.compile("\s*<drspp>\s*\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)\].*")
-    objectPattern = re.compile("()object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    predicatePattern = re.compile("()predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    propertyPattern = re.compile("()property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*") 
-    doneReadingPattern = re.compile("^\s*</drspp>.*") 
-    
-    # implications have the same stuff, they are just indented (\s+)
-    implicationVariablesPattern = re.compile("(\s+)\[([A-Z][0-9]*(?:,[A-Z][0-9]*)*)?\].*")
-    implicationSignPattern = re.compile("(\s+)(=&gt;)\s*")
-    implicationObjectPattern = re.compile("(\s+)object\(([A-Z][0-9]*),(.+),(.+),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    implicationPredicatePattern = re.compile("(\s+)predicate\(([A-Z][0-9]*),(.+),(.+),(.+)\)-(\d+)/(\d+)\s*")
-    implicationPropertyPattern = re.compile("(\s+)property\(([A-Z][0-9]*),(.+),(.+)\)-(\d+)/(\d+)\s*")     
->>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
-    
+    #print("\n".join(drs))
     j = 0
     for i in range(len(drs)):        
         line = drs[max(i,j)]
@@ -698,32 +715,9 @@ def interpret_ace(ace,makeFiles = False):
             break
         elif m := re.match(regexPatterns['xmlBeforeDRS'],line): 
             continue
-<<<<<<< HEAD
         elif m := re.match(regexPatterns['variables'],line):
             if makeFiles: appendToDRSFile('['+('' if not m.groups()[0] else m.groups()[0])+']')
         elif m := re.match(regexPatterns['object'],line): 
-=======
-        elif m := re.match(variablesPattern,line):
-            if makeFiles: appendToDRSFile('['+m.groups()[0]+']')
-        elif m := re.match(implicationVariablesPattern,line):
-            if makeFiles: appendToDRSFile(line)
-            if len(body) == 0: continue
-            elif twice:
-                implications.append(((impRoles,impObjects,impProperties),body))
-                impObjects = ObjectList()    
-                impProperties = PropertyList()    
-                impRoles = []                
-                body = []
-                twice = False
-            else: twice = True
-        elif m := re.match(implicationSignPattern,line):
-            if makeFiles: appendToDRSFile(m.groups()[0]+'=>')
-            body = (impRoles,impObjects,impProperties)
-            impObjects = ObjectList()    
-            impProperties = PropertyList()    
-            impRoles = []
-        elif m := re.match(objectPattern,line): 
->>>>>>> parent of df5a6f8... added more comments. cleaned up a bit
             if makeFiles: appendToDRSFile(line)
             objects.append(m.groups()[:-2])
         elif m := re.match(regexPatterns['unaryPredicate'],line): 
@@ -741,8 +735,7 @@ def interpret_ace(ace,makeFiles = False):
         elif m := re.match(regexPatterns['relation'],line):
             for ob in objects.objs:
                 if ob.letter == m.groups()[1]:
-                    relations.append(Relation(m.groups()[0],m.groups()[1],ob.name+m.groups()[2].capitalize(),m.groups()[3]))
-                    objects.remove(ob)
+                    predicates.append(Role(m.groups()[1],ob.name+m.groups()[2].capitalize(),m.groups()[1],m.groups()[3]))
         elif m := re.match(regexPatterns['preposition'],line):
             for pred in predicates:
                 if isinstance(pred,Class) and pred.letter == m.groups()[1]:
@@ -756,7 +749,7 @@ def interpret_ace(ace,makeFiles = False):
                         predicates.append(Role(pred.letter,newName,pred.subj,m.groups()[3]))
                     else:
                         newName = ('is' if pred.name == 'be' else pred.name)+m.groups()[2][0].capitalize()+m.groups()[2][1:]
-                        predicates.append(Predicate(pred.letter,newName,objects.var[pred.subj] if pred.subj in objects.var else pred.subj,objects.var[pred.obj] if pred.obj in objects.var else pred.obj,objects.var[m.groups()[3]] if m.groups()[3] in objects.var else m.groups()[3]))
+                        predicates.append(Predicate(pred.letter,newName,pred.subj,pred.obj,m.groups()[3]))
                         predicates.remove(pred)
                     break
         else:
@@ -764,7 +757,7 @@ def interpret_ace(ace,makeFiles = False):
             # just need to define the behavior to fix this exception
             raise Exception("Undefined Interpretation for DRS Expression",line)
     
-    predicates = collapseRelationsIntoPredicates(predicates,relations)
+    predicates = collapseRelationsIntoPredicates(predicates,relations,objects)
     
     facts = groundExpressions(predicates,objects,properties)
     
