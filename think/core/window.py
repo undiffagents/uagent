@@ -210,8 +210,7 @@ try:
 
         def __init__(self, size=(500, 500), title='Think Window', host='localhost'):
             super().__init__(size=size, title=title)
-            print('[server] Opening channel on \'{}\' port {}...'.format(
-                host, WINDOW_PORT))
+            print('[server] Opening channel on port {}...'.format(WINDOW_PORT))
             self.listener = Listener((host, WINDOW_PORT))
 
         def run(self):
