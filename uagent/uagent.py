@@ -70,12 +70,24 @@ class UndifferentiatedAgent(Agent):
         for potential_condition in self.condition_list:
             #as more conditions are added, their cases must be coded in here.
             if cond.pred == potential_condition:
-                if cond.pred == 'appearsOn' or cond.pred == 'visible':
+                # if cond.pred == 'appearsOn' or cond.pred == 'visible':
+                #     self.think('check condition "{}"'.format(cond))
+                #     isa = cond.obj(0)
+                #     # visual = self.vision.find(isa=isa)
+                #     visual = self.vision.search_for(Query(isa=isa), None)
+                #     if visual:
+                #         print('----- Found visual')
+                #         context.set('visual', visual)
+                #         visobj = self.vision.encode(visual)
+                #         context.set(isa, visobj)
+                #     else:
+                #         return False
+                if cond.pred == 'appearsOn':
                     self.think('check condition "{}"'.format(cond))
                     isa = cond.obj(0)
-                    # visual = self.vision.find(isa=isa, seen=False)
-                    visual = self.vision.search_for(Query(isa=isa, seen=False), None)
+                    visual = self.vision.find(isa=isa, seen=False)
                     if visual:
+                        print('----- Found {}'.format(isa))
                         context.set('visual', visual)
                         visobj = self.vision.encode(visual)
                         context.set(isa, visobj)
@@ -90,9 +102,13 @@ class UndifferentiatedAgent(Agent):
                 self.think('execute action "{}"'.format(action))
 
                 if action.pred == 'press':
-                    visual = self.vision.find(isa=action.obj(1))
-                    if visual:
-                        self.motor.point_and_click(visual)
+                    # visual = self.vision.find(isa=action.obj(1))
+                    # if visual:
+                    #     self.motor.point_and_click(visual)
+                    key = action.obj(1)
+                    if key == 'space_bar':
+                        key = ' '
+                    self.motor.type(key)
 
                 if action.pred == 'click':
                     visual = context.get('visual')

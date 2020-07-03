@@ -179,12 +179,24 @@ try:
 
         def draw_text(self, visual, text=None, color=None):
             text = text or str(visual.obj)
-            surface = self.font.render(
-                text, True, get_color(color or visual.get('color')))
-            rect = surface.get_rect()
-            rect.center = (visual.x + (visual.w // 2),
-                           visual.y + (visual.h // 2))
-            self.screen.blit(surface, rect)
+            if visual.has('multiline') and visual.get('multiline'):
+                lines = text.strip().split('\n')
+                total = len(lines)
+                for i, line in enumerate(lines):
+                    dy = (i - total/2) * 16
+                    surface = self.font.render(
+                        line, True, get_color(color or visual.get('color')))
+                    rect = surface.get_rect()
+                    rect.center = (visual.x + (visual.w // 2),
+                                   visual.y + (visual.h // 2) + dy)
+                    self.screen.blit(surface, rect)
+            else:
+                surface = self.font.render(
+                    text, True, get_color(color or visual.get('color')))
+                rect = surface.get_rect()
+                rect.center = (visual.x + (visual.w // 2),
+                            visual.y + (visual.h // 2))
+                self.screen.blit(surface, rect)
 
         def reset(self):
             self.visuals = []

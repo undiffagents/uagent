@@ -17,7 +17,7 @@ class PVTTask(Task):
 
         def start_trial():
             end_trial()
-            self.stimulus = DisplayVisual(140, 130, 20, 20, 'target',
+            self.stimulus = DisplayVisual(140, 130, 20, 20, 'letter',
                                           random.choice(['X', 'O']))
             self.stimulus.set('region', 'pvt')
             self.stimulus.set('color', random.choice(['red', 'black']))
@@ -35,7 +35,9 @@ class PVTTask(Task):
         self.keyboard.add_type_fn(handle_key)
 
         if self.instructions:
-            self.display.add(10, 10, 100, 100, 'text', self.instructions)
+            visual = DisplayVisual(50, 50, 200, 200, 'text', self.instructions)
+            visual.set('multiline', True)
+            self.display.add_visual(visual)
             self.wait(10.0)
             self.display.clear()
 
