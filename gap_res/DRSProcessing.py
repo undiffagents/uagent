@@ -43,7 +43,10 @@ class predicateSwitcher(object):
             # Apply appropriate variables to ItemGraph
             objectGraph = ItemGraph(self.graphNumber)
             objectGraph.appendItemValue(objReferenceVariable)
-            objectGraph.appendItemRole(objName)
+            #objectGraph.appendItemRole(objName)
+
+            objectGraph.createItemRoleWithType(objName)
+
             objectGraph.appendItemOp(objOperator)
             objectGraph.appendItemCount(objCount)
 
@@ -359,6 +362,9 @@ class questionSwitcher(object):
         self.negationActive = None
         self.verbTargetGap = False
 
+        self.questionItems = []
+        self.questionAffordances = []
+
     # Method to call the appropriate function based on the argument passed in
     def callFunction(self, predicateType, predicateContents, DRSGraph):
         # Get the name of the method
@@ -382,7 +388,12 @@ class questionSwitcher(object):
         objOperator = predicateComponents[4]
         objCount = predicateComponents[5].split(')')[0]
         # Get item node in original instruction which this SHOULD correspond to (ignoring name for now)
-        DRSEquivalentNode = self.findMatchingItemNode(objRole, objOperator, objCount)
+        # THIS NEEDS REENABLED
+        #DRSEquivalentNode = self.findMatchingItemNode(objRole, objOperator, objCount)
+        #************************************************************************************************************************************************************************************************
+        #TODO
+        DRSEquivalentNode = self.findItemNodeWithRole(objRole)
+
         # If we don't find a node for this item, then we have encountered a lexical gap.
 
         newNymCount = 0
@@ -396,11 +407,14 @@ class questionSwitcher(object):
                         # No nodes "active"
                         newRole = requestNewTermToNymCheck(objRole)
                         newNymCount = newNymCount + 1
-                        DRSEquivalentNode = self.findMatchingItemNode(newRole, objOperator, objCount)
+                        #TODO ********************************************************************************************************************************************************
+                        # REENABLE THIS
+                        #DRSEquivalentNode = self.findMatchingItemNode(newRole, objOperator, objCount)
+                        DRSEquivalentNode = self.findItemNodeWithRole(newRole)
                         if DRSEquivalentNode is not None:
                             print("Lexical gap resolved - a role given (" + newRole + ") was found associated with an"
                                                                                       " item in the knowledge base")
-                            DRSEquivalentNameNode = self.findRoleNodeConnectedToItemNode(DRSEquivalentNode)
+                            DRSEquivalentNameNode = self.findRoleTypeNameNodeConnectedToItemNode(DRSEquivalentNode)
                             self.DRSGraph.AppendValueAtSpecificNode(DRSEquivalentNameNode, objRole)
         # Replace the reference ID (from APE Webclient) to the equivalent node's reference ID (from the graph)
         if self.DRSGraph.graph.has_node(DRSEquivalentNode):
@@ -604,7 +618,7 @@ class questionSwitcher(object):
             pass
         elif numberOfComponents == 4:
             # Get action node by its name
-            actionNode = self.findActionNodeWithVerb(predVerb)
+            actionNode = self.findActionNodeWithVerb(predVerb, predSubjRef, predDirObjRef)
             if CONTROL_IDENTIFY_LEXICAL is True:
                 if actionNode is None and self.verbTargetGap == False:
                     print("Lexical gap encountered - a verb (" + predVerb + ") was introduced which is not currently "
@@ -616,11 +630,12 @@ class questionSwitcher(object):
                             # No nodes "active"
                             newVerb = requestNewTermToNymCheck(predVerb)
                             newNymCount = newNymCount + 1
-                            actionNode = self.findActionNodeWithVerb(newVerb)
+                            actionNode = self.findActionNodeWithVerb(newVerb, predSubjRef, predDirObjRef)
+                            verbNode = self.findVerbNodeConnectedToActionNode(actionNode)
                             if actionNode is not None:
                                 print("Lexical gap resolved - a role given (" + newVerb + ") was found associated with "
                                                                                       "an item in the knowledge base")
-                                self.DRSGraph.AppendValueAtSpecificNode(actionNode, newVerb)
+                                self.DRSGraph.AppendValueAtSpecificNode(verbNode, newVerb)
             # actionNode = self.findActionNodeConnectedToVerbNode(verbNode)
             # If the SUBJECT reference is a proper name
             # Check if we find a node containing said name
@@ -805,7 +820,7 @@ class questionSwitcher(object):
         # Handle role nodes
         # Get list of item nodes associated with the role nodes
         for roleNode in roleNodes:
-            itemNodes.append(self.findItemNodeConnectedToRoleNode(roleNode))
+            itemNodes.append(self.findItemNodeConnectedToRoleTypeNameNode(roleNode))
         # Handle remaining matching nodes - check their operator and count nodes
         for itemNode in itemNodes:
             opNode = self.findOpNodeConnectedToItemNode(itemNode)
@@ -819,30 +834,73 @@ class questionSwitcher(object):
                 print("TARGET GAP: More than one node found that describes an item with the role of " + role +
                       ", the operator of " + operator + ", and the count of " + count + ".")
                 if CONTROL_RESOLVE_TARGET is True:
-                    print("DEBUG OPTION: Please select which node you would like to use.")
-                    print(matchingNodes)
-                    nodeSelected = input("Enter a node value")
-                    while nodeSelected not in matchingNodes:
+                    if CONTROL_RESOLVE_TARGET_AUTO is True:
+                        # Iterate through the matches found and check if they have an affordance associated to the
+                        # verbs used in the question. ****** THIS MAY NOT WORK FOR MORE COMPLEX QUESTIONS?
+                        affordanceMatchingNodes = []
+                        for match in matchingNodes:
+                            affordanceNode = self.findAffordanceNodeConnectedToItemNode(match)
+                            if self.DRSGraph.graph.nodes[affordanceNode][CONST_NODE_VALUE_KEY] \
+                                    in self.questionAffordances:
+                                affordanceMatchingNodes.append(match)
+                        if len(affordanceMatchingNodes) == 1:
+                            print("TARGET GAP RESOLVED: Single node matching the requested description with an " +
+                                  "affordance matching a verb used in the question.")
+                            matchingNodes = affordanceMatchingNodes
+                    if len(matchingNodes) > 1:
+                        print("UNABLE TO AUTOMATICALLY RESOLVE: Please select which node you would like to use.")
+                        print(matchingNodes)
                         nodeSelected = input("Enter a node value")
-                    return nodeSelected
-        if len(matchingNodes) > 0:
+                        while nodeSelected not in matchingNodes:
+                            nodeSelected = input("Enter a node value")
+                        return nodeSelected
+        if len(matchingNodes) == 1:
             return matchingNodes.pop()
         else:
             return None
 
-    # TODO: NEED TO HANDLE CASE WHERE MULTIPLE ITEMS
     # TEMP UNTIL FIGURE OUT NAME HANDLING
-    def findItemNodeWithRole(self, strRole):
+    def findItemNodeWithRole(self, role):
+        itemNodes = []
+        matchingNodes = []
         # Get list of nodes with the given role
-        roleNodes = self.ListOfNodesWithValue(strRole)
+        roleNodes = self.ListOfNodesWithValue(role)
         # Handle role nodes
         # Get list of item nodes associated with the role nodes
         for roleNode in roleNodes:
-            roleItemNode = self.findItemNodeConnectedToRoleNode(roleNode)
-            return roleItemNode
+            matchingNodes.append(self.findItemNodeConnectedToRoleTypeNameNode(roleNode))
+        if CONTROL_IDENTIFY_TARGET is True:
+            if len(matchingNodes) > 1:
+                # RAISE A GAP HERE, Found more than one possible node with this value. Have user select.
+                print("TARGET GAP: More than one node found that describes an item with the role of " + role + ".")
+                if CONTROL_RESOLVE_TARGET is True:
+                    if CONTROL_RESOLVE_TARGET_AUTO is True:
+                        # Iterate through the matches found and check if they have an affordance associated to the
+                        # verbs used in the question. ****** THIS MAY NOT WORK FOR MORE COMPLEX QUESTIONS?
+                        affordanceMatchingNodes = []
+                        for match in matchingNodes:
+                            affordanceNode = self.findAffordanceNodeConnectedToItemNode(match)
+                            if self.DRSGraph.graph.nodes[affordanceNode][CONST_NODE_VALUE_KEY] \
+                                    in self.questionAffordances:
+                                affordanceMatchingNodes.append(match)
+                        if len(affordanceMatchingNodes) == 1:
+                            print("TARGET GAP RESOLVED: Single node matching the requested description with an " +
+                                  "affordance matching a verb used in the question.")
+                            matchingNodes = affordanceMatchingNodes
+                    if len(matchingNodes) > 1:
+                        print("UNABLE TO AUTOMATICALLY RESOLVE: Please select which node you would like to use.")
+                        print(matchingNodes)
+                        nodeSelected = input("Enter a node value")
+                        while nodeSelected not in matchingNodes:
+                            nodeSelected = input("Enter a node value")
+                        return nodeSelected
+        if len(matchingNodes) == 1:
+            return matchingNodes.pop()
+        else:
+            return None
 
     # TODO: NEED TO HANDLE CASE WHERE MULTIPLE POSSIBLE ACTIONS
-    def findActionNodeWithVerb(self, verb):
+    def findActionNodeWithVerb(self, verb, subjRef, dirObjRef):
         # Declare list of found nodes
         actionNodes = []
         # Get list of nodes with the given role
@@ -854,6 +912,43 @@ class questionSwitcher(object):
             if verbActionNode is not None:
                 # If an action node is found which has this verb, add it to the list.
                 actionNodes.append(verbActionNode)
+        # If the SUBJECT reference is a proper name
+        # Check if we find a node containing said name
+        if subjRef is not None:
+            if CONST_PRED_SUBJ_NAMED in subjRef:
+                # Get item name out of "named(XYZ)"
+                itemName = subjRef[subjRef.find("(") + 1:subjRef.find(")")]
+                # Add quotes around item name to actually find them since they are added on naming
+                itemName = "\"" + itemName + "\""
+                nodesWithGivenName = self.ListOfNodesWithValue(itemName)
+                if len(nodesWithGivenName) > 0:
+                    itemNodes = []
+                    for nameNode in nodesWithGivenName:
+                        # Need to get the actual item node, not the name node.
+                        itemNode = self.findItemNodeConnectedToNameNode(nameNode)
+                        itemNodes.append(itemNode)
+                    # If only one item with that name, then we've found our subject node
+                    if len(itemNodes) == 1:
+                        self.subjectNode = itemNodes[0]
+        # Same as above for OBJECT reference
+        if dirObjRef is not None:
+            if CONST_PRED_SUBJ_NAMED in dirObjRef:
+                # Get item name out of "named(XYZ)"
+                # Goes all the way to the end because the closed paren has already been stripped if it's the last
+                # item
+                itemName = dirObjRef[dirObjRef.find("(") + 1:]
+                # Add quotes around item name to actually find them since they are added on naming
+                itemName = "\"" + itemName + "\""
+                nodesWithGivenName = self.ListOfNodesWithValue(itemName)
+                if len(nodesWithGivenName) > 0:
+                    itemNodes = []
+                    for nameNode in nodesWithGivenName:
+                        # Need to get the actual item node, not the name node.
+                        itemNode = self.findItemNodeConnectedToNameNode(nameNode)
+                        itemNodes.append(itemNode)
+                    # If only one item with that name, then we've found our subject node
+                    if len(itemNodes) == 1:
+                        self.objectNode = itemNodes[0]
         # If there are multiple action nodes with the same verb, identify a target gap and ask the user to pick
         # which verb should be used.
         # THIS COULD HAVE AUTOMATED RESOLUTION BY LOOKING AT CONNECTED OBJECT NODES
@@ -864,7 +959,35 @@ class questionSwitcher(object):
                       + ".")
                 self.verbTargetGap = True
                 if CONTROL_RESOLVE_TARGET is True:
-                    print("DEBUG OPTION: Please select which action node you would like to use.")
+                    if CONTROL_RESOLVE_TARGET_AUTO is True:
+                        for actionNode in actionNodes:
+                            # Get the subject node
+                            if self.subjectNode is None:
+                                subjectNode = self.DRSGraph.FindItemWithValue(subjRef)
+                            else:
+                                subjectNode = self.subjectNode
+                            # Get the object nodes
+                            if self.objectNode is None:
+                                objectNode = self.DRSGraph.FindItemWithValue(dirObjRef)
+                            else:
+                                objectNode = self.objectNode
+                            # If both are connected to the action node, then the action links them
+                            subjectNodeConnected = False
+                            objectNodeConnected = False
+                            # Check if the subject node has "IsTargetOf"/"IsSourceOf" relationship with the action node
+                            if self.HasEdgeWithValue(actionNode, subjectNode, CONST_HAS_TARGET_EDGE) or \
+                                    self.HasEdgeWithValue(actionNode, subjectNode, CONST_HAS_SOURCE_EDGE):
+                                subjectNodeConnected = True
+                            # Check if the object node has "IsTargetOf"/"IsSourceOf" relationship with the action node
+                            if self.HasEdgeWithValue(actionNode, objectNode, CONST_HAS_TARGET_EDGE) or \
+                                    self.HasEdgeWithValue(actionNode, objectNode, CONST_HAS_SOURCE_EDGE):
+                                objectNodeConnected = True
+                            if subjectNodeConnected is True and objectNodeConnected is True:
+                                print("TARGET GAP RESOLVED: Single node matching the requested verb with  " +
+                                                "connections to the correct subject and object nodes.")
+                                return actionNode
+                    # Don't need an else here, as if the previous part worked, it'll have returned.
+                    print("UNABLE TO AUTOMATICALLY RESOLVE: Please select which node you would like to use.")
                     print(actionNodes)
                     nodeSelected = input("Enter a node value")
                     while nodeSelected not in actionNodes:
@@ -895,7 +1018,7 @@ class questionSwitcher(object):
         roleItemNodes = []
         # Get list of item nodes associated with the role nodes
         for roleNode in roleNodes:
-            roleItemNode = self.findItemNodeConnectedToRoleNode(roleNode)
+            roleItemNode = self.findItemNodeConnectedToRoleTypeNameNode(roleNode)
             roleItemNodes.append(roleItemNode)
         # Find item node which has both the name and role
         # Iterate through role nodes for arbitrary reason
@@ -920,12 +1043,48 @@ class questionSwitcher(object):
             if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_HAS_VERB_EDGE:
                 return startNode
 
+    def findVerbNodeConnectedToActionNode(self, actionNode):
+        # Edges seem to be a little weird, so getting
+        outEdgesFromNode = self.DRSGraph.graph.out_edges(actionNode, data=True)
+        inEdgesFromNode = self.DRSGraph.graph.in_edges(actionNode, data=True)
+        for startNode, endNode, edgeValues in outEdgesFromNode:
+            # If an edge has the value ItemHasName, then we want to return the start node (the item node itself)
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_HAS_VERB_EDGE:
+                return endNode
+
     def findItemNodeConnectedToRoleNode(self, roleNode):
         inEdgesFromNode = self.DRSGraph.graph.in_edges(roleNode, data=True)
+        # outEdgesFromNode = self.DRSGraph.graph.edges(roleNode, data=True)
         for startNode, endNode, edgeValues in inEdgesFromNode:
             # If an edge has the value ItemHasRole, then we want to return the start node (the item node itself)
             if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_HAS_ROLE_EDGE:
                 return startNode
+
+    def findItemNodeConnectedToRoleTypeNameNode(self, roleTypeNameNode):
+        inEdgesFromNode = self.DRSGraph.graph.in_edges(roleTypeNameNode, data=True)
+        # outEdgesFromNode = self.DRSGraph.graph.edges(roleNode, data=True)
+        for startNode, endNode, edgeValues in inEdgesFromNode:
+            # If an edge has the value hasName, then we want to backtrack up to the RoleType node
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_HAS_NAME_EDGE:
+                roleTypeNode = startNode
+                inEdgesFromRoleTypeNode = self.DRSGraph.graph.in_edges(roleTypeNode, data=True)
+                for typeStartNode, typeEndNode, typeEdgeValues in inEdgesFromRoleTypeNode:
+                    # If an edge coming to the roleType node has the value ofItemRoleType, then we want to backtrack
+                    # up to the Role node itself
+                    if typeEdgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_ROLE_TYPE_EDGE:
+                        roleNode = typeStartNode
+                        outEdgesFromRoleNode = self.DRSGraph.graph.out_edges(roleNode, data=True)
+                        # outEdgesFromNode = self.DRSGraph.graph.edges(roleNode, data=True)
+                        for roleStartNode, roleEndNode, roleEdgeValues in outEdgesFromRoleNode:
+                            # If an edge has the value ItemHasRole, then we want to return the start node
+                            # (the item node itself)
+                            if roleEdgeValues[CONST_NODE_VALUE_KEY] == CONST_ROLE_ASSUMED_BY:
+                                # The depth of this traversal is kinda silly
+                                # TODO*******************************************************************************************************
+                                # This should 100% be refactored to return multiple if there are multiple items
+                                # connected to the same role node (possible with the new format)
+                                itemNode = roleEndNode
+                                return itemNode
 
     def findOpNodeConnectedToItemNode(self, itemNode):
         outEdgesFromNode = self.DRSGraph.graph.out_edges(itemNode, data=True)
@@ -941,11 +1100,36 @@ class questionSwitcher(object):
             if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_HAS_ROLE_EDGE:
                 return endNode
 
+    def findRoleTypeNameNodeConnectedToItemNode(self, itemNode):
+        outEdgesFromNode = self.DRSGraph.graph.out_edges(itemNode, data=True)
+        inEdgesFromNode = self.DRSGraph.graph.in_edges(itemNode, data=True)
+        for startNode, endNode, edgeValues in inEdgesFromNode:
+            # If an edge has the value ItemHasRole, then the start node is the role node
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ROLE_ASSUMED_BY:
+                roleNode = startNode
+                outEdgesFromNode = self.DRSGraph.graph.out_edges(roleNode, data=True)
+                for roleStartNode, roleEndNode, roleEdgeValues in outEdgesFromNode:
+                    # If an edge has the value ofItemRoleType, then the end node is the role type node
+                    if roleEdgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_ROLE_TYPE_EDGE:
+                        roleTypeNode = roleEndNode
+                        outEdgesFromNode = self.DRSGraph.graph.out_edges(roleTypeNode, data=True)
+                        for roleTypeStartNode, roleTypeEndNode, roleTypeEdgeValues in outEdgesFromNode:
+                            # If an edge has the value hasName, then the end node is the role type name node
+                            if roleTypeEdgeValues[CONST_NODE_VALUE_KEY] == CONST_HAS_NAME_EDGE:
+                                return roleTypeEndNode
+
     def findCountNodeConnectedToItemNode(self, itemNode):
         outEdgesFromNode = self.DRSGraph.graph.out_edges(itemNode, data=True)
         for startNode, endNode, edgeValues in outEdgesFromNode:
             # If an edge has the value ItemHasCount, then we want to return the start node (the item node itself)
             if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_HAS_COUNT_EDGE:
+                return endNode
+
+    def findAffordanceNodeConnectedToItemNode(self, itemNode):
+        outEdgesFromNode = self.DRSGraph.graph.out_edges(itemNode, data=True)
+        for startNode, endNode, edgeValues in outEdgesFromNode:
+            # If an edge has the value ItemHasCount, then we want to return the start node (the item node itself)
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ITEM_HAS_AFFORDANCE_EDGE:
                 return endNode
 
 
@@ -1041,8 +1225,9 @@ def checkForContextGap(DRSGraph):
     itemNodePattern = re.compile(CONST_REGEX_ITEM_NODE)
     propertyNodePattern = re.compile(CONST_REGEX_PROPERTY_NODE)
     # Identify the usual attribute edges which we want to ignore
+    #TODO update these to reflect new framework
     itemEdgesToIgnore = [CONST_ITEM_HAS_NAME_EDGE, CONST_ITEM_HAS_AFFORDANCE_EDGE, CONST_ITEM_HAS_DESCRIPTION_EDGE,
-                         CONST_ITEM_HAS_ROLE_EDGE, CONST_ITEM_HAS_OP_EDGE, CONST_ITEM_HAS_COUNT_EDGE]
+                         CONST_ITEM_HAS_ROLE_EDGE, CONST_ITEM_HAS_OP_EDGE, CONST_ITEM_HAS_COUNT_EDGE, CONST_TYPE]
     propertyEdgesToIgnore = [CONST_PROP_HAS_ADJECTIVE_EDGE, CONST_PROP_HAS_SEC_OBJECT_EDGE,
                              CONST_PROP_HAS_TERT_OBJECT_EDGE, CONST_PROP_HAS_DEG_EDGE, CONST_PROP_HAS_COMP_TARGET_EDGE]
     # Isolate the item and property nodes
@@ -1106,73 +1291,79 @@ def DRSToItem():
     DRSLines = []
     outputFiles = 0
     conditionalCount = 0
-    # Read in DRS instructions from file
-    DRSFile = open(CONST_INPUT_FILE_NAME + ".txt", "r")
-    for line in DRSFile:
-        # Get DRS command and remove any leading and ending whitespace
-        DRSLines.append(line.strip())
-    # Get numbers of which lines are headers ([A, B, C, ...] and conditionals (=>) )
-    symbolLines = getSymbolLines(DRSLines)
-
-    categorizedDRSLines = categorizeDRSLines(DRSLines, symbolLines)
-
-    # Get all if-then sets
-    conditionalSets = getConditionals(DRSLines, categorizedDRSLines)
-
-    # print(conditionalSets)
     # Set up the predicate switcher
     predSwitcher = predicateSwitcher()
 
     # Set up counter for question response
     questionCounter = 1
 
-    # Iterate through the DRS instructions
-    for index, currentInstruction in enumerate(DRSLines):
-        # take next instruction or exit
-        nextStep = ''
+    # If not importing a graph, then generate one from a set of instructions
+    if CONTROL_USE_IMPORTED_GRAPH == False:
+        # Read in DRS instructions from file
+        DRSFile = open(CONST_INPUT_FILE_NAME + ".txt", "r")
+        for line in DRSFile:
+            # Get DRS command and remove any leading and ending whitespace
+            DRSLines.append(line.strip())
+        # Get numbers of which lines are headers ([A, B, C, ...] and conditionals (=>) )
+        symbolLines = getSymbolLines(DRSLines)
 
-        # As long as no "exit" given
-        if nextStep != 'exit':
-            # If the current line is an instruction
-            if categorizedDRSLines.get(index) == CONST_INSTRUCTION_TAG:
-                # Get the predicate type and contents
-                instructionCountInMatchingIfBlock, conditionalWithMatchingIfBlock = \
-                    checkCurrentInstructionIf(DRSLines, index, currentInstruction, conditionalSets)
-                DRSGraph = splitAndRun(currentInstruction, predSwitcher, False)
+        categorizedDRSLines = categorizeDRSLines(DRSLines, symbolLines)
+
+        # Get all if-then sets
+        conditionalSets = getConditionals(DRSLines, categorizedDRSLines)
+
+        # Iterate through the DRS instructions
+        for index, currentInstruction in enumerate(DRSLines):
+            # take next instruction or exit
+            nextStep = ''
+
+            # As long as no "exit" given
+            if nextStep != 'exit':
+                # If the current line is an instruction
+                if categorizedDRSLines.get(index) == CONST_INSTRUCTION_TAG:
+                    # Get the predicate type and contents
+                    instructionCountInMatchingIfBlock, conditionalWithMatchingIfBlock = \
+                        checkCurrentInstructionIf(DRSLines, index, currentInstruction, conditionalSets)
+                    DRSGraph = splitAndRun(currentInstruction, predSwitcher, False)
+                    # If we want to export a graph for each step of the way, we do that here
+                    if CONTROL_EXPORT_EACH_STEP_GRAPH is True:
+                        networkx.write_graphml_lxml(DRSGraph.graph, CONST_INPUT_FILE_NAME
+                                                    + "aINSTRUCTION_STEP" + str(outputFiles) + ".graphml")
+                        # Increase the counter
+                        outputFiles = outputFiles + 1
+                        if currentAnnotationLine == 1 or currentAnnotationLine == 3 or currentAnnotationLine == 9 or \
+                                currentAnnotationLine == 11 or currentAnnotationLine == 12 or currentAnnotationLine == 13:
+                            currentACELine = currentACELine + 1
+                        currentAnnotationLine = currentAnnotationLine + 1
+
+
+            # Break out of loop with exit
+            else:
+                break
+
+        # Reset the output counter so the conditionals are tracked separately from the instructions
+        outputFiles = 0
+        # On end of reading in instructions
+        # process conditionals first:
+        for conditional in conditionalSets:
+            if not conditional.processed:
+                DRSGraph = runFullConditional(conditional, predSwitcher, DRSGraph, conditionalSets, conditionalCount)
+                conditionalCount = conditionalCount + 1
                 # If we want to export a graph for each step of the way, we do that here
                 if CONTROL_EXPORT_EACH_STEP_GRAPH is True:
                     networkx.write_graphml_lxml(DRSGraph.graph, CONST_INPUT_FILE_NAME
-                                                + "aINSTRUCTION_STEP" + str(outputFiles) + ".graphml")
+                                                + "bCONDITIONAL_STEP" + str(outputFiles) + ".graphml")
                     # Increase the counter
                     outputFiles = outputFiles + 1
+                    currentAnnotationLine = currentAnnotationLine + 1
                     if currentAnnotationLine == 1 or currentAnnotationLine == 3 or currentAnnotationLine == 9 or \
                             currentAnnotationLine == 11 or currentAnnotationLine == 12 or currentAnnotationLine == 13:
                         currentACELine = currentACELine + 1
-                    currentAnnotationLine = currentAnnotationLine + 1
 
+    if CONTROL_USE_IMPORTED_GRAPH == True:
+        DRSGraph = ItemGraph(None)
+        DRSGraph.graph = networkx.read_graphml(CONST_IMPORT_GRAPH_FILE_NAME + ".graphml")
 
-        # Break out of loop with exit
-        else:
-            break
-
-    # Reset the output counter so the conditionals are tracked separately from the instructions
-    outputFiles = 0
-    # On end of reading in instructions
-    # process conditionals first:
-    for conditional in conditionalSets:
-        if not conditional.processed:
-            DRSGraph = runFullConditional(conditional, predSwitcher, DRSGraph, conditionalSets, conditionalCount)
-            conditionalCount = conditionalCount + 1
-            # If we want to export a graph for each step of the way, we do that here
-            if CONTROL_EXPORT_EACH_STEP_GRAPH is True:
-                networkx.write_graphml_lxml(DRSGraph.graph, CONST_INPUT_FILE_NAME
-                                            + "bCONDITIONAL_STEP" + str(outputFiles) + ".graphml")
-                # Increase the counter
-                outputFiles = outputFiles + 1
-                currentAnnotationLine = currentAnnotationLine + 1
-                if currentAnnotationLine == 1 or currentAnnotationLine == 3 or currentAnnotationLine == 9 or \
-                        currentAnnotationLine == 11 or currentAnnotationLine == 12 or currentAnnotationLine == 13:
-                    currentACELine = currentACELine + 1
 
     # Post-instruction pre-query gap identification goes here
     # In this case, Context Gap
@@ -1189,6 +1380,25 @@ def DRSToItem():
             questionInput = input('There was an error with the ACE entered - please try again.')
             questionLines = APEWebserviceCall(questionInput)
 
+        # Iterate through the question lines and get any verbs/items used in the question
+        # Store them in the question switcher for target gap resolution
+        for line in questionLines:
+            # Break up each predicate
+            predicateSplit = line.split('(', 1)
+            predicateType = predicateSplit[0]
+            predicateContents = predicateSplit[1]
+            # If it's an object then get the object value and add it to the question switcher's list of items
+            if predicateType == "object":
+                predicateComponents = predicateContents.split(',')
+                predItem = predicateComponents[1]
+                qSwitcher.questionItems.append(predItem)
+            # If it's a verb then get the verb value and add it to the question switcher's list of affordances
+            if predicateType == "predicate":
+                predicateComponents = predicateContents.split(',')
+                predVerb = predicateComponents[1]
+                qSwitcher.questionAffordances.append(predVerb)
+
+        # Actually iterate through the question lines this time and call the question switcher on each
         for currentLine in questionLines:
             predicateSplit = currentLine.split('(', 1)
             predicateType = predicateSplit[0]
@@ -1213,11 +1423,18 @@ def DRSToItem():
     # Once "exit" has been entered
     # At end of program, if an ontology was built at all, print it out and export it in GraphML
     if DRSGraph is not None:
-        jsonFile = open("jsonFile.txt", "w")
-        jsonSerializable = networkx.readwrite.json_graph.node_link_data(DRSGraph.graph)
-        jsonOutput = json.dumps(jsonSerializable)
-        jsonFile.write(jsonOutput)
-        networkx.write_graphml_lxml(DRSGraph.graph, CONST_INPUT_FILE_NAME + ".graphml")
-
+        # If not using imported graph, export using the input instruction name
+        if CONTROL_USE_IMPORTED_GRAPH == False:
+            jsonFile = open(CONST_INPUT_FILE_NAME + "json.txt", "w")
+            jsonSerializable = networkx.readwrite.json_graph.node_link_data(DRSGraph.graph)
+            jsonOutput = json.dumps(jsonSerializable)
+            jsonFile.write(jsonOutput)
+            networkx.write_graphml_lxml(DRSGraph.graph, CONST_INPUT_FILE_NAME + ".graphml")
+        else:
+            jsonFile = open(CONST_IMPORT_GRAPH_FILE_NAME + "json.txt", "w")
+            jsonSerializable = networkx.readwrite.json_graph.node_link_data(DRSGraph.graph)
+            jsonOutput = json.dumps(jsonSerializable)
+            jsonFile.write(jsonOutput)
+            networkx.write_graphml_lxml(DRSGraph.graph, CONST_IMPORT_GRAPH_FILE_NAME + "POST.graphml")
 
 DRSToItem()

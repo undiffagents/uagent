@@ -1,0 +1,378 @@
+@prefix :      <http://www.uagent.com/ontology#> .
+@prefix opla:  <http://ontologydesignpatterns.org/opla#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+:ItemRoleTypeButton  a  :ItemRoleType ;
+        :hasName  "responseButton" .
+
+:isPresent  a   owl:DatatypeProperty .
+
+:hasLocation  a  owl:ObjectProperty .
+
+:ItemRoleTypeDistractor
+        a         :ItemRoleType ;
+        :hasName  "distractor" .
+
+<http://www.uagent.com/ontology>
+        a               owl:Ontology ;
+        owl:versionIRI  <http://www.uagent.com/ontology/1.0.0> .
+
+:triggers  a    owl:ObjectProperty .
+
+:hasFirstItem  a  owl:ObjectProperty .
+
+:ItemShape  a   owl:Class .
+
+:ISR-MATBExperiment  a   owl:Class ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asACEString
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asDRSString
+                         ] ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            :asString ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:maxQualifiedCardinality  "4"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :ISR-MATBTask ;
+                           owl:onProperty               :hasTask
+                         ] .
+
+:refersTo  a    owl:ObjectProperty .
+
+:DescriptionInstruction
+        a                owl:Class ;
+        rdfs:subClassOf  :Instruction ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :SituationDescription ;
+                           owl:onProperty     :contributesTo
+                         ] .
+
+:ActionType  a  owl:Class .
+
+:RelativeConditionType
+        a       owl:Class .
+
+:TransitionDescription
+        a       owl:Class .
+
+:ItemRoleTypeAgent  a  :ItemRoleType ;
+        :hasName  "agent" .
+
+:informs  a     owl:ObjectProperty .
+
+:Item2  a             :Item ;
+        :hasItemName  "Mr. Agent" .
+
+:asGroundRuleString  a      owl:DatatypeProperty ;
+        rdfs:range          xsd:string ;
+        rdfs:subPropertyOf  :asRuleString .
+
+:ItemColor  a   owl:Class .
+
+:initialInstruction  a         :Instruction ;
+        :asFactString          "task(psychomotor-vigilance)" , "screen(screen)" , "isPartOf(space_bar,psychomotor-vigilance)" , "button(space_bar)" , "letter(letter)" , "isPartOf(subject,psychomotor-vigilance)" , "subject(subject)" , "isPartOf(letter,psychomotor-vigilance)" , "isPartOf(screen,psychomotor-vigilance)" ;
+        :asGroundRuleString    "appearsOn(letter,screen),subject(subject),button(space_bar),letter(letter),screen(screen) => press(subject,space_bar)" , "hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) => appearsOn(letter,screen)" , "subject(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)" ;
+        :asReasonerFactString  "press(subject,space_bar)" , "appearsOn(letter,screen)" , "hasProperty(psychomotor-vigilance,active)" ;
+        :asRuleString          "appearsOn(K,C),subject(I),button(H),letter(K),screen(C) => press(I,H)" , "subject(M),isPartOf(M,A),task(A) => hasProperty(A,active)" , "hasProperty(A,active),letter(S),screen(C),task(A) => appearsOn(S,C)" .
+
+:ItemRole3  a            :ItemRole ;
+        :assumedBy       :Item3 ;
+        :ofItemRoleType  :ItemRoleTypeDistractor .
+
+:hasItemName  a  owl:DatatypeProperty .
+
+:hasPreSituationDescription
+        a       owl:ObjectProperty .
+
+:Item   a       owl:Class .
+
+:SituationDescription
+        a                owl:Class ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  [ a            owl:Class ;
+                                                owl:unionOf  ( :ItemDescription :RelativeCondition )
+                                              ] ;
+                           owl:onProperty     :hasCurrentCondition
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemDescription ;
+                           owl:onProperty     :hasEarlierCondition
+                         ] .
+
+:hasTask  a     owl:ObjectProperty .
+
+:hasCurrentCondition  a  owl:ObjectProperty .
+
+:hasName  a     owl:DatatypeProperty .
+
+owl:Thing  rdfs:subClassOf  [ a                  owl:Restriction ;
+                              owl:allValuesFrom  xsd:string ;
+                              owl:onProperty     :hasItemName
+                            ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :Affordance ;
+                           owl:onProperty     :affords
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemLocation ;
+                           owl:onProperty     :refersToItemLocation
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :Location ;
+                           owl:onProperty     :hasLocation
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :RelativeConditionType ;
+                           owl:onProperty     :ofRelativeConditionType
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemShape ;
+                           owl:onProperty     :refersToItemShape
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemRoleType ;
+                           owl:onProperty     :ofItemRoleType
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :SituationDescription ;
+                           owl:onProperty     :hasPreSituationDescription
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemType ;
+                           owl:onProperty     :refersToItemType
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemColor ;
+                           owl:onProperty     :refersToItemColor
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  xsd:string ;
+                           owl:onProperty     :hasName
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :SituationDescription ;
+                           owl:onProperty     :hasPostSituationDescription
+                         ] .
+
+:ofItemRoleType  a  owl:ObjectProperty .
+
+:assumedBy  a   owl:ObjectProperty .
+
+:AffordanceType  a  owl:Class .
+
+:ofRelativeConditionType
+        a       owl:ObjectProperty .
+
+:asDRSString  a     owl:DatatypeProperty ;
+        rdfs:range  xsd:string .
+
+:ofActionType  a  owl:ObjectProperty .
+
+:asACEString  a     owl:DatatypeProperty ;
+        rdfs:range  xsd:string .
+
+:prescribes  a  owl:ObjectProperty .
+
+:Item3  a       :Item .
+
+:refersToItemType  a  owl:ObjectProperty .
+
+:hasEarlierCondition  a  owl:ObjectProperty .
+
+:contributesTo  a  owl:ObjectProperty .
+
+:hasPostSituationDescription
+        a       owl:ObjectProperty .
+
+:ItemType  a    owl:Class .
+
+:ItemRole2  a            :ItemRole ;
+        :assumedBy       :Item2 ;
+        :ofItemRoleType  :ItemRoleTypeAgent .
+
+:refersToItemLocation
+        a       owl:ObjectProperty .
+
+:Affordance  a           owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            :hasName ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemRole ;
+                           owl:onProperty     :providesRole
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ISR-MATBTask ;
+                           owl:onProperty     :informs
+                         ] ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onClass               :AffordanceType ;
+                           owl:onProperty            :hasAffordanceType ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] .
+
+:hasInstruction  a  owl:ObjectProperty .
+
+:ItemRole4  a            :ItemRole ;
+        :assumedBy       :Item4 ;
+        :ofItemRoleType  :ItemRoleTypeDistractor .
+
+:hasSecondItem  a  owl:ObjectProperty .
+
+:ItemRoleType  a  owl:Class .
+
+:ISR-MATBTask  a         owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            :asString ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :Instruction ;
+                           owl:onProperty               :hasInstruction
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asDRSString
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asACEString
+                         ] .
+
+:ofItem  a      owl:ObjectProperty .
+
+:ItemRole1  a            :ItemRole ;
+        :assumedBy       :Item1 ;
+        :ofItemRoleType  :ItemRoleTypeButton .
+
+:RelativeCondition  a    owl:Class ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemDescription ;
+                           owl:onProperty     :hasSecondItem
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :ItemDescription ;
+                           owl:onProperty     :hasFirstItem
+                         ] .
+
+:Location  a    owl:Class .
+
+:Instruction  a          owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:string ;
+                           owl:onProperty            :asString ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asDRSString
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange              xsd:string ;
+                           owl:onProperty               :asACEString
+                         ] .
+
+:Item4  a       :Item .
+
+:ActionInstruction  a    owl:Class ;
+        rdfs:subClassOf  :Instruction ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :TransitionDescription ;
+                           owl:onProperty     :prescribes
+                         ] .
+
+:asString  a        owl:DatatypeProperty ;
+        rdfs:range  xsd:string .
+
+:affords  a     owl:ObjectProperty .
+
+:refersToItemColor  a  owl:ObjectProperty .
+
+:ItemRole  a             owl:Class ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :Item ;
+                           owl:onProperty     :assumedBy
+                         ] ;
+        rdfs:subClassOf  [ a                   owl:Restriction ;
+                           owl:onProperty      :assumedBy ;
+                           owl:someValuesFrom  :Item
+                         ] .
+
+:asRuleString  a    owl:DatatypeProperty ;
+        rdfs:range  xsd:string .
+
+:hasAffordanceType  a  owl:ObjectProperty .
+
+:Action  a               owl:Class ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onClass               :ActionType ;
+                           owl:onProperty            :ofActionType ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] .
+
+:ItemLocation  a  owl:Class .
+
+:ItemDescription  a      owl:Class ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :ItemLocation ;
+                           owl:onProperty               :refersToItemLocation
+                         ] ;
+        rdfs:subClassOf  [ a                         owl:Restriction ;
+                           owl:onDataRange           xsd:boolean ;
+                           owl:onProperty            :isPresent ;
+                           owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                         ] ;
+        rdfs:subClassOf  [ a                  owl:Restriction ;
+                           owl:allValuesFrom  :Item ;
+                           owl:onProperty     :ofItem
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :ItemShape ;
+                           owl:onProperty               :refersToItemShape
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :ItemColor ;
+                           owl:onProperty               :refersToItemColor
+                         ] ;
+        rdfs:subClassOf  [ a                            owl:Restriction ;
+                           owl:minQualifiedCardinality  "0"^^xsd:nonNegativeInteger ;
+                           owl:onClass                  :ItemType ;
+                           owl:onProperty               :refersToItemType
+                         ] .
+
+:refersToItemShape  a  owl:ObjectProperty .
+
+:asReasonerFactString
+        a                   owl:DatatypeProperty ;
+        rdfs:range          xsd:string ;
+        rdfs:subPropertyOf  :asFactString .
+
+:providesRole  a  owl:ObjectProperty .
+
+:Item1  a             :Item ;
+        :hasItemName  "Acknowledge" .
+
+:asFactString  a    owl:DatatypeProperty ;
+        rdfs:range  xsd:string .

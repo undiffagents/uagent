@@ -1,0 +1,334 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d1" for="edge" attr.name="value" attr.type="string" />
+  <key id="d0" for="node" attr.name="value" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="Item5">
+      <data key="d0">Item5</data>
+    </node>
+    <node id="Red X">
+      <data key="d0">Red X</data>
+    </node>
+    <node id="Item">
+      <data key="d0">Item</data>
+    </node>
+    <node id="Affordance4">
+      <data key="d0">Affordance4</data>
+    </node>
+    <node id="ItemRoleTypeDistractor">
+      <data key="d0">ItemRoleTypeDistractor</data>
+    </node>
+    <node id="ItemRoleType">
+      <data key="d0">ItemRoleType</data>
+    </node>
+    <node id="distractor">
+      <data key="d0">distractor</data>
+    </node>
+    <node id="Type1">
+      <data key="d0">Type1</data>
+    </node>
+    <node id="Type">
+      <data key="d0">Type</data>
+    </node>
+    <node id="Item4">
+      <data key="d0">Item4</data>
+    </node>
+    <node id="Red O">
+      <data key="d0">Red O</data>
+    </node>
+    <node id="Affordance3">
+      <data key="d0">Affordance3</data>
+    </node>
+    <node id="ItemRole5">
+      <data key="d0">ItemRole5</data>
+    </node>
+    <node id="ItemRole">
+      <data key="d0">ItemRole</data>
+    </node>
+    <node id="ItemRoleTypeTarget">
+      <data key="d0">ItemRoleTypeTarget</data>
+    </node>
+    <node id="AffordanceTypeClickable">
+      <data key="d0">AffordanceTypeClickable</data>
+    </node>
+    <node id="AffordanceType">
+      <data key="d0">AffordanceType</data>
+    </node>
+    <node id="ItemRoleTypeButton">
+      <data key="d0">ItemRoleTypeButton</data>
+    </node>
+    <node id="button">
+      <data key="d0">button</data>
+    </node>
+    <node id="Affordance1">
+      <data key="d0">Affordance1</data>
+    </node>
+    <node id="Affordance">
+      <data key="d0">Affordance</data>
+    </node>
+    <node id="clickable">
+      <data key="d0">clickable</data>
+    </node>
+    <node id="Item3">
+      <data key="d0">Item3</data>
+    </node>
+    <node id="Green X">
+      <data key="d0">Green X</data>
+    </node>
+    <node id="Affordance2">
+      <data key="d0">Affordance2</data>
+    </node>
+    <node id="visible">
+      <data key="d0">visible</data>
+    </node>
+    <node id="AffordanceTypeVisible">
+      <data key="d0">AffordanceTypeVisible</data>
+    </node>
+    <node id="Color1">
+      <data key="d0">Color1</data>
+    </node>
+    <node id="Color">
+      <data key="d0">Color</data>
+    </node>
+    <node id="ItemRole2">
+      <data key="d0">ItemRole2</data>
+    </node>
+    <node id="ItemRoleTypeSubject">
+      <data key="d0">ItemRoleTypeSubject</data>
+    </node>
+    <node id="Item2">
+      <data key="d0">Item2</data>
+    </node>
+    <node id="target">
+      <data key="d0">target</data>
+    </node>
+    <node id="Mr. Agent">
+      <data key="d0">Mr. Agent</data>
+    </node>
+    <node id="ItemRole4">
+      <data key="d0">ItemRole4</data>
+    </node>
+    <node id="ItemDescription1">
+      <data key="d0">ItemDescription1</data>
+    </node>
+    <node id="ItemDescription">
+      <data key="d0">ItemDescription</data>
+    </node>
+    <node id="Location1">
+      <data key="d0">Location1</data>
+    </node>
+    <node id="Item1">
+      <data key="d0">Item1</data>
+    </node>
+    <node id="Shape1">
+      <data key="d0">Shape1</data>
+    </node>
+    <node id="subject">
+      <data key="d0">subject</data>
+    </node>
+    <node id="ItemRole3">
+      <data key="d0">ItemRole3</data>
+    </node>
+    <node id="Location">
+      <data key="d0">Location</data>
+    </node>
+    <node id="Shape">
+      <data key="d0">Shape</data>
+    </node>
+    <node id="ItemRole1">
+      <data key="d0">ItemRole1</data>
+    </node>
+    <node id="Item6">
+      <data key="d0">Item6</data>
+    </node>
+    <node id="Acknowledge">
+      <data key="d0">Acknowledge</data>
+    </node>
+    <edge source="Item5" target="Red X" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item5" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item5" target="Affordance4" id="0">
+      <data key="d1">affords</data>
+    </edge>
+    <edge source="Affordance4" target="Affordance" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Affordance4" target="visible" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Affordance4" target="AffordanceTypeVisible" id="0">
+      <data key="d1">hasAffordanceType</data>
+    </edge>
+    <edge source="ItemRoleTypeDistractor" target="ItemRoleType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleTypeDistractor" target="distractor" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Type1" target="Type" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item4" target="Red O" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item4" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item4" target="Affordance3" id="0">
+      <data key="d1">affords</data>
+    </edge>
+    <edge source="Affordance3" target="Affordance" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Affordance3" target="visible" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Affordance3" target="AffordanceTypeVisible" id="0">
+      <data key="d1">hasAffordanceType</data>
+    </edge>
+    <edge source="ItemRole5" target="ItemRole" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole5" target="ItemRoleTypeTarget" id="0">
+      <data key="d1">ofItemRoleType</data>
+    </edge>
+    <edge source="ItemRole5" target="Item5" id="0">
+      <data key="d1">assumedBy</data>
+    </edge>
+    <edge source="ItemRoleTypeTarget" target="ItemRoleType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleTypeTarget" target="target" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="AffordanceTypeClickable" target="AffordanceType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleTypeButton" target="ItemRoleType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleTypeButton" target="button" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Affordance1" target="Affordance" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Affordance1" target="clickable" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Affordance1" target="AffordanceTypeClickable" id="0">
+      <data key="d1">hasAffordanceType</data>
+    </edge>
+    <edge source="Item3" target="Green X" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item3" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item3" target="Affordance2" id="0">
+      <data key="d1">affords</data>
+    </edge>
+    <edge source="Affordance2" target="Affordance" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Affordance2" target="visible" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Affordance2" target="AffordanceTypeVisible" id="0">
+      <data key="d1">hasAffordanceType</data>
+    </edge>
+    <edge source="AffordanceTypeVisible" target="AffordanceType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Color1" target="Color" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole2" target="ItemRole" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole2" target="ItemRoleTypeSubject" id="0">
+      <data key="d1">ofItemRoleType</data>
+    </edge>
+    <edge source="ItemRole2" target="Item2" id="0">
+      <data key="d1">assumedBy</data>
+    </edge>
+    <edge source="ItemRoleTypeSubject" target="ItemRoleType" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleTypeSubject" target="subject" id="0">
+      <data key="d1">hasName</data>
+    </edge>
+    <edge source="Item2" target="Mr. Agent" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item2" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole4" target="ItemRole" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole4" target="ItemRoleTypeDistractor" id="0">
+      <data key="d1">ofItemRoleType</data>
+    </edge>
+    <edge source="ItemRole4" target="Item4" id="0">
+      <data key="d1">assumedBy</data>
+    </edge>
+    <edge source="ItemDescription1" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription1" target="Type1" id="0">
+      <data key="d1">refersToItemType</data>
+    </edge>
+    <edge source="ItemDescription1" target="Location1" id="0">
+      <data key="d1">refersToItemLocation</data>
+    </edge>
+    <edge source="ItemDescription1" target="Item1" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="ItemDescription1" target="Color1" id="0">
+      <data key="d1">refersToItemColor</data>
+    </edge>
+    <edge source="ItemDescription1" target="Shape1" id="0">
+      <data key="d1">refersToItemShape</data>
+    </edge>
+    <edge source="Location1" target="Location" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item1" target="Acknowledge" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item1" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item1" target="Affordance1" id="0">
+      <data key="d1">affords</data>
+    </edge>
+    <edge source="Shape1" target="Shape" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole3" target="ItemRole" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole3" target="ItemRoleTypeDistractor" id="0">
+      <data key="d1">ofItemRoleType</data>
+    </edge>
+    <edge source="ItemRole3" target="Item3" id="0">
+      <data key="d1">assumedBy</data>
+    </edge>
+    <edge source="ItemRole1" target="ItemRole" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole1" target="ItemRoleTypeButton" id="0">
+      <data key="d1">ofItemRoleType</data>
+    </edge>
+    <edge source="ItemRole1" target="Item1" id="0">
+      <data key="d1">assumedBy</data>
+    </edge>
+    <edge source="Item6" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+  </graph>
+</graphml>

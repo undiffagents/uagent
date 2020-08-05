@@ -18,14 +18,33 @@ def generateItemGraph(graphNumber):
                        value=CONST_ITEM_HAS_NAME_EDGE)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_AFFORDANCE_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_AFFORDANCE_EDGE)
+    itemGraph.add_edge(CONST_ITEM_ROLE_NODE + str(graphNumber), CONST_ITEM_NODE + str(graphNumber),
+                       value=CONST_ROLE_ASSUMED_BY)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_DESCRIPTION_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_DESCRIPTION_EDGE)
+    itemGraph.add_edge(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), CONST_ITEM_NODE + str(graphNumber),
+                       value=CONST_DESCRIPTION_OF_ITEM)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_ROLE_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_ROLE_EDGE)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_OP_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_OP_EDGE)
     itemGraph.add_edge(CONST_ITEM_NODE + str(graphNumber), CONST_ITEM_COUNT_NODE + str(graphNumber),
                        value=CONST_ITEM_HAS_COUNT_EDGE)
+
+    # Should the following be spun out into "addXYZ" functions in the ItemGraph class?
+    itemGraph.add_node(CONST_ITEM_LOCATION_NODE + str(graphNumber), value='')
+    itemGraph.add_node(CONST_ITEM_COLOR_NODE + str(graphNumber), value='')
+    itemGraph.add_node(CONST_ITEM_SHAPE_NODE + str(graphNumber), value='')
+    itemGraph.add_node(CONST_ITEM_TYPE_NODE + str(graphNumber), value='')
+
+    itemGraph.add_edge(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), CONST_ITEM_LOCATION_NODE + str(graphNumber),
+                       value=CONST_REFERS_TO_ITEM_LOCATION_EDGE)
+    itemGraph.add_edge(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), CONST_ITEM_COLOR_NODE + str(graphNumber),
+                       value=CONST_REFERS_TO_ITEM_COLOR_EDGE)
+    itemGraph.add_edge(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), CONST_ITEM_SHAPE_NODE + str(graphNumber),
+                       value=CONST_REFERS_TO_ITEM_SHAPE_EDGE)
+    itemGraph.add_edge(CONST_ITEM_DESCRIPTION_NODE + str(graphNumber), CONST_ITEM_TYPE_NODE + str(graphNumber),
+                       value=CONST_REFERS_TO_ITEM_TYPE_EDGE)
 
     return itemGraph
 
@@ -116,6 +135,11 @@ class ItemGraph(object):
     def __replace(self, target, newValue):
         self.graph.nodes(data=True)[target + str(self.graphNumber)][CONST_NODE_VALUE_KEY] = newValue
 
+    # https://stackoverflow.com/questions/49103913/check-whether-a-node-exists-in-networkx
+    # Returns true if node found, false if not
+    def find_node(self, attribute, value):
+        return any([node for node in self.graph.nodes(data=True) if node[1][attribute] == value])
+
     # Append/replace methods for each node value in Item Graph
     def appendItemValue(self, newValue):
         self.__append(CONST_ITEM_NODE, newValue)
@@ -144,6 +168,22 @@ class ItemGraph(object):
     def appendItemRole(self, newRole):
         self.__append(CONST_ITEM_ROLE_NODE, newRole)
 
+    def createItemRoleWithType(self, newRole):
+        nodeExists = self.graph.has_node(CONST_ITEM_ROLE_TYPE_NODE + newRole)
+        if nodeExists:
+            # Don't create it, but connect the current role to the existing role type
+            pass
+        else:
+            # graphNumber isn't used in these because they're divorced from the current item - this should be a
+            # graph-wide thing, not an instance-by-instance one.
+            self.graph.add_node(CONST_ITEM_ROLE_TYPE_NODE + newRole, value='')
+            self.graph.add_node(CONST_ITEM_ROLE_TYPE_NAME_NODE + newRole, value=newRole)
+            self.graph.add_edge(CONST_ITEM_ROLE_TYPE_NODE + newRole, CONST_ITEM_ROLE_TYPE_NAME_NODE + newRole,
+                                value=CONST_HAS_NAME_EDGE)
+        # Connect the role node to the role type node, whether newly created or not
+        self.graph.add_edge(CONST_ITEM_ROLE_NODE + str(self.graphNumber), CONST_ITEM_ROLE_TYPE_NODE + newRole,
+                            value=CONST_ITEM_ROLE_TYPE_EDGE)
+
     def replaceItemRole(self, newRole):
         self.__replace(CONST_ITEM_ROLE_NODE, newRole)
 
@@ -168,6 +208,21 @@ class ItemGraph(object):
                 if values[CONST_NODE_VALUE_KEY] == valueToFind:
                     return node
         return None
+
+    # Method to find a node containing a value from a given list
+    def FindItemsWithValuesFromList(self, valueList):
+        returnList = []
+        for valueToFind in valueList:
+            if self.graph is not None:
+                # iterate through all graph nodes
+                for node, values in self.graph.nodes.data():
+                    # If the current Node's value = the value passed in
+                    if values[CONST_NODE_VALUE_KEY] == valueToFind:
+                        returnList.append(node)
+        if returnList > 0:
+            return returnList
+        else:
+            return None
 
     # Methods to add different types of edges between nodes
     def addGroupMembershipEdges(self, groupNode, memberNode):
