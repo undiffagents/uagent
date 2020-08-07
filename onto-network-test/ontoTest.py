@@ -110,8 +110,12 @@ def testImport():
 			# If there are quotes at the beginning or end of the string, remove them
 			objValue = objValue.replace('"', '')
 
-			addToGraph(testGraph, subjValue, predValue, objValue)
-			print(subjValue + " - " + predValue + " - " + objValue)
+			# Testing removing rdf:type parts to make the graph less cluttered.
+			# TODO: remove?
+			# This apparently ignores stuff that's just created (Item6 type Item) and nothing else.  maybe ok?
+			if predValue != 'type':
+				addToGraph(testGraph, subjValue, predValue, objValue)
+				print(subjValue + " - " + predValue + " - " + objValue)
 
 	#testGraph.add_node(0, value='xyz')
 	#testGraph.add_node(1, value='abc')
@@ -122,7 +126,7 @@ def testImport():
 		# jsonOutput = json.dumps(jsonSerializable)
 		# jsonFile.write(jsonOutput)
 		print(testGraph.nodes)
-		networkx.write_graphml(testGraph, "test.graphml")
+		networkx.write_graphml(testGraph, "testNoType.graphml")
 
 updateOnto()
 testImport()

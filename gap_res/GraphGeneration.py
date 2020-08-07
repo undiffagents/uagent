@@ -75,10 +75,13 @@ def generatePropGraph(graphNumber):
 def generateActionGraph(graphNumber):
     actionGraph = networkx.MultiDiGraph()
     actionGraph.add_node(CONST_ACTION_NODE + str(graphNumber), value='')
-    actionGraph.add_node(CONST_ACTION_VERB_NODE + str(graphNumber), value='')
+    actionGraph.add_node(CONST_ACTION_TYPE_NODE + str(graphNumber), value='')
+    actionGraph.add_node(CONST_ACTION_TYPE_NAME_NODE + str(graphNumber), value='')
 
-    actionGraph.add_edge(CONST_ACTION_NODE + str(graphNumber), CONST_ACTION_VERB_NODE + str(graphNumber),
-                         value=CONST_ACTION_HAS_VERB_EDGE)
+    actionGraph.add_edge(CONST_ACTION_NODE + str(graphNumber), CONST_ACTION_TYPE_NODE + str(graphNumber),
+                         value=CONST_ACTION_TYPE_EDGE)
+    actionGraph.add_edge(CONST_ACTION_TYPE_NODE + str(graphNumber), CONST_ACTION_TYPE_NAME_NODE + str(graphNumber),
+                         value=CONST_ACTION_TYPE_NAME_EDGE)
 
     return actionGraph
 
@@ -499,10 +502,10 @@ class ActionGraph(object):
         self.__replace(CONST_ACTION_NODE, newValue)
 
     def appendActionVerb(self, newVerb):
-        self.__append(CONST_ACTION_VERB_NODE, newVerb)
+        self.__append(CONST_ACTION_TYPE_NAME_NODE, newVerb)
 
     def replaceActionVerb(self, newVerb):
-        self.__replace(CONST_ACTION_VERB_NODE, newVerb)
+        self.__replace(CONST_ACTION_TYPE_NAME_NODE, newVerb)
 
     # Method to find a node containing a given value
     def FindActionWithValue(self, valueToFind):

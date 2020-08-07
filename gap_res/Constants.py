@@ -51,9 +51,11 @@ CONST_PROP_HAS_COMP_TARGET_EDGE = 'PropertyHasCompTarget'
 
 # Action Graph nodes and edges
 CONST_ACTION_NODE = 'Action'
-CONST_ACTION_VERB_NODE = 'ActionVerb'
+CONST_ACTION_TYPE_NODE = 'ActionType'
+CONST_ACTION_TYPE_NAME_NODE = 'ActionVerbName'
 
-CONST_ACTION_HAS_VERB_EDGE = 'ActionHasVerb'
+CONST_ACTION_TYPE_EDGE = 'ofActionType'
+CONST_ACTION_TYPE_NAME_EDGE = CONST_HAS_NAME_EDGE
 
 # Modifier Graph nodes and edges
 CONST_MODPP_NODE = 'ModPP'

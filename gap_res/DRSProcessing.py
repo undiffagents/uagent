@@ -142,6 +142,7 @@ class predicateSwitcher(object):
                                  numberOfComponents, predDirObjRef=None):
         # Create Action Node
         # TODO: CHECK IF THIS CAN'T BE REWORKED TO AVOID USING THIS
+        # Change affordance to be on target, not subject?
         self.DRSGraph.AppendItemAffordanceAtSpecificNode(predSubjRef, predVerb)
         actionGraph = ActionGraph(self.graphNumber)
         actionGraph.appendActionValue(predReferenceVariable)
@@ -388,11 +389,12 @@ class questionSwitcher(object):
         objOperator = predicateComponents[4]
         objCount = predicateComponents[5].split(')')[0]
         # Get item node in original instruction which this SHOULD correspond to (ignoring name for now)
-        # THIS NEEDS REENABLED
-        #DRSEquivalentNode = self.findMatchingItemNode(objRole, objOperator, objCount)
+        if CONTROL_USE_IMPORTED_GRAPH == False:
+            DRSEquivalentNode = self.findMatchingItemNode(objRole, objOperator, objCount)
         #************************************************************************************************************************************************************************************************
-        #TODO
-        DRSEquivalentNode = self.findItemNodeWithRole(objRole)
+        #TODO: figure out op/count with ontology
+        else:
+            DRSEquivalentNode = self.findItemNodeWithRole(objRole)
 
         # If we don't find a node for this item, then we have encountered a lexical gap.
 
@@ -407,10 +409,12 @@ class questionSwitcher(object):
                         # No nodes "active"
                         newRole = requestNewTermToNymCheck(objRole)
                         newNymCount = newNymCount + 1
-                        #TODO ********************************************************************************************************************************************************
-                        # REENABLE THIS
-                        #DRSEquivalentNode = self.findMatchingItemNode(newRole, objOperator, objCount)
-                        DRSEquivalentNode = self.findItemNodeWithRole(newRole)
+                        #********************************************************************************************************************************************************
+                        # TODO: figure out op/count with ontology
+                        if CONTROL_USE_IMPORTED_GRAPH == False:
+                            DRSEquivalentNode = self.findMatchingItemNode(newRole, objOperator, objCount)
+                        else:
+                            DRSEquivalentNode = self.findItemNodeWithRole(newRole)
                         if DRSEquivalentNode is not None:
                             print("Lexical gap resolved - a role given (" + newRole + ") was found associated with an"
                                                                                       " item in the knowledge base")
@@ -1035,22 +1039,34 @@ class questionSwitcher(object):
                 return startNode
 
     def findActionNodeConnectedToVerbNode(self, verbNode):
-        # Edges seem to be a little weird, so getting
-        outEdgesFromNode = self.DRSGraph.graph.out_edges(verbNode, data=True)
         inEdgesFromNode = self.DRSGraph.graph.in_edges(verbNode, data=True)
         for startNode, endNode, edgeValues in inEdgesFromNode:
-            # If an edge has the value ItemHasName, then we want to return the start node (the item node itself)
-            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_HAS_VERB_EDGE:
-                return startNode
+            # If an edge has the value hasName, then the start node is the action type node
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_TYPE_NAME_EDGE:
+                actionTypeNode = startNode
+
+                inEdgesFromTypeNode = self.DRSGraph.graph.in_edges(actionTypeNode, data=True)
+                for actionTypeStartNode, actionTypeEndNode, actionTypeEdgeValues in inEdgesFromTypeNode:
+                    # If an edge has the value ofActionType, then we want to return the start node (the action node
+                    # itself)
+                    if actionTypeEdgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_TYPE_EDGE:
+                        actionNode = actionTypeStartNode
+                        return actionNode
 
     def findVerbNodeConnectedToActionNode(self, actionNode):
         # Edges seem to be a little weird, so getting
         outEdgesFromNode = self.DRSGraph.graph.out_edges(actionNode, data=True)
-        inEdgesFromNode = self.DRSGraph.graph.in_edges(actionNode, data=True)
         for startNode, endNode, edgeValues in outEdgesFromNode:
-            # If an edge has the value ItemHasName, then we want to return the start node (the item node itself)
-            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_HAS_VERB_EDGE:
-                return endNode
+            # If an edge has the value ofActionType, then we want to return the start node (the action node
+            # itself)
+            if edgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_TYPE_EDGE:
+                actionTypeNode = endNode
+                outEdgesFromTypeNode = self.DRSGraph.graph.out_edges(actionTypeNode, data=True)
+                for actionTypeStartNode, actionTypeEndNode, actionTypeEdgeValues in outEdgesFromTypeNode:
+                    # If an edge has the value hasName, then the end node is the action type name node
+                    if actionTypeEdgeValues[CONST_NODE_VALUE_KEY] == CONST_ACTION_TYPE_NAME_EDGE:
+                        actionTypeNameNode = actionTypeEndNode
+                        return actionTypeNameNode
 
     def findItemNodeConnectedToRoleNode(self, roleNode):
         inEdgesFromNode = self.DRSGraph.graph.in_edges(roleNode, data=True)
@@ -1225,9 +1241,11 @@ def checkForContextGap(DRSGraph):
     itemNodePattern = re.compile(CONST_REGEX_ITEM_NODE)
     propertyNodePattern = re.compile(CONST_REGEX_PROPERTY_NODE)
     # Identify the usual attribute edges which we want to ignore
-    #TODO update these to reflect new framework
+    #TODO update these to reflect new framework - may be overeager to say something is non-contextual.
+    # Probably need to find a way to do more than just "islands"
     itemEdgesToIgnore = [CONST_ITEM_HAS_NAME_EDGE, CONST_ITEM_HAS_AFFORDANCE_EDGE, CONST_ITEM_HAS_DESCRIPTION_EDGE,
-                         CONST_ITEM_HAS_ROLE_EDGE, CONST_ITEM_HAS_OP_EDGE, CONST_ITEM_HAS_COUNT_EDGE, CONST_TYPE]
+                         CONST_ITEM_HAS_ROLE_EDGE, CONST_ITEM_HAS_OP_EDGE, CONST_ITEM_HAS_COUNT_EDGE, CONST_TYPE,
+                         CONST_ROLE_ASSUMED_BY]
     propertyEdgesToIgnore = [CONST_PROP_HAS_ADJECTIVE_EDGE, CONST_PROP_HAS_SEC_OBJECT_EDGE,
                              CONST_PROP_HAS_TERT_OBJECT_EDGE, CONST_PROP_HAS_DEG_EDGE, CONST_PROP_HAS_COMP_TARGET_EDGE]
     # Isolate the item and property nodes
