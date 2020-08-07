@@ -1391,7 +1391,7 @@ def DRSToItem():
     qSwitcher = questionSwitcher()
     questionInput = input('Please enter a question: ')
     # "exit" is trigger word to end questioning
-    while questionInput != ('exit' | 'quit' | 'q'):
+    while questionInput != 'exit' and questionInput != 'quit' and questionInput != 'q':
         questionLines = APEWebserviceCall(questionInput)
         while questionLines is None:
             questionInput = input('There was an error with the ACE entered - please try again.')
