@@ -141,7 +141,7 @@ class ItemGraph(object):
     # https://stackoverflow.com/questions/49103913/check-whether-a-node-exists-in-networkx
     # Returns true if node found, false if not
     def find_node(self, attribute, value):
-        return any([node for node in self.graph.nodes(data=True) if node[1][attribute] == value])
+        return any([node for node in self.graph.nodes(data=True) if nodes[1][attribute] == value])
 
     # Append/replace methods for each node value in Item Graph
     def appendItemValue(self, newValue):

@@ -422,7 +422,7 @@ class questionSwitcher(object):
                             self.DRSGraph.AppendValueAtSpecificNode(DRSEquivalentNameNode, objRole)
         # Replace the reference ID (from APE Webclient) to the equivalent node's reference ID (from the graph)
         if self.DRSGraph.graph.has_node(DRSEquivalentNode):
-            DRSNodeRefID = self.DRSGraph.graph.node[DRSEquivalentNode][CONST_NODE_VALUE_KEY]
+            DRSNodeRefID = self.DRSGraph.graph.nodes[DRSEquivalentNode][CONST_NODE_VALUE_KEY]
             self.newToOldRefIDMapping.update({objRefId: DRSNodeRefID})
             self.itemCount = self.itemCount + 1
         else:
@@ -498,14 +498,14 @@ class questionSwitcher(object):
         if len(adjectiveNodes) > 0:
             for node in adjectiveNodes:
                 # Add new term into adjective node in order to grow our vocabulary
-                if propAdjective not in self.DRSGraph.graph.node[node][CONST_NODE_VALUE_KEY]:
+                if propAdjective not in self.DRSGraph.graph.nodes[node][CONST_NODE_VALUE_KEY]:
                     # TODO: SEE IF I CAN CHANGE THIS  TO NOT USE THIS FUNCTION
                     self.DRSGraph.AppendValueAtSpecificNode(node, propAdjective)
                 propertyNode = self.getPropertyNodeFromAdjective(node)
                 self.nodesWithGivenProperty.append(propertyNode)
                 # MAP FOUND PROPERTY NODE'S REF ID TO THE INCOMING REF ID
                 if self.DRSGraph.graph.has_node(propertyNode):
-                    DRSNodeRefID = self.DRSGraph.graph.node[propertyNode][CONST_NODE_VALUE_KEY]
+                    DRSNodeRefID = self.DRSGraph.graph.nodes[propertyNode][CONST_NODE_VALUE_KEY]
                     self.newToOldRefIDMapping.update({propRefId: DRSNodeRefID})
                     self.propertyCount = self.propertyCount + 1
                     openGap = False
@@ -523,7 +523,7 @@ class questionSwitcher(object):
                         print("Negation gap resolved - an antonym has been found in the knowledge graph")
                         # MAP FOUND ANTONYM NODE'S REF ID TO THE INCOMING REF ID
                         if self.DRSGraph.graph.has_node(propertyNode):
-                            DRSNodeRefID = self.DRSGraph.graph.node[propertyNode][CONST_NODE_VALUE_KEY]
+                            DRSNodeRefID = self.DRSGraph.graph.nodes[propertyNode][CONST_NODE_VALUE_KEY]
                             self.newToOldRefIDMapping.update({propRefId: DRSNodeRefID})
                             self.propertyCount = self.propertyCount + 1
                             self.negationActive = True
@@ -548,7 +548,7 @@ class questionSwitcher(object):
         #    propertyNodesWithAdjective = []
         #    for node in antonymNodes:
         #        print("AntonymNode", node)
-        #        if(propAdjective not in self.DRSGraph.graph.node[node]['value']):
+        #        if(propAdjective not in self.DRSGraph.graph.nodes[node]['value']):
         #            self.DRSGraph.AppendValueAtSpecificNode(node, propAdjective)
         #        propertyNode = self.getPropertyNodeFromAdjective(node)
         #        #print("propertyNode", propertyNode)
@@ -1151,8 +1151,7 @@ class questionSwitcher(object):
 
 def requestNewTermToNymCheck(originalTerm):
     newTerm = input(
-        "Sorry, I don't understand \"" + originalTerm + "\".  Please give me an alternate word and "
-                                                        "I'll make the connection.")
+        "Sorry, I don't understand \"" + originalTerm + "\".\n  Please give me an alternate word and I'll make the connection: ")
     return newTerm
 
 
@@ -1390,9 +1389,9 @@ def DRSToItem():
 
     # Set up questionSwitcher
     qSwitcher = questionSwitcher()
-    questionInput = input('Please enter a question')
+    questionInput = input('Please enter a question: ')
     # "exit" is trigger word to end questioning
-    while questionInput != 'exit':
+    while questionInput != ('exit' | 'quit' | 'q'):
         questionLines = APEWebserviceCall(questionInput)
         while questionLines is None:
             questionInput = input('There was an error with the ACE entered - please try again.')
@@ -1417,26 +1416,29 @@ def DRSToItem():
                 qSwitcher.questionAffordances.append(predVerb)
 
         # Actually iterate through the question lines this time and call the question switcher on each
-        for currentLine in questionLines:
-            predicateSplit = currentLine.split('(', 1)
-            predicateType = predicateSplit[0]
-            predicateContents = predicateSplit[1]
-            qSwitcher.callFunction(predicateType, predicateContents, DRSGraph)
+        try:
+            for currentLine in questionLines:
+                predicateSplit = currentLine.split('(', 1)
+                predicateType = predicateSplit[0]
+                predicateContents = predicateSplit[1]
+                qSwitcher.callFunction(predicateType, predicateContents, DRSGraph)
 
-        result = qSwitcher.resolveQuestion()
-        if result:
-            print("Question", str(questionCounter), "Answer: Yes")
-        elif not result and result is not None:
-            print("Question", str(questionCounter), "Answer: No")
-        else:
-            print("Question", str(questionCounter), "Answer: Unknown")
-        questionCounter = questionCounter + 1
-        # I have my doubts about these lines below but they seem to work
-        DRSGraph = qSwitcher.returnDRSGraph()
-        predSwitcher.updateDRSGraph(DRSGraph.graph)
-        # Reset qSwitcher to be a new question switcher
-        qSwitcher = questionSwitcher()
-        questionInput = input('Please enter a DRS line for your question')
+            result = qSwitcher.resolveQuestion()
+            if result:
+                print("Question", str(questionCounter), "Answer: Yes")
+            elif not result and result is not None:
+                print("Question", str(questionCounter), "Answer: No")
+            else:
+                print("Question", str(questionCounter), "Answer: Unknown")
+            questionCounter = questionCounter + 1
+            # I have my doubts about these lines below but they seem to work
+            DRSGraph = qSwitcher.returnDRSGraph()
+            predSwitcher.updateDRSGraph(DRSGraph.graph)
+            # Reset qSwitcher to be a new question switcher
+            qSwitcher = questionSwitcher()
+            questionInput = input('Please enter a question: ')
+        except:
+            questionInput = input('Sorry, that question resulted in an error.\n Please enter a new question: ')
 
     # Once "exit" has been entered
     # At end of program, if an ontology was built at all, print it out and export it in GraphML
