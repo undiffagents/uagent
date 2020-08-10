@@ -3,7 +3,8 @@ import subprocess
 import time
 import requests
 import networkx
-#from SPARQLWrapper import SPARQLWrapper, JSON
+import re
+# from SPARQLWrapper import SPARQLWrapper, JSON
 from ontoConstants import *
 
 interpreterFile = 'interpreterTest.txt'
@@ -21,11 +22,15 @@ itemDescriptionCount = 0
 situationDescriptionCount = 0
 actionCount = 0
 
+earlierSituationFirstItemNumber = 0
+currentSituationFirstItemNumber = 0
+
 instanceSignifier = ':Instance'
 PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
 createdItemsDict = {}
 
 affordanceDict = {"button": "clickable", "letter": "visible"}
+
 
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?
@@ -33,6 +38,7 @@ affordanceDict = {"button": "clickable", "letter": "visible"}
 # For now using the name if there is one - if not, using the role
 # There would have to be consistency between this and the interpreter on what's used as the reference item
 # Generalization is really going downhill with all this CV stuff
+# hasProperty, appearsOn, press - all don't really map to ontology
 
 # Proposed interpreter changes:
 # a creation line (task(), item(), agent()) prior to first use in an isPartOf, etc.
@@ -43,22 +49,7 @@ affordanceDict = {"button": "clickable", "letter": "visible"}
 
 # Will need to figure out how to deal with isPartOf if not a task
 
-def updateOnto():
-    # Read my file of ontology test additions
-    totalString = ''
-    file1 = open('ontoTestAddition.txt', 'r')
-    Lines = file1.readlines()
-    # Get them ready to send up
-    for line in Lines:
-        line = line.strip()
-        totalString += line + " ."
-    totalString = totalString[:-1]
-    print(totalString)
-
-    # Send em
-    subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
-                     '{} INSERT DATA  {{ {} }}'.format(PREFIX, totalString)])
-
+# Maybe make a network representation of all this and then convert the network to RDF?
 
 def readInput():
     rdfLines = ""
@@ -72,14 +63,17 @@ def readInput():
     print(rdfLines)
     # Send em
     subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
-                     '{} INSERT DATA  {{ {} }}'.format(PREFIX, rdfLines)])
+                    '{} INSERT DATA  {{ {} }}'.format(PREFIX, rdfLines)])
 
 
 def processInterpreterOutputLine(inputLine):
     inputSplit = inputLine.split('(', 1)
     inputType = inputSplit[0]
-    inputContents = inputSplit[1]
-    inputContents = inputContents.split(')')[0]
+    if "action" not in inputType:
+        inputContents = inputSplit[1]
+        inputContents = inputContents.split(')')[0]
+    else:
+        inputContents = inputSplit
 
     # handle task
     if inputType == 'task':
@@ -96,6 +90,9 @@ def processInterpreterOutputLine(inputLine):
     # handle isPartOf
     if inputType == 'isPartOf':
         rdfLines = processIsPartOf(inputContents)
+
+    if inputType == 'action':
+        rdfLines = processAction(inputContents)
 
     return rdfLines
 
@@ -157,13 +154,15 @@ def processItem(inputContents):
             # generate RDF lines
             affordanceCreationLine = affordanceCreator + " " + TYPE_EDGE + " :" + AFFORDANCE_NODE + " ."
             # TODO **** very unsure about the way to "ofType" things, right now using a string.
-            affordanceTypingLine = affordanceCreator + " " + OF_TYPE_EDGE + " \"" + affordanceDict.get(itemRole) + "\" ."
+            affordanceTypingLine = affordanceCreator + " " + OF_TYPE_EDGE + " \"" + affordanceDict.get(
+                itemRole) + "\" ."
             # Add to created things dictionary for the affordance of the role
             createdItemsDict.update({affordanceDict.get(itemRole): affordanceCreator})
             # Add to RDF output
             rdfLines = rdfLines + affordanceCreationLine + affordanceTypingLine
         # Connect item to affordance.
-        itemAffordsLine = itemCreator + " " + AFFORDS_EDGE + " " + createdItemsDict.get(affordanceDict.get(itemRole)) + " ."
+        itemAffordsLine = itemCreator + " " + AFFORDS_EDGE + " " + createdItemsDict.get(
+            affordanceDict.get(itemRole)) + " ."
         rdfLines = rdfLines + itemAffordsLine
 
     # Role creation if role not already existing
@@ -189,6 +188,7 @@ def processItem(inputContents):
 def processAgent(inputContents):
     return ""
 
+
 def processIsPartOf(inputContents):
     rdfLines = ""
     subelementIdentifier = inputContents.split(',')[0]
@@ -199,10 +199,45 @@ def processIsPartOf(inputContents):
 
     # Handle the isPartOf(item,task) scenario
     if "Item" in subelement and "Task" in superelement:
+        if "Role" not in subelement:
+            subelement = re.sub("Item", "ItemRole", subelement)
         taskProvidesRoleLine = superelement + " " + PROVIDES_ROLE_EDGE + " " + subelement + " ."
         rdfLines = rdfLines + taskProvidesRoleLine
 
     return rdfLines
 
 
+def processAction(inputContents):
+    rdfLines = ""
+
+    rdfLines = rdfLines + endSituationDescription()
+    #rdfLines =
+
+    return rdfLines
+
+
+def endSituationDescription():
+    # If not 0, then from 0 to current - earlier condition, from current to max - current condition
+
+    global situationDescriptionCount
+    rdfLines = ""
+
+    # Create a situation and increment the number of situations
+    situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
+    situationDescriptionCount = situationDescriptionCount + 1
+
+    # Make rdf line to create situation
+    createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE + " ."
+    rdfLines = rdfLines + createSituationLine
+
+    # If current situation first Number = 0, then no earlier situation conditions.
+    if currentSituationFirstItemNumber == 0:
+        for i in range(itemCount):
+            currentConditionItem = instanceSignifier + ITEM_NODE + str(i)
+            addCurrentConditionToSituationLine = situationCreator + " " + HAS_CURRENT_CONDITION_EDGE + \
+                                                 " " + currentConditionItem + " ."
+            rdfLines = rdfLines + addCurrentConditionToSituationLine
+    return rdfLines
+
 readInput()
+#endSituationDescription()

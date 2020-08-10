@@ -5,6 +5,7 @@ ITEM_ROLE_NODE = 'ItemRole'
 AFFORDANCE_NODE = 'Affordance'
 TASK_NODE = 'ISR-MATBTask'
 ACTION_NODE = 'Action'
+SITUATION_DESCRIPTION_NODE = 'SituationDescription'
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'
