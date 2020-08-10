@@ -1,0 +1,78 @@
+Format:
+ACE input
+    Relevant "fact" or "rule" being jammed in the DB by interpreter.py
+        How that should be instantiated using Ontology structures
+            CV: +"Term-to-Add" =>groundingTarget (those necessary for "automatic" processing)
+            ONTO: Ontology alterations that seem necessary to me
+p:psychomotor-vigilance is a task.
+    task(psychomotor-vigilance)
+        ':Task1 rdf:type :ISR-MATBTask .'
+        ':Task1 :hasName :"psychomotor-vigilance" .'
+            CV: +"task" => :ISR-MATBTask
+There is a screen that v:isPartOf the task.
+    isPartOf(screen,psychomotor-vigilance)
+        ':Task1 :hasLocation :Screen1 .'
+        ':Screen1 rdf:type :Location .'
+            CV: +"screen" => :Location
+            CV: +"v:isPartOf" => subclass designation.
+                -This is still gross
+            ONTO: need "interface" class. Would also provide method to start grounding perceptual processes.
+The n:space_bar is a button and v:isPartOf the task.
+    isPartOf(space_bar,psychomotor-vigilance)
+        ':Item1 rdf:type :Item .'
+        ':Item1 :hasItemName "space_bar" .'
+        ':Item1 :affords :Affordance1 .'
+        ':Affordance1 rdf:type :Affordance .'
+        ':Affordance1 :ofType :clickable .'
+        ':ItemRole1 :ofType :responseButton .'
+        ':ItemRole1 rdf:type :ItemRole .'
+		':ItemRole1 :assumedBy :Item1 .'
+        ':Task1 :providesRole :ItemRole1 .'
+            CV: "button"
+                1) disambiguation -- infoButton and responseButton both in Ontology currently
+                2) provides affordance :clickable
+                    [:Item :ofItemRoleType :(responseButton | infoButton)] => [:Item :affords :Affordance (:ofAffordanceType :clickable) ]
+There is a subject that v:isPartOf the task.
+    isPartOf(subject,psychomotor-vigilance)
+        ':Agent1 rdf:type :Agent .'
+        ':Task1 :performedBy :Agent1 .'
+            CV: +"subject"=> :Agent
+                +additional agent synonyms
+            ONTO: Agent class, link to ISR-MATBTask
+                ':Agent rdf:type owl:Class'
+                ':performedBy rdf:type owl:ObjectProperty'
+There is a letter that v:isPartOf the task.
+    isPartOf(letter,psychomotor-vigilance)
+        ':Item2 rdf:type :Item .'
+        ':Item2 :hasItemName "letter" .'
+        ':Item2 :affords :Affordance2 .'
+        ':Affordance2 rdf:type :Affordance .'
+        ':Affordance2 :ofType :visible .'
+        ':ItemRole2 :assumedBy :Item2 .'
+        ':ItemRole2 :ofType :stimulus .'
+        ':ItemRole2 rdf:type :ItemRole .'
+        ':Task2 :providesRole :ItemRole2 .'
+            CV: +"letter" => stimulus
+                1) Figure out this is visual
+                    -Later fact/rule (appearsOn)
+                2) Figure out this is a stimulus
+                    -Later fact/rule (part of the "IF" conditional for an action)
+Next three start getting into the situationDescription classes. Can't do those quickly (still need to think about it more).
+If a subject v:isPartOf the task then the task is active.
+    subject(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)
+If the task is active then a letter v:appearsOn the screen.
+    hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) => appearsOn(letter,screen)
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+    appearsOn(letter,screen),subject(subject),button(space_bar),letter(letter),screen(screen) => press(subject,space_bar)
+	
+	
+	
+	
+	
+MODIFICATIONS:
+If a subject begins the task then the task is active.
+    action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)
+If the task activates then a letter v:appearsOn the screen.
+    action(activates,psychomotor-vigilance) => appearsOn(letter,screen)
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+    action(appearsOn,letter,screen) => press(subject,space_bar)

@@ -6,6 +6,7 @@ AFFORDANCE_NODE = 'Affordance'
 TASK_NODE = 'ISR-MATBTask'
 ACTION_NODE = 'Action'
 SITUATION_DESCRIPTION_NODE = 'SituationDescription'
+TRANSITION_DESCRIPTION_NODE = 'TransitionDescription'
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'
