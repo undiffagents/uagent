@@ -8,22 +8,6 @@ import requests
 import networkx
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-def updateOnto():
-	# Read my file of ontology test additions
-	totalString = ''
-	file1 = open('ontoTestAddition.txt', 'r')
-	Lines = file1.readlines()
-	# Get them ready to send up
-	for line in Lines:
-		line = line.strip()
-		totalString += line + " ."
-	totalString = totalString[:-1]
-	print(totalString)
-	PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
-
-	# Send em
-	subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
-					 '{} INSERT DATA  {{ {} }}'.format(PREFIX, totalString)])
 
 def addToGraph(testGraph, subjValue, predValue, objValue):
 	#print("enter")
@@ -113,9 +97,9 @@ def testImport():
 			# Testing removing rdf:type parts to make the graph less cluttered.
 			# TODO: remove?
 			# This apparently ignores stuff that's just created (Item6 type Item) and nothing else.  maybe ok?
-			if predValue != 'type':
-				addToGraph(testGraph, subjValue, predValue, objValue)
-				print(subjValue + " - " + predValue + " - " + objValue)
+			#if predValue != 'type':
+			addToGraph(testGraph, subjValue, predValue, objValue)
+			print(subjValue + " - " + predValue + " - " + objValue)
 
 	#testGraph.add_node(0, value='xyz')
 	#testGraph.add_node(1, value='abc')
@@ -126,7 +110,7 @@ def testImport():
 		# jsonOutput = json.dumps(jsonSerializable)
 		# jsonFile.write(jsonOutput)
 		print(testGraph.nodes)
-		networkx.write_graphml(testGraph, "testNoType.graphml")
+		networkx.write_graphml(testGraph, "test.graphml")
 
-updateOnto()
 testImport()
+

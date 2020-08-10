@@ -1,9 +1,9 @@
 
 To run ontoTest.py, make sure that the Jena Fuseki server is already up and running; I also usually run the agent once to make sure it's fully populated with the schema (not sure if that's necessary).
 
-Then, in another wsl window, run ontoTest.py - there are two functions which get called in the file.
-**updateOnto** - pushes the contents of ontoTestAddition.txt to the server in order to "instantiate" some Items/ItemRoles, etc.
-**testImport**  - queries the server to get all triples from it, ignores any of the triples that don't have "Instance" in the name (the current test marker to see if something is instantiated), and creates a networkx graph which then gets exported to a GraphML file so that it can be imported into KOIOS or viewed through Cytoscape.
+Then, in another wsl window, run ontoInterpreterTest.py, then ontoTest.py - each of these has an important function
+**ontoInterpreterTest.py** - pushes RDF based on the (modified) interpreter output in interpreterTest.txt to the server in order to "instantiate" some Items/ItemRoles, etc.
+**ontoTest.py**  - queries the server to get all triples from it, ignores any of the triples that don't have "Instance" in the name (the current test marker to see if something is instantiated), and creates a networkx graph which then gets exported to a GraphML file so that it can be imported into KOIOS or viewed through Cytoscape.
 
 Necessary dependencies:
 **SparqlWrapper** - pip3 install SPARQLWrapper
