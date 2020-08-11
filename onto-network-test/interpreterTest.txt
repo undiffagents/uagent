@@ -7,4 +7,5 @@ isPartOf(screen,psychomotor-vigilance) PROVIDESROLE
 isPartOf(space_bar,psychomotor-vigilance)
 isPartOf(subject,psychomotor-vigilance)
 isPartOf(letter,psychomotor-vigilance)
-action(begins,subject,psychomotor-vigilance) => item(activeTask) CHANGED JUST FOR TESTING OF HANDLING - ORIGINAL IS hasProperty(psychomotor-vigilance,active)
+action(begins,subject,psychomotor-vigilance) => item(activeTask) CHANGED FOR TESTING - ORIGINAL: action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)
+action(activates,screen,psychomotor-vigilance) => item(letterOnScreen) CHANGED JUST FOR TESTING - ORIGINAL : action(activates,psychomotor-vigilance) => appearsOn(letter,screen) 

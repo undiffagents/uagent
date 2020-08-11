@@ -45,6 +45,8 @@ situationItemsInRDF = []
 situationRDFLines = []
 totalRDFLines = []
 
+sitLevelInputLines = []
+
 affordanceDict = {"button": "clickable", "letter": "visible"}
 
 
@@ -129,6 +131,8 @@ def processInterpreterOutputLine(inputLine):
 
     # handle item
     if inputType == 'item':
+        if inputLine not in sitLevelInputLines:
+            sitLevelInputLines.append(inputLine)
         #rdfLines = processItem(inputContents)
         processItem(inputContents)
 
@@ -139,6 +143,8 @@ def processInterpreterOutputLine(inputLine):
 
     # handle isPartOf
     if inputType == 'isPartOf':
+        if inputLine not in sitLevelInputLines:
+            sitLevelInputLines.append(inputLine)
         #rdfLines = processIsPartOf(inputContents)
         processIsPartOf(inputContents)
 
@@ -423,60 +429,64 @@ def startSituationDescription():
     # at the end of the situation
     situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
 
-    # TODO *****
-    # In here, copy over the existing situation items and
-    copySituationLines = []
-    # Iterate through all situational RDF lines
-    for situationLine in situationRDFLines:
-        upgradedItem = []
-        # Get the three items in the RDF triple
-        situationalItemsToCopy = situationLine.split(' ')
-        for item in situationalItemsToCopy:
-            ###### JUST FOR COMPARING TO SITUATIONITEMS - clip the colon out of the item name
-            ###### itemIdentifier = re.sub('[:]', '', item)
-            # Get just the name of the item (with the colon)
-            itemName = re.search(r'\D+', item)
-            if itemName is not None:
-                itemName = itemName.group(0)
-            # If the name matches one of the terms in situationItems, then process it
-            if itemName in situationItems:
-                # Get just the number from the end of the term
-                itemNumber = re.search(r'\d+', item)
-                if itemNumber is not None:
-                    itemNumber = int(itemNumber.group(0))
-                    # Increase the number to supersede any existing situation items
-                    # If item, then increase by item - if role, by role count, etc.
-                    if itemName == instanceSignifier + ITEM_NODE:
-                        itemNumber = itemNumber + itemCount
-                    if itemName == instanceSignifier + ITEM_ROLE_NODE:
-                        itemNumber = itemNumber + itemRoleCount
-                    if itemName == instanceSignifier + ITEM_DESCRIPTION_NODE:
-                        itemNumber = itemNumber + itemDescriptionCount
-                    if itemName == instanceSignifier + AFFORDANCE_NODE:
-                        itemNumber = itemNumber + affordanceCount
-                    # Create the new item
-                    newItem = itemName + str(itemNumber)
-                    # TODO **** WILDLY INEFFICIENT - THIS NEEDS WORK
-                    for itemNameRole, itemReference in situationItemsDict.items():
-                        if newItem == itemReference:
-                            situationItemsDict.update({itemNameRole: newItem})
-            else:
-                newItem = item
-            upgradedItem.append(newItem)
-        copySituationLines.append(" ".join(upgradedItem))
-
-    # Since we just added the same amount of items etc., we increase the number
-    itemCount = itemCount + itemCount
-    itemRoleCount = itemRoleCount + itemRoleCount
-    itemDescriptionCount = itemDescriptionCount + itemDescriptionCount
-    affordanceCount = affordanceCount + affordanceCount
-
-
     # Clear the previous situation's situation dictionary
 
     situationItemsInRDF.clear()
+    situationItemsDict.clear()
     situationRDFLines.clear()
-    situationRDFLines.extend(copySituationLines)
+
+    for line in sitLevelInputLines:
+        processInterpreterOutputLine(line)
+
+    # TODO *****
+    # In here, copy over the existing situation items and
+    # copySituationLines = []
+    # # Iterate through all situational RDF lines
+    # for situationLine in situationRDFLines:
+    #     upgradedItem = []
+    #     # Get the three items in the RDF triple
+    #     situationalItemsToCopy = situationLine.split(' ')
+    #     for item in situationalItemsToCopy:
+    #         ###### JUST FOR COMPARING TO SITUATIONITEMS - clip the colon out of the item name
+    #         ###### itemIdentifier = re.sub('[:]', '', item)
+    #         # Get just the name of the item (with the colon)
+    #         itemName = re.search(r'\D+', item)
+    #         if itemName is not None:
+    #             itemName = itemName.group(0)
+    #         # If the name matches one of the terms in situationItems, then process it
+    #         if itemName in situationItems:
+    #             # Get just the number from the end of the term
+    #             itemNumber = re.search(r'\d+', item)
+    #             if itemNumber is not None:
+    #                 itemNumber = int(itemNumber.group(0))
+    #                 # Increase the number to supersede any existing situation items
+    #                 # If item, then increase by item - if role, by role count, etc.
+    #                 if itemName == instanceSignifier + ITEM_NODE:
+    #                     itemNumber = itemNumber + itemCount
+    #                 if itemName == instanceSignifier + ITEM_ROLE_NODE:
+    #                     itemNumber = itemNumber + itemRoleCount
+    #                 if itemName == instanceSignifier + ITEM_DESCRIPTION_NODE:
+    #                     itemNumber = itemNumber + itemDescriptionCount
+    #                 if itemName == instanceSignifier + AFFORDANCE_NODE:
+    #                     itemNumber = itemNumber + affordanceCount
+    #                 # Create the new item
+    #                 newItem = itemName + str(itemNumber)
+    #                 # TODO **** WILDLY INEFFICIENT - THIS NEEDS WORK
+    #                 for itemNameRole, itemReference in situationItemsDict.items():
+    #                     if newItem == itemReference:
+    #                         situationItemsDict.update({itemNameRole: newItem})
+    #         else:
+    #             newItem = item
+    #         upgradedItem.append(newItem)
+    #     copySituationLines.append(" ".join(upgradedItem))
+    #
+    # # Since we just added the same amount of items etc., we increase the number
+    # itemCount = itemCount + itemCount
+    # itemRoleCount = itemRoleCount + itemRoleCount
+    # itemDescriptionCount = itemDescriptionCount + itemDescriptionCount
+    # affordanceCount = affordanceCount + affordanceCount
+
+    #situationRDFLines.extend(copySituationLines)
     # multiSituationDict.update({situationCreator: {}})
 
     # Make rdf line to create situation
