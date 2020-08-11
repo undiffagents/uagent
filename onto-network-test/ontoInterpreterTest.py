@@ -26,10 +26,17 @@ actionCount = 0
 earlierSituationFirstItemNumber = 0
 currentSituationFirstItemNumber = 0
 
+# Making an assumption that the number of situations will be the number of actions plus one.
+# With this, we can set up each situation in advance, minus the necessary changes.
+
+maxSituations = 0
+
 instanceSignifier = ':Instance'
 PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
 situationItemsDict = {}
 experimentItemsDict = {}
+
+multiSituationDict = {}
 
 affordanceDict = {"button": "clickable", "letter": "visible"}
 
@@ -60,6 +67,10 @@ def readInput():
     # Open up the interpreter output
     inputFile = open(interpreterFile, 'r')
     inputLines = inputFile.readlines()
+
+    # Parse through the input and see how many actions there should be (thus how many situations)
+    countSituations(inputLines)
+
     rdfLines = rdfLines + startSituationDescription()
     # Iterate through each line
     for line in inputLines:
@@ -71,6 +82,17 @@ def readInput():
     # Send em
     subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
                     '{} INSERT DATA  {{ {} }}'.format(PREFIX, rdfLines)])
+
+
+def countSituations(inputLines):
+    global maxSituations
+
+    for line in inputLines:
+        if "action" in line.split('(')[0]:
+            maxSituations = maxSituations + 1
+
+    # Add the initial situation as well
+    maxSituations = maxSituations + 1
 
 
 def processInterpreterOutputLine(inputLine):
@@ -241,8 +263,6 @@ def processAction(inputContents):
 
     rdfLines = ""
 
-    # Close up the pre-action situation description
-    rdfLines = rdfLines + endSituationDescription()
     # Set up the action linking to the pre-action situation description item before flushing situation items
     actionCreator = instanceSignifier + ACTION_NODE + str(actionCount)
     # Increment the number of actions that exist
@@ -269,6 +289,9 @@ def processAction(inputContents):
     actionTypeRDFLine = actionCreator + " " + OF_TYPE_EDGE + " \"" + actionVerb + "\" ."
     rdfLines = rdfLines + actionTypeRDFLine
 
+    # Close up the pre-action situation description
+    rdfLines = rdfLines + endSituationDescription()
+
     # Next step is to create a new situation description.  Unsure exactly what carries over from one to the next but
     # for now just cloning the previous situation description and adding whatever the action consequence is.
     # TODO **** Figure out situation descriptions in more detail
@@ -286,10 +309,6 @@ def processAction(inputContents):
     # SOMEWHERE IN HERE WE SHOULD POPULATE THE NEW SITUATION - FOR NOW IT'S JUST BEING DONE BY DOUBLING UP THE
     # ITEMS ETC.
     # TODO *****
-
-    # Clear the dictionary of situation items since we're entering a new situation
-    # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
-    situationItemsDict.clear()
 
     # Handle the consequence
     # TODO **** THIS IS PROBABLY NOT THE IDEAL ROUTE
@@ -339,6 +358,8 @@ def startSituationDescription():
     # at the end of the situation
     situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
 
+    # multiSituationDict.update({situationCreator: {}})
+
     # Make rdf line to create situation
     createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE + " ."
     rdfLines = rdfLines + createSituationLine
@@ -372,7 +393,14 @@ def endSituationDescription():
 
     # Increment the number of situations at this point
     situationDescriptionCount = situationDescriptionCount + 1
+
+    # Add the current situation's items to the multi-situation backup dict and
+    # Clear the dictionary of current situation items since we're ending a situation
+    # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
+     multiSituationDict.update({situationCreator: situationItemsDict.copy()})
+     situationItemsDict.clear()
+
     return rdfLines
 
+
 readInput()
-#endSituationDescription()
