@@ -36,7 +36,14 @@ PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontol
 situationItemsDict = {}
 experimentItemsDict = {}
 
+situationItems = [instanceSignifier + ITEM_NODE, instanceSignifier + ITEM_ROLE_NODE,
+                  instanceSignifier + AFFORDANCE_NODE, instanceSignifier + ITEM_DESCRIPTION_NODE]
+
 multiSituationDict = {}
+situationItemsInRDF = []
+
+situationRDFLines = []
+totalRDFLines = []
 
 affordanceDict = {"button": "clickable", "letter": "visible"}
 
@@ -71,13 +78,24 @@ def readInput():
     # Parse through the input and see how many actions there should be (thus how many situations)
     countSituations(inputLines)
 
-    rdfLines = rdfLines + startSituationDescription()
+    # Create a situation dict for each potential situation
+    #for i in range(0, maxSituations):
+        #situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(i)
+        #multiSituationDict.update({situationCreator: {}})
+
+    #rdfLines = rdfLines + startSituationDescription()
+    startSituationDescription()
     # Iterate through each line
     for line in inputLines:
         line = line.strip()
-        rdfLines = rdfLines + processInterpreterOutputLine(line)
+        processInterpreterOutputLine(line)
+        #rdfLines = rdfLines + processInterpreterOutputLine(line)
     # Close up the last situation description
-    rdfLines = rdfLines + endSituationDescription()
+    #rdfLines = rdfLines + endSituationDescription()
+    endSituationDescription()
+    separator = ' .'
+    # Add final " ." after joining all the others
+    rdfLines = separator.join(totalRDFLines) + " ."
     print(rdfLines)
     # Send em
     subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
@@ -106,29 +124,34 @@ def processInterpreterOutputLine(inputLine):
 
     # handle task
     if inputType == 'task':
-        rdfLines = processTask(inputContents)
+        #rdfLines = processTask(inputContents)
+        processTask(inputContents)
 
     # handle item
     if inputType == 'item':
-        rdfLines = processItem(inputContents)
+        #rdfLines = processItem(inputContents)
+        processItem(inputContents)
 
     # handle agent
     if inputType == 'agent':
-        rdfLines = processAgent(inputContents)
+        #rdfLines = processAgent(inputContents)
+        processAgent(inputContents)
 
     # handle isPartOf
     if inputType == 'isPartOf':
-        rdfLines = processIsPartOf(inputContents)
+        #rdfLines = processIsPartOf(inputContents)
+        processIsPartOf(inputContents)
 
     if inputType == 'action':
-        rdfLines = processAction(inputContents)
+        #rdfLines = processAction(inputContents)
+        processAction(inputContents)
 
-    return rdfLines
+    #return rdfLines
 
 
 def processTask(inputContents):
     global taskCount
-    rdfLines = ""
+    #rdfLines = ""
     taskName = inputContents
 
     # assemble task creation rdf line
@@ -137,18 +160,23 @@ def processTask(inputContents):
     taskCount = taskCount + 1
 
     experimentItemsDict.update({taskName: taskCreator})
-    rdfCreationLine = taskCreator + " " + TYPE_EDGE + " :" + TASK_NODE + " ."
-    rdfNamingLine = taskCreator + " " + HAS_NAME_EDGE + " \"" + taskName + "\" ."
+    rdfCreationLine = taskCreator + " " + TYPE_EDGE + " :" + TASK_NODE
+    rdfNamingLine = taskCreator + " " + HAS_NAME_EDGE + " \"" + taskName + "\""
 
-    rdfLines = rdfLines + rdfCreationLine + rdfNamingLine
-    return rdfLines
+    #rdfLines = rdfLines + rdfCreationLine + rdfNamingLine
+    totalRDFLines.append(rdfCreationLine)
+    totalRDFLines.append(rdfNamingLine)
+    #return rdfLines
 
 
 def processItem(inputContents):
     global itemCount
     global affordanceCount
     global itemRoleCount
-    rdfLines = ""
+    #rdfLines = ""
+    itemCreator = None
+    affordanceCreator = None
+    roleCreator = None
     itemRole = ""
     itemName = ""
     # if no comma in the contents, no name, just role.
@@ -168,11 +196,13 @@ def processItem(inputContents):
         situationItemsDict.update({itemName: itemCreator})
 
     # Item creation
-    itemCreationLine = itemCreator + " " + TYPE_EDGE + " :" + ITEM_NODE + " ."
-    rdfLines = rdfLines + itemCreationLine
+    itemCreationLine = itemCreator + " " + TYPE_EDGE + " :" + ITEM_NODE
+    #rdfLines = rdfLines + itemCreationLine
+    situationRDFLines.append(itemCreationLine)
     if itemName != "":
-        itemNamingLine = itemCreator + " " + HAS_ITEM_NAME_EDGE + " \"" + itemName + "\" ."
-        rdfLines = rdfLines + itemNamingLine
+        itemNamingLine = itemCreator + " " + HAS_ITEM_NAME_EDGE + " \"" + itemName + "\""
+        #rdfLines = rdfLines + itemNamingLine
+        situationRDFLines.append(itemNamingLine)
 
     # Affordance creation if appropriate (in affordance dict)
     if affordanceDict.get(itemRole) is not None:
@@ -181,18 +211,20 @@ def processItem(inputContents):
             affordanceCreator = instanceSignifier + AFFORDANCE_NODE + str(affordanceCount)
             affordanceCount = affordanceCount + 1
             # generate RDF lines
-            affordanceCreationLine = affordanceCreator + " " + TYPE_EDGE + " :" + AFFORDANCE_NODE + " ."
+            affordanceCreationLine = affordanceCreator + " " + TYPE_EDGE + " :" + AFFORDANCE_NODE
             # TODO **** very unsure about the way to "ofType" things, right now using a string.
             affordanceTypingLine = affordanceCreator + " " + OF_TYPE_EDGE + " \"" + affordanceDict.get(
-                itemRole) + "\" ."
+                itemRole) + "\""
             # Add to created things dictionary for the affordance of the role
             situationItemsDict.update({affordanceDict.get(itemRole): affordanceCreator})
             # Add to RDF output
-            rdfLines = rdfLines + affordanceCreationLine + affordanceTypingLine
+            #rdfLines = rdfLines + affordanceCreationLine + affordanceTypingLine
+            situationRDFLines.append(affordanceCreationLine)
+            situationRDFLines.append(affordanceTypingLine)
         # Connect item to affordance.
-        itemAffordsLine = itemCreator + " " + AFFORDS_EDGE + " " + situationItemsDict.get(
-            affordanceDict.get(itemRole)) + " ."
-        rdfLines = rdfLines + itemAffordsLine
+        itemAffordsLine = itemCreator + " " + AFFORDS_EDGE + " " + situationItemsDict.get(affordanceDict.get(itemRole))
+        #rdfLines = rdfLines + itemAffordsLine
+        situationRDFLines.append(itemAffordsLine)
 
     # Role creation if role not already existing
     if situationItemsDict.get(itemRole) is None:
@@ -200,28 +232,40 @@ def processItem(inputContents):
         itemRoleCount = itemRoleCount + 1
 
         # generate RDF lines
-        roleCreationLine = roleCreator + " " + TYPE_EDGE + " :" + ITEM_ROLE_NODE + " ."
-        roleTypingLine = roleCreator + " " + OF_TYPE_EDGE + " \"" + itemRole + "\" ."
+        roleCreationLine = roleCreator + " " + TYPE_EDGE + " :" + ITEM_ROLE_NODE
+        roleTypingLine = roleCreator + " " + OF_TYPE_EDGE + " \"" + itemRole + "\""
         # Add to created things dictionary for the role
         situationItemsDict.update({itemRole: roleCreator})
         # Add to rdf output
-        rdfLines = rdfLines + roleCreationLine + roleTypingLine
+        #rdfLines = rdfLines + roleCreationLine + roleTypingLine
+        situationRDFLines.append(roleCreationLine)
+        situationRDFLines.append(roleTypingLine)
     else:
         roleCreator = situationItemsDict.get(itemRole)
     # Connect item to role
-    itemHasRoleLine = roleCreator + " " + ASSUMED_BY_EDGE + " " + itemCreator + " ."
+    itemHasRoleLine = roleCreator + " " + ASSUMED_BY_EDGE + " " + itemCreator
 
-    rdfLines = rdfLines + itemHasRoleLine
+    #rdfLines = rdfLines + itemHasRoleLine
+    situationRDFLines.append(itemHasRoleLine)
 
-    return rdfLines
+    # Add the tags that have to do with the situation to a tracker
+    if itemCreator is not None:
+        situationItemsInRDF.append(itemCreator)
+    if affordanceCreator is not None:
+        situationItemsInRDF.append(affordanceCreator)
+    if roleCreator is not None:
+        situationItemsInRDF.append(roleCreator)
+
+    #return rdfLines
 
 
 def processAgent(inputContents):
-    return ""
+    #return ""
+    pass
 
 
 def processIsPartOf(inputContents):
-    rdfLines = ""
+    #rdfLines = ""
     subelementIdentifier = inputContents.split(',')[0]
     superelementIdentifier = inputContents.split(',')[1]
 
@@ -239,10 +283,11 @@ def processIsPartOf(inputContents):
     if "Item" in subelement and "Task" in superelement:
         if "Role" not in subelement:
             subelement = re.sub("Item", "ItemRole", subelement)
-        taskProvidesRoleLine = superelement + " " + PROVIDES_ROLE_EDGE + " " + subelement + " ."
-        rdfLines = rdfLines + taskProvidesRoleLine
+        taskProvidesRoleLine = superelement + " " + PROVIDES_ROLE_EDGE + " " + subelement
+        #rdfLines = rdfLines + taskProvidesRoleLine
+        situationRDFLines.append(taskProvidesRoleLine)
 
-    return rdfLines
+    #return rdfLines
 
 
 def processAction(inputContents):
@@ -261,7 +306,9 @@ def processAction(inputContents):
     consequenceType = consequence.split('(')[0]
     consequenceContents = consequence.split('(')[1]
 
-    rdfLines = ""
+    # Initializing here to nothing so that if it doesn't get populated, things don't break
+    actionRefersToRDFLine = ""
+    #rdfLines = ""
 
     # Set up the action linking to the pre-action situation description item before flushing situation items
     actionCreator = instanceSignifier + ACTION_NODE + str(actionCount)
@@ -269,8 +316,8 @@ def processAction(inputContents):
     actionCount = actionCount + 1
 
     # Create action node of type Action
-    actionCreationLine = actionCreator + " " + TYPE_EDGE + " :" + ACTION_NODE + " ."
-    rdfLines = rdfLines + actionCreationLine
+    actionCreationLine = actionCreator + " " + TYPE_EDGE + " :" + ACTION_NODE
+    #rdfLines = rdfLines + actionCreationLine
 
     # Make RDF line to instantiate action wrt. the item that triggered it
     if situationItemsDict.get(actionSubject) is None:
@@ -282,29 +329,38 @@ def processAction(inputContents):
         actionRefersToItem = situationItemsDict.get(actionSubject)
         if "Role" in actionRefersToItem:
             actionRefersToItem = re.sub("ItemRole", "Item", actionRefersToItem)
-        actionRefersToRDFLine = actionCreator + " " + REFERS_TO_EDGE + " " + actionRefersToItem + " ."
-        rdfLines = rdfLines + actionRefersToRDFLine
+        actionRefersToRDFLine = actionCreator + " " + REFERS_TO_EDGE + " " + actionRefersToItem
+        #rdfLines = rdfLines + actionRefersToRDFLine
 
     # Add type of action
-    actionTypeRDFLine = actionCreator + " " + OF_TYPE_EDGE + " \"" + actionVerb + "\" ."
-    rdfLines = rdfLines + actionTypeRDFLine
+    actionTypeRDFLine = actionCreator + " " + OF_TYPE_EDGE + " \"" + actionVerb + "\""
+    #rdfLines = rdfLines + actionTypeRDFLine
 
     # Close up the pre-action situation description
-    rdfLines = rdfLines + endSituationDescription()
+    #rdfLines = rdfLines + endSituationDescription()
+    endSituationDescription()
+
+    # Append RDF Lines (this should place everything correctly).
+    totalRDFLines.append(actionCreationLine)
+    totalRDFLines.append(actionTypeRDFLine)
+    totalRDFLines.append(actionRefersToRDFLine)
 
     # Next step is to create a new situation description.  Unsure exactly what carries over from one to the next but
     # for now just cloning the previous situation description and adding whatever the action consequence is.
     # TODO **** Figure out situation descriptions in more detail
-    rdfLines = rdfLines + startSituationDescription()
+    #rdfLines = rdfLines + startSituationDescription()
+    startSituationDescription()
 
     # Create Transition Description and connect situation descriptions to it
-    rdfLines = rdfLines + createTransitionDescription()
+    #rdfLines = rdfLines + createTransitionDescription()
+    createTransitionDescription()
 
     # Connect action to transition description (have to use current transition count - 1 because it was incremented
     # when the transition was created)
     transitionCreator = instanceSignifier + TRANSITION_DESCRIPTION_NODE + str(transitionDescriptionCount - 1)
-    actionTriggersTransitionLine = actionCreator + " " + TRIGGERS_EDGE + " " + transitionCreator + " ."
-    rdfLines = rdfLines + actionTriggersTransitionLine
+    actionTriggersTransitionLine = actionCreator + " " + TRIGGERS_EDGE + " " + transitionCreator
+    #rdfLines = rdfLines + actionTriggersTransitionLine
+    totalRDFLines.append(actionTriggersTransitionLine)
 
     # SOMEWHERE IN HERE WE SHOULD POPULATE THE NEW SITUATION - FOR NOW IT'S JUST BEING DONE BY DOUBLING UP THE
     # ITEMS ETC.
@@ -312,35 +368,39 @@ def processAction(inputContents):
 
     # Handle the consequence
     # TODO **** THIS IS PROBABLY NOT THE IDEAL ROUTE
-    rdfLines = rdfLines + processInterpreterOutputLine(consequence)
+    #rdfLines = rdfLines + processInterpreterOutputLine(consequence)
+    processInterpreterOutputLine(consequence)
 
-    return rdfLines
+    #return rdfLines
 
 
 def createTransitionDescription():
     global transitionDescriptionCount
 
-    rdfLines = ""
+    #rdfLines = ""
 
     # Create a transition and increment the number of transitions
     transitionCreator = instanceSignifier + TRANSITION_DESCRIPTION_NODE + str(transitionDescriptionCount)
     transitionDescriptionCount = transitionDescriptionCount + 1
 
     # Add RDF Line to create transition
-    createTransitionLine = transitionCreator + " " + TYPE_EDGE + " :" + TRANSITION_DESCRIPTION_NODE + " ."
-    rdfLines = rdfLines + createTransitionLine
+    createTransitionLine = transitionCreator + " " + TYPE_EDGE + " :" + TRANSITION_DESCRIPTION_NODE
+    #rdfLines = rdfLines + createTransitionLine
+    totalRDFLines.append(createTransitionLine)
 
     # Connect Transition Description to its pre/post-situations
     if situationDescriptionCount > 0:
         # Pre-situation = current situation count minus one
         transitionPreSituationLine = transitionCreator + " " + HAS_PRE_SITUATION_DESCRIPTION_EDGE + " :" + \
-            SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount - 1) + " ."
+            SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount - 1)
         # Post-situation = current situation count
         transitionPostSituationLine = transitionCreator + " " + HAS_POST_SITUATION_DESCRIPTION_EDGE + " :" + \
-            SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount) + " ."
-        rdfLines = rdfLines + transitionPreSituationLine + transitionPostSituationLine
+            SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
+        #rdfLines = rdfLines + transitionPreSituationLine + transitionPostSituationLine
+        totalRDFLines.append(transitionPreSituationLine)
+        totalRDFLines.append(transitionPreSituationLine)
 
-    return rdfLines
+    #return rdfLines
 
 
 def startSituationDescription():
@@ -348,7 +408,12 @@ def startSituationDescription():
 
     global earlierSituationFirstItemNumber
     global currentSituationFirstItemNumber
-    rdfLines = ""
+    global itemCount
+    global itemRoleCount
+    global itemDescriptionCount
+    global affordanceCount
+
+    #rdfLines = ""
 
     # The first item in the new situation will start at the current item count
     earlierSituationFirstItemNumber = currentSituationFirstItemNumber
@@ -358,49 +423,109 @@ def startSituationDescription():
     # at the end of the situation
     situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
 
+    # TODO *****
+    # In here, copy over the existing situation items and
+    copySituationLines = []
+    # Iterate through all situational RDF lines
+    for situationLine in situationRDFLines:
+        upgradedItem = []
+        # Get the three items in the RDF triple
+        situationalItemsToCopy = situationLine.split(' ')
+        for item in situationalItemsToCopy:
+            ###### JUST FOR COMPARING TO SITUATIONITEMS - clip the colon out of the item name
+            ###### itemIdentifier = re.sub('[:]', '', item)
+            # Get just the name of the item (with the colon)
+            itemName = re.search(r'\D+', item)
+            if itemName is not None:
+                itemName = itemName.group(0)
+            # If the name matches one of the terms in situationItems, then process it
+            if itemName in situationItems:
+                # Get just the number from the end of the term
+                itemNumber = re.search(r'\d+', item)
+                if itemNumber is not None:
+                    itemNumber = int(itemNumber.group(0))
+                    # Increase the number to supersede any existing situation items
+                    # If item, then increase by item - if role, by role count, etc.
+                    if itemName == instanceSignifier + ITEM_NODE:
+                        itemNumber = itemNumber + itemCount
+                    if itemName == instanceSignifier + ITEM_ROLE_NODE:
+                        itemNumber = itemNumber + itemRoleCount
+                    if itemName == instanceSignifier + ITEM_DESCRIPTION_NODE:
+                        itemNumber = itemNumber + itemDescriptionCount
+                    if itemName == instanceSignifier + AFFORDANCE_NODE:
+                        itemNumber = itemNumber + affordanceCount
+                    # Create the new item
+                    newItem = itemName + str(itemNumber)
+                    # TODO **** WILDLY INEFFICIENT - THIS NEEDS WORK
+                    for itemNameRole, itemReference in situationItemsDict.items():
+                        if newItem == itemReference:
+                            situationItemsDict.update({itemNameRole: newItem})
+            else:
+                newItem = item
+            upgradedItem.append(newItem)
+        copySituationLines.append(" ".join(upgradedItem))
+
+    # Since we just added the same amount of items etc., we increase the number
+    itemCount = itemCount + itemCount
+    itemRoleCount = itemRoleCount + itemRoleCount
+    itemDescriptionCount = itemDescriptionCount + itemDescriptionCount
+    affordanceCount = affordanceCount + affordanceCount
+
+
+    # Clear the previous situation's situation dictionary
+
+    situationItemsInRDF.clear()
+    situationRDFLines.clear()
+    situationRDFLines.extend(copySituationLines)
     # multiSituationDict.update({situationCreator: {}})
 
     # Make rdf line to create situation
-    createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE + " ."
-    rdfLines = rdfLines + createSituationLine
+    createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE
+    #rdfLines = rdfLines + createSituationLine
+    totalRDFLines.append(createSituationLine)
 
     for i in range(earlierSituationFirstItemNumber, currentSituationFirstItemNumber):
         earlierConditionItem = instanceSignifier + ITEM_NODE + str(i)
         addEarlierConditionToSituationLine = situationCreator + " " + HAS_EARLIER_CONDITION_EDGE + \
-                                             " " + earlierConditionItem + " ."
-        rdfLines = rdfLines + addEarlierConditionToSituationLine
-    return rdfLines
+                                             " " + earlierConditionItem
+        #rdfLines = rdfLines + addEarlierConditionToSituationLine
+        totalRDFLines.append(addEarlierConditionToSituationLine)
+    #return rdfLines
 
 
 def endSituationDescription():
     # If not 0, then from 0 to current - earlier condition, from current to max - current condition
     global situationDescriptionCount
 
-    rdfLines = ""
+    #rdfLines = ""
+
+    # Move situation RDF lines over into total RDF lines - anything happening in here will be experiment-level
+    # or part of a new situation I THINK?
+    # TODO *****
+    totalRDFLines.extend(situationRDFLines)
 
     # Create a situation
     situationCreator = instanceSignifier + SITUATION_DESCRIPTION_NODE + str(situationDescriptionCount)
 
     # Make rdf line to create situation
-    # createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE + " ."
+    # createSituationLine = situationCreator + " " + TYPE_EDGE + " :" + SITUATION_DESCRIPTION_NODE
     # rdfLines = rdfLines + createSituationLine
 
     for i in range(currentSituationFirstItemNumber, itemCount):
         currentConditionItem = instanceSignifier + ITEM_NODE + str(i)
         addCurrentConditionToSituationLine = situationCreator + " " + HAS_CURRENT_CONDITION_EDGE + \
-                                             " " + currentConditionItem + " ."
-        rdfLines = rdfLines + addCurrentConditionToSituationLine
+                                             " " + currentConditionItem
+        #rdfLines = rdfLines + addCurrentConditionToSituationLine
+        totalRDFLines.append(addCurrentConditionToSituationLine)
 
     # Increment the number of situations at this point
     situationDescriptionCount = situationDescriptionCount + 1
 
     # Add the current situation's items to the multi-situation backup dict and
-    # Clear the dictionary of current situation items since we're ending a situation
     # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
-     multiSituationDict.update({situationCreator: situationItemsDict.copy()})
-     situationItemsDict.clear()
+    multiSituationDict.update({situationCreator: situationItemsDict.copy()})
 
-    return rdfLines
+    #return rdfLines
 
 
 readInput()
