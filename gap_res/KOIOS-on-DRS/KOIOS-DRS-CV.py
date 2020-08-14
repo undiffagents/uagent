@@ -82,48 +82,123 @@ def parseDRSLine(currentLine):
 
 def findMismatches():
     # Iterate through the types found in the DRS
-    for elementType in DRSElements:
+    for termType in DRSElements:
         # Get all items of that type from the DRS
-        DRSTerms = DRSElements.get(elementType)
+        DRSTerms = DRSElements.get(termType)
         # Get all items of that type from both the ontology and think CVs.
         # (Should these be treated as one or separately?  Would it be beneficial to know whether the ontology knows a
         # term and Think doesn't or vice versa?
         # TODO ****
-        OntoCVTerms = OntoCV.get(elementType)
-        ThinkCVTerms = ThinkCV.get(elementType)
+        # OntoCVTerms = OntoCV.get(termType)
+        # ThinkCVTerms = ThinkCV.get(termType)
         # Iterate through all of the terms in the DRS
         for term in DRSTerms:
-            # If the ontology doesn't know the term, inform the user of such
-            # TODO: **** This is probably where WordNet would come in and kick back appropriate nyms.
-            # The question then is which nyms are appropriate and
-            if term not in OntoCVTerms:
-                resolveMismatch(term, "O", OntoCVTerms)
-            # If Think doesn't know the term, also inform the user of that
-            if term not in ThinkCVTerms:
-                resolveMismatch(term, "T", ThinkCVTerms)
+            # If the ontology doesn't know the term, attempt resolution and return result
+            if checkTermInCVs(termType, term, OntoCV) == False:
+                # The question then is which nyms are appropriate and how to "correct" the CVs
+                corrected = resolveMismatch(termType, term, "O")
+                if corrected == True:
+                    print("SUCCESS: Term mismatch corrected!")
+                else:
+                    print("FAILURE: Term mismatch NOT corrected!")
+            # If Think doesn't know the term, attempt resolution and return result
+            if checkTermInCVs(termType, term, ThinkCV) == False:
+                corrected = resolveMismatch(termType, term, "T")
+                if corrected == True:
+                    print("SUCCESS: Term mismatch corrected!")
+                else:
+                    print("FAILURE: Term mismatch NOT corrected!")
 
 
-def resolveMismatch(term, ontoOrThink, CVTermsOfSameType):
+def checkTermInCVs(termType, term, CVToCheck):
+    # Get the list of terms from the selected CV, based on the term type
+    CVTerms = CVToCheck.get(termType)
+    # If the term passed in is not in the CV, return false, else return true
+    if term not in CVTerms:
+        return False
+    else:
+        return True
+
+
+def resolveMismatch(termType, term, ontoOrThink):
     # If ontoOrThink is "O", then the mismatch occurs on the ontology level
     if ontoOrThink == "O":
+        OntoCVTerms = OntoCV.get(termType)
         print("The ontology doesn't know " + term + ".  Next steps to come.")
         nyms, antonyms = getNyms(term)
-        #print(term, nyms, antonyms)
-        nymsThatMatchCV = set(CVTermsOfSameType).intersection(nyms)
+        # Get the set of nyms which match some CV term
+        nymsThatMatchCV = set(OntoCVTerms).intersection(nyms)
+        # If such nyms exist, then inform the user
+        # TODO: **** Going to need to figure out how to "correct" the CVs to provide functionality for new term
+        # Some sort of "SameAs" link between terms?
         if len(nymsThatMatchCV) > 0:
             print("FOUND A CV TERM IN " + term + "'S NYMS")
             print(nymsThatMatchCV)
+            return True
+        # If no such nyms exist, then ask the user for a new term to try
+        else:
+            tryCount = 0
+            successfulMatch = False
+            # Ask until success or 2 attempts, whichever comes first
+            while successfulMatch == False and tryCount < 2:
+                # Ask the user for a new term
+                newTerm = requestNewTermToNymCheck(term)
+                # Check if new term is in the ontology CV.
+                successfulMatch = checkTermInCVs(termType, newTerm, OntoCV)
+                if successfulMatch == False:
+                    nyms, antonyms = getNyms(term)
+                    # Get the set of nyms which match some CV term
+                    nymsThatMatchCV = set(OntoCVTerms).intersection(nyms)
+                    if len(nymsThatMatchCV) > 0:
+                        print("FOUND A CV TERM IN " + newTerm + "'S NYMS")
+                        print(nymsThatMatchCV)
+                        successfulMatch = True
+                # Increase the number of tries
+                tryCount = tryCount + 1
+            return successfulMatch
+
+
     # If ontoOrThink is "T", then the mismatch occurs with the Think CV
     if ontoOrThink == "T":
+        ThinKCVTerms = ThinkCV.get(termType)
         print("Think doesn't know " + term + ".  Next steps to come.")
         nyms, antonyms = getNyms(term)
-        #print(term, nyms, antonyms)
-        nymsThatMatchCV = set(CVTermsOfSameType).intersection(nyms)
+        # Get the set of nyms which match some CV term
+        nymsThatMatchCV = set(ThinKCVTerms).intersection(nyms)
         if len(nymsThatMatchCV) > 0:
             print("FOUND A CV TERM IN " + term + "'S NYMS")
             print(nymsThatMatchCV)
+            return True
+        # If no such nyms exist, then ask the user for a new term to try
+        else:
+            tryCount = 0
+            successfulMatch = False
+            # Ask until success or 2 attempts, whichever comes first
+            while successfulMatch == False and tryCount < 2:
+                # Ask the user for a new term
+                newTerm = requestNewTermToNymCheck(term)
+                # Check if new term is in the ontology CV.
+                successfulMatch = checkTermInCVs(termType, newTerm, ThinkCV)
+                if successfulMatch == False:
+                    nyms, antonyms = getNyms(newTerm)
+                    # Get the set of nyms which match some CV term
+                    nymsThatMatchCV = set(ThinKCVTerms).intersection(nyms)
+                    if len(nymsThatMatchCV) > 0:
+                        print("FOUND A CV TERM IN " + newTerm + "'S NYMS")
+                        print(nymsThatMatchCV)
+                        successfulMatch = True
+                # Increase the number of tries
+                tryCount = tryCount + 1
+            return successfulMatch
 
 
+def requestNewTermToNymCheck(originalTerm):
+    newTerm = input("No CV terms found in the nyms for " + originalTerm
+                    + ".  Please enter a new term which can be tried.")
+    return newTerm
+
+
+# TODO: **** NEED TO FIGURE OUT WHICH NYMS ARE APPROPRIATE
 def getNyms(wordToCheck):
     # Iterate through all words to check
     synonyms = []
