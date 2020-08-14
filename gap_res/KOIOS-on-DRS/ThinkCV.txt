@@ -1,0 +1,13 @@
+action_list press
+action_list click
+action_list remember
+condition_list appearsOn
+condition_list visible
+item_role_list target
+item_role_list stimulus
+item_role_list distractor
+item_role_list responseButton
+item_role_list infoButton
+agent_synonym_list subject
+agent_synonym_list participant
+agent_synonym_list you
