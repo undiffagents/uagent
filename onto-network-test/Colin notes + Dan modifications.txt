@@ -72,7 +72,10 @@ If the letter v:appearsOn the screen then the subject presses the n:space_bar.
 MODIFICATIONS:
 If a subject begins the task then the task is active.
     action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)
+	action(begins,subject,psychomotor-vigilance) => item(activeTask) CHANGED FOR TESTING - ORIGINAL: action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)
 If the task activates then a letter v:appearsOn the screen.
     action(activates,psychomotor-vigilance) => appearsOn(letter,screen)
+	action(activates,screen,psychomotor-vigilance) => item(letterOnScreen) CHANGED JUST FOR TESTING - ORIGINAL : action(activates,psychomotor-vigilance) => appearsOn(letter,screen) 
 If the letter v:appearsOn the screen then the subject presses the n:space_bar.
     action(appearsOn,letter,screen) => press(subject,space_bar)
+	
