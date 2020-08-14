@@ -3,7 +3,7 @@ action_list click
 action_list remember
 condition_list appearsOn
 condition_list visible
-item_role_list target
+item_role_list objective
 item_role_list stimulus
 item_role_list distractor
 item_role_list responseButton

@@ -8,7 +8,7 @@ ItemDescription :refersToItemLocation Location
 ItemDescription :refersToItemColor Color
 ItemDescription :refersToItemShape Shape
 ItemDescription :refersToItemType Type
-ItemRole :ofType target
+ItemRole :ofType objective
 ItemRole :ofType stimulus
 ItemRole :ofType distractor
 ItemRole :ofType responseButton

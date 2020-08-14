@@ -5,6 +5,8 @@
 # Onto-to-Think CV mappings need to match up
 # For now, hardcoding a mapping from one to the other
 
+from nltk.corpus import wordnet
+
 ThinkToOntoMapping = {'action': 'Action', 'condition': 'Affordance', 'item_role': 'ItemRole'}
 DRSToCVMapping = {'object': 'ItemRole', 'predicate': 'Action'}
 
@@ -95,10 +97,75 @@ def findMismatches():
             # TODO: **** This is probably where WordNet would come in and kick back appropriate nyms.
             # The question then is which nyms are appropriate and
             if term not in OntoCVTerms:
-                print("The ontology doesn't know " + term + ".  Next steps to come.")
+                resolveMismatch(term, "O", OntoCVTerms)
             # If Think doesn't know the term, also inform the user of that
             if term not in ThinkCVTerms:
-                print("Think doesn't know " + term + ".  Next steps to come.")
+                resolveMismatch(term, "T", ThinkCVTerms)
+
+
+def resolveMismatch(term, ontoOrThink, CVTermsOfSameType):
+    # If ontoOrThink is "O", then the mismatch occurs on the ontology level
+    if ontoOrThink == "O":
+        print("The ontology doesn't know " + term + ".  Next steps to come.")
+        nyms, antonyms = getNyms(term)
+        #print(term, nyms, antonyms)
+        nymsThatMatchCV = set(CVTermsOfSameType).intersection(nyms)
+        if len(nymsThatMatchCV) > 0:
+            print("FOUND A CV TERM IN " + term + "'S NYMS")
+            print(nymsThatMatchCV)
+    # If ontoOrThink is "T", then the mismatch occurs with the Think CV
+    if ontoOrThink == "T":
+        print("Think doesn't know " + term + ".  Next steps to come.")
+        nyms, antonyms = getNyms(term)
+        #print(term, nyms, antonyms)
+        nymsThatMatchCV = set(CVTermsOfSameType).intersection(nyms)
+        if len(nymsThatMatchCV) > 0:
+            print("FOUND A CV TERM IN " + term + "'S NYMS")
+            print(nymsThatMatchCV)
+
+
+def getNyms(wordToCheck):
+    # Iterate through all words to check
+    synonyms = []
+    hypernyms = []
+    hyponyms = []
+    deriv = []
+    uniqueNymList = []
+    uniqueAntonymList = []
+    # Get synsets of current word to check
+    testWord = wordnet.synsets(wordToCheck)
+    # for each synset (meaning)
+    for syn in testWord:
+        # Get Hypernyms
+        if len(syn.hypernyms()) > 0:
+            currentHypernyms = syn.hypernyms()
+            for hyperSyn in currentHypernyms:
+                for lemma in hyperSyn.lemmas():
+                    hypernyms.append(lemma.name())
+        # Get Hyponyms
+        if len(syn.hyponyms()) > 0:
+            currentHyponyms = syn.hyponyms()
+            for hypoSyn in currentHyponyms:
+                for lemma in hypoSyn.lemmas():
+                    hyponyms.append(lemma.name())
+        # Get direct synonyms
+        for lemma in syn.lemmas():
+            synonyms.append(lemma.name())
+            # Get derivationally related forms
+            for derivForm in lemma.derivationally_related_forms():
+                if derivForm.name() not in deriv:
+                    deriv.append(derivForm.name())
+            # Get antonyms
+            if lemma.antonyms():
+                if lemma.antonyms()[0].name() not in uniqueAntonymList:
+                    uniqueAntonymList.append(lemma.antonyms()[0].name())
+        # TODO ***** Currently cutting out hypernyms/hyponyms
+        #nymLists = synonyms + hypernyms + hyponyms + deriv
+        nymLists = synonyms + deriv
+        uniqueNyms = set(nymLists)
+        uniqueNymList = list(uniqueNyms)
+    return uniqueNymList, uniqueAntonymList
+
 
 def main():
     # Read in the Ontology CV and parse it in
