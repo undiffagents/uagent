@@ -1,0 +1,2 @@
+click|clickable|clicking
+retrieve|retrieving|retrievable
