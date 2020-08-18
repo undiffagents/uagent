@@ -29,12 +29,15 @@ ThinkCV = {}
 DRSElements = {}
 paronyms = {}
 
+equivalenciesFound = {}
+
 CONST_DETECT_LEXICAL_GAPS = True
 CONST_RESOLVE_LEXICAL_GAPS = True
 
 ofTypeEdge = " :ofType "
 refersToItemXEdge = " :refersToItem"
-
+ontoEquivalencyIndicator = " :sameAs "
+thinkEquivalencyIndicator = "equivalent "
 
 def parseOntoCVLine(currentLine):
     # Split and get the first/third elements of line (Action/clicking, ItemRole/target, etc.)
@@ -169,11 +172,17 @@ def resolveMismatch(termType, term, ontoOrThink):
             paronymFound = paronymCheck(term, OntoCVTerms)
             if paronymFound != '':
                 print("Paronym found for " + term + ".  The paronym is " + paronymFound + ".")
+                # Add the equivalency between the paronym and the CV term.
+                if term not in equivalenciesFound:
+                    equivalenciesFound.update({paronymFound: term})
                 return True
         # print("The ontology doesn't know " + term + ".")
         # Check for nyms of the term that would match any terms of the relevant CV type
-        successfulMatchTerm = searchForNymMatchingCV(term, OntoCVTerms)
-        if successfulMatchTerm != '':
+        (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, OntoCVTerms)
+        if successfulMatchTerm != None:
+            # Add the equivalency between the new term and the found CV term.
+            if term not in equivalenciesFound:
+                equivalenciesFound.update({CVTermFound: successfulMatchTerm})
             OntoCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -187,8 +196,11 @@ def resolveMismatch(termType, term, ontoOrThink):
                 # Check if new term is in the ontology CV.
                 successfulMatch = checkTermInCVs(termType, newTerm, OntoCV)
                 if successfulMatch == False:
-                    successfulMatchTerm = searchForNymMatchingCV(term, OntoCVTerms)
-                    if successfulMatchTerm != '':
+                    (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, OntoCVTerms)
+                    if successfulMatchTerm != None:
+                        # Add the equivalency between the new term and the found CV term.
+                        if term not in equivalenciesFound:
+                            equivalenciesFound.update({CVTermFound: successfulMatchTerm})
                         OntoCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
                 # Increase the number of tries
@@ -201,8 +213,11 @@ def resolveMismatch(termType, term, ontoOrThink):
         ThinkCVTerms = ThinkCV.get(termType)
         # print("Think doesn't know " + term + ".  Next steps to come.")
         # Check for nyms of the term that would match any terms of the relevant CV type
-        successfulMatchTerm = searchForNymMatchingCV(term, ThinkCVTerms)
-        if successfulMatchTerm != '':
+        (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, ThinkCVTerms)
+        if successfulMatchTerm != None:
+            # Add the equivalency between the new term and the found CV term.
+            if term not in equivalenciesFound:
+                equivalenciesFound.update({CVTermFound: successfulMatchTerm})
             ThinkCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -216,8 +231,11 @@ def resolveMismatch(termType, term, ontoOrThink):
                 # Check if new term is in the ontology CV.
                 successfulMatch = checkTermInCVs(termType, newTerm, ThinkCV)
                 if successfulMatch == False:
-                    successfulMatchTerm = searchForNymMatchingCV(term, ThinkCVTerms)
-                    if successfulMatchTerm != '':
+                    (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, ThinkCVTerms)
+                    if successfulMatchTerm != None:
+                        # Add the equivalency between the new term and the found CV term.
+                        if term not in equivalenciesFound:
+                            equivalenciesFound.update({CVTermFound: successfulMatchTerm})
                         ThinkCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
                 # Increase the number of tries
@@ -287,11 +305,14 @@ def searchForNymMatchingCV(term, CVTermsOfType):
         print(nymsThatMatchCV)
         if len(nymsThatMatchCV) == 1:
             # TODO **** Figure out how to use nymsThatMatchCV[0] to
-            return term
+            DRSTerm = term
+            CVTermFound = nymsThatMatchCV[0]
+            # Return a tuple consisting of the CV Term (known term) and the new term introduced
+            return CVTermFound, DRSTerm
         else:
             # TODO **** Handle multiple matching terms for the nym
             print("Multiple nyms found that match the CV - HANDLE THIS CASE")
-            return ''
+            return None, None
     # If none of the nyms return match the CV, check if any of them have relevant paronyms
     else:
         for nym in nyms:
@@ -301,9 +322,10 @@ def searchForNymMatchingCV(term, CVTermsOfType):
                 paronymFound = paronymCheck(nym, CVTermsOfType)
                 if paronymFound != '':
                     print("Paronym found for " + nym + ", a nym of " + term + ".  The paronym is " + paronymFound + ".")
-                    return paronymFound
+                    DRSTerm = term
+                    return paronymFound, DRSTerm
     # If no nyms or paronyms of nyms found, return false
-    return ''
+    return None, None
 
 
 def outputUpdatedOntoCV():
@@ -323,6 +345,11 @@ def outputUpdatedOntoCV():
             for value in valuesOfType:
                 outputString = type + ofTypeEdge + value + '\n'
                 updatedOntoCV.write(outputString)
+    # Iterate through equivalencies and establish a "SameAs" relationship
+    for knownTerm in equivalenciesFound:
+        newTerm = equivalenciesFound.get(knownTerm)
+        outputString = knownTerm + ontoEquivalencyIndicator + newTerm + '\n'
+        updatedOntoCV.write(outputString)
     updatedOntoCV.close()
 
 
@@ -353,6 +380,11 @@ def outputUpdatedThinkCV():
                     # Construct output item format
                     outputString = type + "_list " + value + '\n'
                     updatedThinkCV.write(outputString)
+    # Iterate through equivalencies and establish a "SameAs" relationship
+    for knownTerm in equivalenciesFound:
+        newTerm = equivalenciesFound.get(knownTerm)
+        outputString = thinkEquivalencyIndicator + knownTerm + " " + newTerm + '\n'
+        updatedThinkCV.write(outputString)
     updatedThinkCV.close()
 
 

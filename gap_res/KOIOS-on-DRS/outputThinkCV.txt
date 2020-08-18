@@ -18,9 +18,11 @@ action_list retrieving
 action_list searching
 action_list listening-for
 action_list watching-for
-action_list retrieving
 condition_list clickable
 condition_list searchable
 condition_list retrievable
 condition_list findable
 condition_list audible
+equivalent objective target
+equivalent clicking click
+equivalent retrieving remember
