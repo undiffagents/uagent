@@ -345,12 +345,14 @@ def outputUpdatedThinkCV():
         # If current type is in the mapping between the ontology and think
         if type in OntoToThinkMapping:
             # Get the values for this type
-            valuesOfType = OntoCV.get(type)
+            newValuesOfType = OntoCV.get(type)
+            existingValuesOfType = ThinkCV.get(type)
             type = OntoToThinkMapping.get(type)
-            for value in valuesOfType:
-                # Construct output item format
-                outputString = type + "_list " + value + '\n'
-                updatedThinkCV.write(outputString)
+            for value in newValuesOfType:
+                if value not in existingValuesOfType:
+                    # Construct output item format
+                    outputString = type + "_list " + value + '\n'
+                    updatedThinkCV.write(outputString)
     updatedThinkCV.close()
 
 
