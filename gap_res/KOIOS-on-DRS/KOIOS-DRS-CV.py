@@ -8,6 +8,7 @@
 from nltk.corpus import wordnet
 
 ThinkToOntoMapping = {'action': 'Action', 'condition': 'Affordance', 'item_role': 'ItemRole'}
+OntoToThinkMapping = {'Action': 'action', 'Affordance': 'condition', 'ItemRole': 'item_role'}
 DRSToCVMapping = {'object': 'ItemRole', 'predicate': 'Action'}
 
 # These terms are currently being hardcoded to ignore because they're quite generic (or in the case of na, invalid)
@@ -20,6 +21,9 @@ OntoCVFileName = 'OntoCV.txt'
 ThinkCVFileName = 'ThinkCV.txt'
 paronymListFileName = 'ParonymList.txt'
 
+outputOntoCVFileName = "outputOntoCV.txt"
+outputThinkCVFileName = "outputThinkCV.txt"
+
 OntoCV = {}
 ThinkCV = {}
 DRSElements = {}
@@ -27,6 +31,9 @@ paronyms = {}
 
 CONST_DETECT_LEXICAL_GAPS = True
 CONST_RESOLVE_LEXICAL_GAPS = True
+
+ofTypeEdge = " :ofType "
+refersToItemXEdge = " :refersToItem"
 
 
 def parseOntoCVLine(currentLine):
@@ -165,8 +172,9 @@ def resolveMismatch(termType, term, ontoOrThink):
                 return True
         # print("The ontology doesn't know " + term + ".")
         # Check for nyms of the term that would match any terms of the relevant CV type
-        successfulMatch = searchForNymMatchingCV(term, OntoCVTerms)
-        if successfulMatch == True:
+        successfulMatchTerm = searchForNymMatchingCV(term, OntoCVTerms)
+        if successfulMatchTerm != '':
+            OntoCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
         else:
@@ -179,7 +187,10 @@ def resolveMismatch(termType, term, ontoOrThink):
                 # Check if new term is in the ontology CV.
                 successfulMatch = checkTermInCVs(termType, newTerm, OntoCV)
                 if successfulMatch == False:
-                    successfulMatch = searchForNymMatchingCV(term, OntoCVTerms)
+                    successfulMatchTerm = searchForNymMatchingCV(term, OntoCVTerms)
+                    if successfulMatchTerm != '':
+                        OntoCV[termType].append(successfulMatchTerm)
+                        successfulMatch = True
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch
@@ -190,8 +201,9 @@ def resolveMismatch(termType, term, ontoOrThink):
         ThinkCVTerms = ThinkCV.get(termType)
         # print("Think doesn't know " + term + ".  Next steps to come.")
         # Check for nyms of the term that would match any terms of the relevant CV type
-        successfulMatch = searchForNymMatchingCV(term, ThinkCVTerms)
-        if successfulMatch == True:
+        successfulMatchTerm = searchForNymMatchingCV(term, ThinkCVTerms)
+        if successfulMatchTerm != '':
+            ThinkCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
         else:
@@ -204,7 +216,10 @@ def resolveMismatch(termType, term, ontoOrThink):
                 # Check if new term is in the ontology CV.
                 successfulMatch = checkTermInCVs(termType, newTerm, ThinkCV)
                 if successfulMatch == False:
-                    successfulMatch = searchForNymMatchingCV(term, ThinkCVTerms)
+                    successfulMatchTerm = searchForNymMatchingCV(term, ThinkCVTerms)
+                    if successfulMatchTerm != '':
+                        ThinkCV[termType].append(successfulMatchTerm)
+                        successfulMatch = True
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch
@@ -263,14 +278,20 @@ def getNyms(wordToCheck):
 def searchForNymMatchingCV(term, CVTermsOfType):
     nyms, antonyms = getNyms(term)
     # Get the set of nyms which match some CV term
-    nymsThatMatchCV = set(CVTermsOfType).intersection(nyms)
+    nymsThatMatchCV = list(set(CVTermsOfType).intersection(nyms))
     # If such nyms exist, then inform the user
     # TODO: **** Going to need to figure out how to "correct" the CVs to provide functionality for new term
     # Some sort of "SameAs" link between terms?
     if len(nymsThatMatchCV) > 0:
         print("FOUND A CV TERM IN " + term + "'S NYMS")
         print(nymsThatMatchCV)
-        return True
+        if len(nymsThatMatchCV) == 1:
+            # TODO **** Figure out how to use nymsThatMatchCV[0] to
+            return term
+        else:
+            # TODO **** Handle multiple matching terms for the nym
+            print("Multiple nyms found that match the CV - HANDLE THIS CASE")
+            return ''
     # If none of the nyms return match the CV, check if any of them have relevant paronyms
     else:
         for nym in nyms:
@@ -280,9 +301,46 @@ def searchForNymMatchingCV(term, CVTermsOfType):
                 paronymFound = paronymCheck(nym, CVTermsOfType)
                 if paronymFound != '':
                     print("Paronym found for " + nym + ", a nym of " + term + ".  The paronym is " + paronymFound + ".")
-                    return True
+                    return paronymFound
     # If no nyms or paronyms of nyms found, return false
-    return False
+    return ''
+
+
+def outputUpdatedOntoCV():
+    updatedOntoCV = open(outputOntoCVFileName, "w+")
+    # Iterate through ontology CV types
+    for type in OntoCV:
+        # Get values for current type
+        valuesOfType = OntoCV.get(type)
+        # For ItemDescription, handle in special case
+        if type == "ItemDescription":
+            for value in valuesOfType:
+                # Constructing "ItemDescription :refersToItemXYZ XYZ"
+                outputString = type + refersToItemXEdge + value + " " + value + '\n'
+                updatedOntoCV.write(outputString)
+        else:
+            # For any other type, just assemble
+            for value in valuesOfType:
+                outputString = type + ofTypeEdge + value + '\n'
+                updatedOntoCV.write(outputString)
+    updatedOntoCV.close()
+
+
+def outputUpdatedThinkCV():
+    updatedThinkCV = open(outputThinkCVFileName, "w+")
+    # Iterate through Think CV types
+    for type in ThinkCV:
+        # Get values for current type
+        valuesOfType = ThinkCV.get(type)
+        # Convert the type back to ThinkCV format
+        if type in OntoToThinkMapping:
+            type = OntoToThinkMapping.get(type)
+        for value in valuesOfType:
+            # Construction of "type_list item" format
+            outputString = type + "_list " + value + '\n'
+            updatedThinkCV.write(outputString)
+    updatedThinkCV.close()
+
 
 def main():
     # Read in the Ontology CV and parse it in
@@ -309,5 +367,8 @@ def main():
     # in the CVs
     if CONST_DETECT_LEXICAL_GAPS == True:
         findMismatches()
+    outputUpdatedOntoCV()
+    outputUpdatedThinkCV()
+
 
 main()
