@@ -1,0 +1,15 @@
+dev
+.git
+.vscode
+*.pyc
+.gitignore
+.gitlab-ci.yml
+MANIFEST.in
+__pycache__
+.DS_Store
+ape.exe
+tmp_DRS.txt
+tdb.lock
+data
+run
+webapp

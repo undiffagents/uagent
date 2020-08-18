@@ -1,0 +1,8 @@
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.

@@ -6,6 +6,9 @@ class Item:
     def __init__(self, **slotvals):
         self.slots = slotvals
 
+    def get_slots(self):
+        return self.slots.keys()
+
     def get(self, slot):
         return self.slots[slot] if slot in self.slots else None
 
@@ -42,7 +45,7 @@ class Item:
         return True
 
     def __str__(self):
-        return "{}".format(self.slots)
+        return '{}'.format(self.slots)
 
 
 class SlotQuery:
@@ -70,7 +73,7 @@ class SlotQuery:
             return False
 
     def __str__(self):
-        return "{}{}{}".format(self.slot, self.op, self.val)
+        return '{}{}{}'.format(self.slot, self.op, self.val)
 
 
 class Query:
@@ -121,7 +124,7 @@ class Query:
         return True
 
     def __str__(self):
-        return "[" + ", ".join(map(str, self.slotqs)) + "]"
+        return '[' + ', '.join(map(str, self.slotqs)) + ']'
 
 
 class Location(Item):

@@ -9,13 +9,22 @@ def getSymbolLines(DRSLines):
     for index, line in enumerate(DRSLines):
         # If line starts with bracket, it's a header
         if line[0] == CONST_HEADER_LINE_SYMBOL:
-            symbolLines.update({index: CONST_HEADER_LINE_TAG})
+            if line == '[]':
+                symbolLines.update({index: CONST_JUNK_LINE_TAG })
+            else:
+                symbolLines.update({index: CONST_HEADER_LINE_TAG})
         # if line is arrow, it's a conditional
         elif line == CONST_CONDITIONAL_LINE_SYMBOL:
             symbolLines.update({index: CONST_CONDITIONAL_LINE_TAG})
         # if line is "QUESTION" then it's the start of a question segment
         elif line == CONST_QUESTION_LINE_SYMBOL:
             symbolLines.update({index: CONST_QUESTION_LINE_TAG})
+        # if line is "NOT" then it's the start of a negation segment
+        elif line == CONST_NEGATION_LINE_SYMBOL:
+            symbolLines.update({index: CONST_NEGATION_LINE_TAG})
+        # if line is "MUST" then it's the start of a necessity segment
+        elif line == CONST_NECESSITY_LINE_SYMBOL:
+            symbolLines.update({index: CONST_NECESSITY_LINE_TAG})
     # print(symbolLines)
     return symbolLines
 
@@ -49,9 +58,15 @@ def categorizeSymbolLines(symbolLines):
             # if previous symbol is a conditional, then header is for a then part of the conditional
             if previousSymbol == CONST_CONDITIONAL_LINE_TAG:
                 categorizedSymbolLines.update({symbolLineNumber: CONST_THEN_HEADER_TAG})
+            # if previous symbol is "NOT", then header is for a negation
+            if previousSymbol == CONST_NEGATION_LINE_TAG:
+                categorizedSymbolLines.update({symbolLineNumber: CONST_NEGATION_HEADER_TAG})
             # if next symbol is a conditional, then header is for an if part of the conditional
             if nextSymbol == CONST_CONDITIONAL_LINE_TAG:
+                # if previous symbol is "NOT" and the next symbol is => then this is a negated condition:
                 categorizedSymbolLines.update({symbolLineNumber: CONST_IF_HEADER_TAG})
+                if previousSymbol == CONST_NEGATION_LINE_TAG:
+                    categorizedSymbolLines.update({symbolLineNumber: CONST_IF_NEGATION_HEADER_TAG})
         else:
             categorizedSymbolLines.update({symbolLineNumber: currentSymbol})
     return categorizedSymbolLines
