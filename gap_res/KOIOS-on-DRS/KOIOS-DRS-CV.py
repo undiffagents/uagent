@@ -339,6 +339,18 @@ def outputUpdatedThinkCV():
             # Construction of "type_list item" format
             outputString = type + "_list " + value + '\n'
             updatedThinkCV.write(outputString)
+    # TODO **** Is this a good move?
+    # Add the ontology CV elements which aren't in the Think CV to Think's CV
+    for type in OntoCV:
+        # If current type is in the mapping between the ontology and think
+        if type in OntoToThinkMapping:
+            # Get the values for this type
+            valuesOfType = OntoCV.get(type)
+            type = OntoToThinkMapping.get(type)
+            for value in valuesOfType:
+                # Construct output item format
+                outputString = type + "_list " + value + '\n'
+                updatedThinkCV.write(outputString)
     updatedThinkCV.close()
 
 
