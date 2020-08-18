@@ -173,16 +173,20 @@ def resolveMismatch(termType, term, ontoOrThink):
             if paronymFound != '':
                 print("Paronym found for " + term + ".  The paronym is " + paronymFound + ".")
                 # Add the equivalency between the paronym and the CV term.
-                if term not in equivalenciesFound:
-                    equivalenciesFound.update({paronymFound: term})
+                if paronymFound not in equivalenciesFound:
+                    equivalenciesFound.update({paronymFound: [term]})
+                else:
+                    equivalenciesFound[paronymFound].append(term)
                 return True
         # print("The ontology doesn't know " + term + ".")
         # Check for nyms of the term that would match any terms of the relevant CV type
         (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, OntoCVTerms)
         if successfulMatchTerm != None:
             # Add the equivalency between the new term and the found CV term.
-            if term not in equivalenciesFound:
-                equivalenciesFound.update({CVTermFound: successfulMatchTerm})
+            if CVTermFound not in equivalenciesFound:
+                equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
+            else:
+                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
             OntoCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -199,10 +203,18 @@ def resolveMismatch(termType, term, ontoOrThink):
                     (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, OntoCVTerms)
                     if successfulMatchTerm != None:
                         # Add the equivalency between the new term and the found CV term.
-                        if term not in equivalenciesFound:
-                            equivalenciesFound.update({CVTermFound: successfulMatchTerm})
+                        if CVTermFound not in equivalenciesFound:
+                            equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
+                        else:
+                            equivalenciesFound[CVTermFound].append(successfulMatchTerm)
                         OntoCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
+                else:
+                    OntoCV[termType].append(term)
+                    if newTerm not in equivalenciesFound:
+                        equivalenciesFound.update({newTerm: [term]})
+                    else:
+                        equivalenciesFound[newTerm].append(term)
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch
@@ -216,8 +228,10 @@ def resolveMismatch(termType, term, ontoOrThink):
         (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, ThinkCVTerms)
         if successfulMatchTerm != None:
             # Add the equivalency between the new term and the found CV term.
-            if term not in equivalenciesFound:
-                equivalenciesFound.update({CVTermFound: successfulMatchTerm})
+            if CVTermFound not in equivalenciesFound:
+                equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
+            else:
+                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
             ThinkCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -234,10 +248,18 @@ def resolveMismatch(termType, term, ontoOrThink):
                     (CVTermFound, successfulMatchTerm) = searchForNymMatchingCV(term, ThinkCVTerms)
                     if successfulMatchTerm != None:
                         # Add the equivalency between the new term and the found CV term.
-                        if term not in equivalenciesFound:
-                            equivalenciesFound.update({CVTermFound: successfulMatchTerm})
+                        if CVTermFound not in equivalenciesFound:
+                            equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
+                        else:
+                            equivalenciesFound[CVTermFound].append(successfulMatchTerm)
                         ThinkCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
+                else:
+                    ThinkCV[termType].append(term)
+                    if newTerm not in equivalenciesFound:
+                        equivalenciesFound.update({newTerm: [term]})
+                    else:
+                        equivalenciesFound[newTerm].append(term)
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch
@@ -285,7 +307,7 @@ def getNyms(wordToCheck):
             if lemma.antonyms():
                 if lemma.antonyms()[0].name() not in uniqueAntonymList:
                     uniqueAntonymList.append(lemma.antonyms()[0].name())
-        # TODO ***** Currently cutting out hypernyms/hyponyms
+        # TODO ***** DECIDE ON WHICH NYMS ARE MOST APPROPRIATE
         #nymLists = synonyms + hypernyms + hyponyms + deriv
         nymLists = synonyms + deriv
         uniqueNyms = set(nymLists)
@@ -347,9 +369,10 @@ def outputUpdatedOntoCV():
                 updatedOntoCV.write(outputString)
     # Iterate through equivalencies and establish a "SameAs" relationship
     for knownTerm in equivalenciesFound:
-        newTerm = equivalenciesFound.get(knownTerm)
-        outputString = knownTerm + ontoEquivalencyIndicator + newTerm + '\n'
-        updatedOntoCV.write(outputString)
+        newTermList = equivalenciesFound.get(knownTerm)
+        for newTerm in newTermList:
+            outputString = knownTerm + ontoEquivalencyIndicator + newTerm + '\n'
+            updatedOntoCV.write(outputString)
     updatedOntoCV.close()
 
 
@@ -382,9 +405,10 @@ def outputUpdatedThinkCV():
                     updatedThinkCV.write(outputString)
     # Iterate through equivalencies and establish a "SameAs" relationship
     for knownTerm in equivalenciesFound:
-        newTerm = equivalenciesFound.get(knownTerm)
-        outputString = thinkEquivalencyIndicator + knownTerm + " " + newTerm + '\n'
-        updatedThinkCV.write(outputString)
+        newTermList = equivalenciesFound.get(knownTerm)
+        for newTerm in newTermList:
+            outputString = thinkEquivalencyIndicator + knownTerm + " " + newTerm + '\n'
+            updatedThinkCV.write(outputString)
     updatedThinkCV.close()
 
 

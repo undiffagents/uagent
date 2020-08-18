@@ -4,6 +4,7 @@ Action :ofType retrieving
 Action :ofType searching
 Action :ofType listening-for
 Action :ofType watching-for
+Action :ofType appear
 Action :ofType remember
 ItemDescription :refersToItemLocation Location
 ItemDescription :refersToItemColor Color
@@ -22,5 +23,8 @@ Affordance :ofType findable
 Affordance :ofType audible
 Affordance :ofType visible
 objective :sameAs target
+objective :sameAs target
+clicking :sameAs appear
 clicking :sameAs click
+click :sameAs appear
 retrieving :sameAs remember
