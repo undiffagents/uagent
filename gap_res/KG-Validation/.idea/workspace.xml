@@ -4,7 +4,8 @@
     <list default="true" id="2f7df76a-d6c4-474d-b2b0-3f544bf37d0e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KG-Validation-Initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/KG-Validation-Initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ontoConstants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ontoConstants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../onto-network-test/ontoConstants.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/ontoConstants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../onto-network-test/ontoInterpreterTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/ontoInterpreterTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../onto-network-test/test.graphml" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/test.graphml" afterDir="false" />
     </list>
@@ -115,7 +116,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KG-Validation-Initial.py</url>
-          <line>37</line>
+          <line>39</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

@@ -7,6 +7,11 @@ TASK_NODE = 'ISR-MATBTask'
 ACTION_NODE = 'Action'
 SITUATION_DESCRIPTION_NODE = 'SituationDescription'
 TRANSITION_DESCRIPTION_NODE = 'TransitionDescription'
+# The below are ItemX because, despite the graph seemingly indicating otherwise, the OWL file seems to show them as such
+ITEM_LOCATION_NODE = "ItemLocation"
+ITEM_COLOR_NODE = "ItemColor"
+ITEM_SHAPE_NODE = "ItemShape"
+ITEM_TYPE_NODE = "ItemType"
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'

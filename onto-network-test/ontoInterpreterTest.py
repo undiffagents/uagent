@@ -179,7 +179,11 @@ def processItem(inputContents):
     global itemCount
     global affordanceCount
     global itemRoleCount
-    #rdfLines = ""
+    global locationCount
+    global shapeCount
+    global colorCount
+    global typeCount
+
     itemCreator = None
     affordanceCreator = None
     roleCreator = None
@@ -195,8 +199,6 @@ def processItem(inputContents):
 
     # assemble item creation rdf line
     itemCreator = instanceSignifier + ITEM_NODE + str(itemCount)
-    # increase item count
-    itemCount = itemCount + 1
 
     if itemName != "":
         situationItemsDict.update({itemName: itemCreator})
@@ -218,6 +220,43 @@ def processItem(inputContents):
     # Add to RDF Output
     situationRDFLines.append(itemDescriptionCreationLine)
     situationRDFLines.append(itemDescriptionOfItemLine)
+
+    # Create and add location/color/shape/type to ItemDescription
+    locationCreator = instanceSignifier + ITEM_LOCATION_NODE + str(locationCount)
+    shapeCreator = instanceSignifier + ITEM_SHAPE_NODE + str(shapeCount)
+    colorCreator = instanceSignifier + ITEM_COLOR_NODE + str(colorCount)
+    typeCreator = instanceSignifier + ITEM_TYPE_NODE + str(typeCount)
+
+    # Assign types to the things created
+    locationCreationLine = locationCreator + " " + TYPE_EDGE + " :" + ITEM_LOCATION_NODE
+    shapeCreationLine = shapeCreator + " " + TYPE_EDGE + " :" + ITEM_SHAPE_NODE
+    colorCreationLine = colorCreator + " " + TYPE_EDGE + " :" + ITEM_COLOR_NODE
+    typeCreationLine = typeCreator + " " + TYPE_EDGE + " :" + ITEM_TYPE_NODE
+
+    # Link the new things to the ItemDescription
+    itemDescriptionLocationLine = itemDescriptionCreator + " " + REFERS_TO_ITEM_LOCATION_EDGE + " " + locationCreator
+    itemDescriptionShapeLine = itemDescriptionCreator + " " + REFERS_TO_ITEM_SHAPE_EDGE + " " + shapeCreator
+    itemDescriptionColorLine = itemDescriptionCreator + " " + REFERS_TO_ITEM_COLOR_EDGE + " " + colorCreator
+    itemDescriptionTypeLine = itemDescriptionCreator + " " + REFERS_TO_ITEM_TYPE_EDGE + " " + typeCreator
+
+    # Add to RDF Output
+    situationRDFLines.append(locationCreationLine)
+    situationRDFLines.append(shapeCreationLine)
+    situationRDFLines.append(colorCreationLine)
+    situationRDFLines.append(typeCreationLine)
+    situationRDFLines.append(itemDescriptionLocationLine)
+    situationRDFLines.append(itemDescriptionShapeLine)
+    situationRDFLines.append(itemDescriptionColorLine)
+    situationRDFLines.append(itemDescriptionTypeLine)
+
+    # Increment count for each of the above
+    locationCount = locationCount + 1
+    shapeCount = shapeCount + 1
+    colorCount = colorCount + 1
+    typeCount = typeCount + 1
+
+    # increase item count (since item count is also used to track item descriptions)
+    itemCount = itemCount + 1
 
     # Affordance creation if appropriate (in affordance dict)
     if affordanceDict.get(itemRole) is not None:

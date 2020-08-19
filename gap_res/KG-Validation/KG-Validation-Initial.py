@@ -5,8 +5,10 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from ontoConstants import *
 
 # Initially hardcoding the structure of some links in the ontology just to test this system out on Items/Actions/etc.
+# Some of these may not be quite 'necessary' - e.g. Affordances for items.
 importantNodeSets = {ITEM_NODE: [ITEM_ROLE_NODE, AFFORDANCE_NODE, ITEM_DESCRIPTION_NODE],
-                  ACTION_NODE: [ITEM_NODE, TRANSITION_DESCRIPTION_NODE]}
+                    ACTION_NODE: [ITEM_NODE, TRANSITION_DESCRIPTION_NODE],
+                    ITEM_DESCRIPTION_NODE: [ITEM_LOCATION_NODE, ITEM_COLOR_NODE, ITEM_SHAPE_NODE, ITEM_TYPE_NODE]}
 
 
 def checkInitializedGraph():
