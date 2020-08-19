@@ -176,7 +176,8 @@ def resolveMismatch(termType, term, ontoOrThink):
                 if paronymFound not in equivalenciesFound:
                     equivalenciesFound.update({paronymFound: [term]})
                 else:
-                    equivalenciesFound[paronymFound].append(term)
+                    if term not in equivalenciesFound.get(paronymFound):
+                        equivalenciesFound[paronymFound].append(term)
                 return True
         # print("The ontology doesn't know " + term + ".")
         # Check for nyms of the term that would match any terms of the relevant CV type
@@ -186,7 +187,8 @@ def resolveMismatch(termType, term, ontoOrThink):
             if CVTermFound not in equivalenciesFound:
                 equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
             else:
-                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
+                if successfulMatchTerm not in equivalenciesFound.get(CVTermFound):
+                    equivalenciesFound[CVTermFound].append(successfulMatchTerm)
             OntoCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -206,7 +208,8 @@ def resolveMismatch(termType, term, ontoOrThink):
                         if CVTermFound not in equivalenciesFound:
                             equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
                         else:
-                            equivalenciesFound[CVTermFound].append(successfulMatchTerm)
+                            if successfulMatchTerm not in equivalenciesFound.get(CVTermFound):
+                                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
                         OntoCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
                 else:
@@ -214,7 +217,8 @@ def resolveMismatch(termType, term, ontoOrThink):
                     if newTerm not in equivalenciesFound:
                         equivalenciesFound.update({newTerm: [term]})
                     else:
-                        equivalenciesFound[newTerm].append(term)
+                        if term not in equivalenciesFound.get(newTerm):
+                            equivalenciesFound[newTerm].append(term)
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch
@@ -231,7 +235,8 @@ def resolveMismatch(termType, term, ontoOrThink):
             if CVTermFound not in equivalenciesFound:
                 equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
             else:
-                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
+                if successfulMatchTerm not in equivalenciesFound.get(CVTermFound):
+                    equivalenciesFound[CVTermFound].append(successfulMatchTerm)
             ThinkCV[termType].append(successfulMatchTerm)
             return True
         # If no such nyms exist, then ask the user for a new term to try
@@ -251,7 +256,8 @@ def resolveMismatch(termType, term, ontoOrThink):
                         if CVTermFound not in equivalenciesFound:
                             equivalenciesFound.update({CVTermFound: [successfulMatchTerm]})
                         else:
-                            equivalenciesFound[CVTermFound].append(successfulMatchTerm)
+                            if successfulMatchTerm not in equivalenciesFound.get(CVTermFound):
+                                equivalenciesFound[CVTermFound].append(successfulMatchTerm)
                         ThinkCV[termType].append(successfulMatchTerm)
                         successfulMatch = True
                 else:
@@ -259,7 +265,8 @@ def resolveMismatch(termType, term, ontoOrThink):
                     if newTerm not in equivalenciesFound:
                         equivalenciesFound.update({newTerm: [term]})
                     else:
-                        equivalenciesFound[newTerm].append(term)
+                        if term not in equivalenciesFound.get(newTerm):
+                            equivalenciesFound[newTerm].append(term)
                 # Increase the number of tries
                 tryCount = tryCount + 1
             return successfulMatch

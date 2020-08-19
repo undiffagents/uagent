@@ -9,7 +9,9 @@ item_role_list stimulus
 item_role_list distractor
 item_role_list responseButton
 item_role_list infoButton
+item_role_list button
 item_role_list target
+item_role_list letter
 agent_synonym_list subject
 agent_synonym_list participant
 agent_synonym_list you
@@ -24,8 +26,9 @@ condition_list searchable
 condition_list retrievable
 condition_list findable
 condition_list audible
+equivalent responseButton button
 equivalent objective target
-equivalent objective target
+equivalent stimulus letter
 equivalent clicking appear
 equivalent clicking click
 equivalent click appear
