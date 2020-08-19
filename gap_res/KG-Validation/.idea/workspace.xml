@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f7df76a-d6c4-474d-b2b0-3f544bf37d0e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/KG-Validation.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KG-Validation-Initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ontoConstants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../KOIOS-on-DRS/KOIOS-DRS-CV.py" beforeDir="false" afterPath="$PROJECT_DIR$/../KOIOS-on-DRS/KOIOS-DRS-CV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../KOIOS-on-DRS/outputOntoCV.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../KOIOS-on-DRS/outputOntoCV.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../KOIOS-on-DRS/outputThinkCV.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../KOIOS-on-DRS/outputThinkCV.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KG-Validation-Initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/KG-Validation-Initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../onto-network-test/ontoInterpreterTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/ontoInterpreterTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../onto-network-test/test.graphml" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/test.graphml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +115,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KG-Validation-Initial.py</url>
-          <line>33</line>
+          <line>37</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

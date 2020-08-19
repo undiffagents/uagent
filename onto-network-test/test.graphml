@@ -15,6 +15,15 @@
     <node id="Affordance1">
       <data key="d0">Affordance1</data>
     </node>
+    <node id="ItemDescription5">
+      <data key="d0">ItemDescription5</data>
+    </node>
+    <node id="ItemDescription">
+      <data key="d0">ItemDescription</data>
+    </node>
+    <node id="Item4">
+      <data key="d0">Item4</data>
+    </node>
     <node id="ItemRole0">
       <data key="d0">ItemRole0</data>
     </node>
@@ -36,9 +45,6 @@
     <node id="stimulus">
       <data key="d0">stimulus</data>
     </node>
-    <node id="Item4">
-      <data key="d0">Item4</data>
-    </node>
     <node id="Affordance0">
       <data key="d0">Affordance0</data>
     </node>
@@ -53,6 +59,21 @@
     </node>
     <node id="button">
       <data key="d0">button</data>
+    </node>
+    <node id="ItemDescription2">
+      <data key="d0">ItemDescription2</data>
+    </node>
+    <node id="Item1">
+      <data key="d0">Item1</data>
+    </node>
+    <node id="ItemDescription3">
+      <data key="d0">ItemDescription3</data>
+    </node>
+    <node id="Item2">
+      <data key="d0">Item2</data>
+    </node>
+    <node id="ItemDescription4">
+      <data key="d0">ItemDescription4</data>
     </node>
     <node id="Item3">
       <data key="d0">Item3</data>
@@ -69,14 +90,20 @@
     <node id="subject">
       <data key="d0">subject</data>
     </node>
+    <node id="ItemDescription6">
+      <data key="d0">ItemDescription6</data>
+    </node>
+    <node id="ItemDescription8">
+      <data key="d0">ItemDescription8</data>
+    </node>
     <node id="ItemRole2">
       <data key="d0">ItemRole2</data>
     </node>
-    <node id="Item2">
-      <data key="d0">Item2</data>
-    </node>
     <node id="ItemRole4">
       <data key="d0">ItemRole4</data>
+    </node>
+    <node id="ItemDescription1">
+      <data key="d0">ItemDescription1</data>
     </node>
     <node id="Action0">
       <data key="d0">Action0</data>
@@ -90,17 +117,23 @@
     <node id="begins">
       <data key="d0">begins</data>
     </node>
-    <node id="SituationDescription1">
-      <data key="d0">SituationDescription1</data>
+    <node id="ItemDescription9">
+      <data key="d0">ItemDescription9</data>
     </node>
     <node id="Item8">
       <data key="d0">Item8</data>
     </node>
+    <node id="SituationDescription1">
+      <data key="d0">SituationDescription1</data>
+    </node>
+    <node id="ItemDescription7">
+      <data key="d0">ItemDescription7</data>
+    </node>
     <node id="SituationDescription">
       <data key="d0">SituationDescription</data>
     </node>
-    <node id="Item1">
-      <data key="d0">Item1</data>
+    <node id="ItemDescription0">
+      <data key="d0">ItemDescription0</data>
     </node>
     <node id="ItemRole8">
       <data key="d0">ItemRole8</data>
@@ -144,6 +177,15 @@
     <edge source="Affordance1" target="clickable" id="0">
       <data key="d1">ofType</data>
     </edge>
+    <edge source="ItemDescription5" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription5" target="Item4" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="Item4" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
     <edge source="ItemRole0" target="ItemRole" id="0">
       <data key="d1">type</data>
     </edge>
@@ -171,9 +213,6 @@
     <edge source="Item7" target="Item" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="Item4" target="Item" id="0">
-      <data key="d1">type</data>
-    </edge>
     <edge source="Affordance0" target="Affordance" id="0">
       <data key="d1">type</data>
     </edge>
@@ -188,6 +227,36 @@
     </edge>
     <edge source="ItemRole5" target="button" id="0">
       <data key="d1">ofType</data>
+    </edge>
+    <edge source="ItemDescription2" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription2" target="Item1" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="Item1" target="space_bar" id="0">
+      <data key="d1">hasItemName</data>
+    </edge>
+    <edge source="Item1" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Item1" target="Affordance0" id="0">
+      <data key="d1">affords</data>
+    </edge>
+    <edge source="ItemDescription3" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription3" target="Item2" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="Item2" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription4" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription4" target="Item3" id="0">
+      <data key="d1">ofItem</data>
     </edge>
     <edge source="Item3" target="letter" id="0">
       <data key="d1">hasItemName</data>
@@ -207,6 +276,18 @@
     <edge source="Item6" target="Item" id="0">
       <data key="d1">type</data>
     </edge>
+    <edge source="ItemDescription6" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription6" target="Item5" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="ItemDescription8" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription8" target="Item7" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
     <edge source="ItemRole2" target="ItemRole" id="0">
       <data key="d1">type</data>
     </edge>
@@ -216,9 +297,6 @@
     <edge source="ItemRole2" target="subject" id="0">
       <data key="d1">ofType</data>
     </edge>
-    <edge source="Item2" target="Item" id="0">
-      <data key="d1">type</data>
-    </edge>
     <edge source="ItemRole4" target="ItemRole" id="0">
       <data key="d1">type</data>
     </edge>
@@ -227,6 +305,12 @@
     </edge>
     <edge source="ItemRole4" target="screen" id="0">
       <data key="d1">ofType</data>
+    </edge>
+    <edge source="ItemDescription1" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription1" target="Item0" id="0">
+      <data key="d1">ofItem</data>
     </edge>
     <edge source="Action0" target="TransitionDescription0" id="0">
       <data key="d1">triggers</data>
@@ -246,47 +330,50 @@
     <edge source="TransitionDescription0" target="TransitionDescription" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="SituationDescription1" target="Item5" id="0">
+    <edge source="ItemDescription9" target="ItemDescription" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemDescription9" target="Item8" id="0">
+      <data key="d1">ofItem</data>
+    </edge>
+    <edge source="Item8" target="Item" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="SituationDescription1" target="ItemDescription5" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item4" id="0">
+    <edge source="SituationDescription1" target="ItemDescription4" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item6" id="0">
+    <edge source="SituationDescription1" target="ItemDescription6" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item7" id="0">
+    <edge source="SituationDescription1" target="ItemDescription8" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item8" id="0">
+    <edge source="SituationDescription1" target="ItemDescription7" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
     <edge source="SituationDescription1" target="SituationDescription" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="SituationDescription1" target="Item3" id="0">
+    <edge source="SituationDescription1" target="ItemDescription2" id="0">
       <data key="d1">hasEarlierCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item0" id="0">
+    <edge source="SituationDescription1" target="ItemDescription3" id="0">
       <data key="d1">hasEarlierCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item2" id="0">
+    <edge source="SituationDescription1" target="ItemDescription1" id="0">
       <data key="d1">hasEarlierCondition</data>
     </edge>
-    <edge source="SituationDescription1" target="Item1" id="0">
+    <edge source="SituationDescription1" target="ItemDescription0" id="0">
       <data key="d1">hasEarlierCondition</data>
     </edge>
-    <edge source="Item8" target="Item" id="0">
+    <edge source="ItemDescription7" target="ItemDescription" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="Item1" target="space_bar" id="0">
-      <data key="d1">hasItemName</data>
-    </edge>
-    <edge source="Item1" target="Item" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="Item1" target="Affordance0" id="0">
-      <data key="d1">affords</data>
+    <edge source="ItemDescription7" target="Item6" id="0">
+      <data key="d1">ofItem</data>
     </edge>
     <edge source="ItemRole8" target="ItemRole" id="0">
       <data key="d1">type</data>
@@ -315,16 +402,16 @@
     <edge source="ItemRole1" target="button" id="0">
       <data key="d1">ofType</data>
     </edge>
-    <edge source="SituationDescription0" target="Item3" id="0">
+    <edge source="SituationDescription0" target="ItemDescription2" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription0" target="Item0" id="0">
+    <edge source="SituationDescription0" target="ItemDescription3" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription0" target="Item2" id="0">
+    <edge source="SituationDescription0" target="ItemDescription1" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
-    <edge source="SituationDescription0" target="Item1" id="0">
+    <edge source="SituationDescription0" target="ItemDescription0" id="0">
       <data key="d1">hasCurrentCondition</data>
     </edge>
     <edge source="SituationDescription0" target="SituationDescription" id="0">

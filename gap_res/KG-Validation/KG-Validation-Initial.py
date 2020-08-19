@@ -12,7 +12,11 @@ importantNodeSets = {ITEM_NODE: [ITEM_ROLE_NODE, AFFORDANCE_NODE, ITEM_DESCRIPTI
 def checkInitializedGraph():
     testGraph = networkx.MultiDiGraph()
     testImport(testGraph)
-    print('\n\n\n\n\n\n\n\n')
+    for nodeType in importantNodeSets:
+        print("Expected nodes to be connected to " + nodeType + " nodes:")
+        print(importantNodeSets.get(nodeType))
+        print('\n')
+    print('\n')
     # Iterate through all nodes.  If a key name is found, get the node "n"'s predecessors and successors.
     # Predecessor = directed edge from predecessor m to n, successor = directed edge from n to successor m.
     # Check that all of the nodes in the value array exist as pred/succ.
@@ -138,7 +142,7 @@ def testImport(testGraph):
             # This apparently ignores stuff that's just created (Item6 type Item) and nothing else.  maybe ok?
             # if predValue != 'type':
             addToGraph(testGraph, subjValue, predValue, objValue)
-            print(subjValue + " - " + predValue + " - " + objValue)
+            # print(subjValue + " - " + predValue + " - " + objValue)
 
     # testGraph.add_node(0, value='xyz')
     # testGraph.add_node(1, value='abc')

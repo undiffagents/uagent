@@ -210,6 +210,15 @@ def processItem(inputContents):
         #rdfLines = rdfLines + itemNamingLine
         situationRDFLines.append(itemNamingLine)
 
+    # Create the item description.  Doesn't affect itemCount or much of anything else at this point, I think
+    itemDescriptionCreator = instanceSignifier + ITEM_DESCRIPTION_NODE + str(itemCount)
+    # Make RDF lines
+    itemDescriptionCreationLine = itemDescriptionCreator + " " + TYPE_EDGE + " :" + ITEM_DESCRIPTION_NODE
+    itemDescriptionOfItemLine = itemDescriptionCreator + " " + OF_ITEM_EDGE + " " + itemCreator
+    # Add to RDF Output
+    situationRDFLines.append(itemDescriptionCreationLine)
+    situationRDFLines.append(itemDescriptionOfItemLine)
+
     # Affordance creation if appropriate (in affordance dict)
     if affordanceDict.get(itemRole) is not None:
         # If the affordance doesn't already exist, create it.
@@ -438,54 +447,6 @@ def startSituationDescription():
     for line in sitLevelInputLines:
         processInterpreterOutputLine(line)
 
-    # TODO *****
-    # In here, copy over the existing situation items and
-    # copySituationLines = []
-    # # Iterate through all situational RDF lines
-    # for situationLine in situationRDFLines:
-    #     upgradedItem = []
-    #     # Get the three items in the RDF triple
-    #     situationalItemsToCopy = situationLine.split(' ')
-    #     for item in situationalItemsToCopy:
-    #         ###### JUST FOR COMPARING TO SITUATIONITEMS - clip the colon out of the item name
-    #         ###### itemIdentifier = re.sub('[:]', '', item)
-    #         # Get just the name of the item (with the colon)
-    #         itemName = re.search(r'\D+', item)
-    #         if itemName is not None:
-    #             itemName = itemName.group(0)
-    #         # If the name matches one of the terms in situationItems, then process it
-    #         if itemName in situationItems:
-    #             # Get just the number from the end of the term
-    #             itemNumber = re.search(r'\d+', item)
-    #             if itemNumber is not None:
-    #                 itemNumber = int(itemNumber.group(0))
-    #                 # Increase the number to supersede any existing situation items
-    #                 # If item, then increase by item - if role, by role count, etc.
-    #                 if itemName == instanceSignifier + ITEM_NODE:
-    #                     itemNumber = itemNumber + itemCount
-    #                 if itemName == instanceSignifier + ITEM_ROLE_NODE:
-    #                     itemNumber = itemNumber + itemRoleCount
-    #                 if itemName == instanceSignifier + ITEM_DESCRIPTION_NODE:
-    #                     itemNumber = itemNumber + itemDescriptionCount
-    #                 if itemName == instanceSignifier + AFFORDANCE_NODE:
-    #                     itemNumber = itemNumber + affordanceCount
-    #                 # Create the new item
-    #                 newItem = itemName + str(itemNumber)
-    #                 # TODO **** WILDLY INEFFICIENT - THIS NEEDS WORK
-    #                 for itemNameRole, itemReference in situationItemsDict.items():
-    #                     if newItem == itemReference:
-    #                         situationItemsDict.update({itemNameRole: newItem})
-    #         else:
-    #             newItem = item
-    #         upgradedItem.append(newItem)
-    #     copySituationLines.append(" ".join(upgradedItem))
-    #
-    # # Since we just added the same amount of items etc., we increase the number
-    # itemCount = itemCount + itemCount
-    # itemRoleCount = itemRoleCount + itemRoleCount
-    # itemDescriptionCount = itemDescriptionCount + itemDescriptionCount
-    # affordanceCount = affordanceCount + affordanceCount
-
     #situationRDFLines.extend(copySituationLines)
     # multiSituationDict.update({situationCreator: {}})
 
@@ -495,10 +456,14 @@ def startSituationDescription():
     totalRDFLines.append(createSituationLine)
 
     for i in range(earlierSituationFirstItemNumber, currentSituationFirstItemNumber):
-        earlierConditionItem = instanceSignifier + ITEM_NODE + str(i)
+        # earlierConditionItem = instanceSignifier + ITEM_NODE + str(i)
+        # addEarlierConditionToSituationLine = situationCreator + " " + HAS_EARLIER_CONDITION_EDGE + \
+                                           # " " + earlierConditionItem
+        # Situations now refer to ItemDescriptions instead of directly to Items
+        earlierConditionItemDescription = instanceSignifier + ITEM_DESCRIPTION_NODE + str(i)
         addEarlierConditionToSituationLine = situationCreator + " " + HAS_EARLIER_CONDITION_EDGE + \
-                                             " " + earlierConditionItem
-        #rdfLines = rdfLines + addEarlierConditionToSituationLine
+                                            " " + earlierConditionItemDescription
+        # rdfLines = rdfLines + addEarlierConditionToSituationLine
         totalRDFLines.append(addEarlierConditionToSituationLine)
     #return rdfLines
 
@@ -522,10 +487,14 @@ def endSituationDescription():
     # rdfLines = rdfLines + createSituationLine
 
     for i in range(currentSituationFirstItemNumber, itemCount):
-        currentConditionItem = instanceSignifier + ITEM_NODE + str(i)
+        # currentConditionItem = instanceSignifier + ITEM_NODE + str(i)
+        # addCurrentConditionToSituationLine = situationCreator + " " + HAS_CURRENT_CONDITION_EDGE + \
+                                                # " " + currentConditionItem
+        # Situations now refer to ItemDescriptions instead of directly to Items
+        currentConditionItemDescription = instanceSignifier + ITEM_DESCRIPTION_NODE + str(i)
         addCurrentConditionToSituationLine = situationCreator + " " + HAS_CURRENT_CONDITION_EDGE + \
-                                             " " + currentConditionItem
-        #rdfLines = rdfLines + addCurrentConditionToSituationLine
+                                                " " + currentConditionItemDescription
+        # rdfLines = rdfLines + addCurrentConditionToSituationLine
         totalRDFLines.append(addCurrentConditionToSituationLine)
 
     # Increment the number of situations at this point
