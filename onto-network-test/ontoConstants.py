@@ -14,13 +14,14 @@ ITEM_SHAPE_NODE = "ItemShape"
 ITEM_TYPE_NODE = "ItemType"
 ITEM_ROLE_TYPE_NODE = "ItemRoleType"
 AFFORDANCE_TYPE_NODE = "AffordanceType"
+ACTION_TYPE_NODE = "ActionType"
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'
 ASSUMED_BY_EDGE = ':assumedBy'
 AFFORDS_EDGE = ':affords'
 OF_TYPE_EDGE = ':ofType'
-OF_ITEM_EDGE = ':ofItem'
+OF_ITEM_EDGE = 'ofItem'
 IS_PRESENT_EDGE = ':isPresent'
 REFERS_TO_ITEM_TYPE_EDGE = ':refersToItemType'
 REFERS_TO_ITEM_SHAPE_EDGE = ':refersToItemShape'
@@ -36,3 +37,4 @@ HAS_POST_SITUATION_DESCRIPTION_EDGE = ':hasPostSituationDescription'
 TYPE_EDGE = 'rdf:type'
 HAS_NAME_EDGE = ':hasName'
 OF_ITEM_ROLE_TYPE_EDGE = ":ofItemRoleType"
+OF_ACTION_TYPE_EDGE = ":ofActionType"
