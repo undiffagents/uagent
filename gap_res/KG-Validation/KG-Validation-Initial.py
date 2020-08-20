@@ -1,6 +1,7 @@
 import re
 import networkx
 from SPARQLWrapper import SPARQLWrapper, JSON
+from owlready2 import *
 
 from ontoConstants import *
 
