@@ -12,6 +12,7 @@ ITEM_LOCATION_NODE = "ItemLocation"
 ITEM_COLOR_NODE = "ItemColor"
 ITEM_SHAPE_NODE = "ItemShape"
 ITEM_TYPE_NODE = "ItemType"
+ITEM_ROLE_TYPE_NODE = "ItemRoleType"
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'
@@ -33,3 +34,4 @@ HAS_PRE_SITUATION_DESCRIPTION_EDGE = ':hasPreSituationDescription'
 HAS_POST_SITUATION_DESCRIPTION_EDGE = ':hasPostSituationDescription'
 TYPE_EDGE = 'rdf:type'
 HAS_NAME_EDGE = ':hasName'
+OF_ITEM_ROLE_TYPE_EDGE = ":ofItemRoleType"

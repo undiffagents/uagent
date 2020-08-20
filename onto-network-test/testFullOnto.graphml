@@ -6,20 +6,56 @@
     <node id="b0">
       <data key="d0">b0</data>
     </node>
-    <node id="hasEarlierCondition">
-      <data key="d0">hasEarlierCondition</data>
+    <node id="affords">
+      <data key="d0">affords</data>
     </node>
     <node id="Restriction">
       <data key="d0">Restriction</data>
     </node>
-    <node id="ItemDescription">
-      <data key="d0">ItemDescription</data>
+    <node id="Affordance">
+      <data key="d0">Affordance</data>
+    </node>
+    <node id="b1">
+      <data key="d0">b1</data>
+    </node>
+    <node id="hasName">
+      <data key="d0">hasName</data>
+    </node>
+    <node id="string">
+      <data key="d0">string</data>
+    </node>
+    <node id="b2">
+      <data key="d0">b2</data>
+    </node>
+    <node id="informs">
+      <data key="d0">informs</data>
+    </node>
+    <node id="ISR-MATBTask">
+      <data key="d0">ISR-MATBTask</data>
+    </node>
+    <node id="b3">
+      <data key="d0">b3</data>
+    </node>
+    <node id="ActionType">
+      <data key="d0">ActionType</data>
+    </node>
+    <node id="ofActionType">
+      <data key="d0">ofActionType</data>
+    </node>
+    <node id="1">
+      <data key="d0">1</data>
     </node>
     <node id="isPresent">
       <data key="d0">isPresent</data>
     </node>
     <node id="DatatypeProperty">
       <data key="d0">DatatypeProperty</data>
+    </node>
+    <node id="isr-matbtask1">
+      <data key="d0">isr-matbtask1</data>
+    </node>
+    <node id="NamedIndividual">
+      <data key="d0">NamedIndividual</data>
     </node>
     <node id="hasLocation">
       <data key="d0">hasLocation</data>
@@ -42,20 +78,8 @@
     <node id="hasFirstItem">
       <data key="d0">hasFirstItem</data>
     </node>
-    <node id="ItemShape">
-      <data key="d0">ItemShape</data>
-    </node>
-    <node id="Class">
-      <data key="d0">Class</data>
-    </node>
-    <node id="b1">
-      <data key="d0">b1</data>
-    </node>
-    <node id="b2">
-      <data key="d0">b2</data>
-    </node>
-    <node id="b3">
-      <data key="d0">b3</data>
+    <node id="b4">
+      <data key="d0">b4</data>
     </node>
     <node id="refersToItemColor">
       <data key="d0">refersToItemColor</data>
@@ -63,71 +87,20 @@
     <node id="ItemColor">
       <data key="d0">ItemColor</data>
     </node>
-    <node id="ISR-MATBExperiment">
-      <data key="d0">ISR-MATBExperiment</data>
-    </node>
-    <node id="b4">
-      <data key="d0">b4</data>
-    </node>
     <node id="b5">
       <data key="d0">b5</data>
     </node>
     <node id="b6">
       <data key="d0">b6</data>
     </node>
+    <node id="Class">
+      <data key="d0">Class</data>
+    </node>
+    <node id="ItemShape">
+      <data key="d0">ItemShape</data>
+    </node>
     <node id="b7">
       <data key="d0">b7</data>
-    </node>
-    <node id="refersTo">
-      <data key="d0">refersTo</data>
-    </node>
-    <node id="DescriptionInstruction">
-      <data key="d0">DescriptionInstruction</data>
-    </node>
-    <node id="b8">
-      <data key="d0">b8</data>
-    </node>
-    <node id="Instruction">
-      <data key="d0">Instruction</data>
-    </node>
-    <node id="ActionType">
-      <data key="d0">ActionType</data>
-    </node>
-    <node id="RelativeConditionType">
-      <data key="d0">RelativeConditionType</data>
-    </node>
-    <node id="b9">
-      <data key="d0">b9</data>
-    </node>
-    <node id="assumedBy">
-      <data key="d0">assumedBy</data>
-    </node>
-    <node id="Item">
-      <data key="d0">Item</data>
-    </node>
-    <node id="TransitionDescription">
-      <data key="d0">TransitionDescription</data>
-    </node>
-    <node id="b10">
-      <data key="d0">b10</data>
-    </node>
-    <node id="refersToItemShape">
-      <data key="d0">refersToItemShape</data>
-    </node>
-    <node id="informs">
-      <data key="d0">informs</data>
-    </node>
-    <node id="b11">
-      <data key="d0">b11</data>
-    </node>
-    <node id="affords">
-      <data key="d0">affords</data>
-    </node>
-    <node id="Affordance">
-      <data key="d0">Affordance</data>
-    </node>
-    <node id="b12">
-      <data key="d0">b12</data>
     </node>
     <node id="ofItemRoleType">
       <data key="d0">ofItemRoleType</data>
@@ -135,14 +108,92 @@
     <node id="ItemRoleType">
       <data key="d0">ItemRoleType</data>
     </node>
+    <node id="b8">
+      <data key="d0">b8</data>
+    </node>
+    <node id="ItemLocation">
+      <data key="d0">ItemLocation</data>
+    </node>
+    <node id="refersToItemLocation">
+      <data key="d0">refersToItemLocation</data>
+    </node>
+    <node id="0">
+      <data key="d0">0</data>
+    </node>
+    <node id="ISR-MATBExperiment">
+      <data key="d0">ISR-MATBExperiment</data>
+    </node>
+    <node id="b9">
+      <data key="d0">b9</data>
+    </node>
+    <node id="b10">
+      <data key="d0">b10</data>
+    </node>
+    <node id="b11">
+      <data key="d0">b11</data>
+    </node>
+    <node id="b12">
+      <data key="d0">b12</data>
+    </node>
+    <node id="refersTo">
+      <data key="d0">refersTo</data>
+    </node>
+    <node id="b13">
+      <data key="d0">b13</data>
+    </node>
+    <node id="hasPostSituationDescription">
+      <data key="d0">hasPostSituationDescription</data>
+    </node>
+    <node id="SituationDescription">
+      <data key="d0">SituationDescription</data>
+    </node>
+    <node id="DescriptionInstruction">
+      <data key="d0">DescriptionInstruction</data>
+    </node>
+    <node id="b14">
+      <data key="d0">b14</data>
+    </node>
+    <node id="Instruction">
+      <data key="d0">Instruction</data>
+    </node>
+    <node id="RelativeConditionType">
+      <data key="d0">RelativeConditionType</data>
+    </node>
+    <node id="TransitionDescription">
+      <data key="d0">TransitionDescription</data>
+    </node>
+    <node id="b15">
+      <data key="d0">b15</data>
+    </node>
+    <node id="refersToItemShape">
+      <data key="d0">refersToItemShape</data>
+    </node>
+    <node id="b16">
+      <data key="d0">b16</data>
+    </node>
+    <node id="assumedBy">
+      <data key="d0">assumedBy</data>
+    </node>
+    <node id="Item">
+      <data key="d0">Item</data>
+    </node>
+    <node id="b17">
+      <data key="d0">b17</data>
+    </node>
+    <node id="asString">
+      <data key="d0">asString</data>
+    </node>
     <node id="asGroundRuleString">
       <data key="d0">asGroundRuleString</data>
     </node>
     <node id="asRuleString">
       <data key="d0">asRuleString</data>
     </node>
-    <node id="string">
-      <data key="d0">string</data>
+    <node id="b18">
+      <data key="d0">b18</data>
+    </node>
+    <node id="asACEString">
+      <data key="d0">asACEString</data>
     </node>
     <node id="initialInstruction">
       <data key="d0">initialInstruction</data>
@@ -150,17 +201,17 @@
     <node id="appearsOn(letter,screen),subject(subject),button(space_bar),letter(letter),screen(screen) =&gt; press(subject,space_bar)">
       <data key="d0">appearsOn(letter,screen),subject(subject),button(space_bar),letter(letter),screen(screen) =&gt; press(subject,space_bar)</data>
     </node>
-    <node id="isPartOf(subject,psychomotor-vigilance),subject(subject),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)">
-      <data key="d0">isPartOf(subject,psychomotor-vigilance),subject(subject),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)</data>
-    </node>
     <node id="hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) =&gt; appearsOn(letter,screen)">
       <data key="d0">hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) =&gt; appearsOn(letter,screen)</data>
+    </node>
+    <node id="subject(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)">
+      <data key="d0">subject(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)</data>
     </node>
     <node id="appearsOn(K,C),subject(I),button(H),letter(K),screen(C) =&gt; press(I,H)">
       <data key="d0">appearsOn(K,C),subject(I),button(H),letter(K),screen(C) =&gt; press(I,H)</data>
     </node>
-    <node id="isPartOf(M,A),subject(M),task(A) =&gt; hasProperty(A,active)">
-      <data key="d0">isPartOf(M,A),subject(M),task(A) =&gt; hasProperty(A,active)</data>
+    <node id="subject(M),isPartOf(M,A),task(A) =&gt; hasProperty(A,active)">
+      <data key="d0">subject(M),isPartOf(M,A),task(A) =&gt; hasProperty(A,active)</data>
     </node>
     <node id="hasProperty(A,active),letter(S),screen(C),task(A) =&gt; appearsOn(S,C)">
       <data key="d0">hasProperty(A,active),letter(S),screen(C),task(A) =&gt; appearsOn(S,C)</data>
@@ -201,71 +252,11 @@
     <node id="isPartOf(screen,psychomotor-vigilance)">
       <data key="d0">isPartOf(screen,psychomotor-vigilance)</data>
     </node>
-    <node id="asDRSString">
-      <data key="d0">asDRSString</data>
-    </node>
-    <node id="0">
-      <data key="d0">0</data>
-    </node>
-    <node id="b13">
-      <data key="d0">b13</data>
-    </node>
-    <node id="ItemType">
-      <data key="d0">ItemType</data>
-    </node>
-    <node id="refersToItemType">
-      <data key="d0">refersToItemType</data>
-    </node>
-    <node id="b14">
-      <data key="d0">b14</data>
-    </node>
-    <node id="hasInstruction">
-      <data key="d0">hasInstruction</data>
-    </node>
-    <node id="1">
-      <data key="d0">1</data>
-    </node>
     <node id="hasItemName">
       <data key="d0">hasItemName</data>
     </node>
     <node id="hasPreSituationDescription">
       <data key="d0">hasPreSituationDescription</data>
-    </node>
-    <node id="SituationDescription">
-      <data key="d0">SituationDescription</data>
-    </node>
-    <node id="b15">
-      <data key="d0">b15</data>
-    </node>
-    <node id="b16">
-      <data key="d0">b16</data>
-    </node>
-    <node id="asACEString">
-      <data key="d0">asACEString</data>
-    </node>
-    <node id="hasTask">
-      <data key="d0">hasTask</data>
-    </node>
-    <node id="b17">
-      <data key="d0">b17</data>
-    </node>
-    <node id="hasCurrentCondition">
-      <data key="d0">hasCurrentCondition</data>
-    </node>
-    <node id="b18">
-      <data key="d0">b18</data>
-    </node>
-    <node id="AffordanceType">
-      <data key="d0">AffordanceType</data>
-    </node>
-    <node id="hasAffordanceType">
-      <data key="d0">hasAffordanceType</data>
-    </node>
-    <node id="hasName">
-      <data key="d0">hasName</data>
-    </node>
-    <node id="Thing">
-      <data key="d0">Thing</data>
     </node>
     <node id="b19">
       <data key="d0">b19</data>
@@ -273,11 +264,20 @@
     <node id="b20">
       <data key="d0">b20</data>
     </node>
+    <node id="hasCurrentCondition">
+      <data key="d0">hasCurrentCondition</data>
+    </node>
     <node id="b21">
       <data key="d0">b21</data>
     </node>
+    <node id="hasTask">
+      <data key="d0">hasTask</data>
+    </node>
     <node id="b22">
       <data key="d0">b22</data>
+    </node>
+    <node id="Thing">
+      <data key="d0">Thing</data>
     </node>
     <node id="b23">
       <data key="d0">b23</data>
@@ -300,53 +300,56 @@
     <node id="b29">
       <data key="d0">b29</data>
     </node>
-    <node id="ofActionType">
-      <data key="d0">ofActionType</data>
+    <node id="boolean">
+      <data key="d0">boolean</data>
     </node>
-    <node id="refersToItemLocation">
-      <data key="d0">refersToItemLocation</data>
-    </node>
-    <node id="ItemLocation">
-      <data key="d0">ItemLocation</data>
+    <node id="AffordanceType">
+      <data key="d0">AffordanceType</data>
     </node>
     <node id="ofRelativeConditionType">
       <data key="d0">ofRelativeConditionType</data>
     </node>
-    <node id="Location">
-      <data key="d0">Location</data>
+    <node id="asDRSString">
+      <data key="d0">asDRSString</data>
     </node>
     <node id="b30">
       <data key="d0">b30</data>
     </node>
+    <node id="ItemDescription">
+      <data key="d0">ItemDescription</data>
+    </node>
     <node id="b31">
       <data key="d0">b31</data>
-    </node>
-    <node id="boolean">
-      <data key="d0">boolean</data>
-    </node>
-    <node id="b32">
-      <data key="d0">b32</data>
-    </node>
-    <node id="asString">
-      <data key="d0">asString</data>
     </node>
     <node id="prescribes">
       <data key="d0">prescribes</data>
     </node>
+    <node id="b32">
+      <data key="d0">b32</data>
+    </node>
+    <node id="refersToItemType">
+      <data key="d0">refersToItemType</data>
+    </node>
     <node id="b33">
       <data key="d0">b33</data>
-    </node>
-    <node id="contributesTo">
-      <data key="d0">contributesTo</data>
     </node>
     <node id="b34">
       <data key="d0">b34</data>
     </node>
-    <node id="hasPostSituationDescription">
-      <data key="d0">hasPostSituationDescription</data>
+    <node id="Location">
+      <data key="d0">Location</data>
+    </node>
+    <node id="hasEarlierCondition">
+      <data key="d0">hasEarlierCondition</data>
+    </node>
+    <node id="contributesTo">
+      <data key="d0">contributesTo</data>
     </node>
     <node id="b35">
       <data key="d0">b35</data>
+    </node>
+    <node id="ofItem">
+      <data key="d0">ofItem</data>
     </node>
     <node id="b36">
       <data key="d0">b36</data>
@@ -354,8 +357,26 @@
     <node id="b37">
       <data key="d0">b37</data>
     </node>
-    <node id="hasSecondItem">
-      <data key="d0">hasSecondItem</data>
+    <node id="b38">
+      <data key="d0">b38</data>
+    </node>
+    <node id="providesRole">
+      <data key="d0">providesRole</data>
+    </node>
+    <node id="ItemRole">
+      <data key="d0">ItemRole</data>
+    </node>
+    <node id="ItemType">
+      <data key="d0">ItemType</data>
+    </node>
+    <node id="b39">
+      <data key="d0">b39</data>
+    </node>
+    <node id="hasInstruction">
+      <data key="d0">hasInstruction</data>
+    </node>
+    <node id="hasAffordanceType">
+      <data key="d0">hasAffordanceType</data>
     </node>
     <node id="nil">
       <data key="d0">nil</data>
@@ -363,17 +384,8 @@
     <node id="RelativeCondition">
       <data key="d0">RelativeCondition</data>
     </node>
-    <node id="b38">
-      <data key="d0">b38</data>
-    </node>
-    <node id="ofItem">
-      <data key="d0">ofItem</data>
-    </node>
-    <node id="ISR-MATBTask">
-      <data key="d0">ISR-MATBTask</data>
-    </node>
-    <node id="b39">
-      <data key="d0">b39</data>
+    <node id="hasSecondItem">
+      <data key="d0">hasSecondItem</data>
     </node>
     <node id="b40">
       <data key="d0">b40</data>
@@ -381,32 +393,26 @@
     <node id="b41">
       <data key="d0">b41</data>
     </node>
-    <node id="ActionInstruction">
-      <data key="d0">ActionInstruction</data>
-    </node>
     <node id="b42">
       <data key="d0">b42</data>
-    </node>
-    <node id="ItemRole">
-      <data key="d0">ItemRole</data>
     </node>
     <node id="b43">
       <data key="d0">b43</data>
     </node>
-    <node id="4">
-      <data key="d0">4</data>
-    </node>
-    <node id="Action">
-      <data key="d0">Action</data>
-    </node>
     <node id="b44">
       <data key="d0">b44</data>
+    </node>
+    <node id="4">
+      <data key="d0">4</data>
     </node>
     <node id="b45">
       <data key="d0">b45</data>
     </node>
-    <node id="providesRole">
-      <data key="d0">providesRole</data>
+    <node id="ActionInstruction">
+      <data key="d0">ActionInstruction</data>
+    </node>
+    <node id="Action">
+      <data key="d0">Action</data>
     </node>
     <node id="asReasonerFactString">
       <data key="d0">asReasonerFactString</data>
@@ -414,40 +420,97 @@
     <node id="asFactString">
       <data key="d0">asFactString</data>
     </node>
-    <edge source="b0" target="hasEarlierCondition" id="0">
+    <edge source="b0" target="affords" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b0" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b0" target="ItemDescription" id="0">
+    <edge source="b0" target="Affordance" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="hasEarlierCondition" target="ObjectProperty" id="0">
+    <edge source="affords" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ItemDescription" target="b13" id="0">
+    <edge source="Affordance" target="b2" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="b31" id="0">
+    <edge source="Affordance" target="b18" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="b34" id="0">
+    <edge source="Affordance" target="b38" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="b38" id="0">
+    <edge source="Affordance" target="b39" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="b44" id="0">
+    <edge source="Affordance" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b1" target="hasName" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b1" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b1" target="string" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="hasName" target="DatatypeProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b2" target="informs" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b2" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b2" target="ISR-MATBTask" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="informs" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ISR-MATBTask" target="b17" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="b45" id="0">
+    <edge source="ISR-MATBTask" target="b31" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ItemDescription" target="Class" id="0">
+    <edge source="ISR-MATBTask" target="b40" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ISR-MATBTask" target="b41" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ISR-MATBTask" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b3" target="ActionType" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b3" target="ofActionType" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b3" target="1" id="0">
+      <data key="d1">qualifiedCardinality</data>
+    </edge>
+    <edge source="b3" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ActionType" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ofActionType" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="isPresent" target="DatatypeProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="isr-matbtask1" target="NamedIndividual" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="isr-matbtask1" target="ISR-MATBTask" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="hasLocation" target="ObjectProperty" id="0">
@@ -465,28 +528,13 @@
     <edge source="hasFirstItem" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ItemShape" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b1" target="b2" id="0">
-      <data key="d1">rest</data>
-    </edge>
-    <edge source="b1" target="ItemDescription" id="0">
-      <data key="d1">first</data>
-    </edge>
-    <edge source="b2" target="nil" id="0">
-      <data key="d1">rest</data>
-    </edge>
-    <edge source="b2" target="RelativeCondition" id="0">
-      <data key="d1">first</data>
-    </edge>
-    <edge source="b3" target="refersToItemColor" id="0">
+    <edge source="b4" target="refersToItemColor" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b3" target="Restriction" id="0">
+    <edge source="b4" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b3" target="ItemColor" id="0">
+    <edge source="b4" target="ItemColor" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
     <edge source="refersToItemColor" target="ObjectProperty" id="0">
@@ -495,73 +543,142 @@
     <edge source="ItemColor" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ISR-MATBExperiment" target="b4" id="0">
+    <edge source="b5" target="b6" id="0">
+      <data key="d1">unionOf</data>
+    </edge>
+    <edge source="b5" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b6" target="b30" id="0">
+      <data key="d1">rest</data>
+    </edge>
+    <edge source="b6" target="ItemDescription" id="0">
+      <data key="d1">first</data>
+    </edge>
+    <edge source="ItemShape" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b7" target="ofItemRoleType" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b7" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b7" target="ItemRoleType" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="ofItemRoleType" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRoleType" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b8" target="ItemLocation" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b8" target="refersToItemLocation" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b8" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b8" target="0" id="0">
+      <data key="d1">minQualifiedCardinality</data>
+    </edge>
+    <edge source="ItemLocation" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="refersToItemLocation" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ISR-MATBExperiment" target="b9" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ISR-MATBExperiment" target="b5" id="0">
+    <edge source="ISR-MATBExperiment" target="b10" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ISR-MATBExperiment" target="b6" id="0">
+    <edge source="ISR-MATBExperiment" target="b11" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="ISR-MATBExperiment" target="b7" id="0">
+    <edge source="ISR-MATBExperiment" target="b12" id="0">
       <data key="d1">subClassOf</data>
     </edge>
     <edge source="ISR-MATBExperiment" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b4" target="asDRSString" id="0">
+    <edge source="b9" target="asACEString" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b4" target="string" id="0">
+    <edge source="b9" target="string" id="0">
       <data key="d1">onDataRange</data>
     </edge>
-    <edge source="b4" target="Restriction" id="0">
+    <edge source="b9" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b4" target="0" id="0">
+    <edge source="b9" target="0" id="0">
       <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="b5" target="asACEString" id="0">
+    <edge source="b10" target="asDRSString" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b5" target="string" id="0">
+    <edge source="b10" target="string" id="0">
       <data key="d1">onDataRange</data>
     </edge>
-    <edge source="b5" target="Restriction" id="0">
+    <edge source="b10" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b5" target="0" id="0">
+    <edge source="b10" target="0" id="0">
       <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="b6" target="ISR-MATBTask" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b6" target="hasTask" id="0">
+    <edge source="b11" target="asString" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b6" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b6" target="4" id="0">
-      <data key="d1">maxQualifiedCardinality</data>
-    </edge>
-    <edge source="b7" target="asString" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b7" target="string" id="0">
+    <edge source="b11" target="string" id="0">
       <data key="d1">onDataRange</data>
     </edge>
-    <edge source="b7" target="1" id="0">
+    <edge source="b11" target="1" id="0">
       <data key="d1">qualifiedCardinality</data>
     </edge>
-    <edge source="b7" target="Restriction" id="0">
+    <edge source="b11" target="Restriction" id="0">
       <data key="d1">type</data>
+    </edge>
+    <edge source="b12" target="ISR-MATBTask" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b12" target="hasTask" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b12" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b12" target="4" id="0">
+      <data key="d1">maxQualifiedCardinality</data>
     </edge>
     <edge source="refersTo" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="DescriptionInstruction" target="b8" id="0">
+    <edge source="b13" target="hasPostSituationDescription" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b13" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b13" target="SituationDescription" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="hasPostSituationDescription" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="SituationDescription" target="b20" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="SituationDescription" target="b21" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="SituationDescription" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="DescriptionInstruction" target="b14" id="0">
       <data key="d1">subClassOf</data>
     </edge>
     <edge source="DescriptionInstruction" target="Instruction" id="0">
@@ -570,110 +687,83 @@
     <edge source="DescriptionInstruction" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b8" target="contributesTo" id="0">
+    <edge source="b14" target="contributesTo" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b8" target="Restriction" id="0">
+    <edge source="b14" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b8" target="SituationDescription" id="0">
+    <edge source="b14" target="SituationDescription" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="Instruction" target="b17" id="0">
+    <edge source="Instruction" target="b33" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Instruction" target="b40" id="0">
+    <edge source="Instruction" target="b43" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Instruction" target="b41" id="0">
+    <edge source="Instruction" target="b44" id="0">
       <data key="d1">subClassOf</data>
     </edge>
     <edge source="Instruction" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ActionType" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
     <edge source="RelativeConditionType" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b9" target="assumedBy" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b9" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b9" target="Item" id="0">
-      <data key="d1">someValuesFrom</data>
-    </edge>
-    <edge source="assumedBy" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="Item" target="b11" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Item" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="TransitionDescription" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b10" target="refersToItemShape" id="0">
+    <edge source="b15" target="ItemShape" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b15" target="refersToItemShape" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b10" target="Restriction" id="0">
+    <edge source="b15" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b10" target="ItemShape" id="0">
-      <data key="d1">allValuesFrom</data>
+    <edge source="b15" target="0" id="0">
+      <data key="d1">minQualifiedCardinality</data>
     </edge>
     <edge source="refersToItemShape" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="informs" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b11" target="affords" id="0">
+    <edge source="b16" target="assumedBy" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b11" target="Restriction" id="0">
+    <edge source="b16" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b11" target="Affordance" id="0">
-      <data key="d1">allValuesFrom</data>
+    <edge source="b16" target="Item" id="0">
+      <data key="d1">someValuesFrom</data>
     </edge>
-    <edge source="affords" target="ObjectProperty" id="0">
+    <edge source="assumedBy" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="Affordance" target="b18" id="0">
+    <edge source="Item" target="b19" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Affordance" target="b33" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Affordance" target="b35" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Affordance" target="b36" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Affordance" target="Class" id="0">
+    <edge source="Item" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b12" target="ofItemRoleType" id="0">
+    <edge source="b17" target="asString" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b12" target="Restriction" id="0">
+    <edge source="b17" target="string" id="0">
+      <data key="d1">onDataRange</data>
+    </edge>
+    <edge source="b17" target="1" id="0">
+      <data key="d1">qualifiedCardinality</data>
+    </edge>
+    <edge source="b17" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b12" target="ItemRoleType" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="ofItemRoleType" target="ObjectProperty" id="0">
+    <edge source="asString" target="DatatypeProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ItemRoleType" target="Class" id="0">
-      <data key="d1">type</data>
+    <edge source="asString" target="string" id="0">
+      <data key="d1">range</data>
     </edge>
     <edge source="asGroundRuleString" target="asRuleString" id="0">
       <data key="d1">subPropertyOf</data>
@@ -690,13 +780,31 @@
     <edge source="asRuleString" target="string" id="0">
       <data key="d1">range</data>
     </edge>
+    <edge source="b18" target="hasName" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b18" target="string" id="0">
+      <data key="d1">onDataRange</data>
+    </edge>
+    <edge source="b18" target="1" id="0">
+      <data key="d1">qualifiedCardinality</data>
+    </edge>
+    <edge source="b18" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="asACEString" target="DatatypeProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="asACEString" target="string" id="0">
+      <data key="d1">range</data>
+    </edge>
     <edge source="initialInstruction" target="appearsOn(letter,screen),subject(subject),button(space_bar),letter(letter),screen(screen) =&gt; press(subject,space_bar)" id="0">
       <data key="d1">asGroundRuleString</data>
     </edge>
-    <edge source="initialInstruction" target="isPartOf(subject,psychomotor-vigilance),subject(subject),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)" id="0">
+    <edge source="initialInstruction" target="hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) =&gt; appearsOn(letter,screen)" id="0">
       <data key="d1">asGroundRuleString</data>
     </edge>
-    <edge source="initialInstruction" target="hasProperty(psychomotor-vigilance,active),letter(letter),screen(screen),task(psychomotor-vigilance) =&gt; appearsOn(letter,screen)" id="0">
+    <edge source="initialInstruction" target="subject(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active)" id="0">
       <data key="d1">asGroundRuleString</data>
     </edge>
     <edge source="initialInstruction" target="Instruction" id="0">
@@ -705,7 +813,7 @@
     <edge source="initialInstruction" target="appearsOn(K,C),subject(I),button(H),letter(K),screen(C) =&gt; press(I,H)" id="0">
       <data key="d1">asRuleString</data>
     </edge>
-    <edge source="initialInstruction" target="isPartOf(M,A),subject(M),task(A) =&gt; hasProperty(A,active)" id="0">
+    <edge source="initialInstruction" target="subject(M),isPartOf(M,A),task(A) =&gt; hasProperty(A,active)" id="0">
       <data key="d1">asRuleString</data>
     </edge>
     <edge source="initialInstruction" target="hasProperty(A,active),letter(S),screen(C),task(A) =&gt; appearsOn(S,C)" id="0">
@@ -747,142 +855,67 @@
     <edge source="initialInstruction" target="isPartOf(screen,psychomotor-vigilance)" id="0">
       <data key="d1">asFactString</data>
     </edge>
-    <edge source="asDRSString" target="DatatypeProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="asDRSString" target="string" id="0">
-      <data key="d1">range</data>
-    </edge>
-    <edge source="b13" target="ItemType" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b13" target="refersToItemType" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b13" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b13" target="0" id="0">
-      <data key="d1">minQualifiedCardinality</data>
-    </edge>
-    <edge source="ItemType" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="refersToItemType" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b14" target="Instruction" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b14" target="hasInstruction" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b14" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b14" target="1" id="0">
-      <data key="d1">minQualifiedCardinality</data>
-    </edge>
-    <edge source="hasInstruction" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
     <edge source="hasItemName" target="DatatypeProperty" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="hasPreSituationDescription" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="SituationDescription" target="b0" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="SituationDescription" target="b15" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="SituationDescription" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b15" target="hasCurrentCondition" id="0">
+    <edge source="b19" target="affords" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b15" target="Restriction" id="0">
+    <edge source="b19" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b15" target="b30" id="0">
+    <edge source="b19" target="Affordance" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b16" target="asACEString" id="0">
+    <edge source="b20" target="hasCurrentCondition" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b16" target="string" id="0">
-      <data key="d1">onDataRange</data>
-    </edge>
-    <edge source="b16" target="Restriction" id="0">
+    <edge source="b20" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b16" target="0" id="0">
-      <data key="d1">minQualifiedCardinality</data>
-    </edge>
-    <edge source="asACEString" target="DatatypeProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="asACEString" target="string" id="0">
-      <data key="d1">range</data>
-    </edge>
-    <edge source="hasTask" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b17" target="asDRSString" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b17" target="string" id="0">
-      <data key="d1">onDataRange</data>
-    </edge>
-    <edge source="b17" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b17" target="0" id="0">
-      <data key="d1">minQualifiedCardinality</data>
+    <edge source="b20" target="b5" id="0">
+      <data key="d1">allValuesFrom</data>
     </edge>
     <edge source="hasCurrentCondition" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b18" target="AffordanceType" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b18" target="hasAffordanceType" id="0">
+    <edge source="b21" target="hasEarlierCondition" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b18" target="1" id="0">
-      <data key="d1">qualifiedCardinality</data>
-    </edge>
-    <edge source="b18" target="Restriction" id="0">
+    <edge source="b21" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="AffordanceType" target="Class" id="0">
+    <edge source="b21" target="ItemDescription" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="hasTask" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="hasAffordanceType" target="ObjectProperty" id="0">
+    <edge source="b22" target="refersToItemLocation" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b22" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="hasName" target="DatatypeProperty" id="0">
-      <data key="d1">type</data>
+    <edge source="b22" target="ItemLocation" id="0">
+      <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="Thing" target="b3" id="0">
+    <edge source="Thing" target="b0" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Thing" target="b10" id="0">
+    <edge source="Thing" target="b1" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Thing" target="b12" id="0">
+    <edge source="Thing" target="b4" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Thing" target="b19" id="0">
+    <edge source="Thing" target="b7" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="Thing" target="b20" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Thing" target="b21" id="0">
+    <edge source="Thing" target="b13" id="0">
       <data key="d1">subClassOf</data>
     </edge>
     <edge source="Thing" target="b22" id="0">
@@ -903,101 +936,68 @@
     <edge source="Thing" target="b27" id="0">
       <data key="d1">subClassOf</data>
     </edge>
-    <edge source="b19" target="refersToItemLocation" id="0">
-      <data key="d1">onProperty</data>
+    <edge source="Thing" target="b28" id="0">
+      <data key="d1">subClassOf</data>
     </edge>
-    <edge source="b19" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b19" target="ItemLocation" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b20" target="affords" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b20" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b20" target="Affordance" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b21" target="hasLocation" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b21" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b21" target="Location" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b22" target="hasItemName" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b22" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b22" target="string" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b23" target="hasPreSituationDescription" id="0">
+    <edge source="b23" target="refersToItemShape" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b23" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b23" target="SituationDescription" id="0">
+    <edge source="b23" target="ItemShape" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b24" target="hasName" id="0">
+    <edge source="b24" target="hasPreSituationDescription" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b24" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b24" target="string" id="0">
+    <edge source="b24" target="SituationDescription" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b25" target="ofRelativeConditionType" id="0">
+    <edge source="b25" target="hasLocation" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b25" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b25" target="RelativeConditionType" id="0">
+    <edge source="b25" target="Location" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b26" target="hasPostSituationDescription" id="0">
+    <edge source="b26" target="refersToItemType" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b26" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b26" target="SituationDescription" id="0">
+    <edge source="b26" target="ItemType" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b27" target="refersToItemType" id="0">
+    <edge source="b27" target="ofRelativeConditionType" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b27" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b27" target="ItemType" id="0">
+    <edge source="b27" target="RelativeConditionType" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b28" target="hasFirstItem" id="0">
+    <edge source="b28" target="hasItemName" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b28" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b28" target="ItemDescription" id="0">
+    <edge source="b28" target="string" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="b29" target="ActionType" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b29" target="ofActionType" id="0">
+    <edge source="b29" target="isPresent" id="0">
       <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b29" target="boolean" id="0">
+      <data key="d1">onDataRange</data>
     </edge>
     <edge source="b29" target="1" id="0">
       <data key="d1">qualifiedCardinality</data>
@@ -1005,61 +1005,73 @@
     <edge source="b29" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ofActionType" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="refersToItemLocation" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="ItemLocation" target="Class" id="0">
+    <edge source="AffordanceType" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="ofRelativeConditionType" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="Location" target="Class" id="0">
+    <edge source="asDRSString" target="DatatypeProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b30" target="b1" id="0">
-      <data key="d1">unionOf</data>
+    <edge source="asDRSString" target="string" id="0">
+      <data key="d1">range</data>
     </edge>
-    <edge source="b30" target="Class" id="0">
+    <edge source="b30" target="nil" id="0">
+      <data key="d1">rest</data>
+    </edge>
+    <edge source="b30" target="RelativeCondition" id="0">
+      <data key="d1">first</data>
+    </edge>
+    <edge source="ItemDescription" target="b8" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="b15" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="b29" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="b35" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="b36" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="b45" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemDescription" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b31" target="isPresent" id="0">
+    <edge source="b31" target="asDRSString" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b31" target="boolean" id="0">
+    <edge source="b31" target="string" id="0">
       <data key="d1">onDataRange</data>
-    </edge>
-    <edge source="b31" target="1" id="0">
-      <data key="d1">qualifiedCardinality</data>
     </edge>
     <edge source="b31" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b32" target="asString" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b32" target="string" id="0">
-      <data key="d1">onDataRange</data>
-    </edge>
-    <edge source="b32" target="1" id="0">
-      <data key="d1">qualifiedCardinality</data>
-    </edge>
-    <edge source="b32" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="asString" target="DatatypeProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="asString" target="string" id="0">
-      <data key="d1">range</data>
+    <edge source="b31" target="0" id="0">
+      <data key="d1">minQualifiedCardinality</data>
     </edge>
     <edge source="prescribes" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b33" target="hasName" id="0">
+    <edge source="b32" target="assumedBy" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b32" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b32" target="Item" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="refersToItemType" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b33" target="asString" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b33" target="string" id="0">
@@ -1071,113 +1083,122 @@
     <edge source="b33" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="contributesTo" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b34" target="ItemColor" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b34" target="refersToItemColor" id="0">
+    <edge source="b34" target="hasFirstItem" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b34" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b34" target="0" id="0">
-      <data key="d1">minQualifiedCardinality</data>
+    <edge source="b34" target="ItemDescription" id="0">
+      <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="hasPostSituationDescription" target="ObjectProperty" id="0">
+    <edge source="Location" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b35" target="informs" id="0">
+    <edge source="hasEarlierCondition" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="contributesTo" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b35" target="ofItem" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b35" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b35" target="ISR-MATBTask" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b36" target="providesRole" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b36" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b36" target="ItemRole" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="b37" target="hasSecondItem" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b37" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b37" target="ItemDescription" id="0">
-      <data key="d1">allValuesFrom</data>
-    </edge>
-    <edge source="hasSecondItem" target="ObjectProperty" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="RelativeCondition" target="b28" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="RelativeCondition" target="b37" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="RelativeCondition" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b38" target="ofItem" id="0">
-      <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b38" target="Restriction" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b38" target="Item" id="0">
+    <edge source="b35" target="Item" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
     <edge source="ofItem" target="ObjectProperty" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="ISR-MATBTask" target="b14" id="0">
-      <data key="d1">subClassOf</data>
+    <edge source="b36" target="ItemColor" id="0">
+      <data key="d1">onClass</data>
     </edge>
-    <edge source="ISR-MATBTask" target="b16" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ISR-MATBTask" target="b32" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ISR-MATBTask" target="b39" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ISR-MATBTask" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b39" target="asDRSString" id="0">
+    <edge source="b36" target="refersToItemColor" id="0">
       <data key="d1">onProperty</data>
     </edge>
-    <edge source="b39" target="string" id="0">
-      <data key="d1">onDataRange</data>
+    <edge source="b36" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b36" target="0" id="0">
+      <data key="d1">minQualifiedCardinality</data>
+    </edge>
+    <edge source="b37" target="prescribes" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b37" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b37" target="TransitionDescription" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="b38" target="providesRole" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b38" target="Restriction" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b38" target="ItemRole" id="0">
+      <data key="d1">allValuesFrom</data>
+    </edge>
+    <edge source="providesRole" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemRole" target="b16" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemRole" target="b32" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ItemRole" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="ItemType" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b39" target="AffordanceType" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b39" target="hasAffordanceType" id="0">
+      <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b39" target="1" id="0">
+      <data key="d1">qualifiedCardinality</data>
     </edge>
     <edge source="b39" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b39" target="0" id="0">
-      <data key="d1">minQualifiedCardinality</data>
+    <edge source="hasInstruction" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
     </edge>
-    <edge source="b40" target="asString" id="0">
+    <edge source="hasAffordanceType" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="RelativeCondition" target="b34" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="RelativeCondition" target="b42" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="RelativeCondition" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="hasSecondItem" target="ObjectProperty" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="b40" target="Instruction" id="0">
+      <data key="d1">onClass</data>
+    </edge>
+    <edge source="b40" target="hasInstruction" id="0">
       <data key="d1">onProperty</data>
-    </edge>
-    <edge source="b40" target="string" id="0">
-      <data key="d1">onDataRange</data>
-    </edge>
-    <edge source="b40" target="1" id="0">
-      <data key="d1">qualifiedCardinality</data>
     </edge>
     <edge source="b40" target="Restriction" id="0">
       <data key="d1">type</data>
+    </edge>
+    <edge source="b40" target="1" id="0">
+      <data key="d1">minQualifiedCardinality</data>
     </edge>
     <edge source="b41" target="asACEString" id="0">
       <data key="d1">onProperty</data>
@@ -1191,53 +1212,32 @@
     <edge source="b41" target="0" id="0">
       <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="ActionInstruction" target="Instruction" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ActionInstruction" target="b42" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ActionInstruction" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b42" target="prescribes" id="0">
+    <edge source="b42" target="hasSecondItem" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b42" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b42" target="TransitionDescription" id="0">
+    <edge source="b42" target="ItemDescription" id="0">
       <data key="d1">allValuesFrom</data>
     </edge>
-    <edge source="ItemRole" target="b9" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ItemRole" target="b43" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="ItemRole" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b43" target="assumedBy" id="0">
+    <edge source="b43" target="asACEString" id="0">
       <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b43" target="string" id="0">
+      <data key="d1">onDataRange</data>
     </edge>
     <edge source="b43" target="Restriction" id="0">
       <data key="d1">type</data>
     </edge>
-    <edge source="b43" target="Item" id="0">
-      <data key="d1">allValuesFrom</data>
+    <edge source="b43" target="0" id="0">
+      <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="Action" target="b29" id="0">
-      <data key="d1">subClassOf</data>
-    </edge>
-    <edge source="Action" target="Class" id="0">
-      <data key="d1">type</data>
-    </edge>
-    <edge source="b44" target="ItemShape" id="0">
-      <data key="d1">onClass</data>
-    </edge>
-    <edge source="b44" target="refersToItemShape" id="0">
+    <edge source="b44" target="asDRSString" id="0">
       <data key="d1">onProperty</data>
+    </edge>
+    <edge source="b44" target="string" id="0">
+      <data key="d1">onDataRange</data>
     </edge>
     <edge source="b44" target="Restriction" id="0">
       <data key="d1">type</data>
@@ -1245,10 +1245,10 @@
     <edge source="b44" target="0" id="0">
       <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="b45" target="ItemLocation" id="0">
+    <edge source="b45" target="ItemType" id="0">
       <data key="d1">onClass</data>
     </edge>
-    <edge source="b45" target="refersToItemLocation" id="0">
+    <edge source="b45" target="refersToItemType" id="0">
       <data key="d1">onProperty</data>
     </edge>
     <edge source="b45" target="Restriction" id="0">
@@ -1257,7 +1257,19 @@
     <edge source="b45" target="0" id="0">
       <data key="d1">minQualifiedCardinality</data>
     </edge>
-    <edge source="providesRole" target="ObjectProperty" id="0">
+    <edge source="ActionInstruction" target="b37" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ActionInstruction" target="Instruction" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="ActionInstruction" target="Class" id="0">
+      <data key="d1">type</data>
+    </edge>
+    <edge source="Action" target="b3" id="0">
+      <data key="d1">subClassOf</data>
+    </edge>
+    <edge source="Action" target="Class" id="0">
       <data key="d1">type</data>
     </edge>
     <edge source="asReasonerFactString" target="asFactString" id="0">
