@@ -27,6 +27,8 @@ actionCount = 0
 earlierSituationFirstItemNumber = 0
 currentSituationFirstItemNumber = 0
 
+currentTask = None
+
 # Making an assumption that the number of situations will be the number of actions plus one.
 # With this, we can set up each situation in advance, minus the necessary changes.
 
@@ -134,6 +136,7 @@ def processInterpreterOutputLine(inputLine):
             sitLevelInputLines.append(inputLine)
         #rdfLines = processItem(inputContents)
         processItem(inputContents)
+        owlReadyProcessItem(inputContents)
 
     # handle agent
     if inputType == 'agent':
@@ -176,7 +179,7 @@ def processTask(inputContents):
 
 def owlReadyProcessTask(inputContents):
     global taskCount
-    #rdfLines = ""
+    global currentTask
     taskName = inputContents
 
     # Create new task
@@ -184,6 +187,7 @@ def owlReadyProcessTask(inputContents):
         newTask = onto[TASK_NODE]()
         newTask.hasName.append(taskName)
         # newTask = [TASK_NODE]
+    currentTask = newTask
 
     # assemble task creation rdf line
     taskCreator = instanceSignifier + TASK_NODE + str(taskCount)
@@ -191,27 +195,9 @@ def owlReadyProcessTask(inputContents):
     taskCount = taskCount + 1
 
     experimentItemsDict.update({taskName: taskCreator})
-    rdfCreationLine = taskCreator + " " + TYPE_EDGE + " :" + TASK_NODE
-    rdfNamingLine = taskCreator + " " + HAS_NAME_EDGE + " \"" + taskName + "\""
-
-    #rdfLines = rdfLines + rdfCreationLine + rdfNamingLine
-    totalRDFLines.append(rdfCreationLine)
-    totalRDFLines.append(rdfNamingLine)
-    #return rdfLines
 
 
-def processItem(inputContents):
-    global itemCount
-    global affordanceCount
-    global itemRoleCount
-    global locationCount
-    global shapeCount
-    global colorCount
-    global typeCount
-
-    itemCreator = None
-    affordanceCreator = None
-    roleCreator = None
+def owlReadyProcessItem(inputContents):
     itemRole = ""
     itemName = ""
     # if no comma in the contents, no name, just role.
@@ -236,9 +222,55 @@ def processItem(inputContents):
         newItemRole.ofItemRoleType.append(newItemRoleType)
         # Connect the role to the item
         newItemRole.assumedBy.append(newItem)
+        # If there is an affordance for this role, then create an affordance and link it to the item
+        if affordanceDict.get(itemRole) is not None:
+            newAffordance = onto[AFFORDANCE_NODE]()
+            newAffordanceType = onto[AFFORDANCE_TYPE_NODE](affordanceDict.get(itemRole))
+            newAffordance.hasAffordanceType.append(newAffordanceType)
+            newItem.affords.append(newAffordance)
+        # Create Item Description
+        newItemDescription = onto[ITEM_DESCRIPTION_NODE]()
+        # TODO: **** Add values to these somehow?
+        newItemLocation = onto[ITEM_LOCATION_NODE]()
+        newItemColor = onto[ITEM_COLOR_NODE]()
+        newItemShape = onto[ITEM_SHAPE_NODE]()
+        newItemType = onto[ITEM_TYPE_NODE]()
+        newItemDescription.refersToItemLocation.append(newItemLocation)
+        newItemDescription.refersToItemColor.append(newItemColor)
+        newItemDescription.refersToItemShape.append(newItemShape)
+        newItemDescription.refersToItemType.append(newItemType)
+        newItemDescription.ofItem.append(newItem)
+
+
+        # Attach item to Task
+        #if currentTask is not None:
+          #currentTask.providesRole
         print(list(newItem.get_properties()))
         print(list(newItem.get_inverse_properties()))
-        # Add relationships
+
+
+def processItem(inputContents):
+    global itemCount
+    global affordanceCount
+    global itemRoleCount
+    global locationCount
+    global shapeCount
+    global colorCount
+    global typeCount
+
+    itemCreator = None
+    affordanceCreator = None
+    roleCreator = None
+    itemRole = ""
+    itemName = ""
+    # if no comma in the contents, no name, just role.
+    # If comma, first entry is role, second is name
+    if ',' not in inputContents:
+        itemRole = inputContents
+    else:
+        itemRole = inputContents.split(',')[0]
+        itemName = inputContents.split(',')[1]
+
 
     # assemble item creation rdf line
     itemCreator = instanceSignifier + ITEM_NODE + str(itemCount)

@@ -13,6 +13,7 @@ ITEM_COLOR_NODE = "ItemColor"
 ITEM_SHAPE_NODE = "ItemShape"
 ITEM_TYPE_NODE = "ItemType"
 ITEM_ROLE_TYPE_NODE = "ItemRoleType"
+AFFORDANCE_TYPE_NODE = "AffordanceType"
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = ':hasItemName'

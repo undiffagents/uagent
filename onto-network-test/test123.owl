@@ -487,8 +487,34 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemRoleType>
 
+<ItemDescription rdf:about="#itemdescription1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor1"/>
+  <refersToItemLocation rdf:resource="#itemlocation1"/>
+  <refersToItemShape rdf:resource="#itemshape1"/>
+  <refersToItemType rdf:resource="#itemtype1"/>
+  <ofItem rdf:resource="#item1"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
+
 <Item rdf:about="#item2">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <affords rdf:resource="#affordance1"/>
   <hasItemName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">space_bar</hasItemName>
 </Item>
 
@@ -501,6 +527,40 @@
 <ItemRoleType rdf:about="#button">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemRoleType>
+
+<Affordance rdf:about="#affordance1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasAffordanceType rdf:resource="#clickable"/>
+</Affordance>
+
+<AffordanceType rdf:about="#clickable">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</AffordanceType>
+
+<ItemDescription rdf:about="#itemdescription2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor2"/>
+  <refersToItemLocation rdf:resource="#itemlocation2"/>
+  <refersToItemShape rdf:resource="#itemshape2"/>
+  <refersToItemType rdf:resource="#itemtype2"/>
+  <ofItem rdf:resource="#item2"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
 
 <Item rdf:about="#item3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -515,6 +575,31 @@
 <ItemRoleType rdf:about="#subject">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemRoleType>
+
+<ItemDescription rdf:about="#itemdescription3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor3"/>
+  <refersToItemLocation rdf:resource="#itemlocation3"/>
+  <refersToItemShape rdf:resource="#itemshape3"/>
+  <refersToItemType rdf:resource="#itemtype3"/>
+  <ofItem rdf:resource="#item3"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
 
 <Item rdf:about="#item4">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -531,6 +616,31 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemRoleType>
 
+<ItemDescription rdf:about="#itemdescription4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor4"/>
+  <refersToItemLocation rdf:resource="#itemlocation4"/>
+  <refersToItemShape rdf:resource="#itemshape4"/>
+  <refersToItemType rdf:resource="#itemtype4"/>
+  <ofItem rdf:resource="#item4"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
+
 <Item rdf:about="#item5">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </Item>
@@ -541,8 +651,34 @@
   <assumedBy rdf:resource="#item5"/>
 </ItemRole>
 
+<ItemDescription rdf:about="#itemdescription5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor5"/>
+  <refersToItemLocation rdf:resource="#itemlocation5"/>
+  <refersToItemShape rdf:resource="#itemshape5"/>
+  <refersToItemType rdf:resource="#itemtype5"/>
+  <ofItem rdf:resource="#item5"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
+
 <Item rdf:about="#item6">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <affords rdf:resource="#affordance2"/>
   <hasItemName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">space_bar</hasItemName>
 </Item>
 
@@ -551,6 +687,36 @@
   <ofItemRoleType rdf:resource="#button"/>
   <assumedBy rdf:resource="#item6"/>
 </ItemRole>
+
+<Affordance rdf:about="#affordance2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasAffordanceType rdf:resource="#clickable"/>
+</Affordance>
+
+<ItemDescription rdf:about="#itemdescription6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor6"/>
+  <refersToItemLocation rdf:resource="#itemlocation6"/>
+  <refersToItemShape rdf:resource="#itemshape6"/>
+  <refersToItemType rdf:resource="#itemtype6"/>
+  <ofItem rdf:resource="#item6"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
 
 <Item rdf:about="#item7">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -562,6 +728,31 @@
   <assumedBy rdf:resource="#item7"/>
 </ItemRole>
 
+<ItemDescription rdf:about="#itemdescription7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor7"/>
+  <refersToItemLocation rdf:resource="#itemlocation7"/>
+  <refersToItemShape rdf:resource="#itemshape7"/>
+  <refersToItemType rdf:resource="#itemtype7"/>
+  <ofItem rdf:resource="#item7"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
+
 <Item rdf:about="#item8">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <hasItemName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">letter</hasItemName>
@@ -572,6 +763,31 @@
   <ofItemRoleType rdf:resource="#stimulus"/>
   <assumedBy rdf:resource="#item8"/>
 </ItemRole>
+
+<ItemDescription rdf:about="#itemdescription8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor8"/>
+  <refersToItemLocation rdf:resource="#itemlocation8"/>
+  <refersToItemShape rdf:resource="#itemshape8"/>
+  <refersToItemType rdf:resource="#itemtype8"/>
+  <ofItem rdf:resource="#item8"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
 
 <Item rdf:about="#item9">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -586,6 +802,31 @@
 <ItemRoleType rdf:about="#activeTask">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemRoleType>
+
+<ItemDescription rdf:about="#itemdescription9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <refersToItemColor rdf:resource="#itemcolor9"/>
+  <refersToItemLocation rdf:resource="#itemlocation9"/>
+  <refersToItemShape rdf:resource="#itemshape9"/>
+  <refersToItemType rdf:resource="#itemtype9"/>
+  <ofItem rdf:resource="#item9"/>
+</ItemDescription>
+
+<ItemLocation rdf:about="#itemlocation9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemLocation>
+
+<ItemColor rdf:about="#itemcolor9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemColor>
+
+<ItemShape rdf:about="#itemshape9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemShape>
+
+<ItemType rdf:about="#itemtype9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</ItemType>
 
 
 </rdf:RDF>
