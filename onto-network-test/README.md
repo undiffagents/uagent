@@ -1,8 +1,10 @@
 
 To run ontoTest.py, make sure that the Jena Fuseki server is already up and running; I also usually run the agent once to make sure it's fully populated with the schema (not sure if that's necessary).
 
-Then, in another wsl window, run ontoInterpreterTest.py, then ontoTest.py - each of these has an important function
+Then, in another wsl window, run ontoInterpreterTest.py OR owlReadyInterpreterTest.py, then ontoTestFullOnto.py - each of these has an important function
 **ontoInterpreterTest.py** - pushes RDF based on the (modified) interpreter output in interpreterTest.txt to the server in order to "instantiate" some Items/ItemRoles, etc.
+**owlReadyInterpreterTest.py** - A cleaner, probably more correct way of instantiating individuals into the ontology using the OwlReady2 library.  Use it just like ontoInterpreterTest.py, but make sure the default uagent.owl file is loaded into Fuseki (by having run run.py prior).  This will pull down that ontology, do the changes that need done, clear out everything in the Fuseki server, and then reupload with modifications.
+**ontoTestFullOnto.py** - queries the server to get all triples from it, and creates a networkx graph which then gets exported to a GraphML file so that it can be imported into KOIOS or viewed through Cytoscape.  **USE THIS INSTEAD OF ONTOTEST**.
 **ontoTest.py**  - queries the server to get all triples from it, ignores any of the triples that don't have "Instance" in the name (the current test marker to see if something is instantiated), and creates a networkx graph which then gets exported to a GraphML file so that it can be imported into KOIOS or viewed through Cytoscape.
 
 Necessary dependencies:
