@@ -10,6 +10,7 @@ from owlready2 import *
 
 interpreterFile = 'interpreterTest.txt'
 
+currentExperiment = None
 currentTask = None
 currentSituation = None
 previousSituation = None
@@ -64,8 +65,9 @@ def readInput():
     # Open up the interpreter output
     inputFile = open(interpreterFile, 'r')
     inputLines = inputFile.readlines()
+    # Set up the ISR-MATB Experiment
+    beginExperiment()
 
-    startSituationDescription()
     # Iterate through each line
     for line in inputLines:
         line = line.strip()
@@ -88,6 +90,12 @@ def readInput():
     subprocess.call(
         ['./s-update', '--service=http://localhost:3030/uagent/update', "LOAD <file://{}>".format(path)])
 
+
+def beginExperiment():
+    global currentExperiment
+    with onto:
+        newExperiment = onto[EXPERIMENT_NODE]()
+        currentExperiment = newExperiment
 
 
 def processInterpreterOutputLine(inputLine):
@@ -137,13 +145,33 @@ def processInterpreterOutputLine(inputLine):
 
 def owlReadyProcessTask(inputContents):
     global currentTask
+    global currentSituation
+    global previousSituation
+    global sitLevelInputLines
     taskName = inputContents
+
+    # TODO: **** Should each task  start fresh with a new situation Description?
+    # For now, doing that - clearing all prior information and starting anew
+    endSituationDescription()
+    currentSituation = None
+    previousSituation = None
+    situationItemsInRDF.clear()
+    situationItemsDict.clear()
+    situationRDFLines.clear()
+    sitLevelInputLines.clear()
+    startSituationDescription()
 
     # Create new task
     with onto:
         newTask = onto[TASK_NODE]()
         newTask.hasName.append(taskName)
         # newTask = [TASK_NODE]
+        # Attach this task to the experiment if exists
+        if currentExperiment is not None:
+            currentExperiment.hasTask.append(newTask)
+        # If there is a prior experiment, that previous experiment informs this new one
+        if currentTask is not None:
+            currentTask.informs.append(newTask)
     currentTask = newTask
 
     experimentItemsDict.update({taskName: newTask})
@@ -397,7 +425,6 @@ def endSituationDescription():
     # Move situation RDF lines over into total RDF lines - anything happening in here will be experiment-level
     # or part of a new situation I THINK?
     # TODO *****
-    totalRDFLines.extend(situationRDFLines)
 
     # Create a situation
 
@@ -441,12 +468,12 @@ def endSituationDescription():
                 else:
                     print("WARNING: Unexpected type in situationItemsDict.  Process can continue, but may crash later.")
 
-    # Add the current situation's items to the multi-situation backup dict and
-    # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
-    multiSituationDict.update({currentSituation: situationItemsDict.copy()})
+        # Add the current situation's items to the multi-situation backup dict and
+        # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
+        multiSituationDict.update({currentSituation: situationItemsDict.copy()})
 
-    # Make sure to store the current situation as being the previous situation so that transitions can occur easily
-    previousSituation = currentSituation
+        # Make sure to store the current situation as being the previous situation so that transitions can occur easily
+        previousSituation = currentSituation
 
 
 readInput()

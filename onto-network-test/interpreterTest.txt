@@ -8,3 +8,5 @@ isPartOf(space_bar,psychomotor-vigilance)
 isPartOf(subject,psychomotor-vigilance)
 isPartOf(letter,psychomotor-vigilance)
 action(begins,subject,psychomotor-vigilance) => item(activeTask) CHANGED FOR TESTING - ORIGINAL: action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active
+task(visual-search)
+item(screen)
