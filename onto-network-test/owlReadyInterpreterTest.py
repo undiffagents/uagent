@@ -79,9 +79,15 @@ def readInput():
     rdfLines = separator.join(totalRDFLines) + " ."
     print(rdfLines)
     # Send em
-    # subprocess.call(['./s-update', '--service=http://localhost:3030/uagent/update',
-    # '{} INSERT DATA  {{ {} }}'.format(PREFIX, rdfLines)])
     onto.save(file="owlready-uagent.owl")
+    filename = 'owlready-uagent.owl'
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
+    # TODO **** Probably shouldn't delete everything in the graph.  This is just a testing thing
+    subprocess.call(
+        ['./s-update', '--service=http://localhost:3030/uagent/update', "CLEAR ALL".format(path)])
+    subprocess.call(
+        ['./s-update', '--service=http://localhost:3030/uagent/update', "LOAD <file://{}>".format(path)])
+
 
 
 def processInterpreterOutputLine(inputLine):
@@ -225,10 +231,18 @@ def owlReadyProcessIsPartOf(inputContents):
     superIsA = superelement.is_a[0].name
     subIsA = subelement.is_a[0].name
     if ITEM_NODE in subIsA and TASK_NODE == superIsA:
-        # if "Role" not in subIsA:
-        #    subIsA = re.sub("Item", "ItemRole", subIsA)
-        # if currentTask is not None:
-        superelement.providesRole.append(subelement)
+        if ITEM_NODE == subIsA:
+            # Make sure to use the ItemRole, not the Item
+            # Get the list of incoming properties to the item
+            for inverseProp in subelement.get_inverse_properties():
+                source, value = inverseProp
+                # Check if one of the incoming properties has the value "ofItem"
+                if ASSUMED_BY_EDGE in value.name:
+                    # If so, the source is the item role we want
+                    subelement = source
+            # If we've received an item role, then connect it to the current task
+        if subelement is not None:
+            superelement.providesRole.append(subelement)
 
 
 def owlReadyProcessAction(inputContents):
