@@ -16,6 +16,9 @@ ITEM_TYPE_NODE = "ItemType"
 ITEM_ROLE_TYPE_NODE = "ItemRoleType"
 AFFORDANCE_TYPE_NODE = "AffordanceType"
 ACTION_TYPE_NODE = "ActionType"
+DESCRIPTION_INSTRUCTION_NODE = "DescriptionInstruction"
+ACTION_INSTRUCTION_NODE = "ActionInstruction"
+INSTRUCTION_NODE = "Instruction"
 
 # EDGE NAMES
 HAS_ITEM_NAME_EDGE = 'hasItemName'

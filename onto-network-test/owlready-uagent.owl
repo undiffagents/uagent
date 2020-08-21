@@ -465,8 +465,33 @@
   <providesRole rdf:resource="#itemrole6"/>
   <providesRole rdf:resource="#itemrole7"/>
   <providesRole rdf:resource="#itemrole8"/>
+  <hasInstruction rdf:resource="#descriptioninstruction1"/>
+  <hasInstruction rdf:resource="#descriptioninstruction2"/>
+  <hasInstruction rdf:resource="#descriptioninstruction3"/>
+  <hasInstruction rdf:resource="#descriptioninstruction4"/>
+  <hasInstruction rdf:resource="#descriptioninstruction5"/>
+  <hasInstruction rdf:resource="#descriptioninstruction6"/>
+  <hasInstruction rdf:resource="#descriptioninstruction7"/>
+  <hasInstruction rdf:resource="#descriptioninstruction8"/>
+  <hasInstruction rdf:resource="#descriptioninstruction9"/>
+  <hasInstruction rdf:resource="#descriptioninstruction10"/>
+  <hasInstruction rdf:resource="#descriptioninstruction11"/>
+  <hasInstruction rdf:resource="#descriptioninstruction12"/>
+  <hasInstruction rdf:resource="#descriptioninstruction13"/>
+  <hasInstruction rdf:resource="#descriptioninstruction14"/>
+  <hasInstruction rdf:resource="#descriptioninstruction15"/>
+  <hasInstruction rdf:resource="#descriptioninstruction16"/>
+  <hasInstruction rdf:resource="#descriptioninstruction17"/>
+  <hasInstruction rdf:resource="#descriptioninstruction18"/>
+  <hasInstruction rdf:resource="#actioninstruction1"/>
   <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">psychomotor-vigilance</hasName>
 </ISR-MATBTask>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">task(psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
 
 <Item rdf:about="#item1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -506,6 +531,12 @@
 <ItemType rdf:about="#itemtype1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(screen)</asReasonerFactString>
+</DescriptionInstruction>
 
 <Item rdf:about="#item2">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -557,6 +588,12 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
 
+<DescriptionInstruction rdf:about="#descriptioninstruction3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(button,space_bar)</asReasonerFactString>
+</DescriptionInstruction>
+
 <Item rdf:about="#item3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </Item>
@@ -595,6 +632,12 @@
 <ItemType rdf:about="#itemtype3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(subject) WILL NEED TO BECOME AGENT</asReasonerFactString>
+</DescriptionInstruction>
 
 <Item rdf:about="#item4">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -635,6 +678,36 @@
 <ItemType rdf:about="#itemtype4">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(stimulus,letter)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(screen,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(space_bar,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(subject,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(letter,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
 
 <Action rdf:about="#action1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -695,6 +768,12 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
 
+<DescriptionInstruction rdf:about="#descriptioninstruction10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(screen)</asReasonerFactString>
+</DescriptionInstruction>
+
 <Item rdf:about="#item6">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <affords rdf:resource="#affordance2"/>
@@ -737,6 +816,12 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
 
+<DescriptionInstruction rdf:about="#descriptioninstruction11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(button,space_bar)</asReasonerFactString>
+</DescriptionInstruction>
+
 <Item rdf:about="#item7">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </Item>
@@ -771,6 +856,12 @@
 <ItemType rdf:about="#itemtype7">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(subject) WILL NEED TO BECOME AGENT</asReasonerFactString>
+</DescriptionInstruction>
 
 <Item rdf:about="#item8">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -807,6 +898,36 @@
 <ItemType rdf:about="#itemtype8">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(stimulus,letter)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(screen,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(space_bar,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(subject,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isPartOf(letter,psychomotor-vigilance)</asReasonerFactString>
+</DescriptionInstruction>
 
 <TransitionDescription rdf:about="#transitiondescription1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -853,6 +974,18 @@
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
 
+<DescriptionInstruction rdf:about="#descriptioninstruction18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription2"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(activeTask</asReasonerFactString>
+</DescriptionInstruction>
+
+<ActionInstruction rdf:about="#actioninstruction1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <prescribes rdf:resource="#transitiondescription1"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">action(begins,subject,psychomotor-vigilance) =&gt; item(activeTask) CHANGED FOR TESTING - ORIGINAL: action(begins,subject,psychomotor-vigilance) =&gt; hasProperty(psychomotor-vigilance,active</asReasonerFactString>
+</ActionInstruction>
+
 <SituationDescription rdf:about="#situationdescription3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <hasCurrentCondition rdf:resource="#itemdescription10"/>
@@ -860,8 +993,16 @@
 
 <ISR-MATBTask rdf:about="#isr-matbtask2">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasInstruction rdf:resource="#descriptioninstruction19"/>
+  <hasInstruction rdf:resource="#descriptioninstruction20"/>
   <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">visual-search</hasName>
 </ISR-MATBTask>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription3"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">task(visual-search)</asReasonerFactString>
+</DescriptionInstruction>
 
 <Item rdf:about="#item10">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
@@ -897,6 +1038,12 @@
 <ItemType rdf:about="#itemtype10">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
 </ItemType>
+
+<DescriptionInstruction rdf:about="#descriptioninstruction20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <contributesTo rdf:resource="#situationdescription3"/>
+  <asReasonerFactString rdf:datatype="http://www.w3.org/2001/XMLSchema#string">item(screen)</asReasonerFactString>
+</DescriptionInstruction>
 
 
 </rdf:RDF>

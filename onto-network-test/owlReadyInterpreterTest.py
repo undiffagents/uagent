@@ -14,6 +14,7 @@ currentExperiment = None
 currentTask = None
 currentSituation = None
 previousSituation = None
+transitionToCurrentSituation = None
 
 # Making an assumption that the number of situations will be the number of actions plus one.
 # With this, we can set up each situation in advance, minus the necessary changes.
@@ -112,6 +113,7 @@ def processInterpreterOutputLine(inputLine):
         # rdfLines = processTask(inputContents)
         # processTask(inputContents)
         owlReadyProcessTask(inputContents)
+        addDescriptionInstruction(inputLine)
 
     # handle item
     if inputType == 'item':
@@ -120,11 +122,13 @@ def processInterpreterOutputLine(inputLine):
         # rdfLines = processItem(inputContents)
         # processItem(inputContents)
         owlReadyProcessItem(inputContents)
+        addDescriptionInstruction(inputLine)
 
     # handle agent
     if inputType == 'agent':
         # rdfLines = processAgent(inputContents)
         owlReadyProcessAgent(inputContents)
+        addDescriptionInstruction(inputLine)
         pass
 
     # handle isPartOf
@@ -134,13 +138,39 @@ def processInterpreterOutputLine(inputLine):
         # rdfLines = processIsPartOf(inputContents)
         # processIsPartOf(inputContents)
         owlReadyProcessIsPartOf(inputContents)
+        addDescriptionInstruction(inputLine)
 
     if inputType == 'action':
         # rdfLines = processAction(inputContents)
         # processAction(inputContents)
         owlReadyProcessAction(inputContents)
+        addActionInstruction(inputLine)
 
     # return rdfLines
+
+
+def addActionInstruction(inputLine):
+    with onto:
+        # Create description instruction
+        newInstruction = onto[ACTION_INSTRUCTION_NODE]()
+        # Add the input line from the reasoner (I think this is right TODO ****)
+        newInstruction.asReasonerFactString.append(inputLine)
+        # Connect instruction to situation
+        newInstruction.prescribes.append(transitionToCurrentSituation)
+        # Connect instruction to task
+        currentTask.hasInstruction.append(newInstruction)
+
+
+def addDescriptionInstruction(inputLine):
+    with onto:
+        # Create description instruction
+        newInstruction = onto[DESCRIPTION_INSTRUCTION_NODE]()
+        # Add the input line from the reasoner (I think this is right TODO ****)
+        newInstruction.asReasonerFactString.append(inputLine)
+        # Connect instruction to situation
+        newInstruction.contributesTo.append(currentSituation)
+        # Connect instruction to task
+        currentTask.hasInstruction.append(newInstruction)
 
 
 def owlReadyProcessTask(inputContents):
@@ -346,6 +376,7 @@ def owlReadyProcessAction(inputContents):
 
 def createTransitionDescription():
 
+    global transitionToCurrentSituation
     # rdfLines = ""
 
     # Create a transition and increment the number of transitions
@@ -355,6 +386,7 @@ def createTransitionDescription():
             newTransition.hasPreSituationDescription.append(previousSituation)
             newTransition.hasPostSituationDescription.append(currentSituation)
 
+    transitionToCurrentSituation = newTransition
     return newTransition
 
 
