@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2f7df76a-d6c4-474d-b2b0-3f544bf37d0e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../onto-network-test/owlReadyInterpreterTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/owlReadyInterpreterTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../onto-network-test/owlready-uagent.owl" beforeDir="false" afterPath="$PROJECT_DIR$/../../onto-network-test/owlready-uagent.owl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

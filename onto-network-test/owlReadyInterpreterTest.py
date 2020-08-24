@@ -87,9 +87,7 @@ def readInput():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
     # TODO **** Probably shouldn't delete everything in the graph.  This is just a testing thing
     subprocess.call(
-        ['./s-update', '--service=http://localhost:3030/uagent/update', "CLEAR ALL".format(path)])
-    subprocess.call(
-        ['./s-update', '--service=http://localhost:3030/uagent/update', "LOAD <file://{}>".format(path)])
+        ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
 
 
 def beginExperiment():

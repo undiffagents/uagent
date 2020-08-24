@@ -10,63 +10,59 @@
   <owl:versionIRI rdf:resource="http://www.uagent.com/ontology/1.0.0"/>
 </owl:Ontology>
 
-<owl:ObjectProperty rdf:about="#hasLocation"/>
+<owl:ObjectProperty rdf:about="#refersToItemColor"/>
 
-<owl:ObjectProperty rdf:about="#hasEarlierCondition"/>
+<owl:ObjectProperty rdf:about="#hasLocation"/>
 
 <owl:ObjectProperty rdf:about="#triggers"/>
 
 <owl:ObjectProperty rdf:about="#hasFirstItem"/>
 
-<owl:ObjectProperty rdf:about="#refersToItemType"/>
-
 <owl:ObjectProperty rdf:about="#refersTo"/>
-
-<owl:ObjectProperty rdf:about="#hasCurrentCondition"/>
-
-<owl:ObjectProperty rdf:about="#affords"/>
-
-<owl:ObjectProperty rdf:about="#informs"/>
-
-<owl:ObjectProperty rdf:about="#refersToItemColor"/>
-
-<owl:ObjectProperty rdf:about="#contributesTo"/>
 
 <owl:ObjectProperty rdf:about="#assumedBy"/>
 
-<owl:ObjectProperty rdf:about="#hasPreSituationDescription"/>
+<owl:ObjectProperty rdf:about="#informs"/>
 
-<owl:ObjectProperty rdf:about="#refersToItemLocation"/>
-
-<owl:ObjectProperty rdf:about="#hasTask"/>
-
-<owl:ObjectProperty rdf:about="#hasPostSituationDescription"/>
+<owl:ObjectProperty rdf:about="#hasAffordanceType"/>
 
 <owl:ObjectProperty rdf:about="#ofItemRoleType"/>
 
-<owl:ObjectProperty rdf:about="#ofRelativeConditionType"/>
+<owl:ObjectProperty rdf:about="#hasPreSituationDescription"/>
+
+<owl:ObjectProperty rdf:about="#ofItem"/>
+
+<owl:ObjectProperty rdf:about="#hasEarlierCondition"/>
 
 <owl:ObjectProperty rdf:about="#refersToItemShape"/>
+
+<owl:ObjectProperty rdf:about="#hasTask"/>
+
+<owl:ObjectProperty rdf:about="#hasCurrentCondition"/>
+
+<owl:ObjectProperty rdf:about="#refersToItemType"/>
+
+<owl:ObjectProperty rdf:about="#ofRelativeConditionType"/>
 
 <owl:ObjectProperty rdf:about="#ofActionType"/>
 
 <owl:ObjectProperty rdf:about="#prescribes"/>
 
-<owl:ObjectProperty rdf:about="#providesRole"/>
+<owl:ObjectProperty rdf:about="#contributesTo"/>
+
+<owl:ObjectProperty rdf:about="#hasPostSituationDescription"/>
+
+<owl:ObjectProperty rdf:about="#affords"/>
 
 <owl:ObjectProperty rdf:about="#hasInstruction"/>
 
+<owl:ObjectProperty rdf:about="#refersToItemLocation"/>
+
 <owl:ObjectProperty rdf:about="#hasSecondItem"/>
 
-<owl:ObjectProperty rdf:about="#ofItem"/>
-
-<owl:ObjectProperty rdf:about="#hasAffordanceType"/>
+<owl:ObjectProperty rdf:about="#providesRole"/>
 
 <owl:DatatypeProperty rdf:about="#isPresent"/>
-
-<owl:DatatypeProperty rdf:about="#hasName"/>
-
-<owl:DatatypeProperty rdf:about="#asString"/>
 
 <owl:DatatypeProperty rdf:about="#asGroundRuleString">
   <rdfs:subPropertyOf rdf:resource="#asRuleString"/>
@@ -80,57 +76,17 @@
 
 <owl:DatatypeProperty rdf:about="#asFactString"/>
 
+<owl:DatatypeProperty rdf:about="#asString"/>
+
 <owl:DatatypeProperty rdf:about="#hasItemName"/>
+
+<owl:DatatypeProperty rdf:about="#hasName"/>
 
 <owl:DatatypeProperty rdf:about="#asDRSString"/>
 
 <owl:DatatypeProperty rdf:about="#asACEString"/>
 
-<owl:Class rdf:about="#ItemDescription">
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#isPresent"/>
-      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemType"/>
-      <owl:onClass rdf:resource="#ItemType"/>
-      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemLocation"/>
-      <owl:onClass rdf:resource="#ItemLocation"/>
-      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemShape"/>
-      <owl:onClass rdf:resource="#ItemShape"/>
-      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#ofItem"/>
-      <owl:allValuesFrom rdf:resource="#Item"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemColor"/>
-      <owl:onClass rdf:resource="#ItemColor"/>
-      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#ItemType"/>
+<owl:Class rdf:about="#ItemColor"/>
 
 <owl:Class rdf:about="#ItemShape"/>
 
@@ -184,17 +140,18 @@
 
 <owl:Class rdf:about="#TransitionDescription"/>
 
-<owl:Class rdf:about="#Affordance">
+<owl:Class rdf:about="#Item">
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasAffordanceType"/>
-      <owl:onClass rdf:resource="#AffordanceType"/>
-      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+      <owl:onProperty rdf:resource="#affords"/>
+      <owl:allValuesFrom rdf:resource="#Affordance"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemColor"/>
+<owl:Class rdf:about="#AffordanceType"/>
+
+<owl:Class rdf:about="#ItemRoleType"/>
 
 <owl:Class rdf:about="#SituationDescription">
   <rdfs:subClassOf>
@@ -218,16 +175,61 @@
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#Item">
+<owl:Class rdf:about="#ItemDescription">
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#affords"/>
-      <owl:allValuesFrom rdf:resource="#Affordance"/>
+      <owl:onProperty rdf:resource="#refersToItemColor"/>
+      <owl:onClass rdf:resource="#ItemColor"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#ofItem"/>
+      <owl:allValuesFrom rdf:resource="#Item"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#refersToItemLocation"/>
+      <owl:onClass rdf:resource="#ItemLocation"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#refersToItemShape"/>
+      <owl:onClass rdf:resource="#ItemShape"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#refersToItemType"/>
+      <owl:onClass rdf:resource="#ItemType"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isPresent"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemLocation"/>
+<owl:Class rdf:about="#ItemType"/>
+
+<owl:Class rdf:about="#Affordance">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasAffordanceType"/>
+      <owl:onClass rdf:resource="#AffordanceType"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
 
 <owl:Class rdf:about="#RelativeCondition">
   <rdfs:subClassOf>
@@ -244,9 +246,16 @@
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#AffordanceType"/>
+<owl:Class rdf:about="#ItemLocation"/>
 
 <owl:Class rdf:about="#ISR-MATBTask">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasInstruction"/>
+      <owl:onClass rdf:resource="#Instruction"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#informs"/>
@@ -266,18 +275,19 @@
       <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
     </owl:Restriction>
   </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Location"/>
+
+<owl:Class rdf:about="#ActionInstruction">
+  <rdfs:subClassOf rdf:resource="#Instruction"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasInstruction"/>
-      <owl:onClass rdf:resource="#Instruction"/>
-      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+      <owl:onProperty rdf:resource="#prescribes"/>
+      <owl:allValuesFrom rdf:resource="#TransitionDescription"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
-
-<owl:Class rdf:about="#ItemRoleType"/>
-
-<owl:Class rdf:about="#Location"/>
 
 <owl:Class rdf:about="#ItemRole">
   <rdfs:subClassOf>
@@ -294,16 +304,6 @@
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ActionInstruction">
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#prescribes"/>
-      <owl:allValuesFrom rdf:resource="#TransitionDescription"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf rdf:resource="#Instruction"/>
-</owl:Class>
-
 <owl:Class rdf:about="#Action">
   <rdfs:subClassOf>
     <owl:Restriction>
@@ -317,50 +317,8 @@
 <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemType"/>
-      <owl:allValuesFrom rdf:resource="#ItemType"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasName"/>
-      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
       <owl:onProperty rdf:resource="#refersToItemColor"/>
       <owl:allValuesFrom rdf:resource="#ItemColor"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasPostSituationDescription"/>
-      <owl:allValuesFrom rdf:resource="#SituationDescription"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#refersToItemShape"/>
-      <owl:allValuesFrom rdf:resource="#ItemShape"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#asRuleString"/>
-      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#asString"/>
-      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#asFactString"/>
-      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -371,38 +329,26 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasLocation"/>
-      <owl:allValuesFrom rdf:resource="#Location"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#asACEString"/>
-      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#affords"/>
-      <owl:allValuesFrom rdf:resource="#Affordance"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#ofRelativeConditionType"/>
-      <owl:allValuesFrom rdf:resource="#RelativeConditionType"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
       <owl:onProperty rdf:resource="#hasPreSituationDescription"/>
       <owl:allValuesFrom rdf:resource="#SituationDescription"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#asDRSString"/>
+      <owl:onProperty rdf:resource="#asString"/>
       <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#refersToItemShape"/>
+      <owl:allValuesFrom rdf:resource="#ItemShape"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#refersToItemType"/>
+      <owl:allValuesFrom rdf:resource="#ItemType"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -413,8 +359,62 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasPostSituationDescription"/>
+      <owl:allValuesFrom rdf:resource="#SituationDescription"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#affords"/>
+      <owl:allValuesFrom rdf:resource="#Affordance"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#asRuleString"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasName"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
       <owl:onProperty rdf:resource="#refersToItemLocation"/>
       <owl:allValuesFrom rdf:resource="#ItemLocation"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#asFactString"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#asACEString"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasLocation"/>
+      <owl:allValuesFrom rdf:resource="#Location"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#ofRelativeConditionType"/>
+      <owl:allValuesFrom rdf:resource="#RelativeConditionType"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#asDRSString"/>
+      <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </rdf:Description>
@@ -457,14 +457,6 @@
 <ISR-MATBTask rdf:about="#isr-matbtask1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   <informs rdf:resource="#isr-matbtask2"/>
-  <providesRole rdf:resource="#itemrole1"/>
-  <providesRole rdf:resource="#itemrole2"/>
-  <providesRole rdf:resource="#itemrole3"/>
-  <providesRole rdf:resource="#itemrole4"/>
-  <providesRole rdf:resource="#itemrole5"/>
-  <providesRole rdf:resource="#itemrole6"/>
-  <providesRole rdf:resource="#itemrole7"/>
-  <providesRole rdf:resource="#itemrole8"/>
   <hasInstruction rdf:resource="#descriptioninstruction1"/>
   <hasInstruction rdf:resource="#descriptioninstruction2"/>
   <hasInstruction rdf:resource="#descriptioninstruction3"/>
@@ -484,6 +476,14 @@
   <hasInstruction rdf:resource="#descriptioninstruction17"/>
   <hasInstruction rdf:resource="#descriptioninstruction18"/>
   <hasInstruction rdf:resource="#actioninstruction1"/>
+  <providesRole rdf:resource="#itemrole1"/>
+  <providesRole rdf:resource="#itemrole2"/>
+  <providesRole rdf:resource="#itemrole3"/>
+  <providesRole rdf:resource="#itemrole4"/>
+  <providesRole rdf:resource="#itemrole5"/>
+  <providesRole rdf:resource="#itemrole6"/>
+  <providesRole rdf:resource="#itemrole7"/>
+  <providesRole rdf:resource="#itemrole8"/>
   <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">psychomotor-vigilance</hasName>
 </ISR-MATBTask>
 
@@ -509,11 +509,11 @@
 
 <ItemDescription rdf:about="#itemdescription1">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype1"/>
   <refersToItemColor rdf:resource="#itemcolor1"/>
-  <refersToItemLocation rdf:resource="#itemlocation1"/>
-  <refersToItemShape rdf:resource="#itemshape1"/>
   <ofItem rdf:resource="#item1"/>
+  <refersToItemShape rdf:resource="#itemshape1"/>
+  <refersToItemType rdf:resource="#itemtype1"/>
+  <refersToItemLocation rdf:resource="#itemlocation1"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation1">
@@ -565,11 +565,11 @@
 
 <ItemDescription rdf:about="#itemdescription2">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype2"/>
   <refersToItemColor rdf:resource="#itemcolor2"/>
-  <refersToItemLocation rdf:resource="#itemlocation2"/>
-  <refersToItemShape rdf:resource="#itemshape2"/>
   <ofItem rdf:resource="#item2"/>
+  <refersToItemShape rdf:resource="#itemshape2"/>
+  <refersToItemType rdf:resource="#itemtype2"/>
+  <refersToItemLocation rdf:resource="#itemlocation2"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation2">
@@ -610,11 +610,11 @@
 
 <ItemDescription rdf:about="#itemdescription3">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype3"/>
   <refersToItemColor rdf:resource="#itemcolor3"/>
-  <refersToItemLocation rdf:resource="#itemlocation3"/>
-  <refersToItemShape rdf:resource="#itemshape3"/>
   <ofItem rdf:resource="#item3"/>
+  <refersToItemShape rdf:resource="#itemshape3"/>
+  <refersToItemType rdf:resource="#itemtype3"/>
+  <refersToItemLocation rdf:resource="#itemlocation3"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation3">
@@ -656,11 +656,11 @@
 
 <ItemDescription rdf:about="#itemdescription4">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype4"/>
   <refersToItemColor rdf:resource="#itemcolor4"/>
-  <refersToItemLocation rdf:resource="#itemlocation4"/>
-  <refersToItemShape rdf:resource="#itemshape4"/>
   <ofItem rdf:resource="#item4"/>
+  <refersToItemShape rdf:resource="#itemshape4"/>
+  <refersToItemType rdf:resource="#itemtype4"/>
+  <refersToItemLocation rdf:resource="#itemlocation4"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation4">
@@ -745,11 +745,11 @@
 
 <ItemDescription rdf:about="#itemdescription5">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype5"/>
   <refersToItemColor rdf:resource="#itemcolor5"/>
-  <refersToItemLocation rdf:resource="#itemlocation5"/>
-  <refersToItemShape rdf:resource="#itemshape5"/>
   <ofItem rdf:resource="#item5"/>
+  <refersToItemShape rdf:resource="#itemshape5"/>
+  <refersToItemType rdf:resource="#itemtype5"/>
+  <refersToItemLocation rdf:resource="#itemlocation5"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation5">
@@ -793,11 +793,11 @@
 
 <ItemDescription rdf:about="#itemdescription6">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype6"/>
   <refersToItemColor rdf:resource="#itemcolor6"/>
-  <refersToItemLocation rdf:resource="#itemlocation6"/>
-  <refersToItemShape rdf:resource="#itemshape6"/>
   <ofItem rdf:resource="#item6"/>
+  <refersToItemShape rdf:resource="#itemshape6"/>
+  <refersToItemType rdf:resource="#itemtype6"/>
+  <refersToItemLocation rdf:resource="#itemlocation6"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation6">
@@ -834,11 +834,11 @@
 
 <ItemDescription rdf:about="#itemdescription7">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype7"/>
   <refersToItemColor rdf:resource="#itemcolor7"/>
-  <refersToItemLocation rdf:resource="#itemlocation7"/>
-  <refersToItemShape rdf:resource="#itemshape7"/>
   <ofItem rdf:resource="#item7"/>
+  <refersToItemShape rdf:resource="#itemshape7"/>
+  <refersToItemType rdf:resource="#itemtype7"/>
+  <refersToItemLocation rdf:resource="#itemlocation7"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation7">
@@ -876,11 +876,11 @@
 
 <ItemDescription rdf:about="#itemdescription8">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype8"/>
   <refersToItemColor rdf:resource="#itemcolor8"/>
-  <refersToItemLocation rdf:resource="#itemlocation8"/>
-  <refersToItemShape rdf:resource="#itemshape8"/>
   <ofItem rdf:resource="#item8"/>
+  <refersToItemShape rdf:resource="#itemshape8"/>
+  <refersToItemType rdf:resource="#itemtype8"/>
+  <refersToItemLocation rdf:resource="#itemlocation8"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation8">
@@ -951,11 +951,11 @@
 
 <ItemDescription rdf:about="#itemdescription9">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype9"/>
   <refersToItemColor rdf:resource="#itemcolor9"/>
-  <refersToItemLocation rdf:resource="#itemlocation9"/>
-  <refersToItemShape rdf:resource="#itemshape9"/>
   <ofItem rdf:resource="#item9"/>
+  <refersToItemShape rdf:resource="#itemshape9"/>
+  <refersToItemType rdf:resource="#itemtype9"/>
+  <refersToItemLocation rdf:resource="#itemlocation9"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation9">
@@ -1016,11 +1016,11 @@
 
 <ItemDescription rdf:about="#itemdescription10">
   <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-  <refersToItemType rdf:resource="#itemtype10"/>
   <refersToItemColor rdf:resource="#itemcolor10"/>
-  <refersToItemLocation rdf:resource="#itemlocation10"/>
-  <refersToItemShape rdf:resource="#itemshape10"/>
   <ofItem rdf:resource="#item10"/>
+  <refersToItemShape rdf:resource="#itemshape10"/>
+  <refersToItemType rdf:resource="#itemtype10"/>
+  <refersToItemLocation rdf:resource="#itemlocation10"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation10">
