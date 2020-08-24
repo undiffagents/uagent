@@ -152,11 +152,11 @@ def addActionInstruction(inputLine):
         # Create description instruction
         newInstruction = onto[ACTION_INSTRUCTION_NODE]()
         # Add the input line from the reasoner (I think this is right TODO ****)
-        newInstruction.asReasonerFactString.append(inputLine)
+        onto[AS_REASONER_FACT_STRING_EDGE][newInstruction].append(inputLine)
         # Connect instruction to situation
-        newInstruction.prescribes.append(transitionToCurrentSituation)
+        onto[PRESCRIBES_EDGE][newInstruction].append(transitionToCurrentSituation)
         # Connect instruction to task
-        currentTask.hasInstruction.append(newInstruction)
+        onto[HAS_INSTRUCTION_EDGE][currentTask].append(newInstruction)
 
 
 def addDescriptionInstruction(inputLine):
@@ -164,11 +164,11 @@ def addDescriptionInstruction(inputLine):
         # Create description instruction
         newInstruction = onto[DESCRIPTION_INSTRUCTION_NODE]()
         # Add the input line from the reasoner (I think this is right TODO ****)
-        newInstruction.asReasonerFactString.append(inputLine)
+        onto[AS_REASONER_FACT_STRING_EDGE][newInstruction].append(inputLine)
         # Connect instruction to situation
-        newInstruction.contributesTo.append(currentSituation)
+        onto[CONTRIBUTES_TO_EDGE][newInstruction].append(currentSituation)
         # Connect instruction to task
-        currentTask.hasInstruction.append(newInstruction)
+        onto[HAS_INSTRUCTION_EDGE][currentTask].append(newInstruction)
 
 
 def owlReadyProcessTask(inputContents):
@@ -192,14 +192,14 @@ def owlReadyProcessTask(inputContents):
     # Create new task
     with onto:
         newTask = onto[TASK_NODE]()
-        newTask.hasName.append(taskName)
+        onto[HAS_NAME_EDGE][newTask].append(taskName)
         # newTask = [TASK_NODE]
         # Attach this task to the experiment if exists
         if currentExperiment is not None:
-            currentExperiment.hasTask.append(newTask)
+            onto[HAS_TASK_EDGE][currentExperiment].append(newTask)
         # If there is a prior experiment, that previous experiment informs this new one
         if currentTask is not None:
-            currentTask.informs.append(newTask)
+            onto[INFORMS_EDGE][currentTask].append(newTask)
     currentTask = newTask
 
     experimentItemsDict.update({taskName: newTask})
@@ -221,7 +221,7 @@ def owlReadyProcessItem(inputContents):
         newItem = onto[ITEM_NODE]()
         # If the item is named, add its name
         if itemName != "":
-            newItem.hasItemName.append(itemName)
+            onto[HAS_ITEM_NAME_EDGE][newItem].append(itemName)
             # Append to situation item tracker
             situationItemsDict.update({itemName: newItem})
         # Create the item role
@@ -229,17 +229,17 @@ def owlReadyProcessItem(inputContents):
         # Create the item role type
         newItemRoleType = onto[ITEM_ROLE_TYPE_NODE](itemRole)
         # Connect the item role type to the item role
-        newItemRole.ofItemRoleType.append(newItemRoleType)
+        onto[OF_ITEM_ROLE_TYPE_EDGE][newItemRole].append(newItemRoleType)
         # Connect the role to the item
-        newItemRole.assumedBy.append(newItem)
+        onto[ASSUMED_BY_EDGE][newItemRole].append(newItem)
         # Append to situation item tracker - I THINK THIS IS RIGHT TODO ****
         situationItemsDict.update({itemRole: newItemRole})
         # If there is an affordance for this role, then create an affordance and link it to the item
         if affordanceDict.get(itemRole) is not None:
             newAffordance = onto[AFFORDANCE_NODE]()
             newAffordanceType = onto[AFFORDANCE_TYPE_NODE](affordanceDict.get(itemRole))
-            newAffordance.hasAffordanceType.append(newAffordanceType)
-            newItem.affords.append(newAffordance)
+            onto[HAS_AFFORDANCE_TYPE_EDGE][newAffordance].append(newAffordanceType)
+            onto[AFFORDS_EDGE][newItem].append(newAffordance)
             # Append to situation item tracker
             situationItemsDict.update({affordanceDict.get(itemRole): newAffordance})
         # Create Item Description with all of its offshoots
@@ -249,11 +249,11 @@ def owlReadyProcessItem(inputContents):
         newItemColor = onto[ITEM_COLOR_NODE]()
         newItemShape = onto[ITEM_SHAPE_NODE]()
         newItemType = onto[ITEM_TYPE_NODE]()
-        newItemDescription.refersToItemLocation.append(newItemLocation)
-        newItemDescription.refersToItemColor.append(newItemColor)
-        newItemDescription.refersToItemShape.append(newItemShape)
-        newItemDescription.refersToItemType.append(newItemType)
-        newItemDescription.ofItem.append(newItem)
+        onto[REFERS_TO_ITEM_LOCATION_EDGE][newItemDescription].append(newItemLocation)
+        onto[REFERS_TO_ITEM_COLOR_EDGE][newItemDescription].append(newItemColor)
+        onto[REFERS_TO_ITEM_SHAPE_EDGE][newItemDescription].append(newItemShape)
+        onto[REFERS_TO_ITEM_TYPE_EDGE][newItemDescription].append(newItemType)
+        onto[OF_ITEM_EDGE][newItemDescription].append(newItem)
 
         # Attach item to Task
         # if currentTask is not None:
@@ -298,7 +298,7 @@ def owlReadyProcessIsPartOf(inputContents):
                     subelement = source
             # If we've received an item role, then connect it to the current task
         if subelement is not None:
-            superelement.providesRole.append(subelement)
+            onto[PROVIDES_ROLE_EDGE][superelement].append(subelement)
 
 
 def owlReadyProcessAction(inputContents):
@@ -321,7 +321,7 @@ def owlReadyProcessAction(inputContents):
         newAction = onto[ACTION_NODE]()
         # Assign the action type
         newActionType = onto[ACTION_TYPE_NODE](actionVerb)
-        newAction.ofActionType.append(newActionType)
+        onto[OF_ACTION_TYPE_EDGE][newAction].append(newActionType)
         # Attach action to the item that triggered it
         if situationItemsDict.get(actionSubject) is None:
             print("Uh oh - it looks like an error occurred trying to process the action.  The term " + actionSubject + \
@@ -335,7 +335,7 @@ def owlReadyProcessAction(inputContents):
                 # actionRefersToItem = re.sub("ItemRole", "Item", actionRefersToItem)
                 actionTarget = actionTarget.assumedBy
             # TODO **** Is it correct to always grab the first?  What if there are multiple?
-            newAction.refersTo.append(actionTarget[0])
+            onto[REFERS_TO_ITEM_SHAPE_EDGE][newAction].append(actionTarget[0])
 
         # Close up the pre-action situation description
         # rdfLines = rdfLines + endSituationDescription()
@@ -352,7 +352,7 @@ def owlReadyProcessAction(inputContents):
         newTransition = createTransitionDescription()
 
         # Set action up to trigger transition
-        newAction.triggers.append(newTransition)
+        onto[TRIGGERS_EDGE][newAction].append(newTransition)
 
     # Connect action to transition description (have to use current transition count - 1 because it was incremented
     # when the transition was created)
@@ -381,8 +381,8 @@ def createTransitionDescription():
     with onto:
         newTransition = onto[TRANSITION_DESCRIPTION_NODE]()
         if currentSituation is not None and previousSituation is not None:
-            newTransition.hasPreSituationDescription.append(previousSituation)
-            newTransition.hasPostSituationDescription.append(currentSituation)
+            onto[HAS_PRE_SITUATION_DESCRIPTION_EDGE][newTransition].append(previousSituation)
+            onto[HAS_POST_SITUATION_DESCRIPTION_EDGE][newTransition].append(currentSituation)
 
     transitionToCurrentSituation = newTransition
     return newTransition
@@ -418,7 +418,7 @@ def startSituationDescription():
                         relevantItemDescription = source
                 # If we've received an item description, then connect it to the current situation as an earlierCondition
                 if relevantItemDescription is not None:
-                    newSituation.hasEarlierCondition.append(relevantItemDescription)
+                    onto[HAS_EARLIER_CONDITION_EDGE][newSituation].append(relevantItemDescription)
             # If we have an itemRole, grab the itemDescription of the item which the role is assumed by
             elif createdIRAType == ITEM_ROLE_NODE:
                 # TODO **** Again, is grabbing the first one the best move?
@@ -434,7 +434,7 @@ def startSituationDescription():
                         relevantItemDescription = source
                 # If we've received an item description, then connect it to the current situation as an earlierCondition
                 if relevantItemDescription is not None:
-                    newSituation.hasEarlierCondition.append(relevantItemDescription)
+                    onto[HAS_EARLIER_CONDITION_EDGE][newSituation].append(relevantItemDescription)
             else:
                 print("WARNING: Unexpected type in situationItemsDict.  Process can continue, but may crash later.")
 
@@ -478,7 +478,7 @@ def endSituationDescription():
                             relevantItemDescription = source
                     # If we've received an item description, then connect it to the current situation as an earlierCondition
                     if relevantItemDescription is not None:
-                        currentSituation.hasCurrentCondition.append(relevantItemDescription)
+                        onto[HAS_CURRENT_CONDITION_EDGE][currentSituation].append(relevantItemDescription)
                 # If we have an itemRole, grab the itemDescription of the item which the role is assumed by
                 elif createdIRAType == ITEM_ROLE_NODE:
                     # TODO **** Again, is grabbing the first one the best move?
@@ -492,14 +492,16 @@ def endSituationDescription():
                         if OF_ITEM_EDGE in value.name:
                             # If so, the source is the item description we want
                             relevantItemDescription = source
-                    # If we've received an item description, then connect it to the current situation as an earlierCondition
+                    # If we've received an item description, then connect it to the current situation
+                    # as an earlierCondition
                     if relevantItemDescription is not None:
-                        currentSituation.hasCurrentCondition.append(relevantItemDescription)
+                        onto[HAS_CURRENT_CONDITION_EDGE][currentSituation].append(relevantItemDescription)
                 else:
                     print("WARNING: Unexpected type in situationItemsDict.  Process can continue, but may crash later.")
 
         # Add the current situation's items to the multi-situation backup dict and
-        # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing the task etc. in here.
+        # NEED TO MAKE SURE ONLY TO CLEAR SITUATION ITEMS; there's definitely a problem with storing
+        # the task etc. in here.
         multiSituationDict.update({currentSituation: situationItemsDict.copy()})
 
         # Make sure to store the current situation as being the previous situation so that transitions can occur easily
