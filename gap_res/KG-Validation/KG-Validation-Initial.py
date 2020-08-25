@@ -81,6 +81,7 @@ def checkInitializedGraph():
 
 
 def checkForRelation(currentInstance, expectedNode):
+    nodeFound = False
     # Get all of the outgoing properties for the instance
     for prop in currentInstance.get_properties():
         # Get the target of the outgoing property
@@ -92,7 +93,12 @@ def checkForRelation(currentInstance, expectedNode):
                 if nodeType.name == expectedNode:
                     nodeFound = True
                 else:
-                    nodeFound = False
+                    # Check if it's a subtype of the expected node type?
+                    for isA in nodeType.ancestors():
+                        if isA.name == expectedNode:
+                            return True
+                        else:
+                            nodeFound = False
             else:
                 nodeFound = False
             # If so, return true and print the property

@@ -145,8 +145,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KG-Validation-Initial.py</url>
-          <line>90</line>
-          <option name="timeStamp" value="16" />
+          <line>96</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
