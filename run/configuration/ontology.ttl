@@ -14,7 +14,7 @@ tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
 
 :service1  a                          fuseki:Service ;
         fuseki:dataset                :dataset ;
-        fuseki:name                   "uagent" ;
+        fuseki:name                   "ontology" ;
         fuseki:serviceQuery           "" , "query" , "sparql" ;
         fuseki:serviceReadGraphStore  "get" ;
         fuseki:serviceReadQuads       "" ;
