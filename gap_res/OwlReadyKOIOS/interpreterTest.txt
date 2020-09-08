@@ -1,0 +1,12 @@
+task(psychomotor-vigilance)
+item(screen)
+item(button,space_bar)
+item(subject) WILL NEED TO BECOME AGENT
+item(stimulus,letter)
+isPartOf(screen,psychomotor-vigilance)
+isPartOf(space_bar,psychomotor-vigilance)
+isPartOf(subject,psychomotor-vigilance)
+isPartOf(letter,psychomotor-vigilance)
+action(begins,subject,psychomotor-vigilance) => item(activeTask) CHANGED FOR TESTING - ORIGINAL: action(begins,subject,psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active
+task(visual-search)
+item(screen)

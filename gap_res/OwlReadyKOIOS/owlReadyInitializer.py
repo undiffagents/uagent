@@ -1,9 +1,3 @@
-import socket
-import subprocess
-import time
-import requests
-import networkx
-import re
 # from SPARQLWrapper import SPARQLWrapper, JSON
 from ontoConstants import *
 from owlready2 import *
@@ -61,7 +55,7 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 
 # "Action" on the ontology only appears to have a subject and a verb - no object?
 
-def readInput():
+def initializeOntology():
     rdfLines = ""
     # Open up the interpreter output
     inputFile = open(interpreterFile, 'r')
@@ -85,7 +79,6 @@ def readInput():
     onto.save(file="owlready-uagent.owl")
     filename = 'owlready-uagent.owl'
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
-    # TODO **** Probably shouldn't delete everything in the graph.  This is just a testing thing
     subprocess.call(
         ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
 
@@ -508,4 +501,4 @@ def endSituationDescription():
         previousSituation = currentSituation
 
 
-readInput()
+# initializeOntology()
