@@ -1,9 +1,9 @@
 from owlready2 import *
-from KG_Structure_Validation import *
+from Passive_Gap_Handling.KG_Structure_Validation import *
 from ControlPanel import *
 from owlReadyInitializer import *
-from userInteraction import *
-from QuestionHandling import *
+from Active_Gap_Handling.userInteraction import *
+from Active_Gap_Handling.QuestionHandling import *
 
 onto = None
 ontologyLoaded = True
@@ -23,7 +23,7 @@ def checkContextGap():
 def main():
     # Initialize the ontology
     if ontologyLoaded == False:
-        #initializeOntology()
+        initializeOntology()
         pass
     # Load the initialized ontology
     loadOntology()
@@ -46,11 +46,12 @@ def main():
             inputContents = inputSplit[1].split(')')[0]
             if inputType == 'item':
                 response = itemExistenceQuestion(onto, inputContents)
-                print(response)
                 if response == None or response == '' or response == []:
                     if CONTROL_IDENTIFY_LEXICAL == True:
                         print("Lexical gap identified: The ontology does not contain any information regarding " +
                               inputType + ' ' + inputContents)
+                else:
+                    print("Yes!  One or more items with this role/name exist: " + str(response))
             questionInput = input('Please enter a question: ')
 
 

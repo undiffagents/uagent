@@ -1,6 +1,6 @@
 from owlready2 import *
 from ontoConstants import *
-from ontoUtilities import *
+from Active_Gap_Handling.ontoUtilities import *
 
 def itemExistenceQuestion(onto, inputContents):
     itemRole = ""
@@ -18,20 +18,19 @@ def itemExistenceQuestion(onto, inputContents):
 
     # Get list of role type
     results = onto.search(is_a = onto[ITEM_ROLE_TYPE_NODE])
-    print(results)
     # Check if there is a role type which matches the role provided
     for result in results:
         # If the name of the role type matches the role provided, add the item to which it's connected to the list
         # of potential candidates
         if result.name == itemRole:
-            roles = getInstancesConnectedViaProperty(result, OF_ITEM_ROLE_TYPE_EDGE)
+            roles = getInstancesConnectedViaProperty(onto, result, OF_ITEM_ROLE_TYPE_EDGE)
             # REMOVE THIS
-            potentialCandidates.extend(roles)
+            #potentialCandidates.extend(roles)
             # Iterate through all roles received back
             # TODO: ACTUALLY GET THE ITEM TO RESPOND WITH
-            #for role in roles:
-            #    items = getInstancesConnectedViaProperty(role, ASSUMED_BY_EDGE)
-            #    potentialCandidates.extend(items)
+            for role in roles:
+                items = getInstancesConnectedViaProperty(onto, role, ASSUMED_BY_EDGE)
+                potentialCandidates.extend(items)
 
     # If a name was provided, try to narrow down based on name to get accurate answer
 
