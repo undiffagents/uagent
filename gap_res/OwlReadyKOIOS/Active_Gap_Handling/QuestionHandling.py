@@ -33,9 +33,23 @@ def itemExistenceQuestion(onto, inputContents):
                 potentialCandidates.extend(items)
 
     # If a name was provided, try to narrow down based on name to get accurate answer
+    if itemName != "":
+        # Get the name of each potential candidate and validate it against the requested item's name.
+        for candidate in potentialCandidates:
+            # Returns a list but we SHOULD be able to just pop the first item out of the list.
+            # TODO: Presumably an item can't have multiple names?
+            candidateNameList = getInstancesConnectedViaProperty(onto, candidate, HAS_ITEM_NAME_EDGE)
+            # Get the candidate's name
+            if len(candidateNameList) > 0:
+                candidateName = candidateNameList[0]
+            else:
+                candidateName = ""
+            # Compare candidate name to requested name
+            if candidateName == itemName:
+                validCandidates.append(candidate)
 
 
     # If no name is provided, then the list of role type matches
-    if itemName == "":
+    else:
         validCandidates = potentialCandidates
     return validCandidates

@@ -1,10 +1,8 @@
 from owlready2 import *
 
 def getInstancesConnectedViaProperty(onto, currentInstance, property):
-    validProperties = []
     validInverseProperties = []
     instancesConnected = []
-    properties = currentInstance.get_properties()
     inverseProperties = currentInstance.get_inverse_properties()
     # Iterate through the selected instance's properties
     # TODO: Confirm that this works with multiple targets which all have the same edge type
@@ -17,7 +15,6 @@ def getInstancesConnectedViaProperty(onto, currentInstance, property):
             #test = onto[property][currentInstance]
             #print(test)
             #validProperties.append(prop)
-
 
     # Iterate through the selected instance's inverse properties (don't think there's as neat a way as for props)
     for invProp in inverseProperties:
