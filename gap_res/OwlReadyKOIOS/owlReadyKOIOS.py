@@ -29,7 +29,9 @@ def main():
     loadOntology()
     # Check context gaps if enabled
     if CONTROL_IDENTIFY_CONTEXT == True:
+        print("Checking for context gaps")
         checkContextGap()
+        print("Context gap checking complete")
     # If user interaction is enabled, get user questions and handle them
     if CONTROL_USER_INTERACTION == True:
         questionInput = input('Please enter a question: ')
@@ -44,14 +46,9 @@ def main():
             inputSplit = questionInput.split('(', 1)
             inputType = inputSplit[0]
             inputContents = inputSplit[1].split(')')[0]
+            # If it's in the format item(x,[y]), then query the existence of said item
             if inputType == 'item':
-                response = itemExistenceQuestion(onto, inputContents)
-                if response == None or response == '' or response == []:
-                    if CONTROL_IDENTIFY_LEXICAL == True:
-                        print("Lexical gap identified: The ontology does not contain any information regarding " +
-                              inputType + ' ' + inputContents)
-                else:
-                    print("Yes!  One or more items with this role/name exist: " + str(response))
+                response = itemQuestion(onto, inputContents)
             questionInput = input('Please enter a question: ')
 
 
