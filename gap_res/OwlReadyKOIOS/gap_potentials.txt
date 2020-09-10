@@ -1,4 +1,3 @@
 potential gap vectors:
-	Query for items with name "x" without giving role?
 	Query for task name? How about activeness?
 	Query if some thing is part of task?

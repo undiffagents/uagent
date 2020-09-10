@@ -3,7 +3,7 @@ from Passive_Gap_Handling.KG_Structure_Validation import *
 from ControlPanel import *
 from owlReadyInitializer import *
 from Active_Gap_Handling.userInteraction import *
-from Active_Gap_Handling.QuestionHandling import *
+from Active_Gap_Handling.ItemQuestionHandling import *
 
 onto = None
 ontologyLoaded = True

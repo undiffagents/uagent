@@ -8,7 +8,8 @@ Currently also limited to only items, i.e. item(button)/item(button,space_bar) o
 Current querying options with successful examples:
 Existence of item by role: item(button)
 Existence of item by role and name: item(button,space_bar)
+Existence of item by name only: item(,space_bar)
 Names of item with given role: item(button,?)
 Roles of item with given name: item(?,space_bar)
 
-To get failures, just change the terms to something which is not within the ontology (e.g., computer as a role or enter as a name)
+To get failures, just change the terms to something which is not within the ontology (e.g., role: "computer" or name: "enter")
