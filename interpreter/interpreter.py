@@ -265,6 +265,11 @@ def runProlog(facts, prolog, prologfile,makeFiles):
 
     if not makeFiles: os.remove(factFile)
     if not makeFiles: os.remove(groundFile)
+    if makeFiles:
+        fopen = open("interpreter/facts.txt", "w+")
+        for fact in facts:
+            fopen.write("{}\n".format(fact))
+        fopen.close()
 
     return reasonerFacts, groundRules
 
