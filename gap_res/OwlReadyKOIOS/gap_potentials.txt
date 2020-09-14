@@ -1,3 +1,5 @@
 potential gap vectors:
 	Query for task name? How about activeness?
 	Query if some thing is part of task?
+	Actions...?
+	

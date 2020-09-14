@@ -1,0 +1,52 @@
+BASE VST:
+
+p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+There is a target and it is a letter and is correct.
+There is a n:distractor and it is a letter and is incorrect.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.
+
+LEXICAL GAP: 
+
+p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+There is a target and it is a letter and is correct.
+There is a n:distractor and it is a letter and is incorrect.
+If the subject v:isPartOf the task then the task is active.
+If the job is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is right then the subject presses the button.
+
+
+NEGATION GAP: maybe removing "and it is correct" introduces another kind of gap, but the primary result
+that I see from that is removing the inverse of incorrect, thus making "and it is correct" have to be
+grounded within terms of incorrect/not incorrect.
+Alternatively, could replace "and it is correct" with "and it is not incorrect"?
+
+p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+There is a target and it is a letter.
+There is a n:distractor and it is a letter and is incorrect.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.
+
+
+CONTEXT GAP:  Letter has no grounding to it.
+
+p:visual-search is a task.
+There is a button that v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a screen that v:isPartOf the task.
+There is a target and it is correct.
+There is a n:distractor and it is incorrect.
+If the subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If a letter v:appearsOn the screen and it is correct then the subject presses the button.

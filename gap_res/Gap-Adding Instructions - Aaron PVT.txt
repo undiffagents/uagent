@@ -1,0 +1,79 @@
+BASE PVT:
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+
+
+LEXICAL GAP: 
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the job is active then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+
+LEXICAL/CONTEXT GAP: DISTINCTION: In above Lexical, job/task are synonyms on WordNet.
+Target and Letter are NOT synonyms, so it cannot be automatically resolved by synonym checking.
+Potentially a pedantic/incorrect distinction, but making it because otherwise pretty much every
+Lexical gap will also be considered a Context gap?  Since introducing a new word into the vocabulary
+is not a problem when _creating_ an object, only referencing it, and a context gap consists of having
+seemingly disjoint information - a new word in an action would certainly seem disjoint.
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If the target v:appearsOn the screen then the subject presses the n:space_bar.
+
+
+NEGATION GAP:
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is not inactive then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+
+CONTEXT GAP:
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+There is an experimenter.
+The n:space_bar is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses the n:space_bar.
+
+TARGET GAP:  NOTE: Using "the subject presses _a_ button" is critical, as otherwise APE just picks
+one of the previously declared buttons and references that in the action.  Doing "a button" makes 
+it create a new, unreferenced/unnamed button in the action and say to click that - something which 
+is still likely problematic but could maybe be more easily punted down the line to Think; as opposed 
+to just telling Think to click the wrong button, it leaves Think with a non-existing button to 
+click, something which must be resolved.
+
+p:psychomotor-vigilance is a task.
+There is a screen that v:isPartOf the task.
+The n:space_bar is a button and v:isPartOf the task.
+The n:backspace is a button and v:isPartOf the task.
+There is a subject that v:isPartOf the task.
+There is a letter that v:isPartOf the task.
+If a subject v:isPartOf the task then the task is active.
+If the task is active then a letter v:appearsOn the screen.
+If the letter v:appearsOn the screen then the subject presses a button.
