@@ -695,7 +695,7 @@ def collapseRelationsIntoPredicates(predicates,relations,objects):
                         
     return predicates + newPreds
     
-def interpret_ace(ace,makeFiles = False):
+def interpret_ace(ace,makeFiles = True):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
     
     drs = getDRSFromACE(ace)   

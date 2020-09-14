@@ -37,12 +37,14 @@ if __name__ == '__main__':
         elif args[0] == '--window' and len(args) > 1:
             window_name = args[1]
             args = args[2:]
-        elif args[0] == '--quickload' and len(args) > 1:
-            do_quickload = args[1]
-            args = args[2:]
-        elif args[0] = '--ontosim' and len(args) > 1:
-            do_ontosim = args[1]
-            args = args[2:]
+        elif args[0] == '--quickload':
+            do_quickload = 1
+            if len(args) > 1:
+                args = args[1:]
+        elif args[0] == '--ontosim':
+            do_ontosim = 1
+            if len(args) > 1:
+                args = args[1:]
         else:
             print('Unknown arguments: {}'.format(args))
             print(
@@ -65,7 +67,7 @@ if __name__ == '__main__':
 
     # create task
     if task_name == 'pvt':
-        task = (PVTTask(env, load_text('tasks/pvt/ace_new.txt'))
+        task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
                 if agent_name == 'uagent' else
                 PVTTask(env))
     elif task_name == 'vs':
