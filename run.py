@@ -15,10 +15,15 @@ def load_text(path):
 
 if __name__ == '__main__':
 
+    #binary controllers
+    do_quickload = 0 #1 second simulation time
+    do_ontosim = 0 #simulate ontology interactinon or not
+
     # set defaults
     task_name = 'pvt'
     agent_name = 'uagent'
     window_name = 'none'
+    sim_time = 30 
 
     # read arguments from command line
     args = sys.argv[1:]
@@ -32,11 +37,20 @@ if __name__ == '__main__':
         elif args[0] == '--window' and len(args) > 1:
             window_name = args[1]
             args = args[2:]
+        elif args[0] == '--quickload' and len(args) > 1:
+            do_quickload = args[1]
+            args = args[2:]
+        elif args[0] = '--ontosim' and len(args) > 1:
+            do_ontosim = args[1]
+            args = args[2:]
         else:
             print('Unknown arguments: {}'.format(args))
             print(
                 'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
             sys.exit(1)
+
+    if do_quickload: #override default
+        sim_time = 1
 
     # create window (if needed)
     if window_name == 'window':
@@ -51,7 +65,7 @@ if __name__ == '__main__':
 
     # create task
     if task_name == 'pvt':
-        task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
+        task = (PVTTask(env, load_text('tasks/pvt/ace_new.txt'))
                 if agent_name == 'uagent' else
                 PVTTask(env))
     elif task_name == 'vs':
@@ -82,4 +96,4 @@ if __name__ == '__main__':
 
     # run simulation
     world = World(task, agent)
-    world.run(30, real_time=(window is not None))
+    world.run(sim_time, real_time=(window is not None))
