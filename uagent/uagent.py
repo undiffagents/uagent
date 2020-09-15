@@ -92,18 +92,6 @@ class UndifferentiatedAgent(Agent):
         for potential_predicate in self.action_predicate_list:
             #as more conditions are added, their cases must be coded in here.
             if cond.pred == potential_predicate:
-                # if cond.pred == 'appearsOn' or cond.pred == 'visible':
-                #     self.think('check condition "{}"'.format(cond))
-                #     isa = cond.obj(0)
-                #     # visual = self.vision.find(isa=isa)
-                #     visual = self.vision.search_for(Query(isa=isa), None)
-                #     if visual:
-                #         print('----- Found visual')
-                #         context.set('visual', visual)
-                #         visobj = self.vision.encode(visual)
-                #         context.set(isa, visobj)
-                #     else:
-                #         return False
                 # Check the verb and see if it's "appear"
                 if cond.obj(0) == 'appear':
                     self.think('check condition "{}"'.format(cond))
@@ -238,7 +226,12 @@ class UndifferentiatedAgent(Agent):
 
         while self.time() < time:
             context = Chunk()
-            for rule in self.memory.recall_ground_rules():
-                #self.constructTaskActionList(rule)
-                #print("TASK ACTIONS " + str(self.task_action_list))
-                self.process(rule, context)
+
+            # Currently hardcoding the letter check - there will probably be a way to dynamically decide what to wait on
+            # Wait for a letter to appear in vision, otherwise do nothing.
+            stimulus_appears = self.vision.wait_for(isa='letter')
+            if stimulus_appears is not None:
+                for rule in self.memory.recall_ground_rules():
+                    #self.constructTaskActionList(rule)
+                    #print("TASK ACTIONS " + str(self.task_action_list))
+                    self.process(rule, context)
