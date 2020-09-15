@@ -202,6 +202,16 @@ class UndifferentiatedAgent(Agent):
                     if actionVerb not in self.task_action_list:
                         self.task_action_list.append(actionVerb)
 
+    # DS 2020-09-15: Simple gap identification - if there are actions in the task action list which the uagent doesn't
+    # have knowledge of, then a gap arises.
+    def checkForGapWRTActions(self):
+        gapFound = False
+        for task_action in self.task_action_list:
+            if task_action not in self.agent_action_list:
+                print("GAP DETECTED: Action " + task_action + " required by the task which the agent does not know.")
+                gapFound = True
+        return gapFound
+
     def process(self, rule, context):
         if self.is_action(rule):
             self.think('process rule "{}"'.format(rule))
@@ -223,6 +233,8 @@ class UndifferentiatedAgent(Agent):
         # Probably not cognitively correct TODO ****
         for rule in self.memory.recall_ground_rules():
             self.constructTaskActionList(rule)
+
+        gapPresent = self.checkForGapWRTActions()
 
         while self.time() < time:
             context = Chunk()
