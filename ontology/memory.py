@@ -46,11 +46,13 @@ class OntologyMemory(Memory):
     def add_instruction_knowledge(self, ace_output):
         self.ontology.add_instruction_knowledge(ace_output)
 
-    def _ontology_recall(self, name, get):
+    # DS 2020-09-15 - added **kwargs to allow for passing arguments in to the get function
+    # used for recall_ground_rules_similar_to_condition
+    def _ontology_recall(self, name, get, *args):
         self.think('recall {}'.format(name))
         self.log('recalling {}'.format(name))
         results = set([Rule(s) if ' => ' in s else Fact(s)
-                       for s in get()])
+                       for s in get(*args)])
         self.wait(OntologyMemory.DEFAULT_DURATION)
         self.log('recalled {}'.format(name))
         return results
@@ -66,3 +68,9 @@ class OntologyMemory(Memory):
 
     def recall_rules(self):
         return self._ontology_recall('rules', self.ontology.get_instruction_rules)
+
+    #DS 2020-09-15 - adding this in to get only a set of rules that have relevant information in the condition
+    def recall_ground_rules_similar_to_condition(self, conditionSegment):
+        groundRules = self._ontology_recall('ground rules with "' + conditionSegment + '" in condition',
+                              self.ontology.get_instruction_ground_rules_containing, conditionSegment)
+        return groundRules

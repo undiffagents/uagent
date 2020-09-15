@@ -794,7 +794,7 @@ class Interpreter:
         
     def interpret_ace(self,ace):
         '''Interprets ACE text and adds the resulting knowledge to memory'''
-        self.memory.add_instruction_knowledge(interpret_ace(ace, self.ontosim))
+        self.memory.add_instruction_knowledge(interpret_ace(ace, False, self.ontosim))
 
 if __name__ == "__main__":
     if os.path.isfile("interpreter/reasonerFacts.txt"): os.remove("interpreter/reasonerFacts.txt")

@@ -29,6 +29,7 @@ class UndifferentiatedAgent(Agent):
 
         #Actions that execute_action() can handle.
         # DS 2020-09-15 - Modifying this to be the list of actions that the agent is aware of how to do.
+        # Removed 'press' for testing
         # This is pre-determined, as opposed to the task-level actions list, which is built dynamically
         self.agent_action_list = ['press','click','remember']
         #'press' and 'remember' aren't in the Ontology.
@@ -75,7 +76,8 @@ class UndifferentiatedAgent(Agent):
             if action.pred in self.action_predicate_list:
                 for potential_action in self.agent_action_list:
                     # grab the verb from the action (the first object)
-                    if action.obj(0) == potential_action:
+                    if action.obj(0) == potential_action or "|" + action.obj(0) in potential_action\
+                            or action.obj(0) + "|" in potential_action:
                         return True
         return False
 
@@ -209,10 +211,31 @@ class UndifferentiatedAgent(Agent):
         for task_action in self.task_action_list:
             if task_action not in self.agent_action_list:
                 print("GAP DETECTED: Action " + task_action + " required by the task which the agent does not know.")
+                match = input("Please select a matching term from the agent's known action list: " +
+                      str(self.agent_action_list))
+                self.agent_action_list.append(match + "|" + task_action)
                 gapFound = True
+                print(self.agent_action_list)
         return gapFound
 
+    # DS 2020-09-15: Modifying this so that it waits until something new to appear in the visual field before
+    # searching for conditions
     def process(self, rule, context):
+        if self.is_action(rule):
+            self.think('process rule "{}"'.format(rule))
+            visualStimulusAppeared = self.vision.wait_for()
+            if visualStimulusAppeared is not None:
+                visualStimulus = self.vision.encode(visualStimulusAppeared)
+                print("STIM" + str(visualStimulusAppeared))
+            #for cond in rule.conditions:
+            #    if not self.check_condition(cond, context):
+            #        return False
+            #for action in rule.actions:
+            #    self.execute_action(action, context)
+            #return True
+
+
+    def process_old(self, rule, context):
         if self.is_action(rule):
             self.think('process rule "{}"'.format(rule))
             for cond in rule.conditions:
@@ -242,8 +265,13 @@ class UndifferentiatedAgent(Agent):
             # Currently hardcoding the letter check - there will probably be a way to dynamically decide what to wait on
             # Wait for a letter to appear in vision, otherwise do nothing.
             stimulus_appears = self.vision.wait_for(isa='letter')
+
+
             if stimulus_appears is not None:
-                for rule in self.memory.recall_ground_rules():
+                rulesForStimulusApparition = self.memory.recall_ground_rules_similar_to_condition("action(appear,letter")
+                print(rulesForStimulusApparition)
+                for rule in rulesForStimulusApparition:
+                # for rule in self.memory.recall_ground_rules():
                     #self.constructTaskActionList(rule)
                     #print("TASK ACTIONS " + str(self.task_action_list))
-                    self.process(rule, context)
+                    self.process_old(rule, context)

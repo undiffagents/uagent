@@ -96,6 +96,11 @@ class Ontology:
         result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . }}'.format(self.PREFIX,subject,predicate))
         return set([x['object']['value'] for x in result])
 
+    # DS 2020-09-15 - adding this in to query for results which have some specified string contained in the object.
+    def query_for_object_containing(self,subject,predicate,contains):
+        result = self.query('{} SELECT ?object WHERE {{ {} {} ?object . filter contains(?object,"{}") }}'.format(self.PREFIX, subject, predicate, contains))
+        return set([x['object']['value'] for x in result])
+
     def get_instruction_facts(self):
         if self.initialized: return self.query_for_object(self.initialInstruction,':asFactString')
 
@@ -107,6 +112,10 @@ class Ontology:
 
     def get_instruction_ground_rules(self):
         if self.initialized: return self.query_for_object(self.initialInstruction,':asGroundRuleString')
+
+    # DS 2020-09-15 - adding this to query for ground rules which contain some specific string in their object
+    def get_instruction_ground_rules_containing(self,contains):
+        if self.initialized: return self.query_for_object_containing(self.initialInstruction, ':asGroundRuleString', contains)
 
     def get_DRS(self):
         if self.initialized: return "".join(self.query_for_object(self.initialInstruction,":asDRSString"))
