@@ -70,7 +70,19 @@ class OntologyMemory(Memory):
         return self._ontology_recall('rules', self.ontology.get_instruction_rules)
 
     #DS 2020-09-15 - adding this in to get only a set of rules that have relevant information in the condition
-    def recall_ground_rules_similar_to_condition(self, conditionSegment):
+    # Having a for loop doing regex work may well be cognitively incorrect - should this be changed to be in teh
+    # SPARQL query?  Doing regex in SPARQL seems like it might load down the endpoint. TODO: ****
+    def recall_ground_rules_with_condition_containing(self, conditionSegment):
+        groundRulesContainingInCondition = []
         groundRules = self._ontology_recall('ground rules with "' + conditionSegment + '" in condition',
-                              self.ontology.get_instruction_ground_rules_containing, conditionSegment)
-        return groundRules
+                              self.ontology.get_instruction_ground_rules_with_condition_containing, conditionSegment)
+        # Iterate through all of the rules that came back containing conditionSegment and check that it's in the
+        # condition and not in the consequence
+        for rule in groundRules:
+            # check to find the condition segment followed (at some point) by =>
+            searchPattern = re.escape(conditionSegment) + '.+\=\>'
+            segmentInCondition = re.search(searchPattern,str(rule))
+            # if found, this is one of those we want
+            if segmentInCondition is not None:
+                groundRulesContainingInCondition.append(rule)
+        return groundRulesContainingInCondition

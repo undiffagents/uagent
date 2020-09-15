@@ -114,7 +114,7 @@ class Ontology:
         if self.initialized: return self.query_for_object(self.initialInstruction,':asGroundRuleString')
 
     # DS 2020-09-15 - adding this to query for ground rules which contain some specific string in their object
-    def get_instruction_ground_rules_containing(self,contains):
+    def get_instruction_ground_rules_with_condition_containing(self,contains):
         if self.initialized: return self.query_for_object_containing(self.initialInstruction, ':asGroundRuleString', contains)
 
     def get_DRS(self):
