@@ -8,7 +8,7 @@ from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
 
 class UndifferentiatedAgent(Agent):
 
-    def __init__(self, env, output=True):
+    def __init__(self, env, ontosim=False, output=True):
         super().__init__(output=output)
 
         self.memory = OntologyMemory(self)
@@ -16,7 +16,7 @@ class UndifferentiatedAgent(Agent):
         self.audition = Audition(self, env.speakers)
         self.motor = Motor(self, self.vision, env)
 
-        self.interpreter = Interpreter(self.memory)
+        self.interpreter = Interpreter(self.memory, ontosim)
 
         self.language = Language(self)
         self.language.add_interpreter(lambda words:

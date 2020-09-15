@@ -43,8 +43,7 @@ if __name__ == '__main__':
                 args = args[1:]
         elif args[0] == '--ontosim':
             do_ontosim = 1
-            if len(args) > 1:
-                args = args[1:]
+            args = args[2:]
         else:
             print('Unknown arguments: {}'.format(args))
             print(
@@ -80,7 +79,7 @@ if __name__ == '__main__':
 
     # create agent
     if agent_name == 'uagent':
-        agent = UndifferentiatedAgent(env)
+        agent = UndifferentiatedAgent(env, do_ontosim)
     elif agent_name == 'pvt':
         agent = PVTAgent(env)
     elif agent_name == 'vs':
