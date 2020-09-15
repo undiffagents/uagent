@@ -773,6 +773,16 @@ def interpret_ace(ace,makeFiles = True):
     reasonerFacts, groundRules = runProlog([str(fact) for fact in facts], [[str(imp.head),[str(b) for b in imp.body.body]] for imp in implications], prologfile,makeFiles)
     if not makeFiles: os.remove(prologfile)
 
+    # HIJACKING THIS TO RETURN MODIFIED RULES ETC. ****
+    # DS 2020-09-15: adding this to "hardcode" new format for interpreter for uagent expansion testing
+    facts = ["task(psychomotor-vigilance)", "isPartOf(screen,psychomotor-vigilance)", "item(button,space_bar)",
+             "isPartOf(space_bar,psychomotor-vigilance)", "isPartOf(subject,psychomotor-vigilance)",
+            "isPartOf(letter,psychomotor-vigilance)", "item(screen)", "item(subject)", "item(letter)"]
+    groundRules = ["item(subject),isPartOf(subject,psychomotor-vigilance),task(psychomotor-vigilance) => hasProperty(psychomotor-vigilance,active)",
+                   "hasProperty(psychomotor-vigilance,active),item(letter),item(screen),task(psychomotor-vigilance) => action(appear,letter,screen)",
+                   "action(appear,letter,screen),item(subject),item(button,space_bar),item(letter),item(screen) => action(press,subject,space_bar)"]
+    reasonerFacts = ["hasProperty(psychomotor-vigilance,active)", "action(appear,letter,screen)", "action(press,subject,space_bar)"]
+
     return set(facts), set([imp.toRule() for imp in implications]), set(groundRules), set(reasonerFacts)
 
 class Interpreter:
