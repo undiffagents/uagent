@@ -82,6 +82,12 @@ class UndifferentiatedAgent(Agent):
             #as more conditions are added, their cases must be coded in here.
             if cond.pred == potential_predicate:
                 # Check the verb and see if it's "appear"
+
+                ''' CK 2020-09-16: DANIEL - HERE'S SOMETHING WE NEED TO FIGURE OUT:
+                For  Visual Search, we get groundedRules  'appearsOn(target,screen), letter(target), ... => press(subject, resp_key)'
+                As it stands, UA won't ever find it, because the task is presenting multiple visual(isa=letter) -- (appropriately), none of them are coded as visual(isa='target').
+                We need to figure out how to update this to check for levels of abstraction... I guess checking facts or other parts of the conditions, looking for this specific term to see if it's something else?'''
+
                 if cond.obj(0) == 'appear':
                     self.think('check condition "{}"'.format(cond))
                     isa = cond.obj(1)
@@ -266,7 +272,12 @@ class UndifferentiatedAgent(Agent):
             stimulus_appears = self.vision.wait_for(isa=stimulusToLookFor,seen=False)
 
             ''' CK 2020-09-15: playing around with slight adjustment -- seems more appropriate to "encode" the 
-            stimulus, and then use the encoded properties as query basis. '''
+            stimulus, and then use the encoded properties as query basis. 
+            UPDATE: JUST KIDDING. In the last meeting, seemed like we wanted to do it this way, but it's basically exactly opposite of how Dario intends Think to work. Need to talk with Dario and Chris.'''
+
+            
+
+
             # self.vision.start_encode(stimulus_appears)
             # self.vision.get_encoded()
             # self.think("visual obj {}".format(stimulus_appears.obj))
