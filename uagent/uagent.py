@@ -265,30 +265,28 @@ class UndifferentiatedAgent(Agent):
         while self.time() < time:
             context = Chunk()
 
+            for rule in self.memory.recall_ground_rules():
+                self.process(rule, context)
+
             # Currently hardcoding the letter check - there will probably be a way to dynamically decide what to wait on
-            stimulusAppartionVerb = 'appear'
-            stimulusToLookFor = 'letter'
+            # stimulusAppartionVerb = 'appear'
+            # stimulusToLookFor = 'letter'
             # Wait for a letter to appear in vision, otherwise do nothing.
-            stimulus_appears = self.vision.wait_for(isa=stimulusToLookFor,seen=False)
+            # stimulus_appears = self.vision.wait_for(isa=stimulusToLookFor,seen=False)
 
             ''' CK 2020-09-15: playing around with slight adjustment -- seems more appropriate to "encode" the 
             stimulus, and then use the encoded properties as query basis. 
             UPDATE: JUST KIDDING. In the last meeting, seemed like we wanted to do it this way, but it's basically exactly opposite of how Dario intends Think to work. Need to talk with Dario and Chris.'''
-
-            
 
 
             # self.vision.start_encode(stimulus_appears)
             # self.vision.get_encoded()
             # self.think("visual obj {}".format(stimulus_appears.obj))
             # When a new stimulus appears, then get the ground rules which have a condition of a letter appearing
-            if stimulus_appears is not None:
-                rulesForStimulusApparition = self.memory.recall_ground_rules_with_condition_containing("action("
-                                                                                                       + stimulusAppartionVerb
-                                                                                                       + ","
-                                                                                                       + stimulusToLookFor)
-                for rule in rulesForStimulusApparition:
-                # for rule in self.memory.recall_ground_rules():
-                    #self.constructTaskActionList(rule)
-                    #print("TASK ACTIONS " + str(self.task_action_list))
-                    self.process(rule, context)
+            # if stimulus_appears is not None:
+                #rulesForStimulusApparition = self.memory.recall_ground_rules_with_condition_containing("action("
+                #                                                                                       + stimulusAppartionVerb
+                #                                                                                       + ","
+                #                                                                                       + stimulusToLookFor)
+                #for rule in rulesForStimulusApparition:
+                    #self.process(rule, context)
