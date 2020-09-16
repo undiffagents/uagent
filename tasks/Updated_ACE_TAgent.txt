@@ -1,0 +1,75 @@
+Updated ACE Instructions (2020-09-15)
+From Christopher Stevens, ACE used for the trained Agent in JAVA.
+
+INTEGRATED PVT
+
+English:
+    You will be seated in front of a computer screen. A letter will appear in the middle of the screen. When you see the letter, press the spacebar. Remember the identity of the letter. This letter is the target for the Visual Search and Auditory Search tasks.
+
+ACE:
+    A subject sees a screen.
+    If a letter appears on the screen then the subject presses "spacebar" and remembers the letter. 
+    The letter is the target of the Visual-Search-Task and the Auditory-Search-Task.
+
+INTEGRATED VS
+
+English:
+    You will be searching for a target letter on the screen. The target is the letter from the Psychomotor Vigilance Task. A set of letters will appear on the screen. Search for your target letter among the letters. If the target letter is on the screen, press ‘W’. If the target is not on the screen, press ‘R’. A letter is not the target unless it has the same color. Remember whether the target was present.
+
+ACE:
+    A subject sees a screen.
+    There is a letter that is a target.
+    The target is the letter from the Psychomotor-Vigilance-Task.
+    If some letters appear on the screen then the subject searches for the target.
+    If the target is on the screen then the subject presses "W".
+    If the target is not on the screen then the subject presses "R".
+    If a letter's color differs from the target's color then the letter is different.
+
+STANDALONE PVT
+
+English:
+    You will be seated in front of a computer screen. A letter will appear in the middle of the screen. When you see the letter, press the spacebar
+
+ACE:
+    A subject sees a screen.
+    If a letter appears on the screen then the subject presses "spacebar".
+
+STANDALONE VISUAL SEARCH
+
+English:
+    You will be searching for a target letter on the screen. A set of letters will appear on the screen. Search for your target letter among the letters. If the target letter is on the screen, press ‘W’. If the target is not on the screen, press ‘R’. A letter is not the target unless it has the same color.
+
+ACE:
+    A subject sees a screen.
+    There is a letter that is a target.
+    If some letters appear on the screen then the subject searches for the target.
+    If the target is on the screen then the subject presses "W".
+    If the target is not on the screen then the subject presses "R".
+    If a letter's color differs from the target's color then the letter is different.
+
+
+STANDALONE AUDITORY SEARCHEnglish:
+
+English:
+    A set of 1-4 channels will appear on your screen. To hear the message associated with a channel, press ‘J’, ‘K’, ‘L’, or ‘;’ depending on the channel you wish to listen to. If the target is present in any of the four channels, press the ‘N’ key. If the target is not present in any of the four channels, press the ‘=‘ key. Both the color and the letter must match the target.
+
+ACE:
+    A subject sees a screen.
+    There is a letter that is a target.
+    There is at least one channel.
+    The subject searches for the target in the channels. Each channel has a key.
+    The keys are {J, K, L,  ";"}.
+    If the subject presses the key of a channel then the channel plays a sound.
+    If the subject hears the target then the subject presses “N”.
+    If the subject does not hear the target then the subject presses Equals.
+    If a letter's color differs from the target's color then the letter is different.
+
+
+
+
+
+
+
+
+
+

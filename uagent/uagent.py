@@ -56,19 +56,6 @@ class UndifferentiatedAgent(Agent):
         #For future implementations (trying to use other labs' instructions)
         self.agent_synonym_list = ['subject','participant','you']
 
-    # subject(subject), screen(screen), letter(target),
-    # hasProperty(present,positive), hasProperty(target,correct),
-    # appearsOn(target,screen), button(present)
-    # =>
-    # press(subject,present)
-
-    # button(absent), hasProperty(absent,negative),
-    # letter(distractor), screen(screen),
-    # appearsOn(distractor,screen), letter(distractor),
-    # hasProperty(distractor,incorrect), subject(subject)
-    # =>
-    # press(subject,absent)
-
     #CK 2020-06-03: Updated for CV terms. Function output unaltered for 'press' (the only action it looked for, previously)
     # DS 2020-09-15: Modifying for new format - check if pred = "action" and then grab the first object (the verb)
     def is_action(self, rule):
@@ -246,6 +233,15 @@ class UndifferentiatedAgent(Agent):
 
         gapPresent = self.checkForGapWRTActions()
 
+
+        ''' CK 2020-09-15:  Commented code here is Dario's handcoded PVT agent for reference
+        # while self.time() < time:
+        #     visual = self.vision.wait_for(
+        #         isa='letter', region='pvt', seen=False)
+        #     self.vision.start_encode(visual)
+        #     self.motor.type(' ')
+        #     self.vision.get_encoded() '''
+
         while self.time() < time:
             context = Chunk()
 
@@ -253,7 +249,13 @@ class UndifferentiatedAgent(Agent):
             stimulusAppartionVerb = 'appear'
             stimulusToLookFor = 'letter'
             # Wait for a letter to appear in vision, otherwise do nothing.
-            stimulus_appears = self.vision.wait_for(isa=stimulusToLookFor)
+            stimulus_appears = self.vision.wait_for(isa=stimulusToLookFor,seen=False)
+
+            ''' CK 2020-09-15: playing around with slight adjustment -- seems more appropriate to "encode" the 
+            stimulus, and then use the encoded properties as query basis. '''
+            # self.vision.start_encode(stimulus_appears)
+            # self.vision.get_encoded()
+            # self.think("visual obj {}".format(stimulus_appears.obj))
             # When a new stimulus appears, then get the ground rules which have a condition of a letter appearing
             if stimulus_appears is not None:
                 rulesForStimulusApparition = self.memory.recall_ground_rules_with_condition_containing("action("

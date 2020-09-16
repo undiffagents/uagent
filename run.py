@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     #binary controllers
     do_quickload = 0 #1 second simulation time
-    do_ontosim = 0 #simulate ontology interactinon or not
+    do_ontosim = 1 #simulate ontology interactinon or not
 
     # set defaults
     task_name = 'pvt'
@@ -67,6 +67,7 @@ if __name__ == '__main__':
     # create task
     if task_name == 'pvt':
         task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
+        # task = (PVTTask(env, load_text('tasks/pvt/ace_TAgent.txt'))
                 if agent_name == 'uagent' else
                 PVTTask(env))
     elif task_name == 'vs':

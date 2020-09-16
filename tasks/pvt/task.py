@@ -17,10 +17,14 @@ class PVTTask(Task):
 
         def start_trial():
             end_trial()
+
             self.stimulus = DisplayVisual(140, 130, 20, 20, 'letter',
                                           random.choice(['X', 'O']))
             self.stimulus.set('region', 'pvt')
             self.stimulus.set('color', random.choice(['red', 'black']))
+            # CK 2020-09-15: Updated to include letter value as property in addition to the object
+            # For cross task, we want all stimulus properties accessible identically
+            self.stimulus.set('value', self.stimulus.obj )
             self.display.add_visual(self.stimulus)
 
         def end_trial():

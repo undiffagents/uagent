@@ -1,0 +1,7 @@
+A subject sees a screen.
+There is a letter that is a target.
+The target is the letter from the Psychomotor-Vigilance-Task.
+If some letters appear on the screen then the subject searches for the target.
+If the target is on the screen then the subject presses "W".
+If the target is not on the screen then the subject presses "R".
+If a letter's color differs from the target's color then the letter is different.
