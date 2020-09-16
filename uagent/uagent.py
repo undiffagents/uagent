@@ -29,9 +29,9 @@ class UndifferentiatedAgent(Agent):
 
         #Actions that execute_action() can handle.
         # DS 2020-09-15 - Modifying this to be the list of actions that the agent is aware of how to do.
-        # Removed 'press' for testing
+        # Removed 'press' for testing and replaced with 'push'
         # This is pre-determined, as opposed to the task-level actions list, which is built dynamically
-        self.agent_action_list = ['press','click','remember']
+        self.agent_action_list = ['push','click','remember']
         #'press' and 'remember' aren't in the Ontology.
         # "Action" CV in Ontology: 'click', 'read', 'retrieve', 'search', 'listen-for', 'watch-for'
 
@@ -39,6 +39,10 @@ class UndifferentiatedAgent(Agent):
         # which have actions which are performed by the subject.  This allows for gap detection on if the agent is
         # requested to do something which it does not know how to do.
         self.task_action_list = []
+
+        # DS 2020-09-16 - Adding a framework to link task actions to agent actions
+        # Format: Key = agent action, value = task action
+        self.task_to_agent_action_dict = {}
 
         # DS 2020-09-15 - adding a list of desired predicates in case "action" isn't the only one
         self.action_predicate_list = ['action']
@@ -63,8 +67,9 @@ class UndifferentiatedAgent(Agent):
             if action.pred in self.action_predicate_list:
                 for potential_action in self.agent_action_list:
                     # grab the verb from the action (the first object)
-                    if action.obj(0) == potential_action or "|" + action.obj(0) in potential_action\
-                            or action.obj(0) + "|" in potential_action:
+                    # DS 2020-09-16 also check if the action is in the task to agent action dict
+                    if action.obj(0) == potential_action or action.obj(0) in self.task_to_agent_action_dict.values():
+                        print("ACTION FOUND!" + action.obj(0))
                         return True
         return False
 
@@ -137,7 +142,9 @@ class UndifferentiatedAgent(Agent):
             if action.obj(1) == potential_syn:
                 self.think('execute action "{}"'.format(action))
 
-                if action.obj(0) == 'press':
+                # DS 2020-09-16 modifying this to 'push' to test associating actions with each other
+                # 'press' should trigger here if it was associated with push
+                if action.obj(0) == 'push' or action.obj(0) == self.task_to_agent_action_dict.get('push'):
                     # visual = self.vision.find(isa=action.obj(1))
                     # if visual:
                     #     self.motor.point_and_click(visual)
@@ -207,11 +214,11 @@ class UndifferentiatedAgent(Agent):
         for task_action in self.task_action_list:
             if task_action not in self.agent_action_list:
                 print("GAP DETECTED: Action " + task_action + " required by the task which the agent does not know.")
-                match = input("Please select a matching term from the agent's known action list: " +
+                agent_action_match = input("Please select a matching term from the agent's known action list: " +
                       str(self.agent_action_list))
-                self.agent_action_list.append(match + "|" + task_action)
+                self.task_to_agent_action_dict.update({agent_action_match: task_action})
                 gapFound = True
-                print(self.agent_action_list)
+                print(self.task_to_agent_action_dict)
         return gapFound
 
 
@@ -265,8 +272,12 @@ class UndifferentiatedAgent(Agent):
         while self.time() < time:
             context = Chunk()
 
-            for rule in self.memory.recall_ground_rules():
-                self.process(rule, context)
+            # DS 2020-09-16 Putting the stimulus check here as a debug to minimize the clutter of "checking rule,
+            # found nothing".  This can 100% be removed at any time.
+            stimulus_appears = self.vision.wait_for(isa='letter', seen=False)
+            if stimulus_appears is not None:
+                for rule in self.memory.recall_ground_rules():
+                    self.process(rule, context)
 
             # Currently hardcoding the letter check - there will probably be a way to dynamically decide what to wait on
             # stimulusAppartionVerb = 'appear'
