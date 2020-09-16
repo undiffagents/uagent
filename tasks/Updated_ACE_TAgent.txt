@@ -48,7 +48,7 @@ ACE:
     If a letter's color differs from the target's color then the letter is different.
 
 
-STANDALONE AUDITORY SEARCHEnglish:
+STANDALONE AUDITORY SEARCH
 
 English:
     A set of 1-4 channels will appear on your screen. To hear the message associated with a channel, press ‘J’, ‘K’, ‘L’, or ‘;’ depending on the channel you wish to listen to. If the target is present in any of the four channels, press the ‘N’ key. If the target is not present in any of the four channels, press the ‘=‘ key. Both the color and the letter must match the target.

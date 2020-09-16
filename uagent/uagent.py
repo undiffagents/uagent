@@ -220,6 +220,19 @@ class UndifferentiatedAgent(Agent):
             return True
 
 
+
+        ''' CK 2020-09-15:  original run() 
+    def run(self, time=60):
+
+            instr_visual = self.vision.wait_for(isa='text')
+            instructions = self.vision.encode(instr_visual)
+            self.language.interpret(instructions)
+
+            while self.time() < time:
+                context = Chunk()
+                for rule in self.memory.recall_ground_rules():
+                    self.process(rule, context) '''
+
     def run(self, time=60):
 
         instr_visual = self.vision.wait_for(isa='text')
@@ -241,6 +254,7 @@ class UndifferentiatedAgent(Agent):
         #     self.vision.start_encode(visual)
         #     self.motor.type(' ')
         #     self.vision.get_encoded() '''
+
 
         while self.time() < time:
             context = Chunk()
