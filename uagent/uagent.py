@@ -8,16 +8,25 @@ from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
 
 class InstructionStep:
 
-    def __init__(self, memory, rule):
-        self.memory = memory
+    def __init__(self, agent, rule):
+        self.agent = agent
+        self.memory = agent.memory
+        self.process = agent.process
         self.rule = rule
         self.chunk = Chunk(isa='step', rule=self.rule)
         self.memory.add(self.chunk)
         self.utility = 0
 
-    def recall_if_necessary(self):
+    def execute(self, context):
+
         if self.utility <= 0:
             self.memory.recall(isa='step', rule=self.rule)
+
+        self.process(self.rule, context)
+
+        reward = 1  # needs improvement later
+        alpha = .2
+        self.utility += alpha * (reward - self.utility)
 
 
 class UndifferentiatedAgent(Agent):
@@ -158,12 +167,11 @@ class UndifferentiatedAgent(Agent):
 
         steps = []
         for rule in self.ontology_memory.recall_ground_rules():
-            step = InstructionStep(self.memory, rule)
+            step = InstructionStep(self, rule)
             steps.append(step)
             print(rule)
 
         while self.time() < time:
             context = Chunk()
             for step in steps:
-                step.recall_if_necessary()
-                self.process(step.rule, context)
+                step.execute(context)
