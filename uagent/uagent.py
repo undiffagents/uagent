@@ -1,9 +1,15 @@
+import math
+import random
 import re
 
 from interpreter import Interpreter
 from ontology import OntologyMemory
 from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
                    Vision)
+
+DEFAULT_REWARD = 20
+DEFAULT_EGS = .1  # .5
+DEFAULT_ALPHA = .2
 
 
 class InstructionStep:
@@ -12,21 +18,50 @@ class InstructionStep:
         self.agent = agent
         self.memory = agent.memory
         self.process = agent.process
+
         self.rule = rule
         self.chunk = Chunk(isa='step', rule=self.rule)
         self.memory.add(self.chunk)
-        self.utility = 0
+
+        self.utility_recall = DEFAULT_REWARD
+        self.utility_execute = 0
+
+        self.last_time = None
+        self.last_time_was_recall = None
 
     def execute(self, context):
-
-        if self.utility <= 0:
+        self.last_time = self.agent.time()
+        c_recall = math.exp(self.utility_recall / math.sqrt(2 * DEFAULT_EGS))
+        c_execute = math.exp(self.utility_execute / math.sqrt(2 * DEFAULT_EGS))
+        pr_recall = c_recall / (c_recall + c_execute)
+        # print(pr_recall)
+        if random.random() < pr_recall:
+            print('***** RECALL')
             self.memory.recall(isa='step', rule=self.rule)
+            self.process(self.rule, context)
+            self.last_time_was_recall = True
+        else:
+            print('***** EXECUTE')
+            self.process(self.rule, context)
+            self.last_time_was_recall = False
 
-        self.process(self.rule, context)
-
-        reward = 1  # needs improvement later
-        alpha = .2
-        self.utility += alpha * (reward - self.utility)
+    def give_reward(self, time, reward):
+        if self.last_time is not None:
+            reward -= (time - self.last_time)
+            print(f'reward: {reward}')
+            if self.last_time_was_recall:
+                self.utility_recall += DEFAULT_ALPHA * \
+                    (reward - self.utility_recall)
+                if self.utility_execute < self.utility_recall:
+                    self.utility_execute += DEFAULT_ALPHA * \
+                        (self.utility_recall - self.utility_execute)
+            else:
+                self.utility_execute += DEFAULT_ALPHA * \
+                    (reward - self.utility_execute)
+        self.last_time = None
+        self.last_time_was_recall = None
+        print(f'u_recall: {self.utility_recall}')
+        print(f'u_execute: {self.utility_execute}')
 
 
 class UndifferentiatedAgent(Agent):
@@ -35,6 +70,8 @@ class UndifferentiatedAgent(Agent):
         super().__init__(output=output)
 
         self.memory = Memory(self)
+        self.memory.latency_factor = 5.0
+
         self.ontology_memory = OntologyMemory(self)
 
         self.vision = Vision(self, env.display)
@@ -111,8 +148,8 @@ class UndifferentiatedAgent(Agent):
                 if cond.pred == 'appearsOn':
                     self.think('check condition "{}"'.format(cond))
                     isa = cond.obj(0)
-                    # visual = self.vision.find(isa=isa, seen=False)
-                    visual = self.vision.wait_for(isa=isa, seen=False)
+                    visual = self.vision.find(isa=isa, seen=False)
+                    # visual = self.vision.wait_for(isa=isa, seen=False)
                     if visual:
                         print('----- Found {}'.format(isa))
                         context.set('visual', visual)
@@ -170,6 +207,12 @@ class UndifferentiatedAgent(Agent):
             step = InstructionStep(self, rule)
             steps.append(step)
             print(rule)
+
+        def give_reward():
+            for step in steps:
+                step.give_reward(self.time(), DEFAULT_REWARD)
+
+        self.motor.keyboard.add_type_fn(lambda key: give_reward())
 
         while self.time() < time:
             context = Chunk()
