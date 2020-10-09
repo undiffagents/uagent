@@ -34,7 +34,6 @@ class InstructionStep:
         c_recall = math.exp(self.utility_recall / math.sqrt(2 * DEFAULT_EGS))
         c_execute = math.exp(self.utility_execute / math.sqrt(2 * DEFAULT_EGS))
         pr_recall = c_recall / (c_recall + c_execute)
-        # print(pr_recall)
         if random.random() < pr_recall:
             print('***** RECALL')
             self.memory.recall(isa='step', rule=self.rule)
