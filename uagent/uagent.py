@@ -205,7 +205,6 @@ class UndifferentiatedAgent(Agent):
         for rule in self.ontology_memory.recall_ground_rules():
             step = InstructionStep(self, rule)
             steps.append(step)
-            print(rule)
 
         def give_reward():
             for step in steps:
