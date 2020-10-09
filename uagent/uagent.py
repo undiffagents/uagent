@@ -196,11 +196,6 @@ class UndifferentiatedAgent(Agent):
         instructions = self.vision.encode(instr_visual)
         self.language.interpret(instructions)
 
-        # while self.time() < time:
-        #     context = Chunk()
-        #     for rule in self.ontology_memory.recall_ground_rules():
-        #         self.process(rule, context)
-
         steps = []
         for rule in self.ontology_memory.recall_ground_rules():
             step = InstructionStep(self, rule)
