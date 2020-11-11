@@ -370,7 +370,7 @@ class Property(Constant):
         return Property(self.indent,self.letter,self.term,*self.args)
     
     def tripleString(self):
-        raise
+        return 'a :Constant ; :hasName "'+str(self.term) + '" ; :asDRSString '+'"{}property({},{},{})-{}/{}"'.format(self.indent,self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
     
     def __str__(self):
         return "'" + str(self.term) + "':" + str(self.letter)
@@ -1153,7 +1153,8 @@ def makeFactFromRole(predicate,factsExpression):
     
     if isinstance(predicate,Role):
         
-        pass
+        first = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
+        second = checkDictsForKey(predicate.arg(1),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
     
     raise Exception("Undefined Behavior")
 
@@ -1629,9 +1630,14 @@ if __name__ == "__main__":
     
     logfile.write("\nSolved Rules:\n")
     for rule in ontology.get_instruction_ground_rules():
-        logfile.write("{}\n".format(str(rule)))
-        
-    print(ontology.get_DRS_Strings())
-    print(ontology.countDRSStrings())
-    print(ontology.get_ACE_Strings())
-    print(ontology.countACEStrings())    
+        logfile.write("{}\n".format(str(rule)))   
+    
+    logfile.write("\n{} DRS Strings:\n".format(str(ontology.countDRSStrings())))
+    for drs in ontology.get_DRS_Strings():
+        logfile.write("{}\n".format(str(drs)))
+    
+    logfile.write("\n{} ACE Strings:\n".format(str(ontology.countACEStrings())))
+    for ace in ontology.get_ACE_Strings():
+        logfile.write("{}\n".format(str(ace)))
+    
+    logfile.close()

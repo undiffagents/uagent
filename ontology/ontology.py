@@ -60,8 +60,6 @@ class Ontology:
         subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update', "LOAD <file://{}>".format(path)])
         
         self.initialized = True
-        
-        return self
     
     def add_instruction_knowledge(self,ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules):
         
