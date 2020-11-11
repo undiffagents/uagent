@@ -215,43 +215,11 @@
     
 
 
-    <!-- http://www.uagent.com/ontology#asACEString -->
-
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asACEString"/>
-    
-
-
     <!-- http://www.uagent.com/ontology#asDRSString -->
 
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asDRSString"/>
-    
-
-
-    <!-- http://www.uagent.com/ontology#asFactString -->
-
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asFactString"/>
-    
-
-
-    <!-- http://www.uagent.com/ontology#asGroundRuleString -->
-
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asGroundRuleString">
-        <rdfs:subPropertyOf rdf:resource="http://www.uagent.com/ontology#asRuleString"/>
+    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asDRSString">
+        <rdfs:subPropertyOf rdf:resource="http://www.uagent.com/ontology#asString"/>
     </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.uagent.com/ontology#asReasonerFactString -->
-
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asReasonerFactString">
-        <rdfs:subPropertyOf rdf:resource="http://www.uagent.com/ontology#asFactString"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.uagent.com/ontology#asRuleString -->
-
-    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#asRuleString"/>
     
 
 
@@ -267,6 +235,12 @@
     
 
 
+    <!-- http://www.uagent.com/ontology#hasIndex -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#hasIndex"/>
+    
+
+
     <!-- http://www.uagent.com/ontology#hasItemName -->
 
     <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#hasItemName"/>
@@ -276,6 +250,12 @@
     <!-- http://www.uagent.com/ontology#hasName -->
 
     <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#hasName"/>
+    
+
+
+    <!-- http://www.uagent.com/ontology#inReasoningStep -->
+
+    <owl:DatatypeProperty rdf:about="http://www.uagent.com/ontology#inReasoningStep"/>
     
 
 
@@ -503,20 +483,6 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asACEString"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asDRSString"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asString"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -714,6 +680,12 @@
                 <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#inReasoningStep"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -746,7 +718,20 @@
 
     <!-- http://www.uagent.com/ontology#Term -->
 
-    <owl:Class rdf:about="http://www.uagent.com/ontology#Term"/>
+    <owl:Class rdf:about="http://www.uagent.com/ontology#Term">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#hasIndex"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#hasIndex"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
@@ -852,30 +837,6 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asACEString"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asDRSString"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asFactString"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asRuleString"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.uagent.com/ontology#asString"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
@@ -900,6 +861,22 @@
             </owl:Restriction>
         </rdfs:subClassOf>
     </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.uagent.com/ontology#affords"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:subClassOf rdf:resource="http://www.uagent.com/ontology#Predicate"/>
+    </owl:Restriction>
 </rdf:RDF>
 
 
