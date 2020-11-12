@@ -12,7 +12,7 @@ class Ontology:
     koiosGraph = ':koiosGraph'
     thinkGraph = ':thinkGraph'
     
-    predQueryMappings = {'name':'name','arity':'arity','step':'reasoningStep','string':'asString','predicateType':'isa','termType':'isa','termString':'asString','term2Type':'isa','term2String':'asString','functionTermType':'isa','functionTermString':'asString','functionName':'name'} 
+    predQueryMappings = {'ruleString':'asString','name':'name','arity':'arity','step':'reasoningStep','string':'asString','predicateType':'isa','termType':'isa','termString':'asString','term2Type':'isa','term2String':'asString','functionTermType':'isa','functionTermString':'asString','functionName':'name'} 
     
     instruction = ':instruction'
     
@@ -33,7 +33,7 @@ class Ontology:
         print("Starting ontology server...")
         subprocess.Popen(['java', '-jar', 'lib/fuseki/fuseki-server.jar', '--update','--quiet'])
         
-        if loadFile: self.load(loadFile)
+        if loadFile: self.load(filename=loadFile)
                 
     def stopOldServer(self):
         print('Removing any old ontology servers...')
@@ -61,7 +61,7 @@ class Ontology:
         
         self.initialized = True
     
-    def add_instruction_knowledge(self,ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules):
+    def add_instruction_knowledge(self,ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules):
         
         # add ACE
         instructionString = self.instruction+' a :Instruction'+''.join([' ; :asString "{}"'.format(x) for x in ace.splitlines()])+' .'
@@ -115,7 +115,7 @@ class Ontology:
         return set(answer[selector]['value'] for selector in result['head']['vars'] for answer in result['results']['bindings'])
     
     def factQueryExpression(self):
-        return self.instruction + ''' :asRule [ :inReasoningStep ?step ; a :Fact ; :hasHeadPredicate ?pred ] . 
+        return self.instruction + ''' :asRule [ :inReasoningStep ?step ; a :Fact ; :hasHeadPredicate ?pred ; :asString ?ruleString ] . 
                  ?pred a ?predicateType ; :hasName ?name ; :hasArity ?arity ; :asString ?string . 
                  optional {?pred :hasArity 1 ; :hasTerm [ a ?termType ; :asString ?termString ] . } . 
                  optional {?pred :hasTerm [ a ?termType ; :asString ?termString ] ; :hasTerm [ a ?term2Type ; :asString ?term2String ; :hasName ?functionName ; :hasTerm [a ?functionTermType ; :asString ?functionTermString]] . filter(?termType != ?term2Type)} 
@@ -123,7 +123,7 @@ class Ontology:
     
     def headQueryExpression(self):
         return self.instruction + ''' :asRule ?rule .
-                 ?rule :inReasoningStep ?step ; a :Rule ; :hasHeadPredicate ?pred . 
+                 ?rule :inReasoningStep ?step ; a :Rule ; :hasHeadPredicate ?pred ; :asString ?ruleString . 
                  ?pred a ?predicateType ; :hasName ?name ; :hasArity ?arity ; :asString ?string . 
                  optional {?pred :hasArity 1 ; :hasTerm [ a ?termType ; :asString ?termString ] . } . 
                  optional {?pred :hasTerm [ a ?termType ; :asString ?termString ] ; :hasTerm [ a ?term2Type ; :asString ?term2String ; :hasName ?functionName ; :hasTerm [a ?functionTermType ; :asString ?functionTermString]] . filter(?termType != ?term2Type)} 
@@ -178,21 +178,21 @@ class Ontology:
         if head:
             preds = []
             for pred in result:
-                if len(pred) == 7:
-                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['step']:pred['step'],'head':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]}]})
-                elif len(pred) == 9 and re.match(".*?\((.*?)\,.*",pred['string']).groups()[0] == pred['termString']:
-                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['step']:pred['step'],'head':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]}]})                            
-                elif len(pred) == 12:
-                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['step']:pred['step'],'head' if head else 'body':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'hasTerm':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]}]})                             
+                if len(pred) == 8:
+                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'head':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]}]})
+                elif len(pred) == 10 and re.match(".*?\((.*?)\,.*",pred['string']).groups()[0] == pred['termString']:
+                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'head':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]}]})                            
+                elif len(pred) == 13:
+                    preds.append({'isa':'Fact' if fact else 'Rule',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'head' if head else 'body':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'term':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]}]})                             
         else:
             preds = []
             for pred in result:
                 if len(pred) == 7:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]})
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]})
                 elif len(pred) == 9 and re.match(".*?\((.*?)\,.*",pred['string']).groups()[0] == pred['termString']:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]})                            
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]})                            
                 elif len(pred) == 12:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'hasTerm':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'hasTerm':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]})                                      
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'term':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]})                                      
         
         return preds
         
