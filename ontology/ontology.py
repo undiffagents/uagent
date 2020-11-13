@@ -14,8 +14,6 @@ class Ontology:
     
     predQueryMappings = {'ruleString':'asString','name':'name','arity':'arity','step':'reasoningStep','string':'asString','predicateType':'isa','termType':'isa','termString':'asString','term2Type':'isa','term2String':'asString','functionTermType':'isa','functionTermString':'asString','functionName':'name'} 
     
-    instruction = ':instruction'
-    
     PREFIX = 'PREFIX : <http://www.uagent.com/ontology#>\nPREFIX opla: <http://ontologydesignpatterns.org/opla#>\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
 
     def __init__(self,stopOldServer=False,loadFile=False):
@@ -64,7 +62,7 @@ class Ontology:
     def add_instruction_knowledge(self,ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules):
         
         # add ACE
-        instructionString = self.instruction+' a :Instruction'+''.join([' ; :asString "{}"'.format(x) for x in ace.splitlines()])+' .'
+        instructionString = ' '.join(['[] a :Instruction ; :asString "{}" .'.format(x) for x in ace.splitlines()])
         
         # add DRS
         instructionString = instructionString + factsExpression.tripleString()
@@ -76,18 +74,18 @@ class Ontology:
         
         # add rules
         for fact in facts:
-            instructionString = instructionString + self.instruction + ' :asRule [ a :Fact ; :inReasoningStep 0 ; :hasHeadPredicate ['+fact.tripleString()+'] ; :asString "'+str(fact)+'" ] .'
+            instructionString = instructionString + '[] a :Instruction ; :asRule [ a :Fact ; :inReasoningStep 0 ; :hasHeadPredicate ['+fact.tripleString()+'] ; :asString "'+str(fact)+'" ] .'
             dlString = dlString + fact.dlTripleString()
             
         for rule in rules:
-            instructionString = instructionString + self.instruction+' :asRule [ :asString "' +rule.toRule()+ '" ; a :Rule ; :inReasoningStep 0 ; :hasHeadPredicate ['+rule.head.pred.tripleString()+'] '+''.join(['; :hasBodyPredicate [{}] '.format(x.tripleString()) for x in rule.body.preds])+']. '
+            instructionString = instructionString + '[] a :Instruction ; :asRule [ :asString "' +rule.toRule()+ '" ; a :Rule ; :inReasoningStep 0 ; :hasHeadPredicate ['+rule.head.pred.tripleString()+'] '+''.join(['; :hasBodyPredicate [{}] '.format(x.tripleString()) for x in rule.body.preds])+']. '
             
         for order,fact in reasonerFacts:
-            instructionString = instructionString + self.instruction+' :asRule [ a :Fact ; :inReasoningStep '+str(order)+' ; :hasHeadPredicate ['+fact.tripleString()+'] ; :asString "'+str(fact)+'" ] .'
+            instructionString = instructionString + '[] a :Instruction ; :asRule [ a :Fact ; :inReasoningStep '+str(order)+' ; :hasHeadPredicate ['+fact.tripleString()+'] ; :asString "'+str(fact)+'" ] .'
             dlString = dlString + fact.dlTripleString()
             
         for order,rule in groundRules:
-            instructionString = instructionString + self.instruction+' :asRule [ :asString "' +rule.toRule()+ '" ; a :Rule ; :inReasoningStep '+str(order)+' ; :hasHeadPredicate ['+rule.head.pred.tripleString()+'] '+''.join(['; :hasBodyPredicate [{}] '.format(x.tripleString()) for x in rule.body.preds])+']. '
+            instructionString = instructionString + '[] a :Instruction ; :asRule [ :asString "' +rule.toRule()+ '" ; a :Rule ; :inReasoningStep '+str(order)+' ; :hasHeadPredicate ['+rule.head.pred.tripleString()+'] '+''.join(['; :hasBodyPredicate [{}] '.format(x.tripleString()) for x in rule.body.preds])+']. '
         
         self.add_to_instructions_graph(instructionString)
         self.add_to_dl_graph(dlString)
@@ -115,14 +113,14 @@ class Ontology:
         return set(answer[selector]['value'] for selector in result['head']['vars'] for answer in result['results']['bindings'])
     
     def factQueryExpression(self):
-        return self.instruction + ''' :asRule [ :inReasoningStep ?step ; a :Fact ; :hasHeadPredicate ?pred ; :asString ?ruleString ] . 
+        return '''[] a :Instruction ; :asRule [ :inReasoningStep ?step ; a :Fact ; :hasHeadPredicate ?pred ; :asString ?ruleString ] . 
                  ?pred a ?predicateType ; :hasName ?name ; :hasArity ?arity ; :asString ?string . 
                  optional {?pred :hasArity 1 ; :hasTerm [ a ?termType ; :asString ?termString ] . } . 
                  optional {?pred :hasTerm [ a ?termType ; :asString ?termString ] ; :hasTerm [ a ?term2Type ; :asString ?term2String ; :hasName ?functionName ; :hasTerm [a ?functionTermType ; :asString ?functionTermString]] . filter(?termType != ?term2Type)} 
                  optional {?pred :hasArity 2 ; :hasTerm ?term1 ; :hasTerm ?term2 . ?term1 a ?termType ; :asString ?termString . ?term2 a ?term2Type ; :asString ?term2String . filter(?term1 != ?term2) } .} '''
     
     def headQueryExpression(self):
-        return self.instruction + ''' :asRule ?rule .
+        return '''[] a :Instruction ; :asRule ?rule .
                  ?rule :inReasoningStep ?step ; a :Rule ; :hasHeadPredicate ?pred ; :asString ?ruleString . 
                  ?pred a ?predicateType ; :hasName ?name ; :hasArity ?arity ; :asString ?string . 
                  optional {?pred :hasArity 1 ; :hasTerm [ a ?termType ; :asString ?termString ] . } . 
@@ -253,18 +251,10 @@ class Ontology:
         return self.query_count_predicate_in_one_graph(':asDRSString',self.instructionGraph)
 
     def get_ACE_Strings(self):
-        return self.query_select_in_one_graph(['?object'],self.instruction+" :asString ?object",self.instructionGraph)
+        return self.query_select_in_one_graph(['?object'],'[] a :Instruction ; :asString ?object',self.instructionGraph)
     
     def countACEStrings(self):
-        return self.query_count_subject_predicate_in_one_graph(self.instruction,':asString',self.instructionGraph)
-    
-    '''
-SELECT DISTINCT * WHERE {  
-  ?functionPredicate ?p [ owl:intersectionOf [ rdf:rest*/rdf:first ?member ] ; ?p3 ?o3] .
-  ?member ?functionObject ?functionTerm
-  filter(?p3 != owl:intersectionOf)
-}
-    '''
+        return self.query_count_subject_predicate_in_one_graph('[] a :Instruction ; ',':asString',self.instructionGraph)
 
 if __name__ == "__main__":
     print("Starting ontology server...")
