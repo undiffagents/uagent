@@ -1104,6 +1104,8 @@ def makeFacts(factsExpression):
         if isinstance(cOrP,Class):
             knownInstances.add(cOrP.getName())
             knownInstances.add(cOrP.arg(0))
+        elif cOrP.getName() == 'equals':
+            facts.append(Class(cOrP.getIndent(),cOrP.getLetter(),cOrP.arg(0),cOrP.arg(1),cOrP.arg(2),cOrP.arg(3)))
             
     # do roles
     for predicate in roles:
@@ -1134,7 +1136,7 @@ def makeFactFromClass(predicate,factsExpression):
         # property
         for preposition in factsExpression.getPrepositions():
             if predicate.getLetter() == preposition.getLetter():
-                thingInTheRole,_ = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
+                thingInTheRole,_ = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[0],Variable) else (predicate.arg(0),0)
                 thingInThePreposition = factsExpression.getObjectDictionary()[preposition.arg(0)] if preposition.arg(0) in factsExpression.getObjectDictionary() else factsExpression.getPropertyDictionary()[preposition.arg(0)]
                 preposition.args[0] = thingInThePreposition
                 return Role(predicate.getIndent(),predicate.getLetter(),predicate.getName(),thingInTheRole,preposition,predicate.arg(1),predicate.arg(2))
@@ -1142,19 +1144,33 @@ def makeFactFromClass(predicate,factsExpression):
         # instance of a class
         for object in factsExpression.getObjects():
             if predicate.arg(0) == object.getLetter():
-                instance,_ = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary())
+                instance,_ = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary()) if isinstance(predicate.args[0],Variable) else (predicate.arg(0),0)
                 return Class(predicate.getIndent(),predicate.getLetter(),predicate.getName(),instance,predicate.arg(1),predicate.arg(2))        
         
     raise Exception("Undefined Behavior")
 
 def makeFactFromRole(predicate,factsExpression):
     
-    print(predicate)
-    
     if isinstance(predicate,Role):
         
-        first = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
-        second = checkDictsForKey(predicate.arg(1),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
+        # property
+        for preposition in factsExpression.getPrepositions():
+            if predicate.getLetter() == preposition.getLetter():
+                first,err = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[0],Variable) else (predicate.arg(0),0)
+                second,prop = checkDictsForKey(predicate.arg(1),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[1],Variable) else (predicate.arg(1),0)
+                thingInThePreposition = factsExpression.getObjectDictionary()[preposition.arg(0)] if preposition.arg(0) in factsExpression.getObjectDictionary() else factsExpression.getPropertyDictionary()[preposition.arg(0)]
+                preposition.args[0] = thingInThePreposition
+                return TernaryPredicate(predicate.getIndent(),predicate.getLetter(),predicate.getName(),first,second,preposition,predicate.arg(1),predicate.arg(2))        
+        
+        first,err = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[0],Variable) else (predicate.arg(0),0)
+        second,prop = checkDictsForKey(predicate.arg(1),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[1],Variable) else (predicate.arg(1),0)
+        
+        if err == 1:
+            raise Exception("Undefined Behavior")
+        elif prop == 1:
+            return PropertyRole(predicate.getIndent(),predicate.getLetter(),predicate.getName(),first,second,predicate.arg(2),predicate.arg(3))
+        else:
+            return Role(predicate.getIndent(),predicate.getLetter(),predicate.getName(),first,second,predicate.arg(2),predicate.arg(3))
     
     raise Exception("Undefined Behavior")
 
@@ -1198,6 +1214,19 @@ def makeClassFactOrPropertyFactFromRole(predicate,factsExpression):
             else:
                 raise Exception("Undefined Behavior")
             
+        # first term is a variable and second is a string
+        elif re.match("^([A-Z][0-9]*)$",predicate.arg(0)) and re.match("^\'(.*)\'$",predicate.arg(1)):
+            
+            thingInTheClass = predicate.arg(1)
+            classThingIsIn,i = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
+            
+            if i == 0:
+            
+                newPredicate = Role(predicate.getIndent(),predicate.getLetter(),'equals',classThingIsIn,thingInTheClass,predicate.arg(2),predicate.arg(3))
+                    
+            else:
+                raise Exception("Undefined Behavior")      
+        
         # first term is a variable
         elif re.match("^([A-Z][0-9]*)$",predicate.arg(0)):
             
@@ -1238,7 +1267,6 @@ def makeRules(interpretedFactsExpression,nestedExpression):
         
         # easy case, flat implication
         if not isinstance(expression.firstExpression(),NestedExpression) and not isinstance(expression.secondExpression(),NestedExpression) and expression.typeCharacter() == 'i':
-            #print(expression)
             
             bodyPredicates,knownVariables,classes = makeHalfRule(interpretedFactsExpression,expression.firstExpression(),set(),[])
             headPredicates,_,classesForVariables = makeHalfRule(interpretedFactsExpression,expression.secondExpression(),knownVariables,[])
@@ -1283,6 +1311,17 @@ def makeHalfRule(interpretedFactsExpression,expression,previousVariables,classes
     knownVariables = set()
     
     for predicate in roles:
+        
+        # property
+        for preposition in expression.getPrepositions():
+            if predicate.getLetter() == preposition.getLetter():
+                p = TernaryPredicate(predicate.getIndent(),predicate.getLetter(),predicate.getName(),predicate.arg(0),predicate.arg(1),preposition,predicate.arg(1),predicate.arg(2))
+                
+                predicates.append(p)
+                predicates.remove(predicate)
+                
+                knownVariables.add(p.arg(2).arg(0))
+                
         knownVariables.add(predicate.arg(0))
         knownVariables.add(predicate.arg(1))
     
@@ -1304,18 +1343,24 @@ def makeHalfRule(interpretedFactsExpression,expression,previousVariables,classes
         else:
             a = roleOrClass.arg(1)
             knownVariables.add(roleOrClass.arg(0))
-            print(roleOrClass)
             knownVariables.add(roleOrClass.arg(1).arg(0))
             
         predicates.append(roleOrClass)
-             
     
+    terms = set()    
     # add variable classes for all of the types of objects that were not stated
     for objectClass in interpretedFactsExpression.getObjects()+expression.getObjects():
         if objectClass.getLetter() in knownVariables - previousVariables:
             term,_ = checkDictsForKey(objectClass.getLetter(),interpretedFactsExpression.getObjectDictionary(),expression.getObjectDictionary())
-            classesForVariables.append(Class(objectClass.getIndent(),objectClass.getLetter(),term,objectClass.getLetter(),objectClass.arg(-2),objectClass.arg(-1)))    
-    
+            classesForVariables.append(Class(objectClass.getIndent(),objectClass.getLetter(),term,objectClass.getLetter(),objectClass.arg(-2),objectClass.arg(-1)))
+            terms.add(term)
+            
+    for obj in expression.getObjects():
+        if obj.getTerm() in terms:
+            pass
+        else:
+            classesForVariables.append(Class(obj.getIndent(),obj.getLetter(),obj.getTerm(),obj.getLetter(),obj.arg(-2),obj.arg(-1)))
+        
     return predicates,knownVariables,classesForVariables
 
 
@@ -1352,7 +1397,7 @@ def makePropertyFromRole(predicate,interpretedFactsExpression,expression):
         # already a valid role, YAY
         else: 
             newPredicate = predicate
-    
+        
         return newPredicate
     
     raise Exception("Undefined Behavior")
@@ -1592,19 +1637,9 @@ def interpret_ace(ace,makeLogFiles=False):
         for groundRule in groundRules: print(groundRule[1])
     
     return ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules
+
+def main():
     
-
-class Interpreter:
-
-    def __init__(self, memory):
-        self.memory = memory
-
-    def interpret_ace(self,ace):
-        '''Interprets ACE text and adds the resulting knowledge to memory'''
-        self.memory.add_instruction_knowledge(interpret_ace(ace))
-
-if __name__ == "__main__":
-
     if os.path.isfile("interpreter/reasonerFacts.txt"): os.remove("interpreter/reasonerFacts.txt")
     if os.path.isfile("interpreter/groundRules.txt"): os.remove("interpreter/groundRules.txt")
     if os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")
@@ -1641,3 +1676,24 @@ if __name__ == "__main__":
         logfile.write("{}\n".format(str(ace)))
     
     logfile.close()
+    
+def demo(ace):
+    
+    ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules = interpret_ace(ace,makeLogFiles=True)
+    
+    print()
+    
+class Interpreter:
+
+    def __init__(self, memory):
+        self.memory = memory
+
+    def interpret_ace(self,ace):
+        '''Interprets ACE text and adds the resulting knowledge to memory'''
+        self.memory.add_instruction_knowledge(interpret_ace(ace))
+
+if __name__ == "__main__":
+    
+    #demo(open("interpreter/demo.txt","r").read())
+    
+    main()
