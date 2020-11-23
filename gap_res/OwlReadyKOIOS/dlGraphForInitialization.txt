@@ -1,0 +1,49 @@
+<http://www.uagent.com/ontology#task>
+        a       <http://www.w3.org/2002/07/owl#Class> .
+
+<http://www.uagent.com/ontology#space_bar>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> , <http://www.uagent.com/ontology#button> .
+
+<http://www.uagent.com/ontology#beIn>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://www.uagent.com/ontology#psychomotor-vigilance>
+        a       <http://www.uagent.com/ontology#task> , <http://www.w3.org/2002/07/owl#NamedIndividual> ;
+        <http://www.uagent.com/ontology#hasProperty>
+                <http://www.uagent.com/ontology#active> .
+
+<http://www.uagent.com/ontology#button>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> , <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.uagent.com/ontology#beIn>
+                <http://www.uagent.com/ontology#psychomotor-vigilance> .
+
+<http://www.uagent.com/ontology#hasProperty>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://www.uagent.com/ontology#active>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> .
+
+<http://www.uagent.com/ontology#subject>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> , <http://www.w3.org/2002/07/owl#Class> , <http://www.uagent.com/ontology#subject> ;
+        <http://www.uagent.com/ontology#beIn>
+                <http://www.uagent.com/ontology#psychomotor-vigilance> ;
+        <http://www.uagent.com/ontology#press>
+                <http://www.uagent.com/ontology#space_bar> .
+
+<http://www.uagent.com/ontology#press>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://www.uagent.com/ontology#appearOn>
+        a       <http://www.w3.org/2002/07/owl#ObjectProperty> .
+
+<http://www.uagent.com/ontology#letter>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> , <http://www.w3.org/2002/07/owl#Class> , <http://www.uagent.com/ontology#letter> ;
+        <http://www.uagent.com/ontology#appearOn>
+                <http://www.uagent.com/ontology#screen> ;
+        <http://www.uagent.com/ontology#beIn>
+                <http://www.uagent.com/ontology#psychomotor-vigilance> .
+
+<http://www.uagent.com/ontology#screen>
+        a       <http://www.w3.org/2002/07/owl#NamedIndividual> , <http://www.w3.org/2002/07/owl#Class> , <http://www.uagent.com/ontology#screen> ;
+        <http://www.uagent.com/ontology#beIn>
+                <http://www.uagent.com/ontology#psychomotor-vigilance> .
