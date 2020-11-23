@@ -7,32 +7,22 @@ from .ontology import Ontology
 
 class Fact(Chunk):
 
-    def __init__(self, string):
-        super().__init__(string=string)
-        self.pred = string[:string.find('(')]
-        self.objs = string[string.find('(')+1:string.find(')')].split(',')
-
-    def obj(self, i):
-        return self.objs[i]
+    def __init__(self, dictionary):        
+        super().__init__(**dictionary)
 
     def __str__(self):
-        return self.pred + '(' + ','.join(self.objs) + ')'
+        return self.slots['asString']
 
 
 class Rule(Chunk):
 
-    def __init__(self, string):
-        super().__init__(string=string)
-        parts = string.split(' => ')
-        self.conditions = [Fact(x)
-                           for x in re.findall(r'\w+\([\w,_-]*\)', parts[0])]
-        self.actions = [Fact(x)
-                        for x in re.findall(r'\w+\([\w,_-]*\)', parts[1])]
+    def __init__(self, dictionary):
+        super().__init__(**dictionary)
+        self.conditions = self.slots['body']
+        self.actions = self.slots['head']
 
     def __str__(self):
-        return (', '.join([str(x) for x in self.conditions]) +
-                ' => ' +
-                ', '.join([str(x) for x in self.actions]))
+        return self.slots['asString']
 
 
 class OntologyMemory(Memory):
@@ -41,16 +31,15 @@ class OntologyMemory(Memory):
 
     def __init__(self, agent, decay=None):
         super().__init__(agent, decay=decay)
-        self.ontology = Ontology().load()
+        self.ontology = Ontology(stopOldServer=True,loadFile='uagent.owl')
 
     def add_instruction_knowledge(self, ace_output):
-        self.ontology.add_instruction_knowledge(ace_output)
+        self.ontology.add_instruction_knowledge(*ace_output)
 
     def _ontology_recall(self, name, get):
         self.think('recall {}'.format(name))
         self.log('recalling {}'.format(name))
-        results = set([Rule(s) if ' => ' in s else Fact(s)
-                       for s in get()])
+        results = set([Rule(s) if s['isa'] == 'Rule' else Fact(s) for s in get()])
         self.wait(OntologyMemory.DEFAULT_DURATION)
         self.log('recalled {}'.format(name))
         return results
