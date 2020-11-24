@@ -42,6 +42,7 @@
   <data key="d0">Instance</data>
   <data key="d1">screen_Class</data>
 </node>
+<node id="active"/>
 <edge id="0" source="button_Class" target="task_Class">
   <data key="d2">beIn</data>
 </edge>
@@ -58,6 +59,24 @@
   <data key="d2">beIn</data>
 </edge>
 <edge id="0" source="screen_Class" target="task_Class">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="psychomotor-vigilance" target="active">
+  <data key="d2">hasProperty</data>
+</edge>
+<edge id="0" source="subject" target="psychomotor-vigilance">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="subject" target="space_bar">
+  <data key="d2">press</data>
+</edge>
+<edge id="0" source="letter" target="screen">
+  <data key="d2">appearOn</data>
+</edge>
+<edge id="0" source="letter" target="psychomotor-vigilance">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="screen" target="psychomotor-vigilance">
   <data key="d2">beIn</data>
 </edge>
 </graph></graphml>

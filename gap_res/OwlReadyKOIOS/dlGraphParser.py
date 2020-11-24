@@ -12,6 +12,8 @@ itemBlocksInGraph = []
 graphChunks = {}
 classList = []
 instanceList = []
+instanceParents = []
+classChildren = []
 
 testGraph = nx.MultiDiGraph()
 
@@ -97,6 +99,31 @@ def constructInstances():
             testGraph.add_node(objectName, nodeType='Instance', parentClass=parentClass+'_'+CLASS_TYPE)
             # Add to list of classes
             instanceList.append(objectName)
+            # Track parent of instance
+            instanceParents.append((objectName, parentClass))
+            classChildren.append((parentClass, objectName))
+
+def connectInstances():
+    # Need to find a way to get the parent classes of the instance (easy) and then connect the instance to any instances
+    # of classes which the parent class is connected to (hard)
+    for currentInstance in instanceList:
+        # Get the chunk values for the instance in question
+        instanceChunk = graphChunks.get(currentInstance)
+        # Get the predicates out of that chunk
+        instancePreds = instanceChunk.get(PREDS)
+        # Iterate through the predicates - connect the predicates declared on the instance to the targets which are
+        # instances
+        for action, target in instancePreds:
+            # Check if the target is a class object or not
+            testGraph.add_edge(str(currentInstance), str(target), predicate=str(action))
+        # TODO: OTHER STEPS WHICH NEED DONE:
+        # Get the parent of the currentInstance and see if there are any connections which the parent class has
+        # which can be mirrored?  Also check if there are any connections to classes and connect to the child instances?
+        # OR MAYBE NOT - THIS COULD BE A GAP.  F.E.: Button has "beIn PVT" but space_bar does not.
+        # SO THIS COULD BE SOMETHING FOR DETECTION.
+        # Just because a class has/allows for a connection doesn't mean it HAS to be true.
+        # Specifically, what if there are multiple instances of a class; how do you know which to connect to?
+        # Not necessarily all of them.
 
 def getItemBlocksInGraph():
     inputFile = open(dlGraphFile, 'r')
@@ -208,6 +235,7 @@ parseItemBlocks()
 constructClasses()
 constructInstances()
 connectClasses()
+connectInstances()
 nx.write_graphml_lxml(testGraph, "testGraph.graphml")
 
 print(itemBlocksInGraph)
