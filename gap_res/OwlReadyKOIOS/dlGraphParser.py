@@ -2,6 +2,7 @@
 #from ontoConstants import *
 #from owlready2 import *
 import re
+import networkx as nx
 
 dlGraphFile = 'dlGraphForInitialization.txt'
 ontologySignature = 'http://www.uagent.com/ontology#'
@@ -9,10 +10,93 @@ owlSignature = 'http://www.w3.org/2002/07/owl#'
 
 itemBlocksInGraph = []
 graphChunks = {}
+classList = []
+instanceList = []
+
+testGraph = nx.MultiDiGraph()
 
 IS_A = "isa"
 PREDS = "preds"
+CLASS_TYPE = "Class"
 
+# If it's a NamedIndividual, it's an instantiation; if it's a class and not a namedindividual, it's not.
+# OR if it's both, then there's a class and this is an an instantiation of that class at once ?????
+# IGNORE NAMEDINDIVIDUAL - IT'S AN INSTANCE IF IT HAS A UAGENT REFERENCE (button/task) IN ITS THING
+# WHAT ABOUT #active THEN?  IT ONLY HAS NAMEDINDIVIDUAL
+# If it's an "ObjectProperty" it's an "action" edge?
+# How to figure out relationships between classes? i.e. subject -> button passes through spacebar.
+# Maybe track relationships between namedindividuals and that means the classes have a relationship?
+# Would be nice to have a "structure" of acceptable relationships between classes.
+
+# Iterate through all classes and construct those
+# Then initialize namedIndividuals as is appropriate - ARE THE NAMED INDIVIDUALS INSTANCES THOUGH?  OR NOT NECESSARILY
+# Then connect the individuals
+
+# The class side of the graph could be the "expected structure" and the instance side of the graph could be the
+# "actual structure" - maybe those could be compared?
+
+def constructClasses():
+    # Iterate through graphChunks and grab each "class" and create a node out of that.
+    for chunkKey, chunkValue in graphChunks.items():
+        objectName = chunkKey
+        # print(chunkKey, chunkValue)
+        print(objectName)
+        # Get the supertypes of the object
+        superTypes = chunkValue.get(IS_A)
+        # If one of the supertypes is "Class" then we want to create a class-level node for this.
+        if CLASS_TYPE in superTypes:
+            # REMOVE THE + CLASS_TYPE, THAT'S JUST FOR DEBUGGING?  UNLESS IT WOULD BE USEFUL TO KEEP
+            testGraph.add_node(objectName + '_' + CLASS_TYPE, nodeType=CLASS_TYPE, parentClass='Object')
+            # Add to list of classes
+            classList.append(objectName)
+
+def connectClasses():
+    # Iterate through the classes and find what predicate relationships they have with items.  If those items aren't
+    # classes, then need to find the parent class and connect it to that.
+    for classObject in classList:
+        # Get the chunk values for the object in question
+        objectChunk = graphChunks.get(classObject)
+        # Get the predicates out of that chunk
+        objectPreds = objectChunk.get(PREDS)
+        # Iterate through the predicates
+        for action, target in objectPreds:
+            # Check if the target is a class object or not
+            if target in classList:
+                # Connect the object and the target via the action.
+                print(classObject, target, action)
+                testGraph.add_edge(str(classObject) + '_' + CLASS_TYPE,
+                                   str(target) + '_' + CLASS_TYPE, predicate=str(action))
+            # If the target is not a class object, then we need to get its parent class and connect the current
+            # class object to the parent class.
+            else:
+                # Get the chunk about the target
+                targetChunk = graphChunks.get(target)
+                # Retrieve the supertypes from the target chunk
+                targetClasses = targetChunk.get(IS_A)
+                # Compare the target chunk supertypes to the list of classes
+                parentClassesFound = [foundClass for foundClass in classList if foundClass in targetClasses]
+                # If a parent class is found
+                if len(parentClassesFound) > 0:
+                    # ASSUME ONLY ONE PARENT CLASS PER INDIVIDUAL
+                    parentClass = parentClassesFound[0]
+                    testGraph.add_edge(str(classObject) + '_' + CLASS_TYPE,
+                                       str(parentClass) + '_' + CLASS_TYPE, predicate=str(action))
+
+def constructInstances():
+    # Iterate through graphChunks and grab each "class" and create a node out of that.
+    for chunkKey, chunkValue in graphChunks.items():
+        objectName = chunkKey
+        # Get the supertypes of the object
+        superTypes = chunkValue.get(IS_A)
+        # Check if any of the classes are in the list of types for this object
+        parentClassesFound = [foundClass for foundClass in classList if foundClass in superTypes]
+        if len(parentClassesFound) > 0:
+            # ASSUMING ONLY ONE PARENT CLASS PER INDIVIDUAL
+            parentClass = parentClassesFound[0]
+            # TODO: Need to somehow inherit the properties/links of the parent class?
+            testGraph.add_node(objectName, nodeType='Instance', parentClass=parentClass+'_'+CLASS_TYPE)
+            # Add to list of classes
+            instanceList.append(objectName)
 
 def getItemBlocksInGraph():
     inputFile = open(dlGraphFile, 'r')
@@ -121,5 +205,10 @@ def stripHTML(itemToStrip):
 
 getItemBlocksInGraph()
 parseItemBlocks()
+constructClasses()
+constructInstances()
+connectClasses()
+nx.write_graphml_lxml(testGraph, "testGraph.graphml")
+
 print(itemBlocksInGraph)
 print(graphChunks)
