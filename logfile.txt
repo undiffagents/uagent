@@ -1,47 +1,36 @@
 Facts:
 {'isa': 'Fact', 'asString': 'be(letter,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(letter,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
+{'isa': 'Fact', 'asString': 'task(psychomotor-vigilance)', 'reasoningStep': 0, 'head': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}
 {'isa': 'Fact', 'asString': 'subject(subject)', 'reasoningStep': 0, 'head': [{'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}]}]}
 {'isa': 'Fact', 'asString': 'screen(screen)', 'reasoningStep': 0, 'head': [{'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}
-{'isa': 'Fact', 'asString': 'be(subject,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
 {'isa': 'Fact', 'asString': 'letter(letter)', 'reasoningStep': 0, 'head': [{'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}]}]}
-{'isa': 'Fact', 'asString': 'be(screen,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(screen,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
-{'isa': 'Fact', 'asString': 'be(button,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(button,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'button', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
 {'isa': 'Fact', 'asString': 'button(space_bar)', 'reasoningStep': 0, 'head': [{'asString': 'button(space_bar)', 'name': 'button', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'space_bar', 'isa': 'Constant'}]}]}
-{'isa': 'Fact', 'asString': 'task(psychomotor-vigilance)', 'reasoningStep': 0, 'head': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}
+{'isa': 'Fact', 'asString': 'be(screen,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(screen,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
+{'isa': 'Fact', 'asString': 'be(subject,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
+{'isa': 'Fact', 'asString': 'be(button,in(psychomotor-vigilance))', 'reasoningStep': 0, 'head': [{'asString': 'be(button,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'button', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}]}
 
 Learned Facts:
+{'isa': 'Fact', 'asString': 'press(subject,space_bar)', 'reasoningStep': 3, 'head': [{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'space_bar', 'isa': 'Constant'}]}]}
 {'isa': 'Fact', 'asString': 'appear(letter,on(screen))', 'reasoningStep': 2, 'head': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}]}
 {'isa': 'Fact', 'asString': 'hasProperty(psychomotor-vigilance,active)', 'reasoningStep': 1, 'head': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}, {'asString': 'active', 'isa': 'Constant'}]}]}
-{'isa': 'Fact', 'asString': 'press(subject,space_bar)', 'reasoningStep': 3, 'head': [{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'space_bar', 'isa': 'Constant'}]}]}
 
 Rules:
-{'isa': 'Rule', 'asString': 'appear(K,on(C)),screen(C),letter(K),button(H),subject(I) => press(I,H)', 'reasoningStep': 0, 'head': [{'asString': 'press(I,H)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'I', 'isa': 'Variable'}, {'asString': 'H', 'isa': 'Variable'}]}], 'body': [{'asString': 'button(H)', 'name': 'button', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'H', 'isa': 'Variable'}]}, {'asString': 'letter(K)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'K', 'isa': 'Variable'}]}, {'asString': 'appear(K,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'K', 'isa': 'Variable'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'C', 'isa': 'Variable'}]}]}, {'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'C', 'isa': 'Variable'}]}, {'asString': 'subject(I)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'I', 'isa': 'Variable'}]}]}
+{'isa': 'Rule', 'asString': 'appear(K,on(C)),screen(C),letter(K),button(H),subject(I) => press(I,H)', 'reasoningStep': 0, 'head': [{'asString': 'press(I,H)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'I', 'isa': 'Variable'}, {'asString': 'H', 'isa': 'Variable'}]}], 'body': [{'asString': 'subject(I)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'I', 'isa': 'Variable'}]}, {'asString': 'button(H)', 'name': 'button', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'H', 'isa': 'Variable'}]}, {'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'C', 'isa': 'Variable'}]}, {'asString': 'letter(K)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'K', 'isa': 'Variable'}]}, {'asString': 'appear(K,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'K', 'isa': 'Variable'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'C', 'isa': 'Variable'}]}]}]}
 {'isa': 'Rule', 'asString': 'be(M,in(A)),task(A),subject(M) => hasProperty(A,active)', 'reasoningStep': 0, 'head': [{'asString': 'hasProperty(A,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}, {'asString': 'active', 'isa': 'Constant'}]}], 'body': [{'asString': 'subject(M)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'M', 'isa': 'Variable'}]}, {'asString': 'task(A)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}]}, {'asString': 'be(M,in(A))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'M', 'isa': 'Variable'}, {'asString': 'in(A)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'A', 'isa': 'Variable'}]}]}]}
-{'isa': 'Rule', 'asString': 'hasProperty(A,active),task(A),screen(C),letter(S) => appear(S,on(C))', 'reasoningStep': 0, 'head': [{'asString': 'appear(S,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'S', 'isa': 'Variable'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'C', 'isa': 'Variable'}]}]}], 'body': [{'asString': 'letter(S)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'S', 'isa': 'Variable'}]}, {'asString': 'task(A)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}]}, {'asString': 'hasProperty(A,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}, {'asString': 'active', 'isa': 'Constant'}]}, {'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'C', 'isa': 'Variable'}]}]}
+{'isa': 'Rule', 'asString': 'hasProperty(A,active),task(A),screen(C),letter(S) => appear(S,on(C))', 'reasoningStep': 0, 'head': [{'asString': 'appear(S,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'S', 'isa': 'Variable'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'C', 'isa': 'Variable'}]}]}], 'body': [{'asString': 'hasProperty(A,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}, {'asString': 'active', 'isa': 'Constant'}]}, {'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'C', 'isa': 'Variable'}]}, {'asString': 'letter(S)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'S', 'isa': 'Variable'}]}, {'asString': 'task(A)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'A', 'isa': 'Variable'}]}]}
 
 Solved Rules:
-{'isa': 'Rule', 'asString': 'appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)', 'reasoningStep': 3, 'head': [{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'space_bar', 'isa': 'Constant'}]}], 'body': [{'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}, {'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}]}, {'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}, {'asString': 'button(space_bar)', 'name': 'button', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'space_bar', 'isa': 'Constant'}]}]}
-{'isa': 'Rule', 'asString': 'be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)', 'reasoningStep': 1, 'head': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}, {'asString': 'active', 'isa': 'Constant'}]}], 'body': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}, {'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}, {'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}]}]}
-{'isa': 'Rule', 'asString': 'hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))', 'reasoningStep': 2, 'head': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}], 'body': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}]}, {'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}, {'asString': 'active', 'isa': 'Constant'}]}, {'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}
+{'isa': 'Rule', 'asString': 'hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))', 'reasoningStep': 2, 'head': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}], 'body': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}, {'asString': 'active', 'isa': 'Constant'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}]}, {'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}, {'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}
+{'isa': 'Rule', 'asString': 'be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)', 'reasoningStep': 1, 'head': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}, {'asString': 'active', 'isa': 'Constant'}]}], 'body': [{'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}]}, {'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'psychomotor-vigilance', 'isa': 'Constant'}]}, {'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}]}]}
+{'isa': 'Rule', 'asString': 'appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)', 'reasoningStep': 3, 'head': [{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}, {'asString': 'space_bar', 'isa': 'Constant'}]}], 'body': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}, {'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'subject', 'isa': 'Constant'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'letter', 'isa': 'Constant'}]}, {'asString': 'button(space_bar)', 'name': 'button', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'space_bar', 'isa': 'Constant'}]}, {'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'Predicate', 'term': [{'asString': 'screen', 'isa': 'Constant'}]}]}
 
 19 DRS Strings:
-   object(M,subject,countable,na,eq,1)-6/3
-   predicate(N,be,M)-6/4
-   modifier_pp(N,in,A)-6/5
-   =>
-   predicate(P,be,A,O)-6/11
-   property(O,active,pos)-6/12
-
-object(A,task,countable,na,eq,1)-1/6
-object(E,button,countable,na,eq,1)-3/7
-modifier_pp(L,in,A)-5/7
-modifier_pp(G,in,A)-3/10
-object(H,space_bar,countable,na,eq,1)-3/4
-modifier_pp(J,in,A)-4/7
-predicate(L,be,K)-5/6
-object(I,subject,countable,na,eq,1)-4/4
 predicate(B,be,psychomotor-vigilance,A)-1/4
-predicate(F,be,H,E)-3/5
+modifier_pp(G,in,A)-3/10
+modifier_pp(L,in,A)-5/7
+modifier_pp(D,in,A)-2/7
+predicate(D,be,C)-2/6
+object(I,subject,countable,na,eq,1)-4/4
    predicate(R,be,A,Q)-7/4
    property(Q,active,pos)-7/5
    =>
@@ -49,24 +38,35 @@ predicate(F,be,H,E)-3/5
    predicate(T,appear,S)-7/9
    modifier_pp(T,on,C)-7/10
 
-modifier_pp(D,in,A)-2/7
+object(A,task,countable,na,eq,1)-1/6
+   object(M,subject,countable,na,eq,1)-6/3
+   predicate(N,be,M)-6/4
+   modifier_pp(N,in,A)-6/5
+   =>
+   predicate(P,be,A,O)-6/11
+   property(O,active,pos)-6/12
+
+object(E,button,countable,na,eq,1)-3/7
+object(H,space_bar,countable,na,eq,1)-3/4
+modifier_pp(J,in,A)-4/7
+object(K,letter,countable,na,eq,1)-5/4
+predicate(G,be,H)-3/9
+predicate(F,be,H,E)-3/5
+predicate(J,be,I)-4/6
+object(C,screen,countable,na,eq,1)-2/4
    predicate(U,appear,K)-8/4
    modifier_pp(U,on,C)-8/5
    =>
    predicate(V,press,I,H)-8/11
 
-object(C,screen,countable,na,eq,1)-2/4
-object(K,letter,countable,na,eq,1)-5/4
-predicate(J,be,I)-4/6
-predicate(D,be,C)-2/6
-predicate(G,be,H)-3/9
+predicate(L,be,K)-5/6
 
 8 ACE Strings:
-If the task is active then a letter appears on the screen.
-p:psychomotor-vigilance is a task.
-The n:space_bar is a button and is in the task.
-There is a subject that is in the task.
-If a subject is in the task then the task is active.
-If the letter appears on the screen then the subject presses the n:space_bar.
-There is a screen that is in the task.
 There is a letter that is in the task.
+p:psychomotor-vigilance is a task.
+If the letter appears on the screen then the subject presses the n:space_bar.
+The n:space_bar is a button and is in the task.
+There is a screen that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+There is a subject that is in the task.
