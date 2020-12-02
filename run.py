@@ -82,4 +82,4 @@ if __name__ == '__main__':
 
     # run simulation
     world = World(task, agent)
-    world.run(300, real_time=(window is not None))
+    world.run(60, real_time=(window is not None))
