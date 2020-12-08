@@ -1,3 +1,11 @@
+AARON:
+
+    In one WSL window, run 'bash start_server.sh' in uagent-new
+    In another window, run 'python3 run.py' in uagent-new to run Think (I think this loads some information into the ontology, but I'm uncertain)
+   Then go to gap_res/OwlReadyKOIOS and run 'python3 owlReadyInitializer.py'.  This should initialize a bunch of data into uagent-initialized on the Jena Fuseki server.
+
+IGNORE BELOW
+
 Nothing much here yet, just trying to compile all of the gap_res work into one spot.
 
 Context gaps are automatically identified if the control for that is enabled.

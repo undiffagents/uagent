@@ -501,4 +501,4 @@ def endSituationDescription():
         previousSituation = currentSituation
 
 
-# initializeOntology()
+initializeOntology()
