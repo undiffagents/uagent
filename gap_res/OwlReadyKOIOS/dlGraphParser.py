@@ -103,6 +103,8 @@ def constructInstances():
             instanceParents.append((objectName, parentClass))
             classChildren.append((parentClass, objectName))
 
+# This gives affordances pretty nicely I guess?  Maybe - unless there's a difference between afforded actions and
+# "used" actions
 def connectInstances():
     # Need to find a way to get the parent classes of the instance (easy) and then connect the instance to any instances
     # of classes which the parent class is connected to (hard)
