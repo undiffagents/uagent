@@ -61,8 +61,9 @@ class UndifferentiatedAgent(Agent):
     def is_action(self, rule):
         for action in rule.actions:
             for potential_action in self.action_list:
-                if action.pred == potential_action:
-                    return True
+                for term in action['term']:
+                    if term['asString'] == potential_action:
+                        return True
         return False
     
     #CK 2020-06-03: Updated for CV terms. Function output unaltered for 'appearsOn' (the only thing it looked for, previously). Treats 'visible' as identical to 'appearsOn' at the moment.
