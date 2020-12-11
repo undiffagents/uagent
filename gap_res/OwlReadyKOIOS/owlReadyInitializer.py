@@ -2,7 +2,7 @@
 from ontoConstants import *
 from owlready2 import *
 
-interpreterFile = 'instructionGraph.txt'
+interpreterFile = 'interpreterTest.txt'
 
 currentExperiment = None
 currentTask = None
