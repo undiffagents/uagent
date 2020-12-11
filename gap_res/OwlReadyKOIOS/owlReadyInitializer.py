@@ -2,7 +2,7 @@
 from ontoConstants import *
 from owlready2 import *
 
-interpreterFile = 'interpreterTest.txt'
+interpreterFile = 'instructionGraph.txt'
 
 currentExperiment = None
 currentTask = None
@@ -66,7 +66,8 @@ def initializeOntology():
     # Iterate through each line
     for line in inputLines:
         line = line.strip()
-        processInterpreterOutputLine(line)
+        print(line);
+        # processInterpreterOutputLine(line)
         # rdfLines = rdfLines + processInterpreterOutputLine(line)
     # Close up the last situation description
     # rdfLines = rdfLines + endSituationDescription()

@@ -1,0 +1,1192 @@
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(K,letter,countable,na,eq,1)-5/4" ;
+  <http://www.uagent.com/ontology#hasName>
+          "letter"
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "subject(subject)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "subject(subject)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "subject" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Function> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "modifier_pp(D,in,A)-2/7" ;
+  <http://www.uagent.com/ontology#asString>
+          "in(A)" ;
+  <http://www.uagent.com/ontology#hasName>
+          "in" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "A"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "If the task is active then a letter appears on the screen."
+] .
+
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(A,task,countable,na,eq,1)-1/6" ;
+  <http://www.uagent.com/ontology#hasName>
+          "task"
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "If a subject is in the task then the task is active."
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "hasProperty(psychomotor-vigilance,active)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "hasProperty(psychomotor-vigilance,active)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "hasProperty" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "active"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    1
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(F,be,H,E)-3/5" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(H,E)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          2 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "H"
+          ] ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "E"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(G,be,H)-3/9" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(H)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          1 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "H"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "hasProperty(A,active),task(A),screen(C),letter(S) => appear(S,on(C))" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "screen(C)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "screen" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "C"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "task(A)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "task" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "A"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "hasProperty(A,active)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "hasProperty" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "A"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "active"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "letter(S)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "letter" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "S"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "appear(S,on(C))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "appear" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "S"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "on(C)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "on" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Variable> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "C"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "button(space_bar)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "button" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "space_bar"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "screen(screen)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "screen" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "screen"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "letter(letter)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "letter" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "subject(subject)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "subject" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "appear(letter,on(screen))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "appear" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "on(screen)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "on" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "screen"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "press(subject,space_bar)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "press" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "space_bar"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    3
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Function> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "modifier_pp(L,in,A)-5/7" ;
+  <http://www.uagent.com/ontology#asString>
+          "in(A)" ;
+  <http://www.uagent.com/ontology#hasName>
+          "in" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "A"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "There is a letter that is in the task."
+] .
+
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(I,subject,countable,na,eq,1)-4/4" ;
+  <http://www.uagent.com/ontology#hasName>
+          "subject"
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(subject,in(psychomotor-vigilance))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(psychomotor-vigilance)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "psychomotor-vigilance"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "task(psychomotor-vigilance)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "task" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "subject(subject)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "subject" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "hasProperty(psychomotor-vigilance,active)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "hasProperty" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "active"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    1
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "If the letter appears on the screen then the subject presses the n:space_bar."
+] .
+
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(H,space_bar,countable,na,eq,1)-3/4" ;
+  <http://www.uagent.com/ontology#hasName>
+          "space_bar"
+] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(L,be,K)-5/6" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(K)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          1 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "K"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "p:psychomotor-vigilance is a task."
+] .
+
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(C,screen,countable,na,eq,1)-2/4" ;
+  <http://www.uagent.com/ontology#hasName>
+          "screen"
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "There is a screen that is in the task."
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "button(space_bar)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "button(space_bar)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "button" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "space_bar"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(M,in(A)),task(A),subject(M) => hasProperty(A,active)" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "task(A)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "task" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "A"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "subject(M)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "subject" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "M"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(M,in(A))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "M"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(A)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Variable> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "A"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "hasProperty(A,active)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "hasProperty" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "active"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "A"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "appear(K,on(C)),screen(C),letter(K),button(H),subject(I) => press(I,H)" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "screen(C)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "screen" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "C"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "button(H)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "button" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "H"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "appear(K,on(C))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "appear" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "K"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "on(C)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "on" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Variable> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "C"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "letter(K)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "letter" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "K"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "subject(I)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "subject" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "I"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "press(I,H)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "press" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "I"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Variable> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "H"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ <http://www.uagent.com/ontology#asDRSString>
+          "   object(M,subject,countable,na,eq,1)-6/3\n   predicate(N,be,M)-6/4\n   modifier_pp(N,in,A)-6/5\n   =>\n   predicate(P,be,A,O)-6/11\n   property(O,active,pos)-6/12\n" ] .
+
+[ a       <http://www.uagent.com/ontology#Function> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "modifier_pp(J,in,A)-4/7" ;
+  <http://www.uagent.com/ontology#asString>
+          "in(A)" ;
+  <http://www.uagent.com/ontology#hasName>
+          "in" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "A"
+          ]
+] .
+
+[ <http://www.uagent.com/ontology#asDRSString>
+          "   predicate(R,be,A,Q)-7/4\n   property(Q,active,pos)-7/5\n   =>\n   object(S,letter,countable,na,eq,1)-7/8\n   predicate(T,appear,S)-7/9\n   modifier_pp(T,on,C)-7/10\n" ] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(button,in(psychomotor-vigilance))" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(button,in(psychomotor-vigilance))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "button"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(psychomotor-vigilance)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "psychomotor-vigilance"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(D,be,C)-2/6" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(C)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          1 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "C"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Constant> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "object(E,button,countable,na,eq,1)-3/7" ;
+  <http://www.uagent.com/ontology#hasName>
+          "button"
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(screen,in(psychomotor-vigilance))" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(screen,in(psychomotor-vigilance))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(psychomotor-vigilance)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "psychomotor-vigilance"
+                                        ]
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "screen"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(subject,in(psychomotor-vigilance))" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(subject,in(psychomotor-vigilance))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(psychomotor-vigilance)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "psychomotor-vigilance"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "letter(letter)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "letter(letter)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "letter" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ <http://www.uagent.com/ontology#asDRSString>
+          "   predicate(U,appear,K)-8/4\n   modifier_pp(U,on,C)-8/5\n   =>\n   predicate(V,press,I,H)-8/11\n" ] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(B,be,psychomotor-vigilance,A)-1/4" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(psychomotor-vigilance,A)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          2 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Constant> ;
+            <http://www.uagent.com/ontology#asString>
+                    "psychomotor-vigilance"
+          ] ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "A"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Rule> ;
+            <http://www.uagent.com/ontology#asString>
+                    "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))" ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "hasProperty(psychomotor-vigilance,active)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "hasProperty" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "active"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "screen(screen)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "screen" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "screen"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "task(psychomotor-vigilance)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "task" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasBodyPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "letter(letter)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "letter" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "appear(letter,on(screen))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "appear" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "on(screen)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "on" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "screen"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    2
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "press(subject,space_bar)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "press(subject,space_bar)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "press" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "space_bar"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "subject"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    3
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Function> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "modifier_pp(G,in,A)-3/10" ;
+  <http://www.uagent.com/ontology#asString>
+          "in(A)" ;
+  <http://www.uagent.com/ontology#hasName>
+          "in" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "A"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "appear(letter,on(screen))" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "appear(letter,on(screen))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "appear" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "on(screen)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "on" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "screen"
+                                        ]
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    2
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Predicate> ;
+  <http://www.uagent.com/ontology#asDRSString>
+          "predicate(J,be,I)-4/6" ;
+  <http://www.uagent.com/ontology#asString>
+          "be(I)" ;
+  <http://www.uagent.com/ontology#hasArity>
+          1 ;
+  <http://www.uagent.com/ontology#hasName>
+          "be" ;
+  <http://www.uagent.com/ontology#hasTerm>
+          [ a       <http://www.uagent.com/ontology#Variable> ;
+            <http://www.uagent.com/ontology#asString>
+                    "I"
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "There is a subject that is in the task."
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asString>
+          "The n:space_bar is a button and is in the task."
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "task(psychomotor-vigilance)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "task(psychomotor-vigilance)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "task" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "psychomotor-vigilance"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "screen(screen)" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "screen(screen)" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              1 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "screen" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "screen"
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
+
+[ a       <http://www.uagent.com/ontology#Instruction> ;
+  <http://www.uagent.com/ontology#asRule>
+          [ a       <http://www.uagent.com/ontology#Fact> ;
+            <http://www.uagent.com/ontology#asString>
+                    "be(letter,in(psychomotor-vigilance))" ;
+            <http://www.uagent.com/ontology#hasHeadPredicate>
+                    [ a       <http://www.uagent.com/ontology#Predicate> ;
+                      <http://www.uagent.com/ontology#asString>
+                              "be(letter,in(psychomotor-vigilance))" ;
+                      <http://www.uagent.com/ontology#hasArity>
+                              2 ;
+                      <http://www.uagent.com/ontology#hasName>
+                              "be" ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Constant> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "letter"
+                              ] ;
+                      <http://www.uagent.com/ontology#hasTerm>
+                              [ a       <http://www.uagent.com/ontology#Function> ;
+                                <http://www.uagent.com/ontology#asString>
+                                        "in(psychomotor-vigilance)" ;
+                                <http://www.uagent.com/ontology#hasName>
+                                        "in" ;
+                                <http://www.uagent.com/ontology#hasTerm>
+                                        [ a       <http://www.uagent.com/ontology#Constant> ;
+                                          <http://www.uagent.com/ontology#asString>
+                                                  "psychomotor-vigilance"
+                                        ]
+                              ]
+                    ] ;
+            <http://www.uagent.com/ontology#inReasoningStep>
+                    0
+          ]
+] .
