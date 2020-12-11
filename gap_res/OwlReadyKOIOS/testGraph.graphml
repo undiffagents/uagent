@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key attr.name="predicate" attr.type="string" for="edge" id="d2"/>
+<key attr.name="parentClass" attr.type="string" for="node" id="d1"/>
+<key attr.name="nodeType" attr.type="string" for="node" id="d0"/>
+<graph edgedefault="directed"><node id="task_Class">
+  <data key="d0">Class</data>
+  <data key="d1">Object</data>
+</node>
+<node id="button_Class">
+  <data key="d0">Class</data>
+  <data key="d1">Object</data>
+</node>
+<node id="subject_Class">
+  <data key="d0">Class</data>
+  <data key="d1">Object</data>
+</node>
+<node id="letter_Class">
+  <data key="d0">Class</data>
+  <data key="d1">Object</data>
+</node>
+<node id="screen_Class">
+  <data key="d0">Class</data>
+  <data key="d1">Object</data>
+</node>
+<node id="space_bar">
+  <data key="d0">Instance</data>
+  <data key="d1">button_Class</data>
+</node>
+<node id="psychomotor-vigilance">
+  <data key="d0">Instance</data>
+  <data key="d1">task_Class</data>
+</node>
+<node id="subject">
+  <data key="d0">Instance</data>
+  <data key="d1">subject_Class</data>
+</node>
+<node id="letter">
+  <data key="d0">Instance</data>
+  <data key="d1">letter_Class</data>
+</node>
+<node id="screen">
+  <data key="d0">Instance</data>
+  <data key="d1">screen_Class</data>
+</node>
+<node id="active"/>
+<edge id="0" source="button_Class" target="task_Class">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="subject_Class" target="task_Class">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="subject_Class" target="button_Class">
+  <data key="d2">press</data>
+</edge>
+<edge id="0" source="letter_Class" target="screen_Class">
+  <data key="d2">appearOn</data>
+</edge>
+<edge id="0" source="letter_Class" target="task_Class">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="screen_Class" target="task_Class">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="psychomotor-vigilance" target="active">
+  <data key="d2">hasProperty</data>
+</edge>
+<edge id="0" source="subject" target="psychomotor-vigilance">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="subject" target="space_bar">
+  <data key="d2">press</data>
+</edge>
+<edge id="0" source="letter" target="screen">
+  <data key="d2">appearOn</data>
+</edge>
+<edge id="0" source="letter" target="psychomotor-vigilance">
+  <data key="d2">beIn</data>
+</edge>
+<edge id="0" source="screen" target="psychomotor-vigilance">
+  <data key="d2">beIn</data>
+</edge>
+</graph></graphml>
