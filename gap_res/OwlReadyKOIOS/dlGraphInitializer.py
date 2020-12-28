@@ -2,6 +2,8 @@
 from ontoConstants import *
 from owlready2 import *
 
+from ontology import Ontology
+
 interpreterFile = 'interpreterTest.txt'
 
 currentExperiment = None
@@ -33,6 +35,7 @@ affordanceDict = {"button": "clickable", "letter": "visible"}
 
 onto = get_ontology("http://localhost:3030/uagent").load()
 
+ontology = Ontology()
 
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?
@@ -56,6 +59,12 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 # "Action" on the ontology only appears to have a subject and a verb - no object?
 
 def initializeOntology():
+    # TESTING ONTOLOGY CLASS
+    # THIS DIRECTORY CHANGE IS MESSY AND LOCAL TO MY MACHINE BUT IT GETS IT WORKING
+    # THIS SUCCESSFULLY PRINTS THE DRS STRINGS
+    os.chdir('/mnt/t/Projects/uagent-new')
+    print(ontology.get_DRS_Strings())
+    exit(0)
     rdfLines = ""
     # Open up the interpreter output
     inputFile = open(interpreterFile, 'r')
@@ -501,4 +510,4 @@ def endSituationDescription():
         previousSituation = currentSituation
 
 
-# initializeOntology()
+initializeOntology()
