@@ -9,6 +9,7 @@ from ontology import Ontology
 class Term:
 
     def __init__(self,term,*args):
+        self.isString = False
         self.term = self.makeTerm(term)
         self.args = [self.makeTerm(arg) for arg in args]
 
@@ -37,7 +38,11 @@ class Term:
         if f := Term.isFloat(arg):
             return f
         if m := re.match("string\((.*)\)",arg):
+            self.isString = True
             return "'" + m.groups()[0] + "'"
+        if m := re.match("^\'.*\'$",arg):
+            self.isString = True
+            return arg        
         if m := re.match("named\((.*)\)",arg): 
             return m.groups()[0]
         return arg
@@ -52,7 +57,7 @@ class Term:
         return self.args[i]
     
     def tripleString(self):
-        raise
+        raise    
 
     def __str__(self):
         return str(self.term)
@@ -63,25 +68,37 @@ class Term:
 class Variable(Term):
 
     def __init__(self,name,*args):
+        self.isString = False
         if not re.match("^([A-Z][0-9]*)$",name):
             raise Exception("Not a DRS variable")
         self.term = self.makeTerm(name)
         self.args = [self.makeTerm(arg) for arg in args]
     
+    def drsType(self):
+        return 'variable'
+    
+
+    def drsArgTripleString(self):
+        raise    
+    
     def tripleString(self):
-        return 'a :Variable ; :asString "'+str(self.term) + '"'    
+        return 'a :Variable ; :asString "'+str(self.term) + '"'  
 
 class Function(Term):
-
+    
     def __init__(self,name,*args):
+        self.isString = False
         self.term = self.makeTerm(name)
         self.args = [self.makeTerm(arg) for arg in args]
+        
+    def drsType(self):
+        return 'function'
+    
+    def drsArgTripleString(self):
+        raise      
     
     def getTerm(self):
-        return self
-
-    def tripleString(self):
-        return ' a :Function '+(' ; '.join([':hasTerm :'+str(arg) for arg in self.args]) if len(args) > 1 else ' ; :hasTerm :'+str(args[0]))
+        return self   
     
     def __str__(self):
         return str(self.term) + ("" if len(self.args) == 0 else ("(" + ",".join([str(x) for x in self.args]) + ")"))
@@ -90,23 +107,45 @@ class Function(Term):
         return str(self.term) + ("" if len(self.args) == 0 else ("(" + ",".join([str(x) for x in self.args]) + ")"))
 
 class Constant(Function):
-
+    
     def __init__(self,name,*args):
+        self.isString = False
         if not isinstance(name,int) and not isinstance(name,float) and re.match("^([A-Z][0-9]*)$",name):
             raise Exception("Not a DRS constant")
         self.term = self.makeTerm(name)
         self.args = [self.makeTerm(arg) for arg in args]  
+    
+    def drsType(self):
+        return "object"    
+    
+    def drsArgTripleString(self):
+        raise      
 
     def getTerm(self):
         return self.term
     
     def tripleString(self):
-        return 'a :Constant ; :asString "' + str(self.term) + '"'    
+        #if self.isString: return 'a :Constant ; :asString "\\\\\\\"'+self.term+'\\\\\\\"' #:hasName "' + str(self.term) + '"
+        return 'a :Constant ; :hasName "' + str(self) + '" ; :asString "' + str(self) + '"'
+    
+    def __str__(self):
+        return str(self.term)
+
+    def __repr__(self):
+        return str(self.term)    
     
 class Predicate:
-    '''Corresponds to a prolog predicate arity > 2'''
+    '''Corresponds to a prolog predicate and DRS predicate'''
+    
+    def drsType(self):
+        return "predicate"
+    
+    def drsArgTripleString(self):
+        return '{\\"letter\\":\\"'+str(self.letter)+'\\",\\"indent\\":\\"'+str(self.indent)+'\\",\\"num1\\":\\"'+str(self.args[-2])+'\\",\\"num2\\":\\"'+str(self.args[-1])+'\\",'+','.join(['\\"arg'+str(i)+'\\":\\"'+str(x)+'\\"' for i,x in enumerate(self.args[:-2])])+'}'
 
-    def __init__(self,name,*args):
+    def __init__(self,indent,letter,name,*args):
+        self.indent = Constant(indent)
+        self.letter = Variable(letter)        
         self.name = Constant(name)
         self.args = []
         for arg in args:
@@ -121,6 +160,12 @@ class Predicate:
         
     def getName(self):
         return self.name.getTerm()
+    
+    def getIndent(self):
+        return self.indent.getTerm()
+    
+    def getLetter(self):
+        return self.letter.getTerm()    
 
     def arg(self,i):
         return self.args[i].getTerm()
@@ -128,6 +173,9 @@ class Predicate:
     def getArgs(self):
         return [x.getTerm() for x in self.args]
 
+    def asDRSString(self):
+        return '{}{}({},{},{})-{}/{}'.format(self.indent,self.drsType(),self.letter,self.name,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
+    
     def __str__(self):
         return str(self.name) + "(" + (",".join([str(x) for x in self.args]) if len(self.args) > 1 else str(self.args[0])) + ")"
 
@@ -170,19 +218,12 @@ class PredicateList:
 
 class Class(Predicate):
     '''Corresponds to both a Descrioption logic Class and a prolog predicate arity /1 read from DRS'''
+    
     def __init__(self,indent,letter,name,inst,num1,num2):
-        super().__init__(name,inst,num1,num2)
-        self.indent = Constant(indent)
-        self.letter = Variable(letter)
+        super().__init__(indent,letter,name,inst,num1,num2)       
         
     def copy(self):
         return Class(self.getIndent(),self.getLetter(),self.getName(),*self.getArgs())              
-        
-    def getIndent(self):
-        return self.indent.getTerm()
-    
-    def getLetter(self):
-        return self.letter.getTerm()
     
     def tripleString(self):
         return 'a :Predicate ; :hasName "' + str(self.getName()) + '" ; :hasArity 1 ; :hasTerm ['+self.args[0].tripleString()+'] ; :asString "'+str(self)+'"'
@@ -192,7 +233,7 @@ class Class(Predicate):
     
     def dlTripleString(self):
         name = self.getDLName()
-        return name + ' a owl:Class . :'+str(self.args[0])+' a '+name+' ; a owl:NamedIndividual . '
+        return name + ' a owl:Class . :'+str(self.args[0])+' a '+name+' ; a owl:NamedIndividual . ' 
 
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + ")"
@@ -204,18 +245,10 @@ class Role(Predicate):
     '''Corresponds to both a Descrioption logic Role and a prolog predicate arity /2 read from DRS'''
     
     def __init__(self,indent,letter,name,subj,obj,num1,num2):
-        super().__init__(name,subj,obj,num1,num2)
-        self.indent = Constant(indent)
-        self.letter = Variable(letter)       
+        super().__init__(indent,letter,name,subj,obj,num1,num2)      
 
     def copy(self):
         return Role(self.getIndent(),self.getLetter(),self.getName(),*self.getArgs())
-    
-    def getIndent(self):
-        return self.indent.getTerm()
-    
-    def getLetter(self):
-        return self.letter.getTerm()
     
     def tripleString(self):
         return 'a :Predicate ; :hasArity 2 ; :hasName "' + str(self.getName()) + '" ; :hasTerm ['+self.args[0].tripleString()+'] ; :hasTerm ['+self.args[1].tripleString()+'] ; :asString "'+str(self)+'"'
@@ -227,8 +260,17 @@ class Role(Predicate):
     
     def dlTripleString(self):
         name = self.getDLName()
-        arg = str(self.arg(1)) if not isinstance(self.arg(1),Preposition) else str(self.arg(1).arg(0))
-        return name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+arg+' ; a owl:NamedIndividual . :'+arg+' a owl:NamedIndividual . '
+        
+        if isinstance(self.arg(1),Preposition):
+            if self.args[0].isString:
+                raise Exception("todo")            
+            string = name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+str(self.arg(1).arg(0))+' ; a owl:NamedIndividual . :'+str(self.arg(1).arg(0))+' a owl:NamedIndividual .'
+            #print(string)
+            return string
+        elif self.args[0].isString or self.args[1].isString:
+            raise Exception("todo")
+        else:          
+            return name + ' a owl:ObjectProperty .  :'+self.arg(0)+' '+name+' :'+str(self.arg(1))+' ; a owl:NamedIndividual . :'+str(self.arg(1))+' a owl:NamedIndividual .' 
     
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + "," + str(self.args[1]) + ")"
@@ -242,7 +284,12 @@ class PropertyRole(Role):
         super().__init__(indent,letter,'hasProperty',subj,obj,num1,num2)
     
     def copy(self):
-        return PropertyRole(self.getIndent(),self.getLetter(),*self.getArgs())    
+        return PropertyRole(self.getIndent(),self.getLetter(),*self.getArgs())
+    
+    def dlTripleString(self):
+        name = self.getDLName()
+        argy = str(self.arg(1))
+        return name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+argy+' ; a owl:NamedIndividual . :'+argy+' a owl:NamedIndividual .'     
     
     def getIndent(self):
         return self.indent.getTerm()
@@ -254,24 +301,16 @@ class TernaryPredicate(Predicate):
     '''Corresponds to a prolog predicate arity /3 read from DRS'''
     
     def __init__(self,indent,letter,name,subj,iobj,dobj,num1,num2):
-        super().__init__(name,subj,iobj,dobj,num1,num2)
-        self.indent = Constant(indent)
-        self.letter = Variable(letter)        
+        super().__init__(indent,letter,name,subj,iobj,dobj,num1,num2)     
 
     def copy(self):
         return TernaryPredicate(self.getIndent(),self.getLetter(),self.getName(),*self.getArgs())
     
-    def getIndent(self):
-        return self.indent.getTerm()
-    
-    def getLetter(self):
-        return self.letter.getTerm()
-    
     def tripleString(self):
-        return 'a :Predicate ; :hasArity 3 ; :hasName "' + str(self.getName()) + '" ; :hasTerm ['+self.args[0].tripleString()+'] ; :hasTerm ['+self.args[1].tripleString()+'] ; :hasTerm ['+self.args[2].tripleString()+'] ; :asString "'+str(self)+'"'
+        return 'a :Predicate ;  :hasArity 3 ; :hasName "' + str(self.getName()) + '" ; :hasTerm ['+self.args[0].tripleString()+'] ; :hasTerm ['+self.args[1].tripleString()+'] ; :hasTerm ['+self.args[2].tripleString()+'] ; :asString "'+str(self)+'"'
     
     def dlTripleString(self):
-        raise
+        raise Exception("Undefined semntics for ternary predicates")
     
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + "," + str(self.args[1]) + "," + str(self.args[2]) + ")"
@@ -281,6 +320,13 @@ class TernaryPredicate(Predicate):
 
 class Object(Constant):
     '''DRS object'''
+    
+    def drsType(self):
+        return "object"
+    
+    def drsArgTripleString(self):
+        return '{\\"letter\\":\\"'+str(self.letter)+'\\",\\"indent\\":\\"'+str(self.indent)+'\\",\\"num1\\":\\"'+str(self.args[-2])+'\\",\\"num2\\":\\"'+str(self.args[-1])+'\\",'+','.join(['\\"arg'+str(i)+'\\":\\"'+str(x)+'\\"' for i,x in enumerate(self.args[:-2])])+'}'
+
     def __init__(self,indent,letter,name,quant,stuff1,stuff2,stuff3,num1,num2):
         super().__init__(name,quant,stuff1,stuff2,stuff3,num1,num2)
         self.indent = self.makeTerm(indent)
@@ -293,7 +339,10 @@ class Object(Constant):
         return self.letter
     
     def tripleString(self):
-        return 'a :Constant ; :hasName "'+str(self.term) + '" ; :asDRSString '+'"{}object({},{},{})-{}/{}"'.format(self.indent,self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
+        return 'a :Constant ; :hasName "'+str(self.term)+'"'
+    
+    def asDRSString(self):
+        return '{}{}({},{},{})-{}/{}'.format(self.indent,self.drsType(),self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
     
     def copy(self):
         return Object(self.indent,self.letter,self.term,*self.args)
@@ -355,6 +404,13 @@ class ObjectList:
 
 class Property(Constant):
     '''DRS property.'''
+    
+    def drsType(self):
+        return "property"
+    
+    def drsArgTripleString(self):
+        return '{\\"letter\\":\\"'+str(self.letter)+'\\",\\"indent\\":\\"'+str(self.indent)+'\\",\\"num1\\":\\"'+str(self.args[-2])+'\\",\\"num2\\":\\"'+str(self.args[-1])+'\\",'+','.join(['\\"arg'+str(i)+'\\":\\"'+str(x)+'\\"' for i,x in enumerate(self.args[:-2])])+'}'
+
     def __init__(self,indent,letter,name,type,num1,num2):
         super().__init__(name,type,num1,num2)
         self.indent = self.makeTerm(indent)
@@ -370,7 +426,10 @@ class Property(Constant):
         return Property(self.indent,self.letter,self.term,*self.args)
     
     def tripleString(self):
-        return 'a :Constant ; :hasName "'+str(self.term) + '" ; :asDRSString '+'"{}property({},{},{})-{}/{}"'.format(self.indent,self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
+        return 'a :Constant ;  :hasName "'+str(self.term) +'"'
+    
+    def asDRSString(self):
+        return '{}{}({},{},{})-{}/{}'.format(self.indent,self.drsType(),self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
     
     def __str__(self):
         return "'" + str(self.term) + "':" + str(self.letter)
@@ -424,15 +483,25 @@ class PropertyList:
 
 class Relation(Class):
     '''DRS relation'''
+    
+    def drsType(self):
+        return "relation"
+    
+    def drsArgTripleString(self):
+        return '{\\"letter\\":\\"'+str(self.letter)+'\\",\\"indent\\":\\"'+str(self.indent)+'\\",\\"num1\\":\\"'+str(self.args[-2])+'\\",\\"num2\\":\\"'+str(self.args[-1])+'\\",'+','.join(['\\"arg'+str(i)+'\\":\\"'+str(x)+'\\"' for i,x in enumerate(self.args[:-2])])+'}'
+
     def __init__(self,indent,letter,name,to,num1,num2):
         super().__init__(indent,letter,name,to,num1,num2)
     
     def tripleString(self):
-        raise  
+        raise  Exception("TODO")
     
     def copy(self):
         return Relation(self.getIndent(),self.getLetter(),self.getName(),*self.args)    
 
+    def asDRSString(self):
+        return '{}{}({},{},{})-{}/{}'.format(self.indent,self.drsType(),self.letter,self.name,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])
+    
     def getIndent(self):
         return self.indent.getTerm()
     
@@ -474,7 +543,8 @@ class RelationList:
         return "[" + ",".join([str(x) for x in self.rels]) + "]"
 
 class Preposition(Function):
-    '''DRS relation'''
+    '''DRS preposition'''
+    
     def __init__(self,indent,letter,name,to,num1,num2):
         super().__init__(name,to,num1,num2) 
         self.indent = self.makeTerm(indent)
@@ -491,10 +561,19 @@ class Preposition(Function):
             string = 'a :Variable ; :asString "'+str(self.args[0])+'"'
         else:
             string = 'a :Constant ; :asString "'+str(self.args[0])+'"'
-        return 'a :Function ; :asString "'+str(self)+'" ; :hasName "'+str(self.term)+'" ; :hasTerm ['+string+']'  
+        return 'a :Function ; :asString "'+str(self)+'" ; :hasName "'+str(self.term)+'" ; :hasTerm ['+string+']'
     
     def copy(self):
         return Preposition(self.indent,self.letter,self.term,*self.args)
+    
+    def drsType(self):
+        return "preposition"
+    
+    def drsArgTripleString(self):
+        return '{\\"letter\\":\\"'+str(self.letter)+'\\",\\"indent\\":\\"'+str(self.indent)+'\\",\\"num1\\":\\"'+str(self.args[-2])+'\\",\\"num2\\":\\"'+str(self.args[-1])+'\\",'+','.join(['\\"arg'+str(i)+'\\":\\"'+str(x)+'\\"' for i,x in enumerate(self.args[:-2])])+'}'
+
+    def asDRSString(self):
+        return '{}{}({},{},{})-{}/{}'.format(self.indent,self.drsType(),self.letter,self.term,','.join([str(x) for x in self.args[:-2]]),self.args[-2],self.args[-1])    
     
     def __str__(self):
         return self.term + "(" + self.args[0] + ")"
@@ -646,18 +725,10 @@ class Expression:
         return self.properties.property(i)
     
     def tripleString(self):
-        string = ''
-        for object in self.getObjects():
-            string = string + '[] '+object.tripleString()+' .'
-        for predicate in self.getPredicates():
-            string = string +'[] '+predicate.tripleString()+' ; :asDRSString '+'"{}predicate({},{},{})-{}/{}"'.format(predicate.indent,predicate.letter,predicate.name,','.join([str(x) for x in predicate.args[:-2]]),predicate.args[-2],predicate.args[-1])+' .'
-        for preposition in self.getPrepositions():
-            string = string +'[] '+preposition.tripleString()+' ; :asDRSString '+'"{}modifier_pp({},{},{})-{}/{}"'.format(preposition.indent,preposition.letter,preposition.term,','.join([str(x) for x in preposition.args[:-2]]),preposition.args[-2],preposition.args[-1])+' .'
-        for relation in self.getRelations():
-            string = string +'[] '+relation.tripleString()+' .'
-        for property in self.getProperties():
-            string = string +'[] '+property.tripleString()+' .'
-        return string
+        return ['['+thing.tripleString()+' ; :asDRSString "'+thing.asDRSString()+'" ; :drsType :'+thing.drsType()+' ; :drsArgs "'+thing.drsArgTripleString()+'"]' for thing in self.getAllParts()]
+        
+    def isEmpty(self):
+        return len(self.getAllParts()) == 0
         
     def __str__(self):        
         return "predicates [" + ",".join([str(x) for x in self.getPredicates()]) + "]\nrelations [" + ",".join([str(x) for x in self.getRelations()]) + "]\nprepositions [" + ",".join([str(x) for x in self.getPrepositions()]) + "]\nobjects [" + ",".join([str(x) for x in self.getObjects()]) + "]\nproperties [" + ",".join([str(x) for x in self.getProperties()]) + "]"
@@ -671,6 +742,10 @@ class NestedExpression:
         self.typeIDCharacter = None
         self.first = None
         self.second = None        
+    
+    def drsType(self):
+        if self.typeIDCharacter == 'i': return 'conditional'
+        raise Exception('Undefined semantics')
     
     def setTypeIDCharacter(self,idchar):
         if not (isinstance(idchar,str) and len(idchar)==1): 
@@ -701,31 +776,11 @@ class NestedExpression:
         if self.typeIDCharacter == 'i':
             if isinstance(self.first,NestedExpression) or isinstance(self.second,NestedExpression): raise
             else:
-                head = ''
-                body = ''
-                string = string + '[] :asDRSString "'
-                for object in self.first.getObjects():
-                    string = string + '{}object({},{},{})-{}/{}\\n'.format(object.indent,object.letter,object.term,','.join([str(x) for x in object.args[:-2]]),object.args[-2],object.args[-1])
-                for predicate in self.first.getPredicates():
-                    string = string +'{}predicate({},{},{})-{}/{}\\n'.format(predicate.indent,predicate.letter,predicate.name,','.join([str(x) for x in predicate.args[:-2]]),predicate.args[-2],predicate.args[-1])
-                for preposition in self.first.getPrepositions():
-                    string = string +'{}modifier_pp({},{},{})-{}/{}\\n'.format(preposition.indent,preposition.letter,preposition.term,','.join([str(x) for x in preposition.args[:-2]]),preposition.args[-2],preposition.args[-1])
-                for relation in self.first.getRelations():
-                    string = string +'{}relation({},{},{})-{}/{}\\n'.format(relation.indent,relation.letter,relation.name,','.join([str(x) for x in relation.args[:-2]]),relation.args[-2],relation.args[-1])  
-                for property in self.first.getProperties():
-                    string = string +'{}property({},{},{})-{}/{}\\n'.format(property.indent,property.letter,property.term,','.join([str(x) for x in property.args[:-2]]),property.args[-2],property.args[-1])
-                string = string + '   =>\\n'
-                for object in self.second.getObjects():
-                    string = string + '{}object({},{},{})-{}/{}\\n'.format(object.indent,object.letter,object.term,','.join([str(x) for x in object.args[:-2]]),object.args[-2],object.args[-1])
-                for predicate in self.second.getPredicates():
-                    string = string +'{}predicate({},{},{})-{}/{}\\n'.format(predicate.indent,predicate.letter,predicate.name,','.join([str(x) for x in predicate.args[:-2]]),predicate.args[-2],predicate.args[-1])
-                for preposition in self.second.getPrepositions():
-                    string = string +'{}modifier_pp({},{},{})-{}/{}\\n'.format(preposition.indent,preposition.letter,preposition.term,','.join([str(x) for x in preposition.args[:-2]]),preposition.args[-2],preposition.args[-1])
-                for relation in self.second.getRelations():
-                    string = string +'{}relation({},{},{})-{}/{}\\n'.format(relation.indent,relation.letter,relation.name,','.join([str(x) for x in relation.args[:-2]]),relation.args[-2],relation.args[-1])  
-                for property in self.second.getProperties():
-                    string = string +'{}property({},{},{})-{}/{}\\n'.format(property.indent,property.letter,property.term,','.join([str(x) for x in property.args[:-2]]),property.args[-2],property.args[-1])            
-                return string + '" .'
+                string = string + '[] :asDRSString "'+'\\n'.join([x.asDRSString() for x in self.first.getAllParts()])+'\\n   =>\\n'+'\\n'.join([x.asDRSString() for x in self.second.getAllParts()])+'" ; :drsType :'+self.drsType()
+                pre = '' if self.first.isEmpty() else ' ; :hasPreSituationDescripton '+' ; :hasPreSituationDescripton '.join(self.first.tripleString())
+                post = '' if self.second.isEmpty() else ' ; :hasPostSituationDescripton '+' ; :hasPostSituationDescripton '.join(self.second.tripleString())
+                return string+pre+post+' . '
+            
         elif self.setTypeIDCharacter == 'v':
             pass
         raise
@@ -834,9 +889,6 @@ class Body(PredicateList):
     def getTerms(self):
         return self.var
     
-    def dlTripleString(self):
-        raise
-    
     def __str__(self):        
         return ",".join([str(x) for x in self.preds])
 
@@ -915,13 +967,13 @@ def checkDictsForKey(key,*dicts):
             return (dicts[i][key],i) if dicts[i][key] not in dicts[i] else (dicts[i][dicts[i][key]],i)
     return key,i
     
-def writePrologFile(facts, rules, newRules, prologfile, factFile, groundFile):
+def writePrologFile(facts,rules,newRules,prologfile,factFile,groundFile):
     '''writes a prolog file that executes a logic program built from 
     the instructions that will produce all facts it enatils in one 
     file and all solved rules it used to obtain enatilments facts in another'''    
     program = sorted(rules+newRules+facts, key=lambda x: x[0])
     
-    selector = lambda thing: '({})'.format(thing[0]+","+",".join(thing[1][:-1] if not thing[1][-2] == 'order(ZZ)' else thing[1][:-2]))
+    selector = lambda thing: '({})'.format(thing[0]+","+",".join(thing[1][:-1])) # if not thing[1][-2] == 'order(ZZ)' else thing[1][:-2]))
     
     groundTerms = lambda thing: ',write(Stream2,","),'.join(['writeq(Stream2,{})'.format(cutCounter(stuff)) for stuff in (thing[1][:-1] if not thing[1][-2] == 'order(ZZ)' else thing[1][:-2])])
     groundWriter = lambda thing: 'writeq(Stream2,ZZZ),write(Stream2," : "),{},write(Stream2," => "),writeq(Stream2,{}),writeln(Stream2,"")'.format(groundTerms(thing),cutCounter(thing[0]))
@@ -961,10 +1013,10 @@ def runProlog(facts,rules,makeLogFiles):
             for i in range(len(rule.body.preds)):
                 for head in heads:
                     if sameVariablePredicate(rule.body.preds[i],head):
-                        rule.body.preds[i] = Predicate(*([rule.body.preds[i].getName()] + rule.body.preds[i].args[:-2] + ['ZZ']))
+                        rule.body.preds[i] = Predicate(*([rule.head.pred.getIndent(),rule.head.pred.getLetter(),rule.body.preds[i].getName()] + rule.body.preds[i].args[:-2] + ['ZZ']))
         
-        newRules.append(Rule(Body([Predicate(*([rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['_']))]),Head(rule.head.pred)))
-        rule.head.pred = Predicate(*([rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['ZZZ']))
+        newRules.append(Rule(Body([Predicate(*([rule.head.pred.getIndent(),rule.head.pred.getLetter(),rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['_']))]),Head(rule.head.pred)))
+        rule.head.pred = Predicate(*([rule.head.pred.getIndent(),rule.head.pred.getLetter(),rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['ZZZ']))
     
     ruleStr = [[str(rule.head),[str(b) for b in rule.body.preds]+['ZZZ is ZZ + 1']] for rule in rules]
     newRuleStr = [[str(rule.head),[str(b) for b in rule.body.preds]] for rule in newRules]
@@ -1086,6 +1138,7 @@ def makeFacts(factsExpression):
     
     facts = []
     knownInstances = set()
+    equalThings = set()
     factsFunctions = factsExpression.getPrepositions()
     
     # partition the predicates
@@ -1104,8 +1157,9 @@ def makeFacts(factsExpression):
         if isinstance(cOrP,Class):
             knownInstances.add(cOrP.getName())
             knownInstances.add(cOrP.arg(0))
-        elif cOrP.getName() == 'equals':
-            facts.append(Class(cOrP.getIndent(),cOrP.getLetter(),cOrP.arg(0),cOrP.arg(1),cOrP.arg(2),cOrP.arg(3)))
+        elif cOrP.getName() == 'equals': 
+            equalThings.add((cOrP.arg(0),cOrP.arg(1)))
+            #facts.append(Class(cOrP.getIndent(),cOrP.getLetter(),cOrP.arg(0),cOrP.arg(1),cOrP.arg(2),cOrP.arg(3)))
             
     # do roles
     for predicate in roles:
@@ -1123,9 +1177,21 @@ def makeFacts(factsExpression):
     for objectClass in factsExpression.getObjects():
         if objectClass.getTerm() in knownInstances: continue
         facts.append(Class(objectClass.getIndent(),objectClass.getLetter(),objectClass.getTerm(),objectClass.getTerm(),objectClass.arg(-2),objectClass.arg(-1)))
+        knownInstances.add(objectClass.getTerm())
+        
+    # add instances for all of the equal objects that were not stated
+    if len(equalThings) > 0:
+        for objectClass in factsExpression.getObjects():
+            #print(equalThings)
+            tryAgain = True
+            for thing1,thing2 in equalThings:  
+                if objectClass.getTerm() == thing1 or objectClass.getTerm() == thing2: tryAgain = False ; break
+            if tryAgain: continue
+            elif objectClass.getTerm() in knownInstances:
+                pass
+            else:
+                facts.append(Class(objectClass.getIndent(),objectClass.getLetter(),objectClass.getTerm(),objectClass.getTerm(),objectClass.arg(-2),objectClass.arg(-1)))
     
-    
-         
     return facts,factsExpression
 
 def makeFactFromClass(predicate,factsExpression):
@@ -1214,32 +1280,27 @@ def makeClassFactOrPropertyFactFromRole(predicate,factsExpression):
             else:
                 raise Exception("Undefined Behavior")
             
-        # first term is a variable and second is a string
-        elif re.match("^([A-Z][0-9]*)$",predicate.arg(0)) and re.match("^\'(.*)\'$",predicate.arg(1)):
+        # first term is a variable
+        elif re.match("^([A-Z][0-9]*)$",predicate.arg(0)):# and re.match("^\'(.*)\'$",predicate.arg(1)):
             
             thingInTheClass = predicate.arg(1)
             classThingIsIn,i = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
             
             if i == 0:
-            
-                newPredicate = Role(predicate.getIndent(),predicate.getLetter(),'equals',classThingIsIn,thingInTheClass,predicate.arg(2),predicate.arg(3))
                     
+                newPredicate = Role(predicate.getIndent(),predicate.getLetter(),'equals',classThingIsIn,thingInTheClass,predicate.arg(2),predicate.arg(3))
+                print(newPredicate)
             else:
                 raise Exception("Undefined Behavior")      
-        
-        # first term is a variable
-        elif re.match("^([A-Z][0-9]*)$",predicate.arg(0)):
-            
-            raise Exception("Undefined Behavior")
             
         # second term is a variable
         elif re.match("^([A-Z][0-9]*)$",predicate.arg(1)):
             
             thingInTheClass = predicate.arg(0)
             classThingIsIn,i = checkDictsForKey(predicate.arg(1),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary())
-            
+                        
             if i == 0:
-            
+                
                 newPredicate = Class(predicate.getIndent(),predicate.getLetter(),classThingIsIn,thingInTheClass,predicate.arg(2),predicate.arg(3))
                 
                 # update the object dictionary to contain the new Class
@@ -1618,10 +1679,9 @@ def interpret_ace(ace,makeLogFiles=False):
 
     # get ready to read
     initEmpties()
-    regexPatterns = compileRegexes()
 
     # read DRS
-    factsExpression,nestedExpressions = readExpressions(drs,regexPatterns,makeLogFiles)
+    factsExpression,nestedExpressions = readExpressions(drs,compileRegexes(),makeLogFiles)
     
     # interpret expressions as rules
     facts,interpretedFactsExpression = makeFacts(factsExpression.copy())    
@@ -1636,52 +1696,74 @@ def interpret_ace(ace,makeLogFiles=False):
         for reasonerFact in reasonerFacts: print(reasonerFact[1])
         for groundRule in groundRules: print(groundRule[1])
     
-    return ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules
+    return ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules
 
-def main():
+def standaloneInterpreter(owlFile='uagent.owl',aceFile="interpreter/ace.txt",stopOldServer=False,makeLogFiles=False):
     
     if os.path.isfile("interpreter/reasonerFacts.txt"): os.remove("interpreter/reasonerFacts.txt")
     if os.path.isfile("interpreter/groundRules.txt"): os.remove("interpreter/groundRules.txt")
     if os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")
     if os.path.isfile("interpreter/prolog.pl"): os.remove("interpreter/prolog.pl")
 
-    ontology = Ontology(stopOldServer=True,loadFile='uagent.owl')
+    ontology = Ontology(stopOldServer,owlFile)
 
-    ontology.add_instruction_knowledge(*interpret_ace(open("interpreter/ace.txt","r").read(),makeLogFiles=True))
+    ruleInterpretation = interpret_ace(open(aceFile,"r").read(),makeLogFiles)
+    ontology.add_instruction_knowledge(*ruleInterpretation)
     
-    logfile = open("logfile.txt","w")
-    
-    logfile.write("Facts:\n")
-    for fact in ontology.get_instruction_facts():
-        logfile.write("{}\n".format(str(fact)))
+    if makeLogFiles:
+        logfile = open("interpreter/logfile.txt","w")
         
-    logfile.write("\nLearned Facts:\n")
-    for fact in ontology.get_instruction_reasoner_facts():
-        logfile.write("{}\n".format(str(fact)))
+        logfile.write("Facts:\n")
+        for fact in ontology.get_instruction_facts():
+            logfile.write("{}\n".format(str(fact)))
+            
+        logfile.write("\nLearned Facts:\n")
+        for fact in ontology.get_instruction_reasoner_facts():
+            logfile.write("{}\n".format(str(fact)))
+            
+        logfile.write("\nRules:\n")
+        for rule in ontology.get_instruction_rules():
+            logfile.write("{}\n".format(str(rule)))
         
-    logfile.write("\nRules:\n")
-    for rule in ontology.get_instruction_rules():
-        logfile.write("{}\n".format(str(rule)))
+        logfile.write("\nSolved Rules:\n")
+        for rule in ontology.get_instruction_ground_rules():
+            logfile.write("{}\n".format(str(rule)))   
+        
+        logfile.write("\n{} DRS Strings:\n".format(str(ontology.countDRSStrings())))
+        for drs in ontology.get_DRS_Strings():
+            logfile.write("{}\n".format(str(drs)))
+            
+        logfile.write("\nDRS Conditional Strings:\n")
+        for drs in ontology.get_DRS_Conditional_Strings():
+            logfile.write("{}\n".format(str(drs)))   
+            
+        logfile.write("\nDRS Fact Strings:\n")
+        for drs in ontology.get_DRS_Fact_Strings():
+            logfile.write("{}\n".format(str(drs)))           
+        
+        logfile.write("\n{} ACE Strings:\n".format(str(ontology.countACEStrings())))
+        for ace in ontology.get_ACE_Strings():
+            logfile.write("{}\n".format(str(ace)))
+        
+        implementedTypes = ['object','predicate','preposition','property','relation']
+        
+        logfile.write("\nTyped DRS Strings:\n")
+        for type in implementedTypes:
+            logfile.write("\n{}\n".format(str(type)))
+            for x in ontology.getDRSArgsForComponentType(type):
+                logfile.write("{}\n".format(str(x)))
+                
+        print(ontology.getDLGraphClasses())
+        print(ontology.getDLGraphIndividuals())
+        print(ontology.getDLGraphRoles())
+        print(ontology.getDLGraphTriples())
+        print(ontology.getDLGraphClassesForIndividual('psychomotor-vigilance'))
+        print(ontology.getDLGraphRolesForIndivdual('psychomotor-vigilance'))
+        print(ontology.getDLGraphIndividualsForClass('task'))
+
+        logfile.close()
     
-    logfile.write("\nSolved Rules:\n")
-    for rule in ontology.get_instruction_ground_rules():
-        logfile.write("{}\n".format(str(rule)))   
-    
-    logfile.write("\n{} DRS Strings:\n".format(str(ontology.countDRSStrings())))
-    for drs in ontology.get_DRS_Strings():
-        logfile.write("{}\n".format(str(drs)))
-    
-    logfile.write("\n{} ACE Strings:\n".format(str(ontology.countACEStrings())))
-    for ace in ontology.get_ACE_Strings():
-        logfile.write("{}\n".format(str(ace)))
-    
-    logfile.close()
-    
-def demo(ace):
-    
-    ace,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules = interpret_ace(ace,makeLogFiles=True)
-    
-    print()
+    return ruleInterpretation
     
 class Interpreter:
 
@@ -1694,6 +1776,4 @@ class Interpreter:
 
 if __name__ == "__main__":
     
-    #demo(open("interpreter/demo.txt","r").read())
-    
-    main()
+    standaloneInterpreter(owlFile='uagent.owl',aceFile="interpreter/ace.txt",stopOldServer=True,makeLogFiles=True)
