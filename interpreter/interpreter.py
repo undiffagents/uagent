@@ -1713,54 +1713,78 @@ def standaloneInterpreter(owlFile='uagent.owl',aceFile="interpreter/ace.txt",sto
     if makeLogFiles:
         logfile = open("interpreter/logfile.txt","w")
         
-        logfile.write("Facts:\n")
+        logfile.write("get_instruction_facts()\n")
         for fact in ontology.get_instruction_facts():
             logfile.write("{}\n".format(str(fact)))
             
-        logfile.write("\nLearned Facts:\n")
+        logfile.write("\nget_instruction_reasoner_facts()\n")
         for fact in ontology.get_instruction_reasoner_facts():
             logfile.write("{}\n".format(str(fact)))
             
-        logfile.write("\nRules:\n")
+        logfile.write("\nget_instruction_rules()\n")
         for rule in ontology.get_instruction_rules():
             logfile.write("{}\n".format(str(rule)))
         
-        logfile.write("\nSolved Rules:\n")
+        logfile.write("\nget_instruction_ground_rules()\n")
         for rule in ontology.get_instruction_ground_rules():
             logfile.write("{}\n".format(str(rule)))   
         
-        logfile.write("\n{} DRS Strings:\n".format(str(ontology.countDRSStrings())))
+        logfile.write("\nget_DRS_Strings()\n")
         for drs in ontology.get_DRS_Strings():
             logfile.write("{}\n".format(str(drs)))
             
-        logfile.write("\nDRS Conditional Strings:\n")
+        logfile.write("\nget_DRS_Conditional_Strings()\n")
         for drs in ontology.get_DRS_Conditional_Strings():
             logfile.write("{}\n".format(str(drs)))   
             
-        logfile.write("\nDRS Fact Strings:\n")
+        logfile.write("\nget_DRS_Fact_Strings()\n")
         for drs in ontology.get_DRS_Fact_Strings():
             logfile.write("{}\n".format(str(drs)))           
         
-        logfile.write("\n{} ACE Strings:\n".format(str(ontology.countACEStrings())))
+        logfile.write("\nget_ACE_Strings()\n")
         for ace in ontology.get_ACE_Strings():
             logfile.write("{}\n".format(str(ace)))
         
         implementedTypes = ['object','predicate','preposition','property','relation']
         
-        logfile.write("\nTyped DRS Strings:\n")
+        logfile.write("\ngetDRSArgsForComponentType()\n")
         for type in implementedTypes:
             logfile.write("\n{}\n".format(str(type)))
             for x in ontology.getDRSArgsForComponentType(type):
                 logfile.write("{}\n".format(str(x)))
-                
-        print(ontology.getDLGraphClasses())
-        print(ontology.getDLGraphIndividuals())
-        print(ontology.getDLGraphRoles())
-        print(ontology.getDLGraphTriples())
-        print(ontology.getDLGraphClassesForIndividual('psychomotor-vigilance'))
-        print(ontology.getDLGraphRolesForIndivdual('psychomotor-vigilance'))
-        print(ontology.getDLGraphIndividualsForClass('task'))
-
+        
+        logfile.write("\ngetDLGraphClasses()\n")        
+        for x in ontology.getDLGraphClasses():
+            logfile.write("{}\n".format(str(x)))
+            
+        logfile.write("\ngetDLGraphIndividuals()\n")        
+        for x in ontology.getDLGraphIndividuals():
+            logfile.write("{}\n".format(str(x)))        
+        
+        logfile.write("\ngetDLGraphRoles()\n")        
+        for x in ontology.getDLGraphRoles():
+            logfile.write("{}\n".format(str(x)))        
+            
+        logfile.write("\ngetDLGraphTriples()\n")        
+        for x in ontology.getDLGraphTriples():
+            logfile.write("{}\n".format(str(x)))       
+            
+        logfile.write("\ngetDLGraphClassesForIndividual('psychomotor-vigilance')\n")        
+        for x in ontology.getDLGraphClassesForIndividual('psychomotor-vigilance'):
+            logfile.write("{}\n".format(str(x)))              
+            
+        logfile.write("\ngetDLGraphIndividualsForClass('task')\n")        
+        for x in ontology.getDLGraphIndividualsForClass('task'):
+            logfile.write("{}\n".format(str(x)))  
+            
+        logfile.write("\ngetDLGraphTriplesForIndivdual('psychomotor-vigilance')\n")        
+        for x in ontology.getDLGraphTriplesForIndivdual('psychomotor-vigilance'):
+            logfile.write("{}\n".format(str(x)))
+                          
+        logfile.write("\ngetDLGraphTriplesForRole('press')\n")        
+        for x in ontology.getDLGraphTriplesForRole('press'):
+            logfile.write("{}\n".format(str(x))) 
+                          
         logfile.close()
     
     return ruleInterpretation

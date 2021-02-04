@@ -285,7 +285,7 @@ class Ontology:
     def getDLGraphTriples(self):
         '''
         input:  self
-        return: [ str ]
+        return: [ (str,str,str) ]
         
         Gets a list of triples that connect any instruction individual to another with a role in the dl graph
         '''   
@@ -319,10 +319,10 @@ class Ontology:
         return [(result['one']['value'].split('#')[1],result['two']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?one ?two WHERE {{ graph {} {{ :{} a owl:ObjectProperty . ?one :{} ?two ; a owl:NamedIndividual . ?two a owl:NamedIndividual }} }}'.format(self.prefixes,self.dlGraph,cl,cl))['results']['bindings']]    
 
     
-    def getDLGraphRolesForIndivdual(self,individual):
+    def getDLGraphTriplesForIndivdual(self,individual):
         '''
         input:  self
-        return: [ str ]
+        return: [ (str,str,str) ]
         
         Gets a list of triples that connect an instruction individual to another with a role in the dl graph
         '''   
@@ -330,6 +330,15 @@ class Ontology:
         query2 = {(result['individual2']['value'].split('#')[1],result['role']['value'].split('#')[1],individual) for result in self.query('{} SELECT DISTINCT ?role ?individual2 WHERE {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual . ?individual2 a owl:NamedIndividual ; ?role :{} .}} }}'.format(self.prefixes,self.dlGraph,individual,individual))['results']['bindings']}
         
         return query1.union(query2)
+    
+    def getDLGraphTriplesForRole(self,role):
+        '''
+        input:  self
+        return: [ (str,str,str) ]
+        
+        Gets a list of triples that connect an instruction individual to another with a role in the dl graph
+        '''   
+        return {(result['individual1']['value'].split('#')[1],role,result['individual2']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?individual1 ?individual2 WHERE {{ graph {} {{ :{} a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; :{} ?individual2 . ?individual2 a owl:NamedIndividual .}} }}'.format(self.prefixes,self.dlGraph,role,role))['results']['bindings']} 
     
     '''Class and internal functions (comments ommited unless requested)'''
     
