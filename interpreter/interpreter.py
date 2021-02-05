@@ -259,6 +259,7 @@ class Role(Predicate):
         return ':'+self.getName()+self.arg(1).term[0].capitalize()+self.arg(1).term[1:].lower()
     
     def dlTripleString(self):
+        print(self)
         name = self.getDLName()
         
         if isinstance(self.arg(1),Preposition):
@@ -1018,7 +1019,7 @@ def runProlog(facts,rules,makeLogFiles):
         newRules.append(Rule(Body([Predicate(*([rule.head.pred.getIndent(),rule.head.pred.getLetter(),rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['_']))]),Head(rule.head.pred)))
         rule.head.pred = Predicate(*([rule.head.pred.getIndent(),rule.head.pred.getLetter(),rule.head.pred.getName()] + rule.head.pred.args[:-2] + ['ZZZ']))
     
-    ruleStr = [[str(rule.head),[str(b) for b in rule.body.preds]+['ZZZ is ZZ + 1']] for rule in rules]
+    ruleStr = [[str(rule.head),[str(b) for b in rule.body.preds]+['ZZZ is ZZ + 1']] for rule in rules]        
     newRuleStr = [[str(rule.head),[str(b) for b in rule.body.preds]] for rule in newRules]
     factStr = [str(fact) for fact in facts+[Class('','Z','order','0',-1,-1)]]
     
@@ -1164,10 +1165,10 @@ def makeFacts(factsExpression):
     # do roles
     for predicate in roles:
         facts.append(makeFactFromRole(predicate,factsExpression))
-            
+               
     # do classes
     for predicate in classes:
-        facts.append(makeFactFromClass(predicate,factsExpression))  
+        facts.append(makeFactFromClass(predicate,factsExpression))
             
     # do ternary predicates
     for predicate in ternaries:
@@ -1202,7 +1203,7 @@ def makeFactFromClass(predicate,factsExpression):
         # property
         for preposition in factsExpression.getPrepositions():
             if predicate.getLetter() == preposition.getLetter():
-                thingInTheRole,_ = checkDictsForKey(predicate.arg(0),factsExpression.getObjectDictionary(),factsExpression.getPropertyDictionary()) if isinstance(predicate.args[0],Variable) else (predicate.arg(0),0)
+                thingInTheRole = factsExpression.getObjectDictionary()[predicate.arg(0)] if predicate.arg(0) in factsExpression.getObjectDictionary() else factsExpression.getPropertyDictionary()[predicate.arg(0)]
                 thingInThePreposition = factsExpression.getObjectDictionary()[preposition.arg(0)] if preposition.arg(0) in factsExpression.getObjectDictionary() else factsExpression.getPropertyDictionary()[preposition.arg(0)]
                 preposition.args[0] = thingInThePreposition
                 return Role(predicate.getIndent(),predicate.getLetter(),predicate.getName(),thingInTheRole,preposition,predicate.arg(1),predicate.arg(2))
@@ -1270,8 +1271,10 @@ def makeClassFactOrPropertyFactFromRole(predicate,factsExpression):
                 if thingInTheClass not in factsExpression.getObjectDictionary():
                     factsExpression.getObjectDictionary()[thingInTheClass] = classThingIsIn
                     factsExpression.getObjectDictionary()[predicate.arg(1)] = thingInTheClass
-                    #del factsExpression.getObjectDictionary()[predicate.arg(0)]
-            
+                
+                print(factsExpression.getObjectDictionary())
+                print()
+                
             # second is a property
             elif i == 0:
                 
@@ -1684,7 +1687,7 @@ def interpret_ace(ace,makeLogFiles=False):
     factsExpression,nestedExpressions = readExpressions(drs,compileRegexes(),makeLogFiles)
     
     # interpret expressions as rules
-    facts,interpretedFactsExpression = makeFacts(factsExpression.copy())    
+    facts,interpretedFactsExpression = makeFacts(factsExpression.copy())
     rules = makeRules(interpretedFactsExpression,nestedExpressions)
     
     # reason over rules
@@ -1744,12 +1747,20 @@ def standaloneInterpreter(owlFile='uagent.owl',aceFile="interpreter/ace.txt",sto
         logfile.write("\nget_ACE_Strings()\n")
         for ace in ontology.get_ACE_Strings():
             logfile.write("{}\n".format(str(ace)))
+            
+        logfile.write("\ngetAllTypedDRSInstructions()\n{")
+        bigDict = ontology.getAllTypedDRSInstructions()
+        for thing in bigDict:
+            logfile.write("\n{}:[\n".format(str(thing)))
+            for stuff in bigDict[thing]:
+                logfile.write("{}\n".format(str(stuff)))
+            logfile.write("]")
         
         implementedTypes = ['object','predicate','preposition','property','relation']
         
-        logfile.write("\ngetDRSArgsForComponentType()\n")
+        logfile.write("}\n")
         for type in implementedTypes:
-            logfile.write("\n{}\n".format(str(type)))
+            logfile.write("\ngetDRSArgsForComponentType('{}')\n".format(str(type)))
             for x in ontology.getDRSArgsForComponentType(type):
                 logfile.write("{}\n".format(str(x)))
         
