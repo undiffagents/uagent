@@ -18,8 +18,8 @@ class Rule(Chunk):
 
     def __init__(self, dictionary):
         super().__init__(**dictionary)
-        self.conditions = self.slots['body']
-        self.actions = self.slots['head']
+        self.conditions = self.slots['preCondition']
+        self.actions = self.slots['postCondition']
 
     def __str__(self):
         return self.slots['asString']
@@ -31,7 +31,7 @@ class OntologyMemory(Memory):
 
     def __init__(self, agent, decay=None):
         super().__init__(agent, decay=decay)
-        self.ontology = Ontology(stopOldServer=True,loadFile='uagent.owl')
+        self.ontology = Ontology(stopOldServer=True,owlFile='uagent.owl')
 
     def add_instruction_knowledge(self, ace_output):
         self.ontology.add_instruction_knowledge(*ace_output)
