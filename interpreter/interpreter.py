@@ -1675,7 +1675,9 @@ def readExpressions(drs,regexPatterns,makeLogFiles):
     
 def interpret_ace(ace,makeLogFiles=False):
     '''interpret the ACE to obtain facts,rules,as well as new reasoner facts and rules'''
-    
+
+    print("Interpreter time")
+
     # get DRS
     drs = getDRSFromACE(ace)   
     if makeLogFiles and os.path.isfile("interpreter/DRS.txt"): os.remove("interpreter/DRS.txt")

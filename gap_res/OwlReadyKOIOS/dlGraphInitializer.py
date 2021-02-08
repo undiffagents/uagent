@@ -1,6 +1,10 @@
 # from SPARQLWrapper import SPARQLWrapper, JSON
 from ontoConstants import *
 from owlready2 import *
+import sys
+
+sys.path.append('/mnt/t/Projects/uagent-new/ontology')
+sys.path.append('/mnt/t/Projects/uagent-new/lib')
 
 from ontology import Ontology
 

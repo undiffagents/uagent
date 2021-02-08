@@ -383,7 +383,7 @@ class Ontology:
         
         print('Waiting for ontology server...')
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            while subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update', ''],stdout=subprocess.PIPE,stderr=subprocess.PIPE) != 0: 
+            while subprocess.call(['lib/fuseki/s-update','--service=http://localhost:3030/uagent/update', ''],stdout=subprocess.PIPE,stderr=subprocess.PIPE) != 0:
                 pass        
         
         print('Loading ontology...')
