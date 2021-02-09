@@ -2,7 +2,8 @@
 from ontoConstants import *
 from owlready2 import *
 
-interpreterFile = 'interpreterTest.txt'
+interpreterFile = 'gap_res/OwlReadyKOIOS/interpreterTest.txt'
+#interpreterFile = 'interpreterTest.txt'
 
 currentExperiment = None
 currentTask = None
@@ -77,11 +78,13 @@ def initializeOntology():
     rdfLines = separator.join(totalRDFLines) + " ."
     print(rdfLines)
     # Send em
-    onto.save(file="owlready-uagent.owl")
+    onto.save(file="gap_res/OwlReadyKOIOS/owlready-uagent.owl")
+    #onto.save(file="owlready-uagent.owl")
     filename = 'owlready-uagent.owl'
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
     subprocess.call(
-        ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
+        ['lib/fuseki/s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
+    # ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
 
 
 def beginExperiment():

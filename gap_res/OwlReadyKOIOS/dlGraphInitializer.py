@@ -8,7 +8,8 @@ sys.path.append('/mnt/t/Projects/uagent-new/lib')
 
 from ontology import Ontology
 
-interpreterFile = 'interpreterTest.txt'
+interpreterFile = 'gap_res/OwlReadyKOIOS/interpreterTest.txt'
+#interpreterFile = 'interpreterTest.txt'
 
 currentExperiment = None
 currentTask = None
@@ -67,33 +68,56 @@ def initializeOntology():
     # THIS DIRECTORY CHANGE IS MESSY AND LOCAL TO MY MACHINE BUT IT GETS IT WORKING
     # THIS SUCCESSFULLY PRINTS THE DRS STRINGS
     os.chdir('/mnt/t/Projects/uagent-new')
-    print(ontology.get_DRS_Strings())
-    exit(0)
     rdfLines = ""
     # Open up the interpreter output
-    inputFile = open(interpreterFile, 'r')
-    inputLines = inputFile.readlines()
+    # inputFile = open(interpreterFile, 'r')
+    # inputLines = inputFile.readlines()
     # Set up the ISR-MATB Experiment
     beginExperiment()
 
     # Iterate through each line
-    for line in inputLines:
-        line = line.strip()
-        processInterpreterOutputLine(line)
+    #for line in inputLines:
+    #    line = line.strip()
+    #    processInterpreterOutputLine(line)
         # rdfLines = rdfLines + processInterpreterOutputLine(line)
     # Close up the last situation description
     # rdfLines = rdfLines + endSituationDescription()
+    # print(ontology.getAllTypedDRSInstructions())
+    individuals = ontology.getDLGraphIndividuals()
+    print(individuals)
+    for individual in individuals:
+        dlGraphClasses = ontology.getDLGraphClassesForIndividual(individual)
+        #print(ontology.getDRSArgsForComponentName(individual))
+        DRSTypesForIndividual = list(ontology.getDRSArgsForComponentName(individual).keys())
+        #print("INDIV", DRSTypesForIndividual)
+        for dlGraphClass in dlGraphClasses:
+            # print(ontology.getDRSArgsForComponentName(dlGraphClass))
+            DRSTypesForClass = list(ontology.getDRSArgsForComponentName(dlGraphClass).keys())
+            #print("CLASS", DRSTypesForClass)
+        DRSTypes = set(DRSTypesForClass + DRSTypesForIndividual)
+        print(individual, dlGraphClass, DRSTypes)
+        processDLGraphItem(individual, dlGraphClass, DRSTypes.pop())
+        DRSTypesForClass.clear()
+        DRSTypesForIndividual.clear()
+        dlGraphClass = None
+
+    roles = ontology.getDLGraphRoles()
+    print(roles)
+    for role in roles:
+        print(ontology.getDLGraphTriplesForRole(role))
+
     endSituationDescription()
     separator = ' .'
     # Add final " ." after joining all the others
     rdfLines = separator.join(totalRDFLines) + " ."
     print(rdfLines)
     # Send em
-    onto.save(file="owlready-uagent.owl")
+    onto.save(file="gap_res/OwlReadyKOIOS/owlready-uagent.owl")
+    # onto.save(file="owlready-uagent.owl")
     filename = 'owlready-uagent.owl'
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
-    subprocess.call(
-        ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
+    subprocess.call(['lib/fuseki/s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
+    # ['./s-update', '--service=http://localhost:3030/uagent-initialized/update', "LOAD <file://{}>".format(path)])
 
 
 def beginExperiment():
@@ -101,6 +125,102 @@ def beginExperiment():
     with onto:
         newExperiment = onto[EXPERIMENT_NODE]()
         currentExperiment = newExperiment
+
+
+def processDLGraphItem(individualName, className, DRSType):
+    if DRSType == 'object':
+        if className == 'task':
+            DLGraphProcessTask(individualName)
+        else:
+            print("process item")
+            DLGraphProcessItem(individualName, className)
+
+
+    if DRSType == 'property':
+        # Create a property
+        pass
+
+def DLGraphProcessTask(taskName):
+    global currentTask
+    global currentSituation
+    global previousSituation
+    global sitLevelInputLines
+
+    # TODO: **** Should each task  start fresh with a new situation Description?
+    # For now, doing that - clearing all prior information and starting anew
+    endSituationDescription()
+    currentSituation = None
+    previousSituation = None
+    situationItemsInRDF.clear()
+    situationItemsDict.clear()
+    situationRDFLines.clear()
+    sitLevelInputLines.clear()
+    startSituationDescription()
+
+    # Create new task
+    with onto:
+        newTask = onto[TASK_NODE]()
+        onto[HAS_NAME_EDGE][newTask].append(taskName)
+        # newTask = [TASK_NODE]
+        # Attach this task to the experiment if exists
+        if currentExperiment is not None:
+            onto[HAS_TASK_EDGE][currentExperiment].append(newTask)
+        # If there is a prior experiment, that previous experiment informs this new one
+        if currentTask is not None:
+            onto[INFORMS_EDGE][currentTask].append(newTask)
+    currentTask = newTask
+
+    experimentItemsDict.update({taskName: newTask})
+
+def DLGraphProcessItem(itemName, itemRole):
+    # Create new item and item role
+    with onto:
+        newItem = onto[ITEM_NODE]()
+        # If the item is named, add its name
+        if itemName != "":
+            onto[HAS_ITEM_NAME_EDGE][newItem].append(itemName)
+            # Append to situation item tracker
+            situationItemsDict.update({itemName: newItem})
+        # Create the item role
+        newItemRole = onto[ITEM_ROLE_NODE]()
+        # Create the item role type
+        newItemRoleType = onto[ITEM_ROLE_TYPE_NODE](itemRole)
+        # Connect the item role type to the item role
+        onto[OF_ITEM_ROLE_TYPE_EDGE][newItemRole].append(newItemRoleType)
+        # Connect the role to the item
+        onto[ASSUMED_BY_EDGE][newItemRole].append(newItem)
+        # Append to situation item tracker - I THINK THIS IS RIGHT TODO ****
+        situationItemsDict.update({itemRole: newItemRole})
+        # If there is an affordance for this role, then create an affordance and link it to the item
+        if affordanceDict.get(itemRole) is not None:
+            newAffordance = onto[AFFORDANCE_NODE]()
+            newAffordanceType = onto[AFFORDANCE_TYPE_NODE](affordanceDict.get(itemRole))
+            onto[HAS_AFFORDANCE_TYPE_EDGE][newAffordance].append(newAffordanceType)
+            onto[AFFORDS_EDGE][newItem].append(newAffordance)
+            # Append to situation item tracker
+            situationItemsDict.update({affordanceDict.get(itemRole): newAffordance})
+        # Create Item Description with all of its offshoots
+        newItemDescription = onto[ITEM_DESCRIPTION_NODE]()
+        # TODO: **** Add values to these somehow?
+        newItemLocation = onto[ITEM_LOCATION_NODE]()
+        newItemColor = onto[ITEM_COLOR_NODE]()
+        newItemShape = onto[ITEM_SHAPE_NODE]()
+        newItemType = onto[ITEM_TYPE_NODE]()
+        onto[REFERS_TO_ITEM_LOCATION_EDGE][newItemDescription].append(newItemLocation)
+        onto[REFERS_TO_ITEM_COLOR_EDGE][newItemDescription].append(newItemColor)
+        onto[REFERS_TO_ITEM_SHAPE_EDGE][newItemDescription].append(newItemShape)
+        onto[REFERS_TO_ITEM_TYPE_EDGE][newItemDescription].append(newItemType)
+        onto[OF_ITEM_EDGE][newItemDescription].append(newItem)
+
+        # Attach item to Task
+        # if currentTask is not None:
+        #  currentTask.providesRole.append(newItemRole)
+        print(list(newItem.get_properties()))
+        print(list(newItem.get_inverse_properties()))
+
+    # Add the tags that have to do with the situation to a tracker
+
+
 
 
 def processInterpreterOutputLine(inputLine):
