@@ -113,6 +113,27 @@ def initializeOntology():
     print(rdfLines)
     # Send em
     onto.save(file="gap_res/OwlReadyKOIOS/owlready-uagent.owl")
+
+    # BUBBLEGUM AND DUCT-TAPE HACK TO GET THIS WORKING WITH MULTIPLE SUBGRAPHS (thanks owlready) ********
+    # read the owl file
+    owl_file = open("gap_res/OwlReadyKOIOS/owlready-uagent.owl", "r+")
+    owl_file_content = ""
+    for line in owl_file:
+        stripped_line = line.strip()
+        fixed_line = stripped_line
+        # Remove the subgraph silliness that occurs
+        if " <http://www.uagent.com/ontology#instructionGraph>" in fixed_line:
+            fixed_line = fixed_line.replace(" <http://www.uagent.com/ontology#instructionGraph>", "http://www.uagent.com/ontology#instructionGraph")
+        if "> <http://www.uagent.com/ontology#dlGraph" in fixed_line:
+            fixed_line = fixed_line.replace("> <http://www.uagent.com/ontology#dlGraph", "")
+        if "> <http://www.uagent.com/ontology#" in fixed_line:
+            fixed_line = fixed_line.replace("> <http://www.uagent.com/ontology#", "")
+        owl_file_content += fixed_line + "\n"
+    print(owl_file_content)
+    write_file = open("gap_res/OwlReadyKOIOS/owlready-uagent.owl", "w+")
+    write_file.write(owl_file_content)
+    owl_file.close()
+
     # onto.save(file="owlready-uagent.owl")
     filename = 'owlready-uagent.owl'
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)

@@ -7,7 +7,8 @@ Next steps: Don't use a hardcoded version of the expected relationships and base
 To run, ensure that the Jena Fuseki server is running, as well as filled with an instantiated version of the knowledge graph.
 
 Basic workflow for this (on my machine, and possibly including unnecessary steps, I haven't fully vetted it):
-    In one WSL window, run 'bash start_server.sh' in uagent-new
-    In another window, run 'python3 run.py' in uagent-new to run Think (I think this loads some information into the ontology, but I'm uncertain)
-    Next, run 'python3 ontoInterpreterTest.py' in uagent-new/onto-network-test to instantiate data into the knowledge graph
-    Finally, for KG validation, run 'python3 KG-Validation-Initial.py' in uagent-new/gap_res/KG-Validation.
+    In one WSL window, run 'python3 interpreter/interpreter.py' in uagent-new
+    In another window, run 'python3 gap_res/OwlReadyKOIOS/dlGraphInitializer.py' to instantiate data into the knowledge graph
+    Finally, for KG validation, run 'python3 gap_res/OwlReadyKOIOS/Passive_Gap_Handling/KG_Structure_Validation.py' in uagent-new.
+
+NOTE: Some variables/filepaths in the gap_res portions are absolutely machine-specific to my drive structure, etc. so there may need to be some minor edits
