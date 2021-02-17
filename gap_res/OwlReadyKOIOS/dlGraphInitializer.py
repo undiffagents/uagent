@@ -42,6 +42,8 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 
 ontology = Ontology()
 
+TESTING_KG_VALIDATION = False
+
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?
 # What if you have multiple items with the same name?  Same role?
@@ -129,7 +131,7 @@ def initializeOntology():
         if "> <http://www.uagent.com/ontology#" in fixed_line:
             fixed_line = fixed_line.replace("> <http://www.uagent.com/ontology#", "")
         owl_file_content += fixed_line + "\n"
-    print(owl_file_content)
+    # print(owl_file_content)
     write_file = open("gap_res/OwlReadyKOIOS/owlready-uagent.owl", "w+")
     write_file.write(owl_file_content)
     owl_file.close()
@@ -209,7 +211,8 @@ def DLGraphProcessItem(itemName, itemRole):
         # Connect the item role type to the item role
         onto[OF_ITEM_ROLE_TYPE_EDGE][newItemRole].append(newItemRoleType)
         # Connect the role to the item
-        onto[ASSUMED_BY_EDGE][newItemRole].append(newItem)
+        if TESTING_KG_VALIDATION == False:
+            onto[ASSUMED_BY_EDGE][newItemRole].append(newItem)
         # Append to situation item tracker - I THINK THIS IS RIGHT TODO ****
         situationItemsDict.update({itemRole: newItemRole})
         # If there is an affordance for this role, then create an affordance and link it to the item
@@ -631,14 +634,15 @@ def endSituationDescription():
                     # TODO **** Again, is grabbing the first one the best move?
                     relevantItemDescription = None
                     # Get the item which the role is assumed by
-                    relevantItem = createdItemRoleOrAffordance.assumedBy[0]
-                    # Get the list of incoming properties to the item
-                    for inverseProp in relevantItem.get_inverse_properties():
-                        source, value = inverseProp
-                        # Check if one of the incoming properties has the value "ofItem"
-                        if OF_ITEM_EDGE in value.name:
-                            # If so, the source is the item description we want
-                            relevantItemDescription = source
+                    if len(createdItemRoleOrAffordance.assumedBy) > 0:
+                        relevantItem = createdItemRoleOrAffordance.assumedBy[0]
+                        # Get the list of incoming properties to the item
+                        for inverseProp in relevantItem.get_inverse_properties():
+                            source, value = inverseProp
+                            # Check if one of the incoming properties has the value "ofItem"
+                            if OF_ITEM_EDGE in value.name:
+                                # If so, the source is the item description we want
+                                relevantItemDescription = source
                     # If we've received an item description, then connect it to the current situation
                     # as an earlierCondition
                     if relevantItemDescription is not None:
