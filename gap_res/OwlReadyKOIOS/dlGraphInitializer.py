@@ -208,6 +208,8 @@ def DLGraphProcessTask(taskName):
             onto[INFORMS_EDGE][currentTask].append(newTask)
     currentTask = newTask
 
+    #TODO ******** Tasks aren't situation-level, just doing this for actions
+    situationItemsDict.update({taskName: newTask})
     experimentItemsDict.update({taskName: newTask})
 
 
@@ -295,7 +297,11 @@ def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
         else:
             # TODO **** I really need to figure out the dict thing - right now since the dict returns a role, just
             # subbing out the term "role" for "item" if it appears.
-            actionTarget = situationItemsDict.get(actionSubject)
+            actionSubjectRef = situationItemsDict.get(actionSubject)
+            actionTarget = situationItemsDict.get(actionObject)
+            # TODO ****** This sometimes references item, sometimes itemRole.  Need to figure out why
+            # Has to do with space_bar and active being "item", and all the others being "itemrole" in the dict
+
             #print("TARGET", actionTarget)
             # actionTargetType = actionTarget.is_a[0].name
             # if actionTargetType == ITEM_ROLE_NODE:
@@ -303,8 +309,11 @@ def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
                 #actionSubject = actionTarget.assumedBy
                 #print(actionSubject)
             # TODO **** Is it correct to always grab the first?  What if there are multiple?
-            print("newACtion", newAction)
+            print("SUBJECT", actionSubjectRef)
+            print("newAction", newAction)
             print("TARGET", actionTarget)
+            # TODO ****** we're just pointing the actions to subject and target by "refers to"
+            onto[REFERS_TO_EDGE][newAction].append(actionSubjectRef)
             onto[REFERS_TO_EDGE][newAction].append(actionTarget)
 
         # TODO: ******* How do we handle situation descriptions since we don't really have ordering anymore?
