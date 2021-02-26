@@ -42,7 +42,7 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 
 ontology = Ontology()
 
-TESTING_KG_VALIDATION = True
+TESTING_KG_VALIDATION = False
 
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?
@@ -286,7 +286,7 @@ def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
         # Assign the action type
         newActionType = onto[ACTION_TYPE_NODE](actionVerb)
         print("newAction2", newAction)
-        if TESTING_KG_VALIDATION == True:
+        if TESTING_KG_VALIDATION == False:
             onto[OF_ACTION_TYPE_EDGE][newAction].append(newActionType)
         # Attach action to the item that triggered it
         if situationItemsDict.get(actionSubject) is None:
