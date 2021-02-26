@@ -42,7 +42,7 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 
 ontology = Ontology()
 
-TESTING_KG_VALIDATION = False
+TESTING_KG_VALIDATION = True
 
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?
@@ -102,11 +102,16 @@ def initializeOntology():
         DRSTypesForClass.clear()
         DRSTypesForIndividual.clear()
         dlGraphClass = None
+        print("items", situationItemsDict)
 
     roles = ontology.getDLGraphRoles()
     print(roles)
     for role in roles:
         print(ontology.getDLGraphTriplesForRole(role))
+        actionsForRole = ontology.getDLGraphTriplesForRole(role)
+        for action in actionsForRole:
+            processDLGraphAction(action)
+
 
     endSituationDescription()
     separator = ' .'
@@ -158,10 +163,20 @@ def processDLGraphItem(individualName, className, DRSType):
             print("process item")
             DLGraphProcessItem(individualName, className)
 
-
     if DRSType == 'property':
-        # Create a property
-        pass
+        # **** Figure properties out
+        print("process property - " + individualName)
+        print("CURRENTLY TREATING PROPERTIES AS ITEMS BECAUSE NOT SURE WHERE THEY GO IN ONTOLOGY - THIS NEEDS CHANGED")
+        DLGraphProcessItem(individualName, "Property")
+
+
+def processDLGraphAction(action):
+        subject = action[0]
+        verb = action[1]
+        object = action[2]
+        print(subject, verb, object)
+        DLGraphProcessAction(subject, verb, object)
+
 
 def DLGraphProcessTask(taskName):
     global currentTask
@@ -171,14 +186,14 @@ def DLGraphProcessTask(taskName):
 
     # TODO: **** Should each task  start fresh with a new situation Description?
     # For now, doing that - clearing all prior information and starting anew
-    endSituationDescription()
-    currentSituation = None
-    previousSituation = None
-    situationItemsInRDF.clear()
-    situationItemsDict.clear()
-    situationRDFLines.clear()
-    sitLevelInputLines.clear()
-    startSituationDescription()
+    # endSituationDescription()
+    # currentSituation = None
+    # previousSituation = None
+    # situationItemsInRDF.clear()
+    # situationItemsDict.clear()
+    # situationRDFLines.clear()
+    # sitLevelInputLines.clear()
+    # startSituationDescription()
 
     # Create new task
     with onto:
@@ -194,6 +209,7 @@ def DLGraphProcessTask(taskName):
     currentTask = newTask
 
     experimentItemsDict.update({taskName: newTask})
+
 
 def DLGraphProcessItem(itemName, itemRole):
     # Create new item and item role
@@ -245,6 +261,91 @@ def DLGraphProcessItem(itemName, itemRole):
     # Add the tags that have to do with the situation to a tracker
 
 
+def DLGraphProcessProp(itemName, itemRole):
+    pass
+
+
+def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
+    # Messy string manipulation to get the action contents out of the total string
+    # actionContents = inputContents.split(" => ")[0]
+    # actionContents = actionContents.split('(')[1]
+    # actionContents = actionContents.split(')')[0]
+    # actionVerb = actionContents.split(',')[0]
+    # actionSubject = actionContents.split(',')[1]
+    # if len(actionContents.split(',')) > 2:
+    #     actionObject = actionContents.split(',')[2]
+    # consequence = inputContents.split(" => ")[1]
+    # consequence = consequence.split(')')[0]
+
+    # Initializing here to nothing so that if it doesn't get populated, things don't break
+    actionRefersToRDFLine = ""
+    # rdfLines = ""
+
+    with onto:
+        newAction = onto[ACTION_NODE]()
+        # Assign the action type
+        newActionType = onto[ACTION_TYPE_NODE](actionVerb)
+        print("newAction2", newAction)
+        if TESTING_KG_VALIDATION == True:
+            onto[OF_ACTION_TYPE_EDGE][newAction].append(newActionType)
+        # Attach action to the item that triggered it
+        if situationItemsDict.get(actionSubject) is None:
+            print("Uh oh - it looks like an error occurred trying to process the action.  The term " + actionSubject + \
+                  " was not found.  For debugging purposes, this happened in processAction - line 240.")
+        else:
+            # TODO **** I really need to figure out the dict thing - right now since the dict returns a role, just
+            # subbing out the term "role" for "item" if it appears.
+            actionTarget = situationItemsDict.get(actionSubject)
+            #print("TARGET", actionTarget)
+            # actionTargetType = actionTarget.is_a[0].name
+            # if actionTargetType == ITEM_ROLE_NODE:
+                # actionRefersToItem = re.sub("ItemRole", "Item", actionRefersToItem)
+                #actionSubject = actionTarget.assumedBy
+                #print(actionSubject)
+            # TODO **** Is it correct to always grab the first?  What if there are multiple?
+            print("newACtion", newAction)
+            print("TARGET", actionTarget)
+            onto[REFERS_TO_EDGE][newAction].append(actionTarget)
+
+        # TODO: ******* How do we handle situation descriptions since we don't really have ordering anymore?
+
+        # Close up the pre-action situation description
+        # rdfLines = rdfLines + endSituationDescription()
+        # TODO: ****** PUT THESE BACK IN
+        # endSituationDescription()
+
+        # Next step is to create a new situation description.  Unsure exactly what carries over from one to the next but
+        # for now just cloning the previous situation description and adding whatever the action consequence is.
+        # TODO **** Figure out situation descriptions in more detail
+        # rdfLines = rdfLines + startSituationDescription()
+        ## TODO: ****** PUT THESE BACK IN
+        # startSituationDescription()
+
+        # Create Transition Description and connect situation descriptions to it
+        # rdfLines = rdfLines + createTransitionDescription()
+        # TODO: ****** PUT THESE BACK IN
+        # newTransition = createTransitionDescription()
+
+        # Set action up to trigger transition
+        # TODO: ****** PUT THESE BACK IN
+        # onto[TRIGGERS_EDGE][newAction].append(newTransition)
+
+    # Connect action to transition description (have to use current transition count - 1 because it was incremented
+    # when the transition was created)
+    # actionTriggersTransitionLine = actionCreator + " " + TRIGGERS_EDGE + " " + transitionCreator
+    # rdfLines = rdfLines + actionTriggersTransitionLine
+    # totalRDFLines.append(actionTriggersTransitionLine)
+
+    # SOMEWHERE IN HERE WE SHOULD POPULATE THE NEW SITUATION - FOR NOW IT'S JUST BEING DONE BY DOUBLING UP THE
+    # ITEMS ETC.
+    # TODO *****
+
+    # Handle the consequence
+    # TODO **** THIS IS PROBABLY NOT THE IDEAL ROUTE
+    # rdfLines = rdfLines + processInterpreterOutputLine(consequence)
+    # processInterpreterOutputLine(consequence)
+
+    # return rdfLines
 
 
 def processInterpreterOutputLine(inputLine):
