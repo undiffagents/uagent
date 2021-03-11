@@ -43,6 +43,9 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 ontology = Ontology()
 
 TESTING_KG_VALIDATION = False
+if len(sys.argv) > 1:
+    if sys.argv[1] == '-t' or sys.argv[1] == '-test':
+        TESTING_KG_VALIDATION = True
 
 # CONCERNS: Co-referencing nodes after they've been created etc. will be a real pain.  Trying to figure that out.
 # The dict seems like a good idea, but for items with roles/names, what should be the key?  The name? The role?

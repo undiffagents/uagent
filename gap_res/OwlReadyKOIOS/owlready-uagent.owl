@@ -5,12 +5,12 @@ xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 xmlns:owl="http://www.w3.org/2002/07/owl#"
 xml:base="http://www.uagent.com/ontology"
 xmlns="http://www.uagent.com/ontology#"
-xmlns:onto="#Function"
+xmlns:onto="#Fact"
 xmlns:onto2="#Instruction"
 xmlns:onto3="#Constant"
-xmlns:onto4="#Predicate"
-xmlns:onto5="#Fact"
-xmlns:onto6="#Variable"
+xmlns:onto4="#Variable"
+xmlns:onto5="#Predicate"
+xmlns:onto6="#Function"
 xmlns:onto7="#Rule"
 xmlns:onto8="http://www.w3.org/2002/07/owl#Class"
 xmlns:onto9="http://www.w3.org/2002/07/owl#NamedIndividual"
@@ -23,94 +23,99 @@ xmlns:onto11="#task">
 
 <owl:ObjectProperty rdf:about="#hasLocation"/>
 
-<owl:ObjectProperty rdf:about="#hasTerm"/>
+<owl:ObjectProperty rdf:about="#refersToItemColor"/>
 
 <owl:ObjectProperty rdf:about="#triggers"/>
 
 <owl:ObjectProperty rdf:about="#hasFirstItem"/>
 
-<owl:ObjectProperty rdf:about="#informs"/>
-
-<owl:ObjectProperty rdf:about="#refersToItemShape"/>
-
-<owl:ObjectProperty rdf:about="#refersTo"/>
-
-<owl:ObjectProperty rdf:about="#assumedBy"/>
-
-<owl:ObjectProperty rdf:about="#refersToItemLocation"/>
-
-<owl:ObjectProperty rdf:about="#hasHeadPredicate"/>
-
-<owl:ObjectProperty rdf:about="#asRule"/>
-
-<owl:ObjectProperty rdf:about="#refersToItemType"/>
-
-<owl:ObjectProperty rdf:about="#hasPreSituationDescription"/>
-
-<owl:ObjectProperty rdf:about="#ofActionType"/>
-
-<owl:ObjectProperty rdf:about="#hasInstruction"/>
-
-<owl:ObjectProperty rdf:about="#hasTask"/>
-
-<owl:ObjectProperty rdf:about="#hasCurrentCondition"/>
-
-<owl:ObjectProperty rdf:about="#hasPostSituationDescription"/>
-
-<owl:ObjectProperty rdf:about="#prescribes"/>
-
-<owl:ObjectProperty rdf:about="#hasBodyPredicate"/>
-
-<owl:ObjectProperty rdf:about="#ofItemRoleType"/>
-
-<owl:ObjectProperty rdf:about="#ofRelativeConditionType"/>
-
 <owl:ObjectProperty rdf:about="#affords"/>
-
-<owl:ObjectProperty rdf:about="#providesRole"/>
 
 <owl:ObjectProperty rdf:about="#hasEarlierCondition"/>
 
-<owl:ObjectProperty rdf:about="#contributesTo"/>
+<owl:ObjectProperty rdf:about="#hasInstruction"/>
+
+<owl:ObjectProperty rdf:about="#refersTo"/>
 
 <owl:ObjectProperty rdf:about="#hasSecondItem"/>
 
-<owl:ObjectProperty rdf:about="#ofItem"/>
+<owl:ObjectProperty rdf:about="#hasTerm"/>
 
-<owl:ObjectProperty rdf:about="#refersToItemColor"/>
+<owl:ObjectProperty rdf:about="#refersToItemType"/>
+
+<owl:ObjectProperty rdf:about="#informs"/>
+
+<owl:ObjectProperty rdf:about="#hasBodyPredicate"/>
 
 <owl:ObjectProperty rdf:about="#hasAffordanceType"/>
 
+<owl:ObjectProperty rdf:about="#hasHeadPredicate"/>
+
+<owl:ObjectProperty rdf:about="#refersToItemShape"/>
+
+<owl:ObjectProperty rdf:about="#hasPreSituationDescription"/>
+
+<owl:ObjectProperty rdf:about="#hasCurrentCondition"/>
+
+<owl:ObjectProperty rdf:about="#hasTask"/>
+
+<owl:ObjectProperty rdf:about="#ofItem"/>
+
+<owl:ObjectProperty rdf:about="#ofItemRoleType"/>
+
+<owl:ObjectProperty rdf:about="#assumedBy"/>
+
+<owl:ObjectProperty rdf:about="#ofRelativeConditionType"/>
+
+<owl:ObjectProperty rdf:about="#ofActionType"/>
+
+<owl:ObjectProperty rdf:about="#refersToItemLocation"/>
+
+<owl:ObjectProperty rdf:about="#prescribes"/>
+
+<owl:ObjectProperty rdf:about="#providesRole"/>
+
+<owl:ObjectProperty rdf:about="#contributesTo"/>
+
+<owl:ObjectProperty rdf:about="#hasPostSituationDescription"/>
+
+<owl:ObjectProperty rdf:about="#asRule"/>
+
 <owl:DatatypeProperty rdf:about="#isPresent"/>
 
-<owl:DatatypeProperty rdf:about="#asString"/>
+<owl:DatatypeProperty rdf:about="#hasIndex"/>
+
+<owl:DatatypeProperty rdf:about="#hasName"/>
 
 <owl:DatatypeProperty rdf:about="#hasArity"/>
 
 <owl:DatatypeProperty rdf:about="#hasItemName"/>
 
-<owl:DatatypeProperty rdf:about="#hasName"/>
-
 <owl:DatatypeProperty rdf:about="#asDRSString">
 <rdfs:subPropertyOf rdf:resource="#asString"/>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#asString"/>
+
 <owl:DatatypeProperty rdf:about="#inReasoningStep"/>
 
-<owl:DatatypeProperty rdf:about="#hasIndex"/>
+<owl:Class rdf:about="#ItemColor"/>
+
+<owl:Class rdf:about="#Affordance">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasAffordanceType"/>
+<owl:onClass rdf:resource="#AffordanceType"/>
+<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
+</owl:Class>
 
 <owl:Class rdf:about="#ItemDescription">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemShape"/>
-<owl:onClass rdf:resource="#ItemShape"/>
-<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemLocation"/>
-<owl:onClass rdf:resource="#ItemLocation"/>
+<owl:onProperty rdf:resource="#refersToItemColor"/>
+<owl:onClass rdf:resource="#ItemColor"/>
 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
@@ -136,53 +141,16 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemColor"/>
-<owl:onClass rdf:resource="#ItemColor"/>
+<owl:onProperty rdf:resource="#refersToItemLocation"/>
+<owl:onClass rdf:resource="#ItemLocation"/>
 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#Term">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasIndex"/>
-<owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasIndex"/>
-<owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#ISR-MATBTask">
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#informs"/>
-<owl:allValuesFrom rdf:resource="#ISR-MATBTask"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasInstruction"/>
-<owl:onClass rdf:resource="#Instruction"/>
-<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#providesRole"/>
-<owl:allValuesFrom rdf:resource="#ItemRole"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasName"/>
-<owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+<owl:onProperty rdf:resource="#refersToItemShape"/>
+<owl:onClass rdf:resource="#ItemShape"/>
+<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
 </owl:Class>
@@ -192,14 +160,14 @@ xmlns:onto11="#task">
 <owl:Class rdf:about="#Role">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasTerm"/>
-<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:cardinality>
+<owl:onProperty rdf:resource="#hasArity"/>
+<owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</owl:hasValue>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasArity"/>
-<owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</owl:hasValue>
+<owl:onProperty rdf:resource="#hasTerm"/>
+<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:cardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf rdf:resource="#Predicate"/>
@@ -220,8 +188,6 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#TransitionDescription"/>
-
 <owl:Class rdf:about="#ISR-MATBExperiment">
 <rdfs:subClassOf>
 <owl:Restriction>
@@ -230,16 +196,6 @@ xmlns:onto11="#task">
 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</owl:maxQualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#DescriptionInstruction">
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#contributesTo"/>
-<owl:allValuesFrom rdf:resource="#SituationDescription"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf rdf:resource="#Instruction"/>
 </owl:Class>
 
 <owl:Class rdf:about="#Instruction">
@@ -258,32 +214,56 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ActionType"/>
-
-<owl:Class rdf:about="#RelativeConditionType"/>
-
-<owl:Class rdf:about="#Item">
+<owl:Class rdf:about="#DescriptionInstruction">
+<rdfs:subClassOf rdf:resource="#Instruction"/>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#affords"/>
-<owl:allValuesFrom rdf:resource="#Affordance"/>
+<owl:onProperty rdf:resource="#contributesTo"/>
+<owl:allValuesFrom rdf:resource="#SituationDescription"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemLocation"/>
+<owl:Class rdf:about="#ActionType"/>
+
+<owl:Class rdf:about="#Term">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasIndex"/>
+<owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasIndex"/>
+<owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#RelativeConditionType"/>
+
+<owl:Class rdf:about="#TransitionDescription"/>
+
+<owl:Class rdf:about="#ItemType"/>
 
 <owl:Class rdf:about="#Constant">
-<rdfs:subClassOf rdf:resource="#Function"/>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasArity"/>
 <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
 </owl:Restriction>
 </rdfs:subClassOf>
+<rdfs:subClassOf rdf:resource="#Function"/>
 </owl:Class>
 
 <owl:Class rdf:about="#Function">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasTerm"/>
+<owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasArity"/>
@@ -295,41 +275,27 @@ xmlns:onto11="#task">
 <owl:complementOf rdf:resource="#Variable"/>
 </owl:Class>
 </rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasTerm"/>
-<owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
 <rdfs:subClassOf rdf:resource="#Term"/>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemColor"/>
+<owl:Class rdf:about="#AffordanceType"/>
 
-<owl:Class rdf:about="#Rule">
+<owl:Class rdf:about="#Item">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasHeadPredicate"/>
-<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasBodyPredicate"/>
-<owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#inReasoningStep"/>
-<owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+<owl:onProperty rdf:resource="#affords"/>
+<owl:allValuesFrom rdf:resource="#Affordance"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemType"/>
-
 <owl:Class rdf:about="#SituationDescription">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasEarlierCondition"/>
+<owl:allValuesFrom rdf:resource="#ItemDescription"/>
+</owl:Restriction>
+</rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasCurrentCondition"/>
@@ -343,38 +309,58 @@ xmlns:onto11="#task">
 </owl:allValuesFrom>
 </owl:Restriction>
 </rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasEarlierCondition"/>
-<owl:allValuesFrom rdf:resource="#ItemDescription"/>
-</owl:Restriction>
-</rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#AffordanceType"/>
-
 <owl:Class rdf:about="#Class">
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasTerm"/>
-<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasArity"/>
 <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</owl:hasValue>
 </owl:Restriction>
 </rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasTerm"/>
+<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
 <rdfs:subClassOf rdf:resource="#Predicate"/>
 </owl:Class>
 
-<owl:Class rdf:about="#Affordance">
+<owl:Class rdf:about="#ItemLocation"/>
+
+<owl:Class rdf:about="#RelativeCondition">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasAffordanceType"/>
-<owl:onClass rdf:resource="#AffordanceType"/>
-<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+<owl:onProperty rdf:resource="#hasSecondItem"/>
+<owl:allValuesFrom rdf:resource="#ItemDescription"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasFirstItem"/>
+<owl:allValuesFrom rdf:resource="#ItemDescription"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Rule">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasHeadPredicate"/>
+<owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#inReasoningStep"/>
+<owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasBodyPredicate"/>
+<owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
 </owl:Class>
@@ -394,33 +380,47 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#ItemRoleType"/>
+<owl:Class rdf:about="#ISR-MATBTask">
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasInstruction"/>
+<owl:onClass rdf:resource="#Instruction"/>
+<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasName"/>
+<owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#providesRole"/>
+<owl:allValuesFrom rdf:resource="#ItemRole"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#informs"/>
+<owl:allValuesFrom rdf:resource="#ISR-MATBTask"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+</owl:Class>
 
 <owl:Class rdf:about="#Variable">
+<rdfs:subClassOf rdf:resource="#Term"/>
 <rdfs:subClassOf>
 <owl:Class>
 <owl:complementOf rdf:resource="#Function"/>
 </owl:Class>
 </rdfs:subClassOf>
-<rdfs:subClassOf rdf:resource="#Term"/>
 </owl:Class>
 
 <owl:Class rdf:about="#Location"/>
 
-<owl:Class rdf:about="#RelativeCondition">
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasFirstItem"/>
-<owl:allValuesFrom rdf:resource="#ItemDescription"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasSecondItem"/>
-<owl:allValuesFrom rdf:resource="#ItemDescription"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-</owl:Class>
+<owl:Class rdf:about="#ItemRoleType"/>
 
 <owl:Class rdf:about="#ActionInstruction">
 <rdfs:subClassOf>
@@ -435,22 +435,21 @@ xmlns:onto11="#task">
 <owl:Class rdf:about="#Action">
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#triggers"/>
-<owl:onClass rdf:resource="#TransitionDescription"/>
-<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
 <owl:onProperty rdf:resource="#ofActionType"/>
 <owl:onClass rdf:resource="#ActionType"/>
 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#triggers"/>
+<owl:onClass rdf:resource="#TransitionDescription"/>
+<owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+</owl:Restriction>
+</rdfs:subClassOf>
 </owl:Class>
 
 <owl:Class rdf:about="#Fact">
-<rdfs:subClassOf rdf:resource="#Rule"/>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasBodyPredicate"/>
@@ -458,6 +457,7 @@ xmlns:onto11="#task">
 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:maxQualifiedCardinality>
 </owl:Restriction>
 </rdfs:subClassOf>
+<rdfs:subClassOf rdf:resource="#Rule"/>
 </owl:Class>
 
 <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
@@ -469,14 +469,8 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasHeadPredicate"/>
-<owl:allValuesFrom rdf:resource="#Predicate"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemType"/>
-<owl:allValuesFrom rdf:resource="#ItemType"/>
+<owl:onProperty rdf:resource="#affords"/>
+<owl:allValuesFrom rdf:resource="#Affordance"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
@@ -487,56 +481,32 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasPostSituationDescription"/>
-<owl:allValuesFrom rdf:resource="#SituationDescription"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemLocation"/>
-<owl:allValuesFrom rdf:resource="#ItemLocation"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
 <owl:onProperty rdf:resource="#refersToItemShape"/>
 <owl:allValuesFrom rdf:resource="#ItemShape"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#asString"/>
-<owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#ofItemRoleType"/>
-<owl:allValuesFrom rdf:resource="#ItemRoleType"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#affords"/>
-<owl:allValuesFrom rdf:resource="#Affordance"/>
-</owl:Restriction>
-</rdfs:subClassOf>
-<rdfs:subClassOf>
-<owl:Restriction>
-<owl:onProperty rdf:resource="#hasBodyPredicate"/>
+<owl:onProperty rdf:resource="#hasHeadPredicate"/>
 <owl:allValuesFrom rdf:resource="#Predicate"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasLocation"/>
-<owl:allValuesFrom rdf:resource="#Location"/>
+<owl:onProperty rdf:resource="#refersToItemColor"/>
+<owl:allValuesFrom rdf:resource="#ItemColor"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#hasItemName"/>
 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasBodyPredicate"/>
+<owl:allValuesFrom rdf:resource="#Predicate"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
@@ -548,20 +518,50 @@ xmlns:onto11="#task">
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#hasPreSituationDescription"/>
+<owl:onProperty rdf:resource="#hasPostSituationDescription"/>
 <owl:allValuesFrom rdf:resource="#SituationDescription"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
-<owl:onProperty rdf:resource="#refersToItemColor"/>
-<owl:allValuesFrom rdf:resource="#ItemColor"/>
+<owl:onProperty rdf:resource="#hasLocation"/>
+<owl:allValuesFrom rdf:resource="#Location"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#refersToItemLocation"/>
+<owl:allValuesFrom rdf:resource="#ItemLocation"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#asString"/>
+<owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 <rdfs:subClassOf>
 <owl:Restriction>
 <owl:onProperty rdf:resource="#ofRelativeConditionType"/>
 <owl:allValuesFrom rdf:resource="#RelativeConditionType"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#hasPreSituationDescription"/>
+<owl:allValuesFrom rdf:resource="#SituationDescription"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#refersToItemType"/>
+<owl:allValuesFrom rdf:resource="#ItemType"/>
+</owl:Restriction>
+</rdfs:subClassOf>
+<rdfs:subClassOf>
+<owl:Restriction>
+<owl:onProperty rdf:resource="#ofItemRoleType"/>
+<owl:allValuesFrom rdf:resource="#ItemRoleType"/>
 </owl:Restriction>
 </rdfs:subClassOf>
 </rdf:Description>
@@ -636,8 +636,8 @@ xmlns:onto11="#task">
 
 <ItemRole rdf:about="#itemrole1">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<assumedBy rdf:resource="#item1"/>
 <ofItemRoleType rdf:resource="#button"/>
+<assumedBy rdf:resource="#item1"/>
 </ItemRole>
 
 <Affordance rdf:about="#affordance1">
@@ -651,11 +651,11 @@ xmlns:onto11="#task">
 
 <ItemDescription rdf:about="#itemdescription1">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<refersToItemShape rdf:resource="#itemshape1"/>
-<refersToItemLocation rdf:resource="#itemlocation1"/>
-<refersToItemType rdf:resource="#itemtype1"/>
-<ofItem rdf:resource="#item1"/>
 <refersToItemColor rdf:resource="#itemcolor1"/>
+<refersToItemType rdf:resource="#itemtype1"/>
+<refersToItemShape rdf:resource="#itemshape1"/>
+<ofItem rdf:resource="#item1"/>
+<refersToItemLocation rdf:resource="#itemlocation1"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation1">
@@ -686,8 +686,8 @@ xmlns:onto11="#task">
 
 <ItemRole rdf:about="#itemrole2">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<assumedBy rdf:resource="#item2"/>
 <ofItemRoleType rdf:resource="#Property"/>
+<assumedBy rdf:resource="#item2"/>
 </ItemRole>
 
 <ItemRoleType rdf:about="#Property">
@@ -696,11 +696,11 @@ xmlns:onto11="#task">
 
 <ItemDescription rdf:about="#itemdescription2">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<refersToItemShape rdf:resource="#itemshape2"/>
-<refersToItemLocation rdf:resource="#itemlocation2"/>
-<refersToItemType rdf:resource="#itemtype2"/>
-<ofItem rdf:resource="#item2"/>
 <refersToItemColor rdf:resource="#itemcolor2"/>
+<refersToItemType rdf:resource="#itemtype2"/>
+<refersToItemShape rdf:resource="#itemshape2"/>
+<ofItem rdf:resource="#item2"/>
+<refersToItemLocation rdf:resource="#itemlocation2"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation2">
@@ -726,17 +726,17 @@ xmlns:onto11="#task">
 
 <ItemRole rdf:about="#itemrole3">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<assumedBy rdf:resource="#item3"/>
 <ofItemRoleType rdf:resource="#subject"/>
+<assumedBy rdf:resource="#item3"/>
 </ItemRole>
 
 <ItemDescription rdf:about="#itemdescription3">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<refersToItemShape rdf:resource="#itemshape3"/>
-<refersToItemLocation rdf:resource="#itemlocation3"/>
-<refersToItemType rdf:resource="#itemtype3"/>
-<ofItem rdf:resource="#item3"/>
 <refersToItemColor rdf:resource="#itemcolor3"/>
+<refersToItemType rdf:resource="#itemtype3"/>
+<refersToItemShape rdf:resource="#itemshape3"/>
+<ofItem rdf:resource="#item3"/>
+<refersToItemLocation rdf:resource="#itemlocation3"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation3">
@@ -763,8 +763,8 @@ xmlns:onto11="#task">
 
 <ItemRole rdf:about="#itemrole4">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<assumedBy rdf:resource="#item4"/>
 <ofItemRoleType rdf:resource="#letter"/>
+<assumedBy rdf:resource="#item4"/>
 </ItemRole>
 
 <Affordance rdf:about="#affordance2">
@@ -778,11 +778,11 @@ xmlns:onto11="#task">
 
 <ItemDescription rdf:about="#itemdescription4">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<refersToItemShape rdf:resource="#itemshape4"/>
-<refersToItemLocation rdf:resource="#itemlocation4"/>
-<refersToItemType rdf:resource="#itemtype4"/>
-<ofItem rdf:resource="#item4"/>
 <refersToItemColor rdf:resource="#itemcolor4"/>
+<refersToItemType rdf:resource="#itemtype4"/>
+<refersToItemShape rdf:resource="#itemshape4"/>
+<ofItem rdf:resource="#item4"/>
+<refersToItemLocation rdf:resource="#itemlocation4"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation4">
@@ -808,17 +808,17 @@ xmlns:onto11="#task">
 
 <ItemRole rdf:about="#itemrole5">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<assumedBy rdf:resource="#item5"/>
 <ofItemRoleType rdf:resource="#screen"/>
+<assumedBy rdf:resource="#item5"/>
 </ItemRole>
 
 <ItemDescription rdf:about="#itemdescription5">
 <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-<refersToItemShape rdf:resource="#itemshape5"/>
-<refersToItemLocation rdf:resource="#itemlocation5"/>
-<refersToItemType rdf:resource="#itemtype5"/>
-<ofItem rdf:resource="#item5"/>
 <refersToItemColor rdf:resource="#itemcolor5"/>
+<refersToItemType rdf:resource="#itemtype5"/>
+<refersToItemShape rdf:resource="#itemshape5"/>
+<ofItem rdf:resource="#item5"/>
+<refersToItemLocation rdf:resource="#itemlocation5"/>
 </ItemDescription>
 
 <ItemLocation rdf:about="#itemlocation5">
@@ -887,1040 +887,306 @@ xmlns:onto11="#task">
 </Action>
 
 <onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-</onto:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a screen that is in the task.</asString>
-</onto2:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(A,task,countable,na,eq,1)-1/6</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"A","indent":"","num1":"1","num2":"6","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#propertyinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   property(Q,active,pos)-7/5</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"Q","indent":"   ","num1":"7","num2":"5","arg0":"pos"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(C,screen,countable,na,eq,1)-2/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"C","indent":"","num1":"2","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(K,letter,countable,na,eq,1)-5/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"K","indent":"","num1":"5","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto5:instructionGraph>
 <hasHeadPredicate>
 </hasHeadPredicate>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
 <inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
+</onto:instructionGraph>
 
 <onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">If the task is active then a letter appears on the screen.</asString>
+<asRule>
+</asRule>
 </onto2:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(C)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(A)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(K)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(L,be,K)-5/6</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"L","indent":"","num1":"5","num2":"6","arg0":"K"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">E</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">If a subject is in the task then the task is active.</asString>
-</onto2:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#propertyinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   property(O,active,pos)-6/12</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"O","indent":"   ","num1":"6","num2":"12","arg0":"pos"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(letter,in(psychomotor-vigilance))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   preposition(T,on,C)-7/10</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"T","indent":"   ","num1":"7","num2":"10","arg0":"C"}</drsArgs>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
-</onto4:instructionGraph>
-
-<onto7:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K,on(C)),screen(C),letter(K),button(H),subject(I) =&gt; press(I,H)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto7:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-</onto:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(J,in,A)-4/7</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"J","indent":"","num1":"4","num2":"7","arg0":"A"}</drsArgs>
-</onto:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(H)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(A,Q)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(R,be,A,Q)-7/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"R","indent":"   ","num1":"7","num2":"4","arg0":"A","arg1":"Q"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
-</onto6:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   object(M,subject,countable,na,eq,1)-6/3</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"M","indent":"   ","num1":"6","num2":"3","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K,on(C))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   object(S,letter,countable,na,eq,1)-7/8</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"S","indent":"   ","num1":"7","num2":"8","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(C)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(D,be,C)-2/6</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"D","indent":"","num1":"2","num2":"6","arg0":"C"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(space_bar,in(psychomotor-vigilance))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-</onto4:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(I,H)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(V,press,I,H)-8/11</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"V","indent":"   ","num1":"8","num2":"11","arg0":"I","arg1":"H"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(psychomotor-vigilance,A)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(B,be,psychomotor-vigilance,A)-1/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"B","indent":"","num1":"1","num2":"4","arg0":"psychomotor-vigilance","arg1":"A"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a letter that is in the task.</asString>
-</onto2:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(H,E)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(F,be,H,E)-3/5</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"F","indent":"","num1":"3","num2":"5","arg0":"H","arg1":"E"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
-</onto6:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
 </onto3:instructionGraph>
 
 <onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(I,subject,countable,na,eq,1)-4/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"I","indent":"","num1":"4","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto4:instructionGraph>
-
-<rdf:Description>
-<drsType rdf:resource="#conditionalinstructionGraph"/>
-<hasPostSituationDescripton>
-</hasPostSituationDescripton>
-<hasPreSituationDescripton>
-</hasPreSituationDescripton>
-<hasPreSituationDescripton>
-</hasPreSituationDescripton>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(U,appear,K)-8/4
-preposition(U,on,C)-8/5
-=&gt;
-predicate(V,press,I,H)-8/11</asDRSString>
-</rdf:Description>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a subject that is in the task.</asString>
-</onto2:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">O</asString>
-</onto6:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto7:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M,in(A)),task(A),subject(M) =&gt; hasProperty(A,active)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto7:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(screen,in(psychomotor-vigilance))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">Q</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">The n:space_bar is a button and is in the task.</asString>
-</onto2:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">M</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(H)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(G,be,H)-3/9</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"G","indent":"","num1":"3","num2":"9","arg0":"H"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
-
-<onto7:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) =&gt; press(subject,space_bar)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">3</inReasoningStep>
-</onto7:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(M)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">3</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto6:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">S</asString>
-</onto6:instructionGraph>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(J,be,I)-4/6</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(I)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"J","indent":"","num1":"4","num2":"6","arg0":"I"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(F,be,H,E)-3/5</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(H,E)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"F","indent":"","num1":"3","num2":"5","arg0":"H","arg1":"E"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
+</onto5:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
 </onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(I)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(letter,in(psychomotor-vigilance))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-</onto4:instructionGraph>
 
 <onto2:instructionGraph>
 <asRule>
 </asRule>
 </onto2:instructionGraph>
 
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
+</onto6:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
 <onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#prepositioninstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(D,in,A)-2/7</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"D","indent":"","num1":"2","num2":"7","arg0":"A"}</drsArgs>
+</onto6:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
+</onto6:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(screen,in(psychomotor-vigilance))</asString>
 </onto5:instructionGraph>
 
 <onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
 </onto4:instructionGraph>
 
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(D,be,C)-2/6</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(C)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"D","indent":"","num1":"2","num2":"6","arg0":"C"}</drsArgs>
+</onto5:instructionGraph>
 
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
 <hasTerm>
 </hasTerm>
 <drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(A,O)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(P,be,A,O)-6/11</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"P","indent":"   ","num1":"6","num2":"11","arg0":"A","arg1":"O"}</drsArgs>
-</onto4:instructionGraph>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(R,be,A,Q)-7/4</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(A,Q)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"R","indent":"   ","num1":"7","num2":"4","arg0":"A","arg1":"Q"}</drsArgs>
+</onto5:instructionGraph>
 
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(H,space_bar,countable,na,eq,1)-3/4</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"H","indent":"","num1":"3","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
 
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(G,in,A)-3/10</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"G","indent":"","num1":"3","num2":"10","arg0":"A"}</drsArgs>
-</onto:instructionGraph>
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
 
 <onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
 </onto4:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
 </onto3:instructionGraph>
 
-<onto:instructionGraph>
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">S</asString>
+</onto4:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">O</asString>
+</onto4:instructionGraph>
+
+<onto6:instructionGraph>
 <hasTerm>
 </hasTerm>
 <drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
 <asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   preposition(N,in,A)-6/5</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
 <drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"N","indent":"   ","num1":"6","num2":"5","arg0":"A"}</drsArgs>
-</onto:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
 </onto6:instructionGraph>
 
-<onto:instructionGraph>
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
+</onto4:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
+</onto6:instructionGraph>
+
+<onto6:instructionGraph>
 <hasTerm>
 </hasTerm>
 <drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(L,in,A)-5/7</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"L","indent":"","num1":"5","num2":"7","arg0":"A"}</drsArgs>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(S)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(T,appear,S)-7/9</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"T","indent":"   ","num1":"7","num2":"9","arg0":"S"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(C)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto4:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-</onto:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   preposition(U,on,C)-8/5</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"U","indent":"   ","num1":"8","num2":"5","arg0":"C"}</drsArgs>
 </onto6:instructionGraph>
 
-<onto6:instructionGraph>
+<onto4:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">M</asString>
-</onto6:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(space_bar,in(psychomotor-vigilance))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto2:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">p:psychomotor-vigilance is a task.</asString>
-</onto2:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
-</onto3:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto7:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) =&gt; appear(letter,on(screen))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</inReasoningStep>
-</onto7:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-</onto:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(U,appear,K)-8/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"U","indent":"   ","num1":"8","num2":"4","arg0":"K"}</drsArgs>
 </onto4:instructionGraph>
 
 <onto3:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
 </onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
 
 <rdf:Description>
 <drsType rdf:resource="#conditionalinstructionGraph"/>
@@ -1942,9 +1208,192 @@ predicate(P,be,A,O)-6/11
 property(O,active,pos)-6/12</asDRSString>
 </rdf:Description>
 
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+</onto5:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+</onto5:instructionGraph>
+
+<onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) =&gt; hasProperty(psychomotor-vigilance,active)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</inReasoningStep>
+</onto7:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
+</onto5:instructionGraph>
+
 <onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
 </onto6:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">p:psychomotor-vigilance is a task.</asString>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active)</asString>
+</onto5:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">The n:space_bar is a button and is in the task.</asString>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M,in(A))</asString>
+</onto5:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(A,task,countable,na,eq,1)-1/6</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"A","indent":"","num1":"1","num2":"6","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) =&gt; press(subject,space_bar)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">3</inReasoningStep>
+</onto7:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
+</onto6:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(letter,in(psychomotor-vigilance))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
 
 <onto2:instructionGraph>
 <asRule>
@@ -1952,150 +1401,860 @@ property(O,active,pos)-6/12</asDRSString>
 </onto2:instructionGraph>
 
 <onto3:instructionGraph>
-<drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(E,button,countable,na,eq,1)-3/7</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"E","indent":"","num1":"3","num2":"7","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
 </onto3:instructionGraph>
 
-<onto6:instructionGraph>
+<onto4:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(K)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
+</onto5:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
+</onto4:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">If the task is active then a letter appears on the screen.</asString>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(H)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">Q</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#propertyinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   property(Q,active,pos)-7/5</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"Q","indent":"   ","num1":"7","num2":"5","arg0":"pos"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
+</onto4:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button(space_bar)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
 </onto6:instructionGraph>
 
 <onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto6:instructionGraph>
 <hasTerm>
 </hasTerm>
 <drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   preposition(U,on,C)-8/5</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"U","indent":"   ","num1":"8","num2":"5","arg0":"C"}</drsArgs>
-</onto:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(J,in,A)-4/7</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"J","indent":"","num1":"4","num2":"7","arg0":"A"}</drsArgs>
+</onto6:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(A)</asString>
+</onto5:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">S</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(K,letter,countable,na,eq,1)-5/4</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"K","indent":"","num1":"5","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
 </onto3:instructionGraph>
 
 <onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(K)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
 </onto4:instructionGraph>
 
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
-</onto6:instructionGraph>
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
+</onto3:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<drsType rdf:resource="#propertyinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   property(O,active,pos)-6/12</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"O","indent":"   ","num1":"6","num2":"12","arg0":"pos"}</drsArgs>
 </onto3:instructionGraph>
 
 <onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">3</inReasoningStep>
 </onto:instructionGraph>
 
-<onto4:instructionGraph>
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(S)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto4:instructionGraph>
+</onto5:instructionGraph>
 
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
 <hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
+</onto5:instructionGraph>
 
 <onto3:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(I)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
+</onto5:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(space_bar,in(psychomotor-vigilance))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
+</onto5:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(letter,on(screen))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</inReasoningStep>
+</onto:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(C,screen,countable,na,eq,1)-2/4</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"C","indent":"","num1":"2","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M,in(A)),task(A),subject(M) =&gt; hasProperty(A,active)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto7:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(I,subject,countable,na,eq,1)-4/4</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"I","indent":"","num1":"4","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) =&gt; appear(letter,on(screen))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</inReasoningStep>
+</onto7:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
 <hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a letter that is in the task.</asString>
+</onto2:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
 </onto3:instructionGraph>
 
 <onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
 </onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(M)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(subject,space_bar)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">E</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(G,be,H)-3/9</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(H)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"G","indent":"","num1":"3","num2":"9","arg0":"H"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">M</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(I,H)</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(U,appear,K)-8/4</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"U","indent":"   ","num1":"8","num2":"4","arg0":"K"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   object(S,letter,countable,na,eq,1)-7/8</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"S","indent":"   ","num1":"7","num2":"8","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(N,be,M)-6/4</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"N","indent":"   ","num1":"6","num2":"4","arg0":"M"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
+</onto6:instructionGraph>
+
+<onto3:instructionGraph>
+<drsType rdf:resource="#objectinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   object(M,subject,countable,na,eq,1)-6/3</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"M","indent":"   ","num1":"6","num2":"3","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
+</onto4:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
+<onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K,on(C)),screen(C),letter(K),button(H),subject(I) =&gt; press(I,H)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto7:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(C)</asString>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
+</onto6:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
+</onto6:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(A)</asString>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#prepositioninstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(G,in,A)-3/10</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"G","indent":"","num1":"3","num2":"10","arg0":"A"}</drsArgs>
+</onto6:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(S,on(C))</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(space_bar,in(psychomotor-vigilance))</asString>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(T,appear,S)-7/9</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(S)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"T","indent":"   ","num1":"7","num2":"9","arg0":"S"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#prepositioninstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(L,in,A)-5/7</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"L","indent":"","num1":"5","num2":"7","arg0":"A"}</drsArgs>
+</onto6:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(K,on(C))</asString>
+</onto5:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">M</asString>
+</onto4:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(P,be,A,O)-6/11</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(A,O)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"P","indent":"   ","num1":"6","num2":"11","arg0":"A","arg1":"O"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(B,be,psychomotor-vigilance,A)-1/4</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(psychomotor-vigilance,A)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"B","indent":"","num1":"1","num2":"4","arg0":"psychomotor-vigilance","arg1":"A"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
+</onto5:instructionGraph>
+
+<rdf:Description>
+<drsType rdf:resource="#conditionalinstructionGraph"/>
+<hasPostSituationDescripton>
+</hasPostSituationDescripton>
+<hasPreSituationDescripton>
+</hasPreSituationDescripton>
+<hasPreSituationDescripton>
+</hasPreSituationDescripton>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(U,appear,K)-8/4
+preposition(U,on,C)-8/5
+=&gt;
+predicate(V,press,I,H)-8/11</asDRSString>
+</rdf:Description>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(letter,in(psychomotor-vigilance))</asString>
+</onto5:instructionGraph>
 
 <onto2:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">If the letter appears on the screen then the subject presses the n:space_bar.</asString>
 </onto2:instructionGraph>
 
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
-</onto3:instructionGraph>
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
 
 <onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">S</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
 <hasTerm>
 </hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
 <hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(L,be,K)-5/6</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(K)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"L","indent":"","num1":"5","num2":"6","arg0":"K"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
+
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</inReasoningStep>
+</onto:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">C</asString>
 </onto4:instructionGraph>
 
 <onto7:instructionGraph>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
+<hasBodyPredicate>
+</hasBodyPredicate>
 <hasHeadPredicate>
 </hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) =&gt; hasProperty(psychomotor-vigilance,active)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</inReasoningStep>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active),task(A),screen(C),letter(S) =&gt; appear(S,on(C))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
 </onto7:instructionGraph>
 
+<onto:instructionGraph>
+<hasHeadPredicate>
+</hasHeadPredicate>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(screen,in(psychomotor-vigilance))</asString>
+<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
+</onto:instructionGraph>
+
 <onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a screen that is in the task.</asString>
+</onto2:instructionGraph>
+
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
 <hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+</onto5:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
+</onto6:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">I</asString>
 </onto4:instructionGraph>
 
 <onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
+</onto4:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
+</onto3:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter(letter)</asString>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
 <hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(psychomotor-vigilance)</asString>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
+</onto4:instructionGraph>
+
+<onto6:instructionGraph>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#prepositioninstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   preposition(T,on,C)-7/10</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(C)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"T","indent":"   ","num1":"7","num2":"10","arg0":"C"}</drsArgs>
+</onto6:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
+</onto3:instructionGraph>
+
+<onto5:instructionGraph>
+<hasTerm>
+</hasTerm>
+<hasTerm>
+</hasTerm>
+<drsType rdf:resource="#predicateinstructionGraph"/>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(V,press,I,H)-8/11</asDRSString>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(I,H)</asString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"V","indent":"   ","num1":"8","num2":"11","arg0":"I","arg1":"H"}</drsArgs>
+</onto5:instructionGraph>
+
+<onto4:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">H</asString>
 </onto4:instructionGraph>
 
 <rdf:Description>
@@ -2118,231 +2277,72 @@ preposition(T,on,C)-7/10
 object(S,letter,countable,na,eq,1)-7/8</asDRSString>
 </rdf:Description>
 
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">M</asString>
-</onto6:instructionGraph>
+<onto3:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
 
-<onto4:instructionGraph>
+<onto5:instructionGraph>
 <hasTerm>
 </hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear(S,on(C))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">appear</hasName>
-</onto4:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(C)</asString>
+</onto5:instructionGraph>
+
+<onto2:instructionGraph>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">If a subject is in the task then the task is active.</asString>
+</onto2:instructionGraph>
+
+<onto3:instructionGraph>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</asString>
+</onto3:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
 
 <onto3:instructionGraph>
 <drsType rdf:resource="#objectinstructionGraph"/>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(H,space_bar,countable,na,eq,1)-3/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"H","indent":"","num1":"3","num2":"4","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">button</hasName>
+<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">object(E,button,countable,na,eq,1)-3/7</asDRSString>
+<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"E","indent":"","num1":"3","num2":"7","arg0":"countable","arg1":"na","arg2":"eq","arg3":"1"}</drsArgs>
 </onto3:instructionGraph>
 
 <onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M,in(A))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">K</asString>
 </onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press(I,H)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">press</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(psychomotor-vigilance)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-</onto:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(screen,in(psychomotor-vigilance))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">space_bar</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(M)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">   predicate(N,be,M)-6/4</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"N","indent":"   ","num1":"6","num2":"4","arg0":"M"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#predicateinstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(I)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">predicate(J,be,I)-4/6</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"J","indent":"","num1":"4","num2":"6","arg0":"I"}</drsArgs>
-</onto4:instructionGraph>
-
-<onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">A</asString>
-</onto6:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">letter</hasName>
-</onto3:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">active</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task(A)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">task</hasName>
-</onto4:instructionGraph>
-
-<onto7:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<hasBodyPredicate>
-</hasBodyPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active),task(A),screen(C),letter(S) =&gt; appear(S,on(C))</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto7:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
-
-<onto2:instructionGraph>
-<asRule>
-</asRule>
-</onto2:instructionGraph>
 
 <onto3:instructionGraph>
 <asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
 </onto3:instructionGraph>
 
+<onto2:instructionGraph>
+<asRule>
+</asRule>
+</onto2:instructionGraph>
+
 <onto6:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">S</asString>
+<hasTerm>
+</hasTerm>
+<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on</hasName>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">on(screen)</asString>
 </onto6:instructionGraph>
 
-<onto:instructionGraph>
-<hasTerm>
-</hasTerm>
-<drsType rdf:resource="#prepositioninstructionGraph"/>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in(A)</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">in</hasName>
-<asDRSString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">preposition(D,in,A)-2/7</asDRSString>
-<drsArgs rdf:datatype="http://www.uagent.com/ontology#instructionGraph">{"letter":"D","indent":"","num1":"2","num2":"7","arg0":"A"}</drsArgs>
-</onto:instructionGraph>
-
 <onto2:instructionGraph>
 <asRule>
 </asRule>
 </onto2:instructionGraph>
 
 <onto2:instructionGraph>
-<asRule>
-</asRule>
+<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">There is a subject that is in the task.</asString>
 </onto2:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(psychomotor-vigilance,active)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty(A,active)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">hasProperty</hasName>
-</onto4:instructionGraph>
-
-<onto5:instructionGraph>
-<hasHeadPredicate>
-</hasHeadPredicate>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">subject(subject)</asString>
-<inReasoningStep rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">0</inReasoningStep>
-</onto5:instructionGraph>
-
-<onto3:instructionGraph>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</asString>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">psychomotor-vigilance</hasName>
-</onto3:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be(subject,in(psychomotor-vigilance))</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">2</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">be</hasName>
-</onto4:instructionGraph>
-
-<onto4:instructionGraph>
-<hasTerm>
-</hasTerm>
-<asString rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen(screen)</asString>
-<hasArity rdf:datatype="http://www.w3.org/2001/XMLSchema#integerinstructionGraph">1</hasArity>
-<hasName rdf:datatype="http://www.uagent.com/ontology#instructionGraph">screen</hasName>
-</onto4:instructionGraph>
 
 <owl:Restriction>
 <rdfs:subClassOf rdf:resource="#Predicate"/>
