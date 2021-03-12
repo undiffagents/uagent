@@ -1,5 +1,5 @@
 from owlready2 import *
-from Passive_Gap_Handling.KG_Structure_Validation import *
+from Passive_Gap_Handling.OntoContextGap import *
 from ControlPanel import *
 from owlReadyInitializer import *
 from Active_Gap_Handling.userInteraction import *

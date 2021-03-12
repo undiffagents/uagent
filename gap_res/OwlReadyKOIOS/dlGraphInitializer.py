@@ -43,6 +43,8 @@ onto = get_ontology("http://localhost:3030/uagent").load()
 ontology = Ontology()
 
 TESTING_KG_VALIDATION = False
+
+# This establishes the -t/-test command line argument, which sets this in context gap testing mode (breaks a few links)
 if len(sys.argv) > 1:
     if sys.argv[1] == '-t' or sys.argv[1] == '-test':
         TESTING_KG_VALIDATION = True
@@ -89,7 +91,7 @@ def initializeOntology():
     # rdfLines = rdfLines + endSituationDescription()
     # print(ontology.getAllTypedDRSInstructions())
     individuals = ontology.getDLGraphIndividuals()
-    print(individuals)
+    # print(individuals)
     for individual in individuals:
         dlGraphClasses = ontology.getDLGraphClassesForIndividual(individual)
         #print(ontology.getDRSArgsForComponentName(individual))
@@ -100,17 +102,17 @@ def initializeOntology():
             DRSTypesForClass = list(ontology.getDRSArgsForComponentName(dlGraphClass).keys())
             #print("CLASS", DRSTypesForClass)
         DRSTypes = set(DRSTypesForClass + DRSTypesForIndividual)
-        print(individual, dlGraphClass, DRSTypes)
+        # print(individual, dlGraphClass, DRSTypes)
         processDLGraphItem(individual, dlGraphClass, DRSTypes.pop())
         DRSTypesForClass.clear()
         DRSTypesForIndividual.clear()
         dlGraphClass = None
-        print("items", situationItemsDict)
+        # print("items", situationItemsDict)
 
     roles = ontology.getDLGraphRoles()
-    print(roles)
+    # print(roles)
     for role in roles:
-        print(ontology.getDLGraphTriplesForRole(role))
+        # print(ontology.getDLGraphTriplesForRole(role))
         actionsForRole = ontology.getDLGraphTriplesForRole(role)
         for action in actionsForRole:
             processDLGraphAction(action)
@@ -120,7 +122,7 @@ def initializeOntology():
     separator = ' .'
     # Add final " ." after joining all the others
     rdfLines = separator.join(totalRDFLines) + " ."
-    print(rdfLines)
+    # print(rdfLines)
     # Send em
     onto.save(file="gap_res/OwlReadyKOIOS/owlready-uagent.owl")
 
@@ -163,13 +165,13 @@ def processDLGraphItem(individualName, className, DRSType):
         if className == 'task':
             DLGraphProcessTask(individualName)
         else:
-            print("process item")
+            # print("process item")
             DLGraphProcessItem(individualName, className)
 
     if DRSType == 'property':
         # **** Figure properties out
-        print("process property - " + individualName)
-        print("CURRENTLY TREATING PROPERTIES AS ITEMS BECAUSE NOT SURE WHERE THEY GO IN ONTOLOGY - THIS NEEDS CHANGED")
+        # print("process property - " + individualName)
+        # print("CURRENTLY TREATING PROPERTIES AS ITEMS BECAUSE NOT SURE WHERE THEY GO IN ONTOLOGY - THIS NEEDS CHANGED")
         DLGraphProcessItem(individualName, "Property")
 
 
@@ -177,7 +179,7 @@ def processDLGraphAction(action):
         subject = action[0]
         verb = action[1]
         object = action[2]
-        print(subject, verb, object)
+        # print(subject, verb, object)
         DLGraphProcessAction(subject, verb, object)
 
 
@@ -260,8 +262,8 @@ def DLGraphProcessItem(itemName, itemRole):
         # Attach item to Task
         # if currentTask is not None:
         #  currentTask.providesRole.append(newItemRole)
-        print(list(newItem.get_properties()))
-        print(list(newItem.get_inverse_properties()))
+        # print(list(newItem.get_properties()))
+        # print(list(newItem.get_inverse_properties()))
 
     # Add the tags that have to do with the situation to a tracker
 
@@ -290,7 +292,7 @@ def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
         newAction = onto[ACTION_NODE]()
         # Assign the action type
         newActionType = onto[ACTION_TYPE_NODE](actionVerb)
-        print("newAction2", newAction)
+        # print("newAction2", newAction)
         if TESTING_KG_VALIDATION == False:
             onto[OF_ACTION_TYPE_EDGE][newAction].append(newActionType)
         # Attach action to the item that triggered it
@@ -312,9 +314,9 @@ def DLGraphProcessAction(actionSubject, actionVerb, actionObject):
                 #actionSubject = actionTarget.assumedBy
                 #print(actionSubject)
             # TODO **** Is it correct to always grab the first?  What if there are multiple?
-            print("SUBJECT", actionSubjectRef)
-            print("newAction", newAction)
-            print("TARGET", actionTarget)
+            # print("SUBJECT", actionSubjectRef)
+            # print("newAction", newAction)
+            # print("TARGET", actionTarget)
             # TODO ****** we're just pointing the actions to subject and target by "refers to"
             onto[REFERS_TO_EDGE][newAction].append(actionSubjectRef)
             onto[REFERS_TO_EDGE][newAction].append(actionTarget)
@@ -521,8 +523,8 @@ def owlReadyProcessItem(inputContents):
         # Attach item to Task
         # if currentTask is not None:
         #  currentTask.providesRole.append(newItemRole)
-        print(list(newItem.get_properties()))
-        print(list(newItem.get_inverse_properties()))
+        # print(list(newItem.get_properties()))
+        # print(list(newItem.get_inverse_properties()))
 
     # Add the tags that have to do with the situation to a tracker
 

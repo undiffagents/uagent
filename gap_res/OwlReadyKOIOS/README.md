@@ -1,8 +1,11 @@
 AARON:
 
-    In one WSL window, run 'bash start_server.sh' in uagent-new
-    In another window, run 'python3 run.py' in uagent-new to run Think (I think this loads some information into the ontology, but I'm uncertain)
-   Then go to gap_res/OwlReadyKOIOS and run 'python3 owlReadyInitializer.py'.  This should initialize a bunch of data into uagent-initialized on the Jena Fuseki server.
+Basic workflow for this (on my machine, and possibly including unnecessary steps, I haven't fully vetted it):
+    In one WSL window, run 'python3 interpreter/interpreter.py' in uagent-new
+    In another window, run 'python3 gap_res/OwlReadyKOIOS/dlGraphInitializer.py' to instantiate data into the knowledge graph
+    Finally, for context gap validation, run 'python3 gap_res/OwlReadyKOIOS/Passive_Gap_Handling/OntoContextGap.py' in uagent-new.
+    For lexical gaps, run 'python3 gap_res/OwlReadyKOIOS/Active_Gap_Handing/OntoLexicalGap.py' with one command line argument, which will be the search term.
+    	In order to run this, you may need to run 'pip3 install nltk' and 'python3 gap_res/setup_nltk.py' for Wordnet
 
 IGNORE BELOW
 
