@@ -9,6 +9,8 @@ class Fact(Chunk):
 
     def __init__(self, dictionary):        
         super().__init__(**dictionary)
+        self.conditions = self.slots['preCondition']
+        self.actions = self.slots['postCondition']
 
     def __str__(self):
         return self.slots['asString']
@@ -34,7 +36,7 @@ class OntologyMemory(Memory):
         self.ontology = Ontology(stopOldServer=True,owlFile='uagent.owl')
 
     def add_instruction_knowledge(self, ace_output):
-        self.ontology.add_instruction_knowledge(*ace_output)
+        self.ontology.add_instruction_knowledge(*ace_output[:-1])
 
     def _ontology_recall(self, name, get):
         self.think('recall {}'.format(name))
