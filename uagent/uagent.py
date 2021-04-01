@@ -8,6 +8,9 @@ from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
 
 class Handler:
 
+    def __init__(self, agent):
+        self.agent = agent
+
     def _has(self, name):
         return hasattr(self, name)
 
@@ -20,13 +23,14 @@ class Handler:
 
 class ConditionHandler(Handler):
 
-    def appear(self, agent, cond, context):
+    def appear(self, cond, context):
         isa = self._term(cond, 0)
-        # visual = self.vision.find(isa=isa, seen=False)
-        visual = agent.vision.search_for(Query(isa=isa, seen=False), None)
+        visual = self.agent.vision.find(isa=isa, seen=False)
+        # visual = self.agent.vision.wait_for(isa=isa, seen=False)
+        # visual = self.agent.vision.search_for(Query(isa=isa, seen=False), None)
         if visual:
             context.set('visual', visual)
-            visobj = agent.vision.encode(visual)
+            visobj = self.agent.vision.encode(visual)
             context.set(isa, visobj)
             return True
         else:
@@ -35,15 +39,21 @@ class ConditionHandler(Handler):
 
 class ActionHandler(Handler):
 
-    def press(self, agent, action, context):
-        isa = self._term(action, 0)
-        visual = agent.vision.find(isa=isa)
-        if visual:
-            agent.motor.point_and_click(visual)
+    # def press(self, action, context):
+    #     isa = self._term(action, 0)
+    #     visual = self.agent.vision.find(isa=isa)
+    #     if visual:
+    #         self.agent.motor.point_and_click(visual)
 
-    def click(self, agent, action, context):
+    def press(self, action, context):
+        key = self._term(action, 1)
+        if key == 'space_bar':
+            key = ' '
+        self.agent.motor.type(key)
+
+    def click(self, action, context):
         visual = context.get('visual')
-        agent.motor.point_and_click(visual)
+        self.agent.motor.point_and_click(visual)
 
 
 class UndifferentiatedAgent(Agent):
@@ -62,8 +72,8 @@ class UndifferentiatedAgent(Agent):
         self.language.add_interpreter(lambda words:
                                       self.interpreter.interpret_ace(' '.join(words)))
 
-        self.condition_handler = ConditionHandler()
-        self.action_handler = ActionHandler()
+        self.condition_handler = ConditionHandler(self)
+        self.action_handler = ActionHandler(self)
 
         # #Not used at the moment.
         # self.item_role_list = ['target','stimulus','distractor','responseButton','infoButton']
@@ -79,10 +89,15 @@ class UndifferentiatedAgent(Agent):
         return False
 
     def check_condition(self, cond, context):
+
+        # XXX Hack until ungrounded rules are omitted!
+        if cond['asString'] == 'appear(K,on(C))':
+            return True
+
         handler = self.condition_handler._get(cond['name'])
         if handler:
             self.think('check condition "{}"'.format(cond))
-            return handler(self, cond, context)
+            return handler(cond, context)
         else:
             return True
 
@@ -90,7 +105,7 @@ class UndifferentiatedAgent(Agent):
         handler = self.action_handler._get(action['name'])
         if handler:
             self.think('execute action "{}"'.format(action))
-            handler(self, action, context)
+            handler(action, context)
 
     def process_rule(self, rule, context):
         if self.is_action(rule):
@@ -111,7 +126,4 @@ class UndifferentiatedAgent(Agent):
         while self.time() < time:
             context = Chunk()
             for rule in self.memory.recall_ground_rules():
-                print()
-                for cond in rule.conditions:
-                    print(cond)
                 self.process_rule(rule, context)
