@@ -14,11 +14,14 @@ class Handler:
     def _get(self, name):
         return getattr(self, name, None)
 
+    def _term(self, chunk, i):
+        return chunk['term'][i]['asString']
+
 
 class ConditionHandler(Handler):
 
     def appear(self, agent, cond, context):
-        isa = cond['term'][0]['asString']
+        isa = self._term(cond, 0)
         # visual = self.vision.find(isa=isa, seen=False)
         visual = agent.vision.search_for(Query(isa=isa, seen=False), None)
         if visual:
@@ -33,14 +36,14 @@ class ConditionHandler(Handler):
 class ActionHandler(Handler):
 
     def press(self, agent, action, context):
-        isa = action['term'][0]['asString']
+        isa = self._term(action, 0)
         visual = agent.vision.find(isa=isa)
         if visual:
             agent.motor.point_and_click(visual)
 
     def click(self, agent, action, context):
         visual = context.get('visual')
-        self.motor.point_and_click(visual)
+        agent.motor.point_and_click(visual)
 
 
 class UndifferentiatedAgent(Agent):
