@@ -188,7 +188,7 @@ class Ontology:
             
         return answer      
     
-    def getDRSArgsForComponentType(self,type,name=None):
+    def getDRSArgsForComponentType(self,t,name=None):
         '''
         input:  self
                 name : str
@@ -199,7 +199,7 @@ class Ontology:
         ''' 
         
         if name:
-            results = self.query('{} SELECT DISTINCT ?args WHERE {{ graph {} {{ [:hasName "{}" ; :drsArgs ?args ; :drsType :{}] }} }}'.format(self.prefixes,self.instructionGraph,name,type))
+            results = self.query('{} SELECT DISTINCT ?args WHERE {{ graph {} {{ [:hasName "{}" ; :drsArgs ?args ; :drsType :{}] }} }}'.format(self.prefixes,self.instructionGraph,name,t))
             
             answer = []
             
@@ -212,7 +212,7 @@ class Ontology:
         
         else:
         
-            results = self.query('{} SELECT DISTINCT ?string ?args WHERE {{ graph {} {{ [ :drsType :{} ; :hasName ?string  ; :drsArgs ?args ] }} }}'.format(self.prefixes,self.instructionGraph,type))
+            results = self.query('{} SELECT DISTINCT ?string ?args WHERE {{ graph {} {{ [ :drsType :{} ; :hasName ?string  ; :drsArgs ?args ] }} }}'.format(self.prefixes,self.instructionGraph,t))
                 
             return [dict(json.loads(result['args']['value']),**{'name':result['string']['value']}) for result in results['results']['bindings']]
     
@@ -262,7 +262,7 @@ class Ontology:
         
         Gets a list of classes in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{  {{ graph {} {{ ?s a ?type }} }} filter(!isBlank(?type))  }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]
     
     def getInstructionGraphIndividuals(self):
         '''
@@ -271,7 +271,7 @@ class Ontology:
         
         Gets a list of individuals in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:NamedIndividual }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]  
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ {{ graph {} {{ ?type ?s ?o }} }}  filter(!isBlank(?type)) }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]  
     
     def getInstructionGraphRoles(self):
         '''
@@ -280,7 +280,7 @@ class Ontology:
         
         Gets a list of roles in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:ObjectProperty }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]    
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?s ?type ?o }}  filter(rdf:type != ?type)}}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]    
     
     def getInstructionGraphTriples(self):
         '''
@@ -306,7 +306,7 @@ class Ontology:
         '''         
         return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class . :{} a ?type ; a owl:NamedIndividual }} }}'.format(self.prefixes,self.instructionGraph,individual))['results']['bindings']]
     
-    def getInstructionGraphIndividualsForClass(self,cl):
+    def getInstructionGraphDetailsForClass(self,cl):
         '''
         input:  self
                 cl : str
@@ -314,7 +314,7 @@ class Ontology:
         
         Gets a list of classes that an individual is in
         '''       
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ {{ graph {} {{ :{} a owl:Class . ?type a :{} ; a owl:NamedIndividual . }} }} }}'.format(self.prefixes,self.instructionGraph,cl,cl,self.instructionGraph,cl,cl))['results']['bindings']]    
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?node ?rel ?type WHERE {{ {{ :{} a owl:Class }} union {{ graph {} {{ ?node a :{} ; ?rel ?type  }} }} filter(?type != :{}) }}'.format(self.prefixes,cl,self.instructionGraph,cl,cl))['results']['bindings']]    
     
     def getInstructionGraphIndividualsForRole(self,role):
         '''

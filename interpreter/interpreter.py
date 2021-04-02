@@ -1815,9 +1815,9 @@ def testInterpreter(ontology):
     implementedTypes = ['object','predicate','preposition','property','relation']
     
     logfile.write("}\n")
-    for type in implementedTypes:
-        logfile.write("\ngetDRSArgsForComponentType('{}')\n".format(str(type)))
-        for x in ontology.getDRSArgsForComponentType(type):
+    for t in implementedTypes:
+        logfile.write("\ngetDRSArgsForComponentType('{}')\n".format(t))
+        for x in ontology.getDRSArgsForComponentType(t):
             logfile.write("{}\n".format(str(x)))
     
     logfile.write("\ngetInstructionGraphClasses()\n")        
@@ -1832,29 +1832,29 @@ def testInterpreter(ontology):
     for x in ontology.getInstructionGraphRoles():
         logfile.write("{}\n".format(str(x)))        
         
-    logfile.write("\ngetInstructionGraphTriples()\n")        
-    for x in ontology.getInstructionGraphTriples():
-        logfile.write("{}\n".format(str(x)))       
+    #logfile.write("\ngetInstructionGraphTriples()\n")        
+    #for x in ontology.getInstructionGraphTriples():
+    #    logfile.write("{}\n".format(str(x)))       
     
-    ind = 'task'
-    cl = 'Item'
-    rl = 'hasProperty'
+    #ind = 'task'
+    #cl = 'Item'
+    #rl = 'hasProperty'
     
-    logfile.write("\ngetInstructionGraphClassesForIndividual('"+ind+"')\n")        
-    for x in ontology.getInstructionGraphClassesForIndividual(ind):
-        logfile.write("{}\n".format(str(x)))              
+    #logfile.write("\ngetInstructionGraphClassesForIndividual('"+ind+"')\n")        
+    #for x in ontology.getInstructionGraphClassesForIndividual(ind):
+    #    logfile.write("{}\n".format(str(x)))              
         
-    logfile.write("\ngetInstructionGraphIndividualsForClass('"+cl+"')\n")        
-    for x in ontology.getInstructionGraphIndividualsForClass(cl):
-        logfile.write("{}\n".format(str(x)))  
+    #logfile.write("\ngetInstructionGraphIndividualsForClass('"+cl+"')\n")        
+    #for x in ontology.getInstructionGraphDetailsForClass(cl):
+    #    logfile.write("{}\n".format(str(x)))  
         
-    logfile.write("\ngetInstructionGraphTriplesForIndivdual('"+ind+"')\n")        
-    for x in ontology.getInstructionGraphTriplesForIndivdual(ind):
-        logfile.write("{}\n".format(str(x)))
+    #logfile.write("\ngetInstructionGraphTriplesForIndivdual('"+ind+"')\n")        
+    #for x in ontology.getInstructionGraphTriplesForIndivdual(ind):
+    #    logfile.write("{}\n".format(str(x)))
                       
-    logfile.write("\ngetInstructionGraphTriplesForRole('"+rl+"')\n")        
-    for x in ontology.getInstructionGraphTriplesForRole(rl):
-        logfile.write("{}\n".format(str(x))) 
+    #logfile.write("\ngetInstructionGraphTriplesForRole('"+rl+"')\n")        
+    #for x in ontology.getInstructionGraphTriplesForRole(rl):
+    #    logfile.write("{}\n".format(str(x))) 
                       
     logfile.close()
     
