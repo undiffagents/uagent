@@ -255,48 +255,48 @@ class Ontology:
                 
             return answer  
         
-    def getDLGraphClasses(self):
+    def getInstructionGraphClasses(self):
         '''
         input:  self
         return: [ str ]
         
         Gets a list of classes in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class }} }}'.format(self.prefixes,self.dlGraph))['results']['bindings']]
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]
     
-    def getDLGraphIndividuals(self):
+    def getInstructionGraphIndividuals(self):
         '''
         input:  self
         return: [ str ]
         
         Gets a list of individuals in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:NamedIndividual }} }}'.format(self.prefixes,self.dlGraph))['results']['bindings']]  
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:NamedIndividual }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]  
     
-    def getDLGraphRoles(self):
+    def getInstructionGraphRoles(self):
         '''
         input:  self
         return: [ str ]
         
         Gets a list of roles in the dl graph
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:ObjectProperty }} }}'.format(self.prefixes,self.dlGraph))['results']['bindings']]    
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:ObjectProperty }} }}'.format(self.prefixes,self.instructionGraph))['results']['bindings']]    
     
-    def getDLGraphTriples(self):
+    def getInstructionGraphTriples(self):
         '''
         input:  self
         return: [ (str,str,str) ]
         
         Gets a list of triples that connect any instruction individual to another with a role in the dl graph
         '''  
-        one = '{ graph :dlGraph { ?role a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; ?role ?individual2 . ?individual2 a owl:NamedIndividual .} }'
-        two = '{ graph :dlGraph { ?role a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; ?role [:asString ?individual2] . } }'
-        three = '{ graph :dlGraph { ?role a owl:ObjectProperty . [:asString ?individual1] ?role ?individual2 . ?individual2 a owl:NamedIndividual . } }'
-        four = '{ graph :dlGraph { ?role a owl:ObjectProperty . [] ?role [:asString ?individual2] ; :asString ?individual1  .} }'
+        one = '{ graph :instructionGraph { ?role a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; ?role ?individual2 . ?individual2 a owl:NamedIndividual .} }'
+        two = '{ graph :instructionGraph { ?role a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; ?role [:asString ?individual2] . } }'
+        three = '{ graph :instructionGraph { ?role a owl:ObjectProperty . [:asString ?individual1] ?role ?individual2 . ?individual2 a owl:NamedIndividual . } }'
+        four = '{ graph :instructionGraph { ?role a owl:ObjectProperty . [] ?role [:asString ?individual2] ; :asString ?individual1  .} }'
         q = '{} SELECT DISTINCT ?individual1 ?role ?individual2 WHERE {{ {} union {} union {} union {} }}'.format(self.prefixes,one,two,three,four)
         return [(result['individual1']['value'] if result['individual1']['type'] == 'literal' else result['individual1']['value'].split('#')[1],result['role']['value'].split('#')[1],result['individual2']['value'] if result['individual2']['type'] == 'literal' else result['individual2']['value'].split('#')[1]) for result in  self.query(q)['results']['bindings']]
 
-    def getDLGraphClassesForIndividual(self,individual):
+    def getInstructionGraphClassesForIndividual(self,individual):
         '''
         input:  self
                 individual : str
@@ -304,9 +304,9 @@ class Ontology:
         
         Gets a list of classes that an individual is in
         '''         
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class . :{} a ?type ; a owl:NamedIndividual }} }}'.format(self.prefixes,self.dlGraph,individual))['results']['bindings']]
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ graph {} {{ ?type a owl:Class . :{} a ?type ; a owl:NamedIndividual }} }}'.format(self.prefixes,self.instructionGraph,individual))['results']['bindings']]
     
-    def getDLGraphIndividualsForClass(self,cl):
+    def getInstructionGraphIndividualsForClass(self,cl):
         '''
         input:  self
                 cl : str
@@ -314,9 +314,9 @@ class Ontology:
         
         Gets a list of classes that an individual is in
         '''       
-        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ {{ graph {} {{ :{} a owl:Class . ?type a :{} ; a owl:NamedIndividual . }} }} }}'.format(self.prefixes,self.dlGraph,cl,cl,self.dlGraph,cl,cl))['results']['bindings']]    
+        return [result['type']['value'].split('#')[1] for result in self.query('{} SELECT DISTINCT ?type WHERE {{ {{ graph {} {{ :{} a owl:Class . ?type a :{} ; a owl:NamedIndividual . }} }} }}'.format(self.prefixes,self.instructionGraph,cl,cl,self.instructionGraph,cl,cl))['results']['bindings']]    
     
-    def getDLGraphIndividualsForRole(self,role):
+    def getInstructionGraphIndividualsForRole(self,role):
         '''
         input:  self
                 role : str
@@ -324,10 +324,10 @@ class Ontology:
         
         Gets a list of classes that an individual is in
         '''       
-        return [(result['one']['value'].split('#')[1],result['two']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?one ?two WHERE {{ graph {} {{ :{} a owl:ObjectProperty . ?one :{} ?two ; a owl:NamedIndividual . ?two a owl:NamedIndividual }} }}'.format(self.prefixes,self.dlGraph,cl,cl))['results']['bindings']]    
+        return [(result['one']['value'].split('#')[1],result['two']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?one ?two WHERE {{ graph {} {{ :{} a owl:ObjectProperty . ?one :{} ?two ; a owl:NamedIndividual . ?two a owl:NamedIndividual }} }}'.format(self.prefixes,self.instructionGraph,cl,cl))['results']['bindings']]    
 
     
-    def getDLGraphTriplesForIndivdual(self,individual):
+    def getInstructionGraphTriplesForIndivdual(self,individual):
         '''
         input:  self
                 individual : str
@@ -335,12 +335,12 @@ class Ontology:
         
         Gets a list of triples that connect an instruction individual to another with a role in the dl graph
         '''   
-        query1 = {(individual,result['role']['value'].split('#')[1],result['individual2']['value'] if result['individual2']['type'] == 'literal' else result['individual2']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?role ?individual2 WHERE {{ {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual ; ?role ?individual2 . ?individual2 a owl:NamedIndividual}} }} union {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual ; ?role [:asString ?individual2] }} }} }}'.format(self.prefixes,self.dlGraph,individual,self.dlGraph,individual))['results']['bindings']}
-        query2 = {(result['individual2']['value'] if result['individual2']['type'] == 'literal' else result['individual2']['value'].split('#')[1],result['role']['value'].split('#')[1],individual) for result in self.query('{} SELECT DISTINCT ?role ?individual2 WHERE {{ {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual . ?individual2 ?role :{} ; a owl:NamedIndividual .}} }} union {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual . [:asString ?individual2] ?role :{} .}} }} }} '.format(self.prefixes,self.dlGraph,individual,individual,self.dlGraph,individual,individual))['results']['bindings']}
+        query1 = {(individual,result['role']['value'].split('#')[1],result['individual2']['value'] if result['individual2']['type'] == 'literal' else result['individual2']['value'].split('#')[1]) for result in self.query('{} SELECT DISTINCT ?role ?individual2 WHERE {{ {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual ; ?role ?individual2 . ?individual2 a owl:NamedIndividual}} }} union {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual ; ?role [:asString ?individual2] }} }} }}'.format(self.prefixes,self.instructionGraph,individual,self.instructionGraph,individual))['results']['bindings']}
+        query2 = {(result['individual2']['value'] if result['individual2']['type'] == 'literal' else result['individual2']['value'].split('#')[1],result['role']['value'].split('#')[1],individual) for result in self.query('{} SELECT DISTINCT ?role ?individual2 WHERE {{ {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual . ?individual2 ?role :{} ; a owl:NamedIndividual .}} }} union {{ graph {} {{ ?role a owl:ObjectProperty . :{} a owl:NamedIndividual . [:asString ?individual2] ?role :{} .}} }} }} '.format(self.prefixes,self.instructionGraph,individual,individual,self.instructionGraph,individual,individual))['results']['bindings']}
         
         return query1.union(query2)
     
-    def getDLGraphTriplesForRole(self,role):
+    def getInstructionGraphTriplesForRole(self,role):
         '''
         input:  self
                 role : str
@@ -348,7 +348,7 @@ class Ontology:
         
         Gets a list of triples that connect an instruction individual to another with a role in the dl graph
         '''  
-        results = self.query('{} SELECT DISTINCT ?individual1 ?individual2 WHERE {{ {{ graph {} {{ :{} a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; :{} ?individual2 . ?individual2 a owl:NamedIndividual .}} }} union {{ graph {} {{ :{} a owl:ObjectProperty . [] :{} ?individual2 ; :asString ?individual1 . ?individual2 a owl:NamedIndividual .}} }} }}'.format(self.prefixes,self.dlGraph,role,role,self.dlGraph,role,role))['results']['bindings']
+        results = self.query('{} SELECT DISTINCT ?individual1 ?individual2 WHERE {{ {{ graph {} {{ :{} a owl:ObjectProperty . ?individual1 a owl:NamedIndividual ; :{} ?individual2 . ?individual2 a owl:NamedIndividual .}} }} union {{ graph {} {{ :{} a owl:ObjectProperty . [] :{} ?individual2 ; :asString ?individual1 . ?individual2 a owl:NamedIndividual .}} }} }}'.format(self.prefixes,self.instructionGraph,role,role,self.instructionGraph,role,role))['results']['bindings']
         return {(result['individual1']['value'] if result['individual1']['type'] == 'literal' else result['individual1']['value'].split('#')[1],role,result['individual2']['value'].split('#')[1]) for result in results} 
     
     def addTripleToKoiosGraph(self,subject,predicate,object):
@@ -375,7 +375,7 @@ class Ontology:
         '''        
         self.add_to_think_graph(":{} :{} :{} .".format(subject,predicate,object))
     
-    def addTripleToDLGraph(self,subject,predicate,object):
+    def addTripleToInstructionGraph(self,subject,predicate,object):
         '''
         input:  self
                 subject : str
@@ -390,7 +390,6 @@ class Ontology:
     '''Class and internal functions (comments ommited unless requested)'''
     
     instructionGraph = ':instructionGraph'
-    dlGraph = ':dlGraph'
     koiosGraph = ':koiosGraph'
     thinkGraph = ':thinkGraph'    
     predQueryMappings = {'ruleString':'asString','name':'name','arity':'arity','step':'reasoningStep','string':'asString','predicateType':'isa','termType':'isa','termString':'asString','term2Type':'isa','term2String':'asString','functionTermType':'isa','functionTermString':'asString','functionName':'name'} 
@@ -450,86 +449,24 @@ class Ontology:
         for nestedExpression in nestedExpressions.expressions():
             self.add_to_instructions_graph(nestedExpression.tripleString())         
         
-        reasonerFacts.sort(key=lambda x: x[0])
-        groundRules.sort(key=lambda x: x[0])
-        
-        orderNumBnode = 0
-        orderBnode = lambda step: ':step{}'.format(step)
-        orderNodes = []
-        
         # add rules
         for fact in facts:
-            factOrderBnode = orderBnode(orderNumBnode)
-            orderNodes.append(factOrderBnode)
-            self.add_to_instructions_graph('[] a :DescriptionInstruction ; :contributesTo [ a :Fact ; :asString "'+str(fact)+'" ;  a :TransitionDescription ; :inReasoningStep 0 ; :hasPreSituationDescription [a :PreSituationDescription ; a :SituationDescription] ; :hasPostSituationDescription [ a :PostSituationDescription ; a :SituationDescription ; :hasCurrentCondition '+factOrderBnode+'] ] . '+factOrderBnode+' a :ItemDescription ; '+fact.tripleString()+' . ')
-            self.add_to_dl_graph(fact.dlTripleString())
-            orderNumBnode+=1
-        
-        step = 1
-        stepOrderNodes = []
+            self.add_to_instructions_graph('[] a :DescriptionInstruction ; :contributesTo [ a :Fact ; :asString "'+str(fact)+'" ;  a :TransitionDescription ; :inReasoningStep 0 ; :hasPostSituationDescription [ a :PostSituationDescription ; a :SituationDescription ; :hasCurrentCondition [ a :ItemDescription ; '+fact.tripleString()+'] ] ] . ')
+
+        for rule in rules:                          
+            body = " ; ".join([':hasCurrentCondition [ a :ItemDescription ; {} ] '.format(x.tripleString()) for x in rule.body.preds])                
+            head = ' ; :hasCurrentCondition [ a :ItemDescription ; {} ]'.format(rule.head.pred.tripleString())       
+                
+            self.add_to_instructions_graph('[] a :ActionInstruction ; :prescribes [ a :TransitionDescription ; :asString "' +rule.toRule()+'" ; :inReasoningStep 0 ; a :Rule ; :hasPostSituationDescription [ a :PostSituationDescription ; a :SituationDescription '+head+'] ; :hasPreSituationDescription [ a :SituationDescription ; a :PreSituationDescription ; '+body+' ] ] . ')  
+    
         for order,fact in reasonerFacts:
-            if order > step+1:
-                step = order-1
-                orderNodes = stepOrderNodes
-                
-            orderNode = orderBnode(orderNumBnode)
-            stepOrderNodes.append(orderNode)
+            self.add_to_instructions_graph('[] a :DescriptionInstruction ; :contributesTo [ a :Fact ; :asString "'+str(fact)+'" ; a :TransitionDescription ; :inReasoningStep '+str(order)+' ; :hasPreSituationDescription [a :SituationDescription ; a :PreSituationDescription ] ; :hasPostSituationDescription [ a :SituationDescription ; a :PostSituationDescription ; :hasCurrentCondition [ a :ItemDescription ; '+fact.tripleString()+'] ] ] . ')
+
+        for order,rule in groundRules:            
+            body = " ; ".join([' ; :hasCurrentCondition [a :ItemDescription ; {}] '.format(x.tripleString()) for x in rule.body.preds])                              
+            head = ' ; :hasCurrentCondition [a :ItemDescription ; {}] '.format(rule.head.pred.tripleString())
             
-            earlier = ' :hasEarlierCondition '+' ; :hasEarlierCondition '.join(orderNodes)
-                        
-            self.add_to_instructions_graph('[] a :DescriptionInstruction ; :contributesTo [ a :Fact ; :asString "'+str(fact)+'" ; a :TransitionDescription ; :inReasoningStep '+str(order)+' ; :hasPreSituationDescription [a :SituationDescription ; a :PreSituationDescription] ; :hasPostSituationDescription [ a :SituationDescription ; a :PostSituationDescription ; '+ earlier+' ; :hasCurrentCondition '+orderNode+']] . '+orderNode+' a :ItemDescription ; '+fact.tripleString()+' . ')
-            self.add_to_dl_graph(fact.dlTripleString())
-            
-            orderNumBnode+=1
-        
-        orderNodes = []
-        
-        for rule in rules:
-            body = ''
-            head = ''
-            steps = ''
-            
-            for x in rule.body.preds:
-                orderNode = orderBnode(orderNumBnode)
-                orderNodes.append(orderNode)                
-                body += '; :hasCurrentCondition {} '.format(orderNode)
-                steps +=' {} a :ItemDescription ; {} . '.format(orderNode,x.tripleString())
-                orderNumBnode+=1
-                
-            orderNode = orderBnode(orderNumBnode)
-            orderNodes.append(orderNode)                
-            head = '; :hasCurrentCondition {} '.format(orderNode)
-            steps +=' {} a :ItemDescription ; {} . '.format(orderNode,rule.head.pred.tripleString())
-            orderNumBnode+=1            
-                
-            self.add_to_instructions_graph('[] a :ActionInstruction ; :prescribes [ a :TransitionDescription ; :asString "' +rule.toRule()+'" ; :inReasoningStep 0 ; a :Rule ; :hasPostSituationDescription [ a :PostSituationDescription ; a :SituationDescription '+head+'] ; :hasPreSituationDescription [ a :SituationDescription ; a :PreSituationDescription '+body+' ] ] . '+steps)  
-            
-        step = 1
-        stepOrderNodes = []            
-        for order,rule in groundRules:
-            if order > step+1:
-                step = order-1
-                orderNodes = stepOrderNodes
-                
-            orderNode = orderBnode(orderNumBnode)
-            stepOrderNodes.append(orderNode)
-            
-            for x in rule.body.preds:
-                orderNode = orderBnode(orderNumBnode)
-                stepOrderNodes.append(orderNode)                
-                body += '; :hasCurrentCondition {} '.format(orderNode)
-                steps +=' {} a :ItemDescription ; {} . '.format(orderNode,x.tripleString())
-                orderNumBnode+=1
-                
-            orderNode = orderBnode(orderNumBnode)
-            stepOrderNodes.append(orderNode)                
-            head = '; :hasCurrentCondition {} '.format(orderNode)
-            steps +=' {} a :ItemDescription ; {} . '.format(orderNode,rule.head.pred.tripleString())
-            orderNumBnode+=1               
-            
-            earlier = ' :hasEarlierCondition '+' ; :hasEarlierCondition '.join(orderNodes)
-            
-            self.add_to_instructions_graph('[] a :ActionInstruction ; :prescribes [ a :TransitionDescription ; a :Rule ; :asString "'+rule.toRule()+ '" ; :inReasoningStep '+str(order)+' ; :hasPostSituationDescription [a :PostSituationDescription ; a :SituationDescription '+head+' ] ; :hasPreSituationDescription [ a :PreSituationDescription ; a :SituationDescription'+body+' ] ] . '+steps) 
+            self.add_to_instructions_graph('[] a :ActionInstruction ; :prescribes [ a :TransitionDescription ; a :Rule ; :asString "'+rule.toRule()+'" ; :inReasoningStep '+str(order)+' ; :hasPostSituationDescription [a :PostSituationDescription ; a :SituationDescription ;  '+head+' ] ; :hasPreSituationDescription [ a :PreSituationDescription ; a :SituationDescription ; '+body+' ] ] . ') 
             
 
     def add(self,data):
@@ -537,10 +474,6 @@ class Ontology:
         
     def add_to_instructions_graph(self,data):
         self.add('graph {} {{ {} }}'.format(self.instructionGraph,data))
-    
-    def add_to_dl_graph(self,data):
-        self.add('graph {} {{ {} }}'.format(self.dlGraph,data))    
-    
     def add_to_koios_graph(self,data):
         self.add('graph {} {{ {} }}'.format(self.koiosGraph,data))
         
@@ -581,20 +514,20 @@ class Ontology:
             preds = []
             for pred in result:
                 if len(pred) == 8:
-                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]}]}) 
+                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]}]}) 
                 elif len(pred) == 10 and re.match(".*?\((.*?)\,.*",pred['string']).groups()[0] == pred['termString']:
-                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]}]})                            
+                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]}]})                            
                 elif len(pred) == 13:
-                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'term':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]}]})                             
+                    preds.append({'isa':'DescriptionInstruction' if fact else 'ActionInstruction',self.predQueryMappings['ruleString']:pred['ruleString'],self.predQueryMappings['step']:pred['step'],'preCondition':[],'postCondition':[{self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'ofItem':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]}]})                             
         else:
             preds = []
             for pred in result:
                 if len(pred) == 7:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]})
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']}]})
                 elif len(pred) == 9 and re.match(".*?\((.*?)\,.*",pred['string']).groups()[0] == pred['termString']:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]})                            
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['term2Type']:pred['term2Type']}]})                            
                 elif len(pred) == 12:
-                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'term':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'term':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]})                                      
+                    preds.append({self.predQueryMappings['string']:pred['string'],self.predQueryMappings['name']:pred['name'],self.predQueryMappings['arity']:pred['arity'],'isa':pred['predicateType'],'ofItem':[{self.predQueryMappings['termString']:pred['termString'],self.predQueryMappings['termType']:pred['termType']},{self.predQueryMappings['term2String']:pred['term2String'],self.predQueryMappings['functionName']:pred['functionName'],self.predQueryMappings['term2Type']:pred['term2Type'],'ofItem':[{self.predQueryMappings['functionTermString']:pred['functionTermString'],self.predQueryMappings['functionTermType']:pred['functionTermType']}]}]})                                      
 
         return preds
         

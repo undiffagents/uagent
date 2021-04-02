@@ -110,7 +110,9 @@
 
     <!-- http://www.uagent.com/ontology#hasTerm -->
 
-    <owl:ObjectProperty rdf:about="http://www.uagent.com/ontology#hasTerm"/>
+    <owl:ObjectProperty rdf:about="http://www.uagent.com/ontology#hasTerm">
+        <rdfs:subPropertyOf rdf:resource="http://www.uagent.com/ontology#ofItem"/>
+    </owl:ObjectProperty>
     
 
 
@@ -366,7 +368,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.uagent.com/ontology#contributesTo"/>
-                <owl:allValuesFrom rdf:resource="http://www.uagent.com/ontology#SituationDescription"/>
+                <owl:allValuesFrom rdf:resource="http://www.uagent.com/ontology#TransitionDescription"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>

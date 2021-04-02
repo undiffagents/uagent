@@ -227,14 +227,6 @@ class Class(Predicate):
     
     def tripleString(self):
         return 'a :ItemDescription ; a :Predicate ; :hasName "' + str(self.getName()) + '" ; :hasArity 1 ; :hasTerm ['+self.args[0].tripleString()+'] ; :asString "'+str(self)+'"'
-    
-    def getDLName(self):
-        return ':'+str(self.getName())
-    
-    def dlTripleString(self):
-        name = self.getDLName()
-        if self.args[0].isString: return name + ' a owl:Class . [] a '+name+' ; :asString "'+str(self.args[0])+'" . '            
-        return name + ' a owl:Class . :'+str(self.args[0])+' a '+name+' ; a owl:NamedIndividual . ' 
 
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + ")"
@@ -254,28 +246,6 @@ class Role(Predicate):
     def tripleString(self):
         return 'a :ItemDescription ; a :Predicate ; :hasArity 2 ; :hasName "' + str(self.getName()) + '" ; :hasTerm ['+self.args[0].tripleString()+'] ; :hasTerm ['+self.args[1].tripleString()+'] ; :asString "'+str(self)+'"'
     
-    def getDLName(self):
-        if not isinstance(self.arg(1),Preposition):
-            return ':'+self.getName()
-        return ':'+self.getName()+self.arg(1).term[0].capitalize()+self.arg(1).term[1:].lower()
-    
-    def dlTripleString(self):
-        name = self.getDLName()
-        
-        if isinstance(self.arg(1),Preposition):
-            if self.args[0].isString:
-                raise Exception("todo")            
-            string = name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+str(self.arg(1).arg(0))+' ; a owl:NamedIndividual . :'+str(self.arg(1).arg(0))+' a owl:NamedIndividual .'
-            return string
-        elif self.args[0].isString and self.args[1].isString: 
-            raise Exception("todo")
-        elif self.args[0].isString: 
-            return name + ' a owl:ObjectProperty . :'+self.arg(1)+' '+name+' [:asString '+str(self.arg(0))+'] ; a owl:NamedIndividual .'  
-        elif self.args[1].isString: 
-            return name + ' a owl:ObjectProperty  . :'+self.arg(0)+' '+name+' [:asString '+str(self.arg(1))+'] ; a owl:NamedIndividual . '
-        else:          
-            return name + ' a owl:ObjectProperty .  :'+self.arg(0)+' '+name+' :'+str(self.arg(1))+' ; a owl:NamedIndividual   . :'+str(self.arg(1))+' a owl:NamedIndividual .' 
-    
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + "," + str(self.args[1]) + ")"
 
@@ -289,13 +259,6 @@ class PropertyRole(Role):
     
     def copy(self):
         return PropertyRole(self.getIndent(),self.getLetter(),*self.getArgs())
-    
-    def dlTripleString(self):
-        name = self.getDLName()
-        argy = str(self.arg(1))
-        if self.args[0].isString: 
-            return name + ' a owl:DatatypeProperty ; rdfs:subPropertyOf :asString . [] '+name+' :'+str(self.arg(1))+' ; :asString "'+self.arg(0)+'" . :'+str(self.arg(1))+' a owl:NamedIndividual .'
-        return name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+argy+' ; a owl:NamedIndividual . :'+argy+' a owl:NamedIndividual .'     
     
     def getIndent(self):
         return self.indent.getTerm()
@@ -315,9 +278,6 @@ class TernaryPredicate(Predicate):
     def tripleString(self):
         return 'a :Predicate ;  :hasArity 3 ; :hasName "' + str(self.getName()) + '" ; :hasTerm ['+self.args[0].tripleString()+'] ; :hasTerm ['+self.args[1].tripleString()+'] ; :hasTerm ['+self.args[2].tripleString()+'] ; :asString "'+str(self)+'"'
     
-    def dlTripleString(self):
-        raise Exception("Undefined semntics for ternary predicates")
-    
     def __str__(self):
         return str(self.name) + "(" + str(self.args[0]) + "," + str(self.args[1]) + "," + str(self.args[2]) + ")"
 
@@ -330,12 +290,7 @@ class TernaryProperty(TernaryPredicate):
         super().__init__(indent,letter,'hasProperty',subj,iobj,dobj,num1,num2)
     
     def copy(self):
-        return TernaryProperty(self.getIndent(),self.getLetter(),*self.getArgs())
-    
-    def dlTripleString(self):
-        name = self.getDLName()
-        argy = str(self.arg(1))
-        return name + ' a owl:ObjectProperty . :'+self.arg(0)+' '+name+' :'+argy+' ; a owl:NamedIndividual . :'+argy+' a owl:NamedIndividual .'     
+        return TernaryProperty(self.getIndent(),self.getLetter(),*self.getArgs())    
     
     def getIndent(self):
         return self.indent.getTerm()
@@ -1865,40 +1820,40 @@ def testInterpreter(ontology):
         for x in ontology.getDRSArgsForComponentType(type):
             logfile.write("{}\n".format(str(x)))
     
-    logfile.write("\ngetDLGraphClasses()\n")        
-    for x in ontology.getDLGraphClasses():
+    logfile.write("\ngetInstructionGraphClasses()\n")        
+    for x in ontology.getInstructionGraphClasses():
         logfile.write("{}\n".format(str(x)))
         
-    logfile.write("\ngetDLGraphIndividuals()\n")        
-    for x in ontology.getDLGraphIndividuals():
+    logfile.write("\ngetInstructionGraphIndividuals()\n")        
+    for x in ontology.getInstructionGraphIndividuals():
         logfile.write("{}\n".format(str(x)))        
     
-    logfile.write("\ngetDLGraphRoles()\n")        
-    for x in ontology.getDLGraphRoles():
+    logfile.write("\ngetInstructionGraphRoles()\n")        
+    for x in ontology.getInstructionGraphRoles():
         logfile.write("{}\n".format(str(x)))        
         
-    logfile.write("\ngetDLGraphTriples()\n")        
-    for x in ontology.getDLGraphTriples():
+    logfile.write("\ngetInstructionGraphTriples()\n")        
+    for x in ontology.getInstructionGraphTriples():
         logfile.write("{}\n".format(str(x)))       
     
     ind = 'task'
-    cl = 'button'
+    cl = 'Item'
     rl = 'hasProperty'
     
-    logfile.write("\ngetDLGraphClassesForIndividual('"+ind+"')\n")        
-    for x in ontology.getDLGraphClassesForIndividual(ind):
+    logfile.write("\ngetInstructionGraphClassesForIndividual('"+ind+"')\n")        
+    for x in ontology.getInstructionGraphClassesForIndividual(ind):
         logfile.write("{}\n".format(str(x)))              
         
-    logfile.write("\ngetDLGraphIndividualsForClass('"+cl+"')\n")        
-    for x in ontology.getDLGraphIndividualsForClass(cl):
+    logfile.write("\ngetInstructionGraphIndividualsForClass('"+cl+"')\n")        
+    for x in ontology.getInstructionGraphIndividualsForClass(cl):
         logfile.write("{}\n".format(str(x)))  
         
-    logfile.write("\ngetDLGraphTriplesForIndivdual('"+ind+"')\n")        
-    for x in ontology.getDLGraphTriplesForIndivdual(ind):
+    logfile.write("\ngetInstructionGraphTriplesForIndivdual('"+ind+"')\n")        
+    for x in ontology.getInstructionGraphTriplesForIndivdual(ind):
         logfile.write("{}\n".format(str(x)))
                       
-    logfile.write("\ngetDLGraphTriplesForRole('"+rl+"')\n")        
-    for x in ontology.getDLGraphTriplesForRole(rl):
+    logfile.write("\ngetInstructionGraphTriplesForRole('"+rl+"')\n")        
+    for x in ontology.getInstructionGraphTriplesForRole(rl):
         logfile.write("{}\n".format(str(x))) 
                       
     logfile.close()
