@@ -17,17 +17,23 @@ class Handler:
     def _get(self, name):
         return getattr(self, name, None)
 
-    def _term(self, chunk, i):
-        return chunk['term'][i]['asString']
+    def _arg(self, chunk, i):
+        return chunk['ofItem'][i]['asString']
 
 
 class ConditionHandler(Handler):
 
     def appear(self, cond, context):
-        isa = self._term(cond, 0)
+        ''' appear(<isa>,on(screen)) '''
+
+        isa = self._arg(cond, 0)
+
+        # vision.find is non-blocking: it checks and returns immediately
         visual = self.agent.vision.find(isa=isa, seen=False)
+
+        # vision.wait_for is blocking: it waits for the item to appear
         # visual = self.agent.vision.wait_for(isa=isa, seen=False)
-        # visual = self.agent.vision.search_for(Query(isa=isa, seen=False), None)
+
         if visual:
             context.set('visual', visual)
             visobj = self.agent.vision.encode(visual)
@@ -39,21 +45,25 @@ class ConditionHandler(Handler):
 
 class ActionHandler(Handler):
 
+    def press(self, action, context):
+        ''' press(subject,<key>) '''
+
+        key = self._arg(action, 1)
+
+        if key == 'space_bar':
+            key = ' '
+
+        self.agent.motor.type(key)
+
     # def press(self, action, context):
-    #     isa = self._term(action, 0)
+    #     isa = self._arg(action, 0)
     #     visual = self.agent.vision.find(isa=isa)
     #     if visual:
     #         self.agent.motor.point_and_click(visual)
 
-    def press(self, action, context):
-        key = self._term(action, 1)
-        if key == 'space_bar':
-            key = ' '
-        self.agent.motor.type(key)
-
-    def click(self, action, context):
-        visual = context.get('visual')
-        self.agent.motor.point_and_click(visual)
+    # def click(self, action, context):
+    #     visual = context.get('visual')
+    #     self.agent.motor.point_and_click(visual)
 
 
 class UndifferentiatedAgent(Agent):
@@ -89,11 +99,6 @@ class UndifferentiatedAgent(Agent):
         return False
 
     def check_condition(self, cond, context):
-
-        # XXX Hack until ungrounded rules are omitted!
-        if cond['asString'] == 'appear(K,on(C))':
-            return True
-
         handler = self.condition_handler._get(cond['name'])
         if handler:
             self.think('check condition "{}"'.format(cond))
