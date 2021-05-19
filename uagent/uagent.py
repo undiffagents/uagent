@@ -1,5 +1,3 @@
-import math
-import random
 import re
 
 from interpreter import Interpreter
@@ -7,62 +5,65 @@ from ontology import OntologyMemory
 from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
                    Vision)
 
-DEFAULT_REWARD = 20
-DEFAULT_EGS = .1  # .5
-DEFAULT_ALPHA = .2
 
+class Handler:
 
-class InstructionStep:
-
-    def __init__(self, agent, rule):
+    def __init__(self, agent):
         self.agent = agent
-        self.memory = agent.memory
-        self.process = agent.process
 
-        self.rule = rule
-        self.chunk = Chunk(isa='step', rule=self.rule)
-        self.memory.add(self.chunk)
+    def _has(self, name):
+        return hasattr(self, name)
 
-        self.utility_recall = DEFAULT_REWARD
-        self.utility_execute = 0
+    def _get(self, name):
+        return getattr(self, name, None)
 
-        self.last_time = None
-        self.last_time_was_recall = None
+    def _arg(self, chunk, i):
+        return chunk['ofItem'][i]['asString']
 
-    #Use basic utility function to determine if an instruction step should be recalled from memory then executed, or simply executed
-    def execute(self, context):
-        self.last_time = self.agent.time()
-        c_recall = math.exp(self.utility_recall / math.sqrt(2 * DEFAULT_EGS))
-        c_execute = math.exp(self.utility_execute / math.sqrt(2 * DEFAULT_EGS))
-        pr_recall = c_recall / (c_recall + c_execute)
-        if random.random() < pr_recall:
-            print('***** RECALL')
-            self.memory.recall(isa='step', rule=self.rule)
-            self.process(self.rule, context)
-            self.last_time_was_recall = True
+
+class ConditionHandler(Handler):
+
+    def appear(self, cond, context):
+        ''' appear(<isa>,on(screen)) '''
+
+        isa = self._arg(cond, 0)
+
+        # vision.find is non-blocking: it checks and returns immediately
+        visual = self.agent.vision.find(isa=isa, seen=False)
+
+        # vision.wait_for is blocking: it waits for the item to appear
+        # visual = self.agent.vision.wait_for(isa=isa, seen=False)
+
+        if visual:
+            context.set('visual', visual)
+            visobj = self.agent.vision.encode(visual)
+            context.set(isa, visobj)
+            return True
         else:
-            print('***** EXECUTE')
-            self.process(self.rule, context)
-            self.last_time_was_recall = False
+            return False
 
-    #update utility values with time-based reward
-    def give_reward(self, time, reward):
-        if self.last_time is not None:
-            reward -= (time - self.last_time)
-            print(f'reward: {reward}')
-            if self.last_time_was_recall:
-                self.utility_recall += DEFAULT_ALPHA * \
-                    (reward - self.utility_recall)
-                if self.utility_execute < self.utility_recall:
-                    self.utility_execute += DEFAULT_ALPHA * \
-                        (self.utility_recall - self.utility_execute)
-            else:
-                self.utility_execute += DEFAULT_ALPHA * \
-                    (reward - self.utility_execute)
-        self.last_time = None
-        self.last_time_was_recall = None
-        print(f'u_recall: {self.utility_recall}')
-        print(f'u_execute: {self.utility_execute}')
+
+class ActionHandler(Handler):
+
+    def press(self, action, context):
+        ''' press(subject,<key>) '''
+
+        key = self._arg(action, 1)
+
+        if key == 'space_bar':
+            key = ' '
+
+        self.agent.motor.type(key)
+
+    # def press(self, action, context):
+    #     isa = self._arg(action, 0)
+    #     visual = self.agent.vision.find(isa=isa)
+    #     if visual:
+    #         self.agent.motor.point_and_click(visual)
+
+    # def click(self, action, context):
+    #     visual = context.get('visual')
+    #     self.agent.motor.point_and_click(visual)
 
 
 class UndifferentiatedAgent(Agent):
@@ -70,91 +71,49 @@ class UndifferentiatedAgent(Agent):
     def __init__(self, env, output=True):
         super().__init__(output=output)
 
-        self.memory = Memory(self)
-        self.memory.latency_factor = 5.0
-
-        self.ontology_memory = OntologyMemory(self)
-
+        #basic pass-ins for now for speed of testing
+        self.memory = OntologyMemory(self,stopOldServer=False,owlFile='uagent.owl')
         self.vision = Vision(self, env.display)
         self.audition = Audition(self, env.speakers)
         self.motor = Motor(self, self.vision, env)
 
-        self.interpreter = Interpreter(self.ontology_memory)
+        self.interpreter = Interpreter(self.memory)
 
         self.language = Language(self)
         self.language.add_interpreter(lambda words:
                                       self.interpreter.interpret_ace(' '.join(words)))
 
-        #CONTROLLED VOCABULARY TERMS:
+        self.condition_handler = ConditionHandler(self)
+        self.action_handler = ActionHandler(self)
 
-        #ACTIONS that execute_action() can handle.
-        self.action_list = ['press', 'click', 'remember']
-        #'press' and 'remember' aren't in the Ontology.
-        # "Action" CV in Ontology: 'click', 'read', 'retrieve', 'search', 'listen-for', 'watch-for'
+        # #Not used at the moment.
+        # self.item_role_list = ['target','stimulus','distractor','responseButton','infoButton']
+        # #"ItemRole" in the Ontology.
 
-        #CONDITIONS that check_condition() can handle.
-        self.condition_list = ['appearsOn', 'visible']
-        #'appearsOn' isn't in the Ontology.
-        # "Affordance" CV in the Ontology: 'clickable', 'searchable', 'retrievable', 'findable', 'audible', 'visible'
-
-        #Not used at the moment.
-        self.item_role_list = ['target', 'stimulus',
-                               'distractor', 'responseButton', 'infoButton']
-        #"ItemRole" in the Ontology.
-
-        #AGENT NAMES
-        self.agent_synonym_list = ['subject', 'participant', 'you']
+        # #For future implementations (trying to use other labs' instructions)
+        # self.agent_synonym_list = ['subject','participant','you']
 
     def is_action(self, rule):
         for action in rule.actions:
-            for potential_action in self.action_list:
-                if action.pred == potential_action:
-                    return True
+            if self.action_handler._has(action['name']):
+                return True
         return False
 
     def check_condition(self, cond, context):
-        for potential_condition in self.condition_list:
-            #as more conditions are added, their cases must be coded in here.
-            if cond.pred == potential_condition:
-                if cond.pred == 'appearsOn':
-                    self.think('check condition "{}"'.format(cond))
-                    isa = cond.obj(0)
-                    visual = self.vision.find(isa=isa, seen=False)
-                    # visual = self.vision.wait_for(isa=isa, seen=False)
-                    if visual:
-                        print('----- Found {}'.format(isa))
-                        context.set('visual', visual)
-                        visobj = self.vision.encode(visual)
-                        context.set(isa, visobj)
-                    else:
-                        return False
-        return True
+        handler = self.condition_handler._get(cond['name'])
+        if handler:
+            self.think('check condition "{}"'.format(cond))
+            return handler(cond, context)
+        else:
+            return True
 
     def execute_action(self, action, context):
-        for potential_syn in self.agent_synonym_list:
-            if action.obj(0) == potential_syn:
-                self.think('execute action "{}"'.format(action))
+        handler = self.action_handler._get(action['name'])
+        if handler:
+            self.think('execute action "{}"'.format(action))
+            handler(action, context)
 
-                if action.pred == 'press':
-                    # visual = self.vision.find(isa=action.obj(1))
-                    # if visual:
-                    #     self.motor.point_and_click(visual)
-                    key = action.obj(1)
-                    if key == 'space_bar':
-                        key = ' '
-                    self.motor.type(key)
-
-                if action.pred == 'click':
-                    visual = context.get('visual')
-                    self.motor.point_and_click(visual)
-
-                elif action.pred == 'remember':
-                    pass
-
-    #1) check if the rule is an action relevant to the UA
-    #2) if so, check if all conditions are met
-    #3) if so, execute the action
-    def process(self, rule, context):
+    def process_rule(self, rule, context):
         if self.is_action(rule):
             self.think('process rule "{}"'.format(rule))
             for cond in rule.conditions:
@@ -170,23 +129,7 @@ class UndifferentiatedAgent(Agent):
         instructions = self.vision.encode(instr_visual)
         self.language.interpret(instructions)
 
-        steps = []
-        for rule in self.ontology_memory.recall_ground_rules():
-            step = InstructionStep(self, rule)
-            steps.append(step)
-
-        def give_reward():
-            for step in steps:
-                step.give_reward(self.time(), DEFAULT_REWARD)
-
-        self.motor.keyboard.add_type_fn(lambda key: give_reward())
-
-        #Repeatedly loops through the instruction steps.
-        # execute()
-            # uses utility functions to determine if the rule is first recalled from memory, or simply executed.
-            # In either case, the rule is then passed to process() and procedes as in the previous version.
-            # CK->DARIO: I think it'd be a good idea to change the name of this (execute()) function to 'determine_action', 'utility_action' or something similar -- seems more in line with what the function is doing.
         while self.time() < time:
             context = Chunk()
-            for step in steps:
-                step.execute(context)
+            for rule in self.memory.recall_ground_rules():
+                self.process_rule(rule, context)
