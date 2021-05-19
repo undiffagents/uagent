@@ -15,10 +15,22 @@ def load_text(path):
 
 if __name__ == '__main__':
 
-    # set defaults
-    task_name = 'pvt'
-    agent_name = 'uagent'
-    window_name = 'none'
+    #debug flag for testing
+    is_debug = 1
+
+
+    if is_debug:
+        # set vars for testing
+        task_name = 'pvt'
+        agent_name = 'uagent'
+        window_name = 'none'
+        default_runtime = 30
+    else:
+        # set defaults
+        task_name = 'pvt'
+        agent_name = 'uagent'
+        window_name = 'none'
+        default_runtime = 300
 
     # read arguments from command line
     args = sys.argv[1:]
@@ -31,6 +43,9 @@ if __name__ == '__main__':
             args = args[2:]
         elif args[0] == '--window' and len(args) > 1:
             window_name = args[1]
+            args = args[2:]
+        elif args[0] == '--test' and len(args) > 1:
+            is_test = args[1]
             args = args[2:]
         else:
             print('Unknown arguments: {}'.format(args))
@@ -73,7 +88,7 @@ if __name__ == '__main__':
         print('Unknown agent argument: {}'.format(agent_name))
         sys.exit(1)
 
-        #UPDATE LOGS!
+    #UPDATE LOGS!
     # 0 = don't log (console output), 1 = log (saves to /data/logs/)
     do_outlog = 1
     if do_outlog:
@@ -83,4 +98,4 @@ if __name__ == '__main__':
 
     # run simulation
     world = World(task, agent)
-    world.run(300, real_time=(window is not None))
+    world.run(default_runtime, real_time=(window is not None))
