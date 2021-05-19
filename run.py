@@ -15,16 +15,16 @@ def load_text(path):
 
 if __name__ == '__main__':
 
-    #debug flag for testing
-    is_debug = 1
+    #script control flags
+    is_test = 1
+    do_outlog = 0 # 0 prints to console, 1 records to /data/logs
 
-
-    if is_debug:
+    if is_test:
         # set vars for testing
         task_name = 'pvt'
         agent_name = 'uagent'
         window_name = 'none'
-        default_runtime = 30
+        default_runtime = 10
     else:
         # set defaults
         task_name = 'pvt'
@@ -77,9 +77,16 @@ if __name__ == '__main__':
         print('Unknown task argument: {}'.format(task_name))
         sys.exit(1)
 
+    # 0 = console output, 1 = record log (saves to /data/logs/)
+    if do_outlog:
+        output = get_think_logger(logfilename=''.join(
+            ['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
+    else:
+        output = True
+
     # create agent
     if agent_name == 'uagent':
-        agent = UndifferentiatedAgent(env)
+        agent = UndifferentiatedAgent(env,output=output)
     elif agent_name == 'pvt':
         agent = PVTAgent(env)
     elif agent_name == 'vs':
@@ -88,14 +95,8 @@ if __name__ == '__main__':
         print('Unknown agent argument: {}'.format(agent_name))
         sys.exit(1)
 
-    #UPDATE LOGS!
-    # 0 = don't log (console output), 1 = log (saves to /data/logs/)
-    do_outlog = 1
-    if do_outlog:
-        #log now indicates taskText, and time started
-        thinklog = get_think_logger(logfilename=''.join(
-            ['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
-
     # run simulation
     world = World(task, agent)
+    print(''.join(['\nSTARTING SIMULATION. \nTASK: ', task_name, '\nAGENT: ', agent_name, '\nRUNTIME: ', str(default_runtime),'\n'] ),end='\n')
     world.run(default_runtime, real_time=(window is not None))
+    print(''.join(['\nSIMULATION COMPLETE.\n']),end='\n')
