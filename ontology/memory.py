@@ -31,9 +31,10 @@ class OntologyMemory(Memory):
 
     DEFAULT_DURATION = .200
 
-    def __init__(self, agent, decay=None):
+    #allow pass in of 'stopOldServer' and 'owlFile' variables
+    def __init__(self, agent, decay=None,stopOldServer=False,owlFile='uagent.owl'):
         super().__init__(agent, decay=decay)
-        self.ontology = Ontology(stopOldServer=True,owlFile='uagent.owl')
+        self.ontology = Ontology(stopOldServer=stopOldServer,owlFile=owlFile)
 
     def add_instruction_knowledge(self, ace_output):
         self.ontology.add_instruction_knowledge(*ace_output[:-1])
