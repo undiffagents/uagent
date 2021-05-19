@@ -17,7 +17,8 @@ if __name__ == '__main__':
 
     #script control flags
     is_test = 1
-    do_outlog = 0 # 0 prints to console, 1 records to /data/logs
+    do_outlog = 1 # 0 prints to console, 1 records to /data/logs
+    output=True
 
     # Default Settings
     task_name = 'pvt'
@@ -82,15 +83,22 @@ if __name__ == '__main__':
 
     # 0 = console output, 1 = record log (saves to /data/logs/)
     if do_outlog:
-        output = get_think_logger(logfilename=''.join(
-            ['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
+        output = get_think_logger(name='think',
+            logfilename=''.join(['data/logs/', task_name, "_", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), '.txt']), uselogfile=True)
     else:
         output = True
+
+def get_think_logger(name='think',
+                     logfilename='outfile.txt',
+                     uselogfile=False,
+                     formats='%(time)12.3f      %(source)-18s      %(message)s',
+                     level=logging.DEBUG):
 
     # create agent
     # def __init__(self, env, output=True,stopOldServer=False,owlFile='uagent.owl'):
     if agent_name == 'uagent':
-        agent = UndifferentiatedAgent(env,output=output,stopOldServer=stopOldServer,owlFile=owlFile)
+        # agent = UndifferentiatedAgent(env,output=output,stopOldServer=stopOldServer,owlFile=owlFile)
+        agent = UndifferentiatedAgent(env,output=True,stopOldServer=stopOldServer,owlFile=owlFile)
     elif agent_name == 'pvt':
         agent = PVTAgent(env)
     elif agent_name == 'vs':
@@ -100,7 +108,9 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # run simulation
-    world = World(task, agent)
     print(''.join(['\nSTARTING SIMULATION. \nTASK: ', task_name, '\nAGENT: ', agent_name, '\nRUNTIME: ', str(default_runtime),'\n'] ),end='\n')
+
+    world = World(task, agent)
     world.run(default_runtime, real_time=(window is not None))
+
     print(''.join(['\nSIMULATION COMPLETE.\n']),end='\n')

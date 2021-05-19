@@ -1010,7 +1010,7 @@ def runProlog(facts,rules,makeLogFiles):
     
     writePrologFile(factStr,ruleStr,newRuleStr,prologfile,factFile,groundFile)
 
-    print("Reasoning...")
+    print("\nReasoning...\n",end="\n")
     subprocess.call(['swipl', prologfile])
 
     reasonerFacts = []
@@ -1024,6 +1024,7 @@ def runProlog(facts,rules,makeLogFiles):
     if not makeLogFiles: os.remove(groundFile)
     if not makeLogFiles: os.remove(prologfile)
 
+    print("Done Reasoning!\n",end="\n")
     return reasonerFacts, groundRules
 
 def sameVariablePredicate(predA,predB):
@@ -1063,7 +1064,7 @@ def makeRuleFromString(string):
     
 def getDRSFromACE(ace):
     '''Runs APE on the ACE file and returns the lines of the DRS it created'''    
-    print("Interpreting ACE...")
+    print("Interpreting ACE...\n",end="\n")
 
     process = subprocess.Popen(['lib/ape/ape.exe', '-cdrspp'],stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     process.stdin.write(ace.encode('utf-8'))
