@@ -61,18 +61,18 @@ class ActionHandler(Handler):
     #     if visual:
     #         self.agent.motor.point_and_click(visual)
 
-    # def click(self, action, context):
-    #     visual = context.get('visual')
-    #     self.agent.motor.point_and_click(visual)
+    def click(self, action, context):
+        visual = context.get('visual')
+        self.agent.motor.point_and_click(visual)
 
 
 class UndifferentiatedAgent(Agent):
 
-    def __init__(self, env, output=True):
+    def __init__(self, env, output=True,stopOldServer=False,owlFile='uagent.owl'):
         super().__init__(output=output)
 
         #basic pass-ins for now for speed of testing
-        self.memory = OntologyMemory(self,stopOldServer=False,owlFile='uagent.owl')
+        self.memory = OntologyMemory(self,stopOldServer=stopOldServer,owlFile=owlFile)
         self.vision = Vision(self, env.display)
         self.audition = Audition(self, env.speakers)
         self.motor = Motor(self, self.vision, env)

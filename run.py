@@ -19,18 +19,15 @@ if __name__ == '__main__':
     is_test = 1
     do_outlog = 0 # 0 prints to console, 1 records to /data/logs
 
-    if is_test:
-        # set vars for testing
-        task_name = 'pvt'
-        agent_name = 'uagent'
-        window_name = 'none'
-        default_runtime = 10
-    else:
-        # set defaults
-        task_name = 'pvt'
-        agent_name = 'uagent'
-        window_name = 'none'
-        default_runtime = 300
+    # Default Settings
+    task_name = 'pvt'
+    agent_name = 'uagent'
+    window_name = 'none'
+    default_runtime = 300
+
+    #these were coded as input arguments with defaults, but pass ins weren't being used. Put them out here to allow for that
+    stopOldServer = 0 #1 to re-initialize Ontology every run
+    owlFile = 'uagent.owl'
 
     # read arguments from command line
     args = sys.argv[1:]
@@ -47,11 +44,17 @@ if __name__ == '__main__':
         elif args[0] == '--test' and len(args) > 1:
             is_test = args[1]
             args = args[2:]
+        elif args[0] == '--log' and len(args) > 1:
+            do_outlog = args[1]
+            args = args[2:]
         else:
             print('Unknown arguments: {}'.format(args))
             print(
                 'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
             sys.exit(1)
+
+    if is_test: #testing overrides
+        default_runtime = 10
 
     # create window (if needed)
     if window_name == 'window':
@@ -85,8 +88,9 @@ if __name__ == '__main__':
         output = True
 
     # create agent
+    # def __init__(self, env, output=True,stopOldServer=False,owlFile='uagent.owl'):
     if agent_name == 'uagent':
-        agent = UndifferentiatedAgent(env,output=output)
+        agent = UndifferentiatedAgent(env,output=output,stopOldServer=stopOldServer,owlFile=owlFile)
     elif agent_name == 'pvt':
         agent = PVTAgent(env)
     elif agent_name == 'vs':
