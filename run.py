@@ -73,6 +73,7 @@ if __name__ == '__main__':
         print('Unknown agent argument: {}'.format(agent_name))
         sys.exit(1)
 
+        #UPDATE LOGS!
     # 0 = don't log (console output), 1 = log (saves to /data/logs/)
     do_outlog = 1
     if do_outlog:
