@@ -1,0 +1,86 @@
+       0.000      agent                   wait for [isa=letter, seen=False]
+       1.000      agent.vision            found {'isa': 'letter', 'x': 211, 'y': 49, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'blue'}
+       1.000      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       1.050      agent.vision            found {'isa': 'letter', 'x': 90, 'y': 49, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.050      agent                   encode {'isa': 'letter', 'x': 90, 'y': 49, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.235      agent.vision            encoded O
+       1.235      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       1.285      agent.vision            found {'isa': 'letter', 'x': 100, 'y': 40, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.285      agent                   encode {'isa': 'letter', 'x': 100, 'y': 40, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.470      agent.vision            encoded O
+       1.470      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       1.520      agent.vision            found {'isa': 'letter', 'x': 128, 'y': 48, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.520      agent                   encode {'isa': 'letter', 'x': 128, 'y': 48, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.705      agent.vision            encoded O
+       1.705      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       1.755      agent.vision            found {'isa': 'letter', 'x': 141, 'y': 37, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.755      agent                   encode {'isa': 'letter', 'x': 141, 'y': 37, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.940      agent.vision            encoded O
+       1.940      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       1.990      agent.vision            found {'isa': 'letter', 'x': 118, 'y': 131, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       1.990      agent                   encode {'isa': 'letter', 'x': 118, 'y': 131, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.175      agent.vision            encoded O
+       2.175      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       2.225      agent.vision            found {'isa': 'letter', 'x': 88, 'y': 162, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.225      agent                   encode {'isa': 'letter', 'x': 88, 'y': 162, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.410      agent.vision            encoded O
+       2.410      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       2.460      agent.vision            found {'isa': 'letter', 'x': 69, 'y': 169, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.460      agent                   encode {'isa': 'letter', 'x': 69, 'y': 169, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.645      agent.vision            encoded O
+       2.645      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       2.695      agent.vision            found {'isa': 'letter', 'x': 58, 'y': 97, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.695      agent                   encode {'isa': 'letter', 'x': 58, 'y': 97, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.880      agent.vision            encoded O
+       2.880      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       2.930      agent.vision            found {'isa': 'letter', 'x': 142, 'y': 196, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       2.930      agent                   encode {'isa': 'letter', 'x': 142, 'y': 196, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       3.115      agent.vision            encoded O
+       3.115      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       3.165      agent.vision            found {'isa': 'letter', 'x': 182, 'y': 159, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       3.165      agent                   encode {'isa': 'letter', 'x': 182, 'y': 159, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       3.350      agent.vision            encoded O
+       3.350      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       3.400      agent.vision            found {'isa': 'letter', 'x': 243, 'y': 76, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       3.400      agent                   encode {'isa': 'letter', 'x': 243, 'y': 76, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       3.585      agent.vision            encoded X
+       3.585      agent                   type "w"
+       3.635      agent.motor             typing "w"
+       3.844      agent.motor             typed "w"
+       4.635      agent                   wait for [isa=letter, seen=False]
+       8.000      agent.vision            found {'isa': 'letter', 'x': 231, 'y': 201, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.000      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       8.050      agent.vision            found {'isa': 'letter', 'x': 250, 'y': 107, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.050      agent                   encode {'isa': 'letter', 'x': 250, 'y': 107, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.235      agent.vision            encoded O
+       8.235      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       8.285      agent.vision            found {'isa': 'letter', 'x': 214, 'y': 106, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.285      agent                   encode {'isa': 'letter', 'x': 214, 'y': 106, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.470      agent.vision            encoded O
+       8.470      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       8.520      agent.vision            found {'isa': 'letter', 'x': 241, 'y': 167, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.520      agent                   encode {'isa': 'letter', 'x': 241, 'y': 167, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.705      agent.vision            encoded O
+       8.705      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       8.755      agent.vision            found {'isa': 'letter', 'x': 231, 'y': 201, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.755      agent                   encode {'isa': 'letter', 'x': 231, 'y': 201, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.940      agent.vision            encoded O
+       8.940      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       8.990      agent.vision            found {'isa': 'letter', 'x': 112, 'y': 185, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       8.990      agent                   encode {'isa': 'letter', 'x': 112, 'y': 185, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.175      agent.vision            encoded O
+       9.175      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       9.225      agent.vision            found {'isa': 'letter', 'x': 141, 'y': 120, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.225      agent                   encode {'isa': 'letter', 'x': 141, 'y': 120, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.410      agent.vision            encoded O
+       9.410      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       9.460      agent.vision            found {'isa': 'letter', 'x': 69, 'y': 92, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.460      agent                   encode {'isa': 'letter', 'x': 69, 'y': 92, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.645      agent.vision            encoded O
+       9.645      agent                   find [isa=letter, color=red, region=vs, seen=False]
+       9.695      agent.vision            found {'isa': 'letter', 'x': 63, 'y': 94, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.695      agent                   encode {'isa': 'letter', 'x': 63, 'y': 94, 'w': 20, 'h': 20, 'seen': False, 'region': 'vs', 'color': 'red'}
+       9.880      agent.vision            encoded X
+       9.880      agent                   type "w"
+       9.930      agent.motor             typing "w"
+      10.139      agent.motor             typed "w"

@@ -16,18 +16,18 @@ def load_text(path):
 if __name__ == '__main__':
 
     #script control flags
-    is_test = 1
     do_outlog = 1 # 0 prints to console, 1 records to /data/logs
-    output=True
+    simulateRules = 0 #1 for testing, 0 for use interpreter
+    stopOldServer = 1 #1 to re-initialize Ontology every run
 
     # Default Settings
-    task_name = 'pvt'
+    # runtime = 300
+    runtime = 20
+    task_name = 'vs'
+    # task_name = 'pvt'
     agent_name = 'uagent'
     window_name = 'none'
-    default_runtime = 300
 
-    #these were coded as input arguments with defaults, but pass ins weren't being used. Put them out here to allow for that
-    stopOldServer = 0 #1 to re-initialize Ontology every run
     owlFile = 'uagent.owl'
 
     # read arguments from command line
@@ -42,8 +42,8 @@ if __name__ == '__main__':
         elif args[0] == '--window' and len(args) > 1:
             window_name = args[1]
             args = args[2:]
-        elif args[0] == '--test' and len(args) > 1:
-            is_test = args[1]
+        elif args[0] == '--runtime' and len(args) > 1:
+            runtime = args[1]
             args = args[2:]
         elif args[0] == '--log' and len(args) > 1:
             do_outlog = args[1]
@@ -54,8 +54,6 @@ if __name__ == '__main__':
                 'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
             sys.exit(1)
 
-    if is_test: #testing overrides
-        default_runtime = 10
 
     # create window (if needed)
     if window_name == 'window':
@@ -88,29 +86,30 @@ if __name__ == '__main__':
     else:
         output = True
 
-def get_think_logger(name='think',
-                     logfilename='outfile.txt',
-                     uselogfile=False,
-                     formats='%(time)12.3f      %(source)-18s      %(message)s',
-                     level=logging.DEBUG):
+# def get_think_logger(name='think',
+#                      logfilename='outfile.txt',
+#                      uselogfile=False,
+#                      formats='%(time)12.3f      %(source)-18s      %(message)s',
+#                      level=logging.DEBUG):
 
     # create agent
     # def __init__(self, env, output=True,stopOldServer=False,owlFile='uagent.owl'):
     if agent_name == 'uagent':
         # agent = UndifferentiatedAgent(env,output=output,stopOldServer=stopOldServer,owlFile=owlFile)
-        agent = UndifferentiatedAgent(env,output=True,stopOldServer=stopOldServer,owlFile=owlFile)
+        agent = UndifferentiatedAgent(env,output=output,stopOldServer=stopOldServer,owlFile=owlFile,simulateRules=simulateRules)
     elif agent_name == 'pvt':
-        agent = PVTAgent(env)
+        agent = PVTAgent(env,output=output)
     elif agent_name == 'vs':
-        agent = VSAgent(env)
+        agent = VSAgent(env,output=output)
     else:
         print('Unknown agent argument: {}'.format(agent_name))
         sys.exit(1)
 
     # run simulation
-    print(''.join(['\nSTARTING SIMULATION. \nTASK: ', task_name, '\nAGENT: ', agent_name, '\nRUNTIME: ', str(default_runtime),'\n'] ),end='\n')
+    print(''.join(['\nSTARTING SIMULATION. \nTASK: ', task_name, '\nAGENT: ', agent_name, '\nRUNTIME: ', str(runtime),'\n'] ),end='\n')
 
     world = World(task, agent)
-    world.run(default_runtime, real_time=(window is not None))
+    # world.run(runtime, real_time=(window is not None))
+    world.run(runtime)
 
     print(''.join(['\nSIMULATION COMPLETE.\n']),end='\n')
