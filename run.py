@@ -22,9 +22,9 @@ if __name__ == '__main__':
 
     # Default Settings
     # runtime = 300
-    runtime = 20
-    task_name = 'vs'
-    # task_name = 'pvt'
+    runtime = 30
+    # task_name = 'vs'
+    task_name = 'pvt'
     agent_name = 'uagent'
     window_name = 'none'
 
@@ -66,9 +66,13 @@ if __name__ == '__main__':
     # create environment
     env = Environment(window=window)
 
+    #'tasks/pvt/ace.txt'
+    # curInst = 'tasks/pvt/ace.txt'
+    # typoInst = 'tasks/pvt/gaptests/typo.txt'
+    curInst = 'tasks/pvt/gaptests/pacebar.txt'
     # create task
     if task_name == 'pvt':
-        task = (PVTTask(env, load_text('tasks/pvt/ace.txt'))
+        task = (PVTTask(env, load_text(curInst))
                 if agent_name == 'uagent' else
                 PVTTask(env))
     elif task_name == 'vs':
