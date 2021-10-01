@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #script control flags
     do_outlog = 1 # 0 prints to console, 1 records to /data/logs
     simulateRules = 0 #1 for testing, 0 for use interpreter
-    stopOldServer = 1 #1 to re-initialize Ontology every run
+    stopOldServer = 0 #1 to re-initialize Ontology every run
 
     # Default Settings
     # runtime = 300
