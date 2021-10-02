@@ -1,0 +1,19 @@
+       0.000      agent                   wait for [isa=text]
+       0.050      agent.vision            found {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.050      agent                   encode {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.235      agent.vision            encoded p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+The n:space_bar is a button and is in the task.
+There is a subject that is in the task.
+There is a slook that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a slook appears on the screen.
+If the slook appears on the screen then the subject presses the n:space_bar.
+       0.235      agent.language          interpreting "p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+The n:space_bar is a button and is in the task.
+There is a subject that is in the task.
+There is a slook that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a slook appears on the screen.
+If the slook appears on the screen then the subject presses the n:space_bar."
