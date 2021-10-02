@@ -22,13 +22,22 @@ class VSTask(Task):
             visual.set('color', color)
             return visual
 
+        # def start_trial():
+        #     end_trial()
+        #     if random.random() < .80:
+        #         self.stimuli.append(create_visual('red', 'X'))
+        #     for _ in range(10):
+        #         self.stimuli.append(create_visual('blue', 'X'))
+        #         self.stimuli.append(create_visual('red', 'O'))
+        #     random.shuffle(self.stimuli)
+        #     self.display.add_visuals(self.stimuli)
         def start_trial():
             end_trial()
             if random.random() < .80:
-                self.stimuli.append(create_visual('red', 'X'))
+                self.stimuli.append(create_visual('red', 'target'))
             for _ in range(10):
-                self.stimuli.append(create_visual('blue', 'X'))
-                self.stimuli.append(create_visual('red', 'O'))
+                self.stimuli.append(create_visual('blue', 'target'))
+                self.stimuli.append(create_visual('red', 'distractor'))
             random.shuffle(self.stimuli)
             self.display.add_visuals(self.stimuli)
 

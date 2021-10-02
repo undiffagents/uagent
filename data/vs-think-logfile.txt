@@ -1,0 +1,213 @@
+       0.000      agent                   wait for [isa=text]
+       0.050      agent.vision            found {'isa': 'text', 'x': 30, 'y': 30, 'w': 200, 'h': 200, 'seen': False}
+       0.050      agent                   encode {'isa': 'text', 'x': 30, 'y': 30, 'w': 200, 'h': 200, 'seen': False}
+       0.235      agent.vision            encoded p:visual-search is a task.
+There is a button that is in the task.
+There is a subject that is in the task.
+There is a screen that is in the task.
+There is a target and it is a letter and is correct.
+There is a n:distractor and it is a letter and is incorrect.
+If the subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If a letter appears on the screen and it is correct then the subject presses the button.
+
+       0.235      agent.language          interpreting "p:visual-search is a task.
+There is a button that is in the task.
+There is a subject that is in the task.
+There is a screen that is in the task.
+There is a target and it is a letter and is correct.
+There is a n:distractor and it is a letter and is incorrect.
+If the subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If a letter appears on the screen and it is correct then the subject presses the button.
+"
+       0.235      agent                   recall ground rules
+       0.285      agent.memory            recalling ground rules
+       0.485      agent.memory            recalled ground rules
+       0.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       0.535      agent                   processed rule: not an action
+       0.585      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       0.635      agent                   processed rule: not an action
+       0.685      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       0.735      agent                   processed rule: not an action
+       0.785      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       0.835      agent                   processed rule: not an action
+       0.885      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       0.935      agent                   processing: rule is an action, check conditions
+       0.985      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       1.035      agent                   find [isa=letter, seen=False]
+       1.085      agent.vision            find failed
+       1.085      agent                   processed rule: conditions not met
+       1.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       1.185      agent                   processed rule: not an action
+       1.235      agent                   recall ground rules
+       1.285      agent.memory            recalling ground rules
+       1.485      agent.memory            recalled ground rules
+       1.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       1.535      agent                   processed rule: not an action
+       1.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       1.635      agent                   processing: rule is an action, check conditions
+       1.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       1.735      agent                   find [isa=letter, seen=False]
+       1.785      agent.vision            find failed
+       1.785      agent                   processed rule: conditions not met
+       1.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       1.885      agent                   processed rule: not an action
+       1.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       1.985      agent                   processed rule: not an action
+       2.035      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       2.085      agent                   processed rule: not an action
+       2.135      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       2.185      agent                   processed rule: not an action
+       2.235      agent                   recall ground rules
+       2.285      agent.memory            recalling ground rules
+       2.485      agent.memory            recalled ground rules
+       2.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       2.535      agent                   processed rule: not an action
+       2.585      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       2.635      agent                   processed rule: not an action
+       2.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       2.735      agent                   processing: rule is an action, check conditions
+       2.785      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       2.835      agent                   find [isa=letter, seen=False]
+       2.885      agent.vision            find failed
+       2.885      agent                   processed rule: conditions not met
+       2.935      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       2.985      agent                   processed rule: not an action
+       3.035      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       3.085      agent                   processed rule: not an action
+       3.135      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       3.185      agent                   processed rule: not an action
+       3.235      agent                   recall ground rules
+       3.285      agent.memory            recalling ground rules
+       3.485      agent.memory            recalled ground rules
+       3.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       3.535      agent                   processed rule: not an action
+       3.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       3.635      agent                   processing: rule is an action, check conditions
+       3.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       3.735      agent                   find [isa=letter, seen=False]
+       3.785      agent.vision            find failed
+       3.785      agent                   processed rule: conditions not met
+       3.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       3.885      agent                   processed rule: not an action
+       3.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       3.985      agent                   processed rule: not an action
+       4.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       4.085      agent                   processed rule: not an action
+       4.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       4.185      agent                   processed rule: not an action
+       4.235      agent                   recall ground rules
+       4.285      agent.memory            recalling ground rules
+       4.485      agent.memory            recalled ground rules
+       4.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       4.535      agent                   processed rule: not an action
+       4.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       4.635      agent                   processing: rule is an action, check conditions
+       4.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       4.735      agent                   find [isa=letter, seen=False]
+       4.785      agent.vision            find failed
+       4.785      agent                   processed rule: conditions not met
+       4.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       4.885      agent                   processed rule: not an action
+       4.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       4.985      agent                   processed rule: not an action
+       5.035      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       5.085      agent                   processed rule: not an action
+       5.135      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       5.185      agent                   processed rule: not an action
+       5.235      agent                   recall ground rules
+       5.285      agent.memory            recalling ground rules
+       5.485      agent.memory            recalled ground rules
+       5.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       5.535      agent                   processed rule: not an action
+       5.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       5.635      agent                   processing: rule is an action, check conditions
+       5.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       5.735      agent                   find [isa=letter, seen=False]
+       5.785      agent.vision            find failed
+       5.785      agent                   processed rule: conditions not met
+       5.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       5.885      agent                   processed rule: not an action
+       5.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       5.985      agent                   processed rule: not an action
+       6.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       6.085      agent                   processed rule: not an action
+       6.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       6.185      agent                   processed rule: not an action
+       6.235      agent                   recall ground rules
+       6.285      agent.memory            recalling ground rules
+       6.485      agent.memory            recalled ground rules
+       6.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       6.535      agent                   processed rule: not an action
+       6.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       6.635      agent                   processing: rule is an action, check conditions
+       6.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       6.735      agent                   find [isa=letter, seen=False]
+       6.785      agent.vision            find failed
+       6.785      agent                   processed rule: conditions not met
+       6.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       6.885      agent                   processed rule: not an action
+       6.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       6.985      agent                   processed rule: not an action
+       7.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       7.085      agent                   processed rule: not an action
+       7.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       7.185      agent                   processed rule: not an action
+       7.235      agent                   recall ground rules
+       7.285      agent.memory            recalling ground rules
+       7.485      agent.memory            recalled ground rules
+       7.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       7.535      agent                   processed rule: not an action
+       7.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       7.635      agent                   processing: rule is an action, check conditions
+       7.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       7.735      agent                   find [isa=letter, seen=False]
+       7.785      agent.vision            find failed
+       7.785      agent                   processed rule: conditions not met
+       7.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       7.885      agent                   processed rule: not an action
+       7.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       7.985      agent                   processed rule: not an action
+       8.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       8.085      agent                   processed rule: not an action
+       8.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       8.185      agent                   processed rule: not an action
+       8.235      agent                   recall ground rules
+       8.285      agent.memory            recalling ground rules
+       8.485      agent.memory            recalled ground rules
+       8.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       8.535      agent                   processed rule: not an action
+       8.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       8.635      agent                   processing: rule is an action, check conditions
+       8.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       8.735      agent                   find [isa=letter, seen=False]
+       8.785      agent.vision            find failed
+       8.785      agent                   processed rule: conditions not met
+       8.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       8.885      agent                   processed rule: not an action
+       8.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       8.985      agent                   processed rule: not an action
+       9.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+       9.085      agent                   processed rule: not an action
+       9.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+       9.185      agent                   processed rule: not an action
+       9.235      agent                   recall ground rules
+       9.285      agent.memory            recalling ground rules
+       9.485      agent.memory            recalled ground rules
+       9.485      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(target) => appear(target,on(screen))"
+       9.535      agent                   processed rule: not an action
+       9.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       9.635      agent                   processing: rule is an action, check conditions
+       9.685      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       9.735      agent                   find [isa=letter, seen=False]
+       9.785      agent.vision            find failed
+       9.785      agent                   processed rule: conditions not met
+       9.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       9.885      agent                   processed rule: not an action
+       9.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       9.985      agent                   processed rule: not an action
+      10.035      agent                   processing rule "hasProperty(visual-search,active),task(visual-search),screen(screen),letter(distractor) => appear(distractor,on(screen))"
+      10.085      agent                   processed rule: not an action
+      10.135      agent                   processing rule "be(subject,in(visual-search)),task(visual-search),subject(subject) => hasProperty(visual-search,active)"
+      10.185      agent                   processed rule: not an action

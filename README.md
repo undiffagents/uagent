@@ -9,7 +9,7 @@ Master will be the 'release' branch -- representing bigger, stables changes acro
 
 ## Dependencies
 
-Versions listed work for CNK, on 2020/02/28
+Verified 2021/09/24; some packages have newer versions, be careful to install the designated version to ensure compatibility.
 
 - /input/APE/ must be setup on each machine
 	- Install SWI-Prolog - http://www.swi-prolog.org
@@ -18,14 +18,17 @@ Versions listed work for CNK, on 2020/02/28
 - Java (11.0.5) - for input processing
 - Ruby (2.5.1p57) - for input processing
 
-## Running Agents
+## Testing Interpreter & Ontology loading
 
-- agents/pvt_ua1.py
-		- Execute: python3 agents/pvt_ua1.py (that is, run it from the base uagent directory).
-		- The main runfile, acting as the 'master' process. It instantiates the think uagent and runs it for the PVT.
+- Interpreter & Ontology
+	- interpreter.py allows for direct testing of ACE instruction interpretation, independently from full UAgent simulation.
+		- python3 interpreter/interpreter.py --ace "ACEFILE.TXT"
+	- Running this tests if the ACE can be interpreted correctly, and further, if the processed information can be instatiated within the triple-store
 
-- agents/pvt_non_ua.py
-	- Runs the non-undiff PVT agent. 
+## Running a full UAgent simulation
+
+- /uagent/uagent.py
+	- This is where the UAgent 'lives' so to speak. This file contains the primary functionality of the UAgent, including cognition, enviromental interactions, and other behaviors.  
 
 - uagent.py
 	- Processes ACE input to populate the Ontology, then instantiates a local query server. (Note: if run from terminal, said server runs until manually killed). See comments in script for manual query example.

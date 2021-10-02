@@ -1,0 +1,210 @@
+get_instruction_facts()
+{'isa': 'DescriptionInstruction', 'asString': 'be(subject,in(psychomotor-vigilance))', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'be(screen,in(psychomotor-vigilance))', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'be(screen,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'be(letter,in(psychomotor-vigilance))', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'be(letter,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'subject(subject)', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'screen(screen)', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'letter(letter)', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'task(psychomotor-vigilance)', 'reasoningStep': 0, 'preCondition': [], 'postCondition': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}]}
+
+get_instruction_reasoner_facts()
+{'isa': 'DescriptionInstruction', 'asString': 'appear(letter,on(screen))', 'reasoningStep': 2, 'preCondition': [], 'postCondition': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'respond(subject)', 'reasoningStep': 3, 'preCondition': [], 'postCondition': [{'asString': 'respond(subject)', 'name': 'respond', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}]}]}
+{'isa': 'DescriptionInstruction', 'asString': 'hasProperty(psychomotor-vigilance,active)', 'reasoningStep': 1, 'preCondition': [], 'postCondition': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}, {'asString': 'active', 'isa': 'Item'}]}]}
+
+get_instruction_rules()
+{'isa': 'ActionInstruction', 'asString': 'be(I,in(A)),task(A),subject(I) => hasProperty(A,active)', 'reasoningStep': 0, 'preCondition': [{'asString': 'task(A)', 'name': 'task', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'A', 'isa': 'Item'}]}, {'asString': 'be(I,in(A))', 'name': 'be', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'I', 'isa': 'Item'}, {'asString': 'in(A)', 'name': 'in', 'isa': 'Function', 'ofItem': [{'asString': 'A', 'isa': 'Item'}]}]}, {'asString': 'subject(I)', 'name': 'subject', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'I', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'hasProperty(A,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'A', 'isa': 'Item'}, {'asString': 'active', 'isa': 'Item'}]}]}
+{'isa': 'ActionInstruction', 'asString': 'hasProperty(A,active),task(A),screen(C),letter(O) => appear(O,on(C))', 'reasoningStep': 0, 'preCondition': [{'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'C', 'isa': 'Item'}]}, {'asString': 'hasProperty(A,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'A', 'isa': 'Item'}, {'asString': 'active', 'isa': 'Item'}]}, {'asString': 'task(A)', 'name': 'task', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'A', 'isa': 'Item'}]}, {'asString': 'letter(O)', 'name': 'letter', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'O', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'appear(O,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'O', 'isa': 'Item'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'C', 'isa': 'Item'}]}]}]}
+{'isa': 'ActionInstruction', 'asString': 'appear(G,on(C)),screen(C),letter(G),subject(E) => respond(E)', 'reasoningStep': 0, 'preCondition': [{'asString': 'screen(C)', 'name': 'screen', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'C', 'isa': 'Item'}]}, {'asString': 'subject(E)', 'name': 'subject', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'E', 'isa': 'Item'}]}, {'asString': 'appear(G,on(C))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'G', 'isa': 'Item'}, {'asString': 'on(C)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'C', 'isa': 'Item'}]}]}, {'asString': 'letter(G)', 'name': 'letter', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'G', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'respond(E)', 'name': 'respond', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'E', 'isa': 'Item'}]}]}
+
+get_instruction_ground_rules()
+{'isa': 'ActionInstruction', 'asString': 'be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)', 'reasoningStep': 1, 'preCondition': [{'asString': 'be(subject,in(psychomotor-vigilance))', 'name': 'be', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'in(psychomotor-vigilance)', 'name': 'in', 'isa': 'Function', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}]}, {'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}, {'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}, {'asString': 'active', 'isa': 'Item'}]}]}
+{'isa': 'ActionInstruction', 'asString': 'hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))', 'reasoningStep': 2, 'preCondition': [{'asString': 'task(psychomotor-vigilance)', 'name': 'task', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}]}, {'asString': 'hasProperty(psychomotor-vigilance,active)', 'name': 'hasProperty', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'psychomotor-vigilance', 'isa': 'Item'}, {'asString': 'active', 'isa': 'Item'}]}, {'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}]}
+{'isa': 'ActionInstruction', 'asString': 'appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)', 'reasoningStep': 3, 'preCondition': [{'asString': 'subject(subject)', 'name': 'subject', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}]}, {'asString': 'letter(letter)', 'name': 'letter', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}]}, {'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}, {'asString': 'screen(screen)', 'name': 'screen', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}], 'postCondition': [{'asString': 'respond(subject)', 'name': 'respond', 'arity': 1, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}]}]}
+
+get_DRS_Strings()
+   property(M,active,pos)-6/5
+   property(K,active,pos)-5/12
+   predicate(N,be,A,M)-6/4
+   property(M,active,pos)-6/5
+   =>
+   predicate(P,appear,O)-6/9
+   preposition(P,on,C)-6/10
+   object(O,letter,countable,na,eq,1)-6/8
+   predicate(J,be,I)-5/4
+   preposition(J,in,A)-5/5
+   object(I,subject,countable,na,eq,1)-5/3
+   =>
+   predicate(L,be,A,K)-5/11
+   property(K,active,pos)-5/12
+   object(O,letter,countable,na,eq,1)-6/8
+   predicate(J,be,I)-5/4
+object(E,subject,countable,na,eq,1)-3/4
+   object(I,subject,countable,na,eq,1)-5/3
+   preposition(J,in,A)-5/5
+object(A,task,countable,na,eq,1)-1/6
+   preposition(P,on,C)-6/10
+   predicate(R,respond,E)-7/11
+preposition(D,in,A)-2/7
+predicate(B,be,psychomotor-vigilance,A)-1/4
+   preposition(Q,on,C)-7/5
+object(G,letter,countable,na,eq,1)-4/4
+predicate(F,be,E)-3/6
+preposition(H,in,A)-4/7
+   predicate(N,be,A,M)-6/4
+   predicate(P,appear,O)-6/9
+predicate(D,be,C)-2/6
+preposition(F,in,A)-3/7
+object(C,screen,countable,na,eq,1)-2/4
+predicate(H,be,G)-4/6
+   predicate(Q,appear,G)-7/4
+   preposition(Q,on,C)-7/5
+   =>
+   predicate(R,respond,E)-7/11
+   predicate(L,be,A,K)-5/11
+   predicate(Q,appear,G)-7/4
+
+get_DRS_Conditional_Strings()
+   predicate(J,be,I)-5/4
+   preposition(J,in,A)-5/5
+   object(I,subject,countable,na,eq,1)-5/3
+   =>
+   predicate(L,be,A,K)-5/11
+   property(K,active,pos)-5/12
+   predicate(Q,appear,G)-7/4
+   preposition(Q,on,C)-7/5
+   =>
+   predicate(R,respond,E)-7/11
+   predicate(N,be,A,M)-6/4
+   property(M,active,pos)-6/5
+   =>
+   predicate(P,appear,O)-6/9
+   preposition(P,on,C)-6/10
+   object(O,letter,countable,na,eq,1)-6/8
+
+get_DRS_Fact_Strings()
+preposition(H,in,A)-4/7
+object(C,screen,countable,na,eq,1)-2/4
+predicate(H,be,G)-4/6
+object(A,task,countable,na,eq,1)-1/6
+preposition(D,in,A)-2/7
+predicate(B,be,psychomotor-vigilance,A)-1/4
+object(E,subject,countable,na,eq,1)-3/4
+object(G,letter,countable,na,eq,1)-4/4
+predicate(D,be,C)-2/6
+predicate(F,be,E)-3/6
+preposition(F,in,A)-3/7
+
+get_ACE_Strings()
+There is a letter that is in the task.
+There is a screen that is in the task.
+p:psychomotor-vigilance is a task.
+If the task is active then a letter appears on the screen.
+There is a subject that is in the task.
+If a subject is in the task then the task is active.
+If the letter appears on the screen then the subject responds.
+
+getAllTypedDRSInstructions()
+{
+predicate:[
+{'letter': 'N', 'indent': '   ', 'num1': '6', 'num2': '4', 'arg0': 'A', 'arg1': 'M', 'name': 'be'}
+{'letter': 'Q', 'indent': '   ', 'num1': '7', 'num2': '4', 'arg0': 'G', 'name': 'appear'}
+{'letter': 'B', 'indent': '', 'num1': '1', 'num2': '4', 'arg0': 'psychomotor-vigilance', 'arg1': 'A', 'name': 'be'}
+{'letter': 'J', 'indent': '   ', 'num1': '5', 'num2': '4', 'arg0': 'I', 'name': 'be'}
+{'letter': 'D', 'indent': '', 'num1': '2', 'num2': '6', 'arg0': 'C', 'name': 'be'}
+{'letter': 'L', 'indent': '   ', 'num1': '5', 'num2': '11', 'arg0': 'A', 'arg1': 'K', 'name': 'be'}
+{'letter': 'R', 'indent': '   ', 'num1': '7', 'num2': '11', 'arg0': 'E', 'name': 'respond'}
+{'letter': 'H', 'indent': '', 'num1': '4', 'num2': '6', 'arg0': 'G', 'name': 'be'}
+{'letter': 'F', 'indent': '', 'num1': '3', 'num2': '6', 'arg0': 'E', 'name': 'be'}
+{'letter': 'P', 'indent': '   ', 'num1': '6', 'num2': '9', 'arg0': 'O', 'name': 'appear'}
+]
+preposition:[
+{'letter': 'D', 'indent': '', 'num1': '2', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+{'letter': 'P', 'indent': '   ', 'num1': '6', 'num2': '10', 'arg0': 'C', 'name': 'on'}
+{'letter': 'H', 'indent': '', 'num1': '4', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+{'letter': 'Q', 'indent': '   ', 'num1': '7', 'num2': '5', 'arg0': 'C', 'name': 'on'}
+{'letter': 'J', 'indent': '   ', 'num1': '5', 'num2': '5', 'arg0': 'A', 'name': 'in'}
+{'letter': 'F', 'indent': '', 'num1': '3', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+]
+property:[
+{'letter': 'K', 'indent': '   ', 'num1': '5', 'num2': '12', 'arg0': 'pos', 'name': 'active'}
+{'letter': 'M', 'indent': '   ', 'num1': '6', 'num2': '5', 'arg0': 'pos', 'name': 'active'}
+]
+object:[
+{'letter': 'I', 'indent': '   ', 'num1': '5', 'num2': '3', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'subject'}
+{'letter': 'C', 'indent': '', 'num1': '2', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'screen'}
+{'letter': 'E', 'indent': '', 'num1': '3', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'subject'}
+{'letter': 'A', 'indent': '', 'num1': '1', 'num2': '6', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'task'}
+{'letter': 'O', 'indent': '   ', 'num1': '6', 'num2': '8', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'letter'}
+{'letter': 'G', 'indent': '', 'num1': '4', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'letter'}
+]}
+
+getDRSArgsForComponentType('object')
+{'letter': 'I', 'indent': '   ', 'num1': '5', 'num2': '3', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'subject'}
+{'letter': 'C', 'indent': '', 'num1': '2', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'screen'}
+{'letter': 'E', 'indent': '', 'num1': '3', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'subject'}
+{'letter': 'A', 'indent': '', 'num1': '1', 'num2': '6', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'task'}
+{'letter': 'O', 'indent': '   ', 'num1': '6', 'num2': '8', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'letter'}
+{'letter': 'G', 'indent': '', 'num1': '4', 'num2': '4', 'arg0': 'countable', 'arg1': 'na', 'arg2': 'eq', 'arg3': '1', 'name': 'letter'}
+
+getDRSArgsForComponentType('predicate')
+{'letter': 'N', 'indent': '   ', 'num1': '6', 'num2': '4', 'arg0': 'A', 'arg1': 'M', 'name': 'be'}
+{'letter': 'Q', 'indent': '   ', 'num1': '7', 'num2': '4', 'arg0': 'G', 'name': 'appear'}
+{'letter': 'B', 'indent': '', 'num1': '1', 'num2': '4', 'arg0': 'psychomotor-vigilance', 'arg1': 'A', 'name': 'be'}
+{'letter': 'J', 'indent': '   ', 'num1': '5', 'num2': '4', 'arg0': 'I', 'name': 'be'}
+{'letter': 'D', 'indent': '', 'num1': '2', 'num2': '6', 'arg0': 'C', 'name': 'be'}
+{'letter': 'L', 'indent': '   ', 'num1': '5', 'num2': '11', 'arg0': 'A', 'arg1': 'K', 'name': 'be'}
+{'letter': 'R', 'indent': '   ', 'num1': '7', 'num2': '11', 'arg0': 'E', 'name': 'respond'}
+{'letter': 'H', 'indent': '', 'num1': '4', 'num2': '6', 'arg0': 'G', 'name': 'be'}
+{'letter': 'F', 'indent': '', 'num1': '3', 'num2': '6', 'arg0': 'E', 'name': 'be'}
+{'letter': 'P', 'indent': '   ', 'num1': '6', 'num2': '9', 'arg0': 'O', 'name': 'appear'}
+
+getDRSArgsForComponentType('preposition')
+{'letter': 'D', 'indent': '', 'num1': '2', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+{'letter': 'P', 'indent': '   ', 'num1': '6', 'num2': '10', 'arg0': 'C', 'name': 'on'}
+{'letter': 'H', 'indent': '', 'num1': '4', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+{'letter': 'Q', 'indent': '   ', 'num1': '7', 'num2': '5', 'arg0': 'C', 'name': 'on'}
+{'letter': 'J', 'indent': '   ', 'num1': '5', 'num2': '5', 'arg0': 'A', 'name': 'in'}
+{'letter': 'F', 'indent': '', 'num1': '3', 'num2': '7', 'arg0': 'A', 'name': 'in'}
+
+getDRSArgsForComponentType('property')
+{'letter': 'K', 'indent': '   ', 'num1': '5', 'num2': '12', 'arg0': 'pos', 'name': 'active'}
+{'letter': 'M', 'indent': '   ', 'num1': '6', 'num2': '5', 'arg0': 'pos', 'name': 'active'}
+
+getDRSArgsForComponentType('relation')
+
+getInstructionGraphClasses()
+Constant
+Item
+Variable
+ItemDescription
+Predicate
+Instruction
+ActionInstruction
+TransitionDescription
+Rule
+SituationDescription
+PreSituationDescription
+Function
+Fact
+DescriptionInstruction
+PostSituationDescription
+
+getInstructionGraphIndividuals()
+
+getInstructionGraphRoles()
+hasName
+asString
+hasArity
+hasTerm
+prescribes
+drsType
+drsArgs
+asDRSString
+hasPreSituationDescription
+hasPostSituationDescription
+inReasoningStep
+hasCurrentCondition
+contributesTo
+hasPostSituationDescripton
+hasPreSituationDescripton
