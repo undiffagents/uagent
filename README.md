@@ -1,5 +1,5 @@
 # uagent
-Full Undifferentiated Agent, v1
+Full Undifferentiated Agent, v1. README last updated: 10/4/2021.
 
 ## Git Logistics
 
@@ -29,14 +29,17 @@ Verified 2021/09/24; some packages have newer versions, be careful to install th
 
 - /uagent/uagent.py
 	- This is where the UAgent 'lives' so to speak. This file contains the primary functionality of the UAgent, including cognition, enviromental interactions, and other behaviors.  
-
-- uagent.py
 	- Processes ACE input to populate the Ontology, then instantiates a local query server. (Note: if run from terminal, said server runs until manually killed). See comments in script for manual query example.
+
+## Running a Targeted Knowledge Gap Test
+
+- bash gaptest.sh --GAPNAME
+	- Gap testing limited to PVT currently. Must be stored as .txt files in the tasks/pvt/gaptests/ folder. 
+	- Creates logfiles for: Console output (including thrown errors), Interpreter processing, and Think behavior simulation. All stored in data/logs/
 
 ## Modules
 	
 - agents
-	- Purpose: primary runfiles.
 
 - ares
 	- Purpose: Integration and training of UAgent in ARES framework
@@ -46,7 +49,7 @@ Verified 2021/09/24; some packages have newer versions, be careful to install th
 	- Purpose: Print cakes. Parlay UAgent processing/learning capabilities to act as experimenter controlling an ARES experiment campaign.
 	- Primaries: ? Pascal, Cogan ?
 
-- gap_res
+- gap_res (DEPRECATED as DS left team)
 	- Purpose: Knowledge Gap Resolution
 	- Primaries: Aaron, Daniel
 
@@ -66,11 +69,14 @@ Verified 2021/09/24; some packages have newer versions, be careful to install th
 	- Purpose: The Think architecture, an adaptation of ACT-R to be run in Python.
 	- Primaries: Dario (+Colin, later)
 
-- ua
-	- Purpose: Code specifically for the UAgent. Currently just ua.py, which has the UndifferentiatedAgent class (for use with Think).
+- uagent
+	- Purpose: primary runfiles for the UAgent. Primarily uagent.py, which has the UndifferentiatedAgent class
 	- Primaries: Dario (+Colin)
 
 ## Other Directories
+
+- lib
+	- Directory for tools used by the UA, including APE and Fuseki (for Ontology server functions).
 
 - run
 	- Directory used as the local 'server' for the in input process. (The agent runfiles are now in /agents/).
