@@ -1780,9 +1780,9 @@ def interpret_ace(ace,makeLogFiles=False):
     
     return ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules,messages
 
-def testInterpreter(ontology):
+def testInterpreter(ontology,logfiletar="interpreter/logfile.txt"):
     
-    logfile = open("interpreter/logfile.txt","w")
+    logfile = open(logfiletar,"w")
         
     logfile.write("get_instruction_facts()\n")
     for fact in ontology.get_instruction_facts():
@@ -1898,6 +1898,30 @@ class Interpreter:
         '''Interprets ACE text and adds the resulting knowledge to memory'''
         self.memory.add_instruction_knowledge(interpret_ace(ace))
 
+    def printLogfile(self, ontology):
+        # files = [x for x in os.listdir('data/logs/') if x.endswith('.txt')]
+        # newest = max(files , key = os.path.getctime)
+        # testInterpreter(ontology,''.join(['data/logs/int-',newest]))
+        testInterpreter(ontology,'data/logs/interpreter-logfile.txt')
+
 if __name__ == "__main__":
     
-    standaloneInterpreter(owlFile='uagent.owl',aceFile="interpreter/ace.txt",stopOldServer=True,makeLogFiles=True)
+    #adding input overrides for faster comparison / logging
+    aceFile="interpreter/ace.txt"
+    owlFile="uagent.owl"
+
+    args = sys.argv[1:]
+    while args:
+        if args[0] == '--ace' and len(args) > 1:
+            aceFile = args[1]
+            args = args[2:]
+        elif args[0] == '--owl' and len(args) > 1:
+            owlFile = args[1]
+            args = args[2:]
+        else:
+            print('Unknown arguments: {}'.format(args))
+            print(
+                'Possible arguments: [--task {pvt,vs}] [--agent {uagent,pvt,vs}] [--window {none,window,<host>}]')
+            sys.exit(1)
+
+    standaloneInterpreter(owlFile=owlFile,aceFile=aceFile,stopOldServer=True,makeLogFiles=True)

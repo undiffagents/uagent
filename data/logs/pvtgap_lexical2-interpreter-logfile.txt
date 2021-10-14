@@ -1,0 +1,44 @@
+get_instruction_facts()
+
+get_instruction_reasoner_facts()
+
+get_instruction_rules()
+
+get_instruction_ground_rules()
+
+get_DRS_Strings()
+
+get_DRS_Conditional_Strings()
+
+get_DRS_Fact_Strings()
+
+get_ACE_Strings()
+If a subject is in the task then the task is active.
+If the task is active then a slook appears on the screen.
+There is a screen that is in the task.
+There is a subject that is in the task.
+There is a slook that is in the task.
+The n:space_bar is a button and is in the task.
+p:psychomotor-vigilance is a task.
+If the slook appears on the screen then the subject presses the n:space_bar.
+
+getAllTypedDRSInstructions()
+{}
+
+getDRSArgsForComponentType('object')
+
+getDRSArgsForComponentType('predicate')
+
+getDRSArgsForComponentType('preposition')
+
+getDRSArgsForComponentType('property')
+
+getDRSArgsForComponentType('relation')
+
+getInstructionGraphClasses()
+Instruction
+
+getInstructionGraphIndividuals()
+
+getInstructionGraphRoles()
+asString

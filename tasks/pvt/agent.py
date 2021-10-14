@@ -3,7 +3,7 @@ from think import Agent, Eyes, Motor, Vision
 
 class PVTAgent(Agent):
 
-    def __init__(self, env):
+    def __init__(self, env, output=True):
         """Initializes the agent"""
         super().__init__(output=True)
         self.vision = Vision(self, env.display) #, eyes=Eyes(self))
