@@ -953,7 +953,7 @@ def alpha_key(text):
     commas = str(len(re.split(r'''(?:[^,']|'[^']*')+''',test[1])[1:-1]))
     return [c for c in test[0]]+[commas]
 
-def writePrologFile(facts,rules,newRules,prologfile,factFile,groundFile):
+def writePrologFile(facts,rules,newRules,prologfile,factFile,groundFile,errFile):
     '''writes a prolog file that executes a logic program built from 
     the instructions that will produce all facts it enatils in one 
     file and all solved rules it used to obtain enatilments facts in another'''
@@ -967,19 +967,20 @@ def writePrologFile(facts,rules,newRules,prologfile,factFile,groundFile):
     
     writer = lambda thing: '({},{})'.format(groundWriter(thing),factWriter(thing))
     
-    output = ['forall({},{}),\n'.format(selector(thing),writer(thing)) for thing in rules]
-    f = open(prologfile, "w").write('{}\n:- open("{}",write, Stream),open("{}",write, Stream2),\n{}close(Stream),close(Stream2),halt.\n'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]), factFile, groundFile, ''.join(output)))
+    output = ['\n   forall({},{})'.format(selector(thing),writer(thing)) for thing in rules] if 0 < len(rules) else ['throw(error(warning(empty_program),context(ace_is_not_in_rule_format)))']
+    f = open(prologfile, "w").write('{}\nhandleError(X,Stream,Stream2,Stream3) :- write("Prolog Error:"),nl,write(X),nl,nl,write(Stream3,X).\n\nwriteFiles(Stream,Stream2,Stream3) :-{}.\n\n:- open("{}",write, Stream),open("{}",write, Stream2),open("{}",write, Stream3),\n   catch(writeFiles(Stream,Stream2,Stream3),X,handleError(X,Stream,Stream2,Stream3)),\n   close(Stream),close(Stream2),close(Stream3),\n   halt.'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]),','.join(output),factFile,groundFile,errFile))
 
 def cutCounter(thing):
     thing = re.split(",(?:ZZZ|ZZ)\)$",thing)
     return thing[0] if len(thing) == 1 else thing[0] + ')'
     
-def runProlog(facts,rules,makeLogFiles):
+def runProlog(facts,rules,makeLogFiles,messages):
     '''runs the prolog file and reads and discards its output files
     returns the lines from the files it discards'''
     
     factFile = "interpreter/reasonerFacts.txt"
     groundFile = "interpreter/groundRules.txt"
+    proErr = "interpreter/prologErrors.txt"
     prologfile = "interpreter/prolog.pl"
     
     heads = [x.head.getPredicate() for x in rules]
@@ -1008,7 +1009,7 @@ def runProlog(facts,rules,makeLogFiles):
     newRuleStr = [[str(rule.head),[str(b) for b in rule.body.preds]] for rule in newRules]
     factStr = [str(fact) for fact in facts+[Class('','Z','order','0',-1,-1),Class('','Y','something','_',-1,-1)]]
     
-    writePrologFile(factStr,ruleStr,newRuleStr,prologfile,factFile,groundFile)
+    writePrologFile(factStr,ruleStr,newRuleStr,prologfile,factFile,groundFile,proErr)
 
     print("\nReasoning...\n",end="\n")
     subprocess.call(['swipl', prologfile])
@@ -1019,13 +1020,23 @@ def runProlog(facts,rules,makeLogFiles):
         reasonerFacts.append((int(x[0]),makeFactFromString(x[1])))
         
     groundRules = [makeRuleFromString(x) for x in open(groundFile, "r").read().splitlines()]
+    
+    errors = []
+    for x in open(proErr, "r").read().splitlines():
+        pcs = re.match( r'(.*?)\((.*?)\)(?:,(.*?)\((.*?)\))*' ,x[6:-1]).groups()
+        msg = pairwiseListToDict(pcs,'prolog')
+        messages['warnings' if pcs[0] == 'warning' else 'errors'].append(msg)
 
     if not makeLogFiles: os.remove(factFile)
     if not makeLogFiles: os.remove(groundFile)
     if not makeLogFiles: os.remove(prologfile)
 
     print("Done Reasoning!\n",end="\n")
-    return reasonerFacts, groundRules
+    return reasonerFacts, groundRules, messages
+
+def pairwiseListToDict(l,source):
+    l =  iter(l)
+    return {**{x:next(l).split(',') for x in l},**{'source':source}}
 
 def sameVariablePredicate(predA,predB):
     '''Double Check Me'''
@@ -1701,7 +1712,7 @@ def readMessages(drsIndex,drs,regexPatterns):
 
     errors = []
     warnings = []
-    message = dict()
+    message = {'source':'APE'}
     
     for currentReadingIndex in range(drsIndex,len(drs)):
         
@@ -1717,13 +1728,13 @@ def readMessages(drsIndex,drs,regexPatterns):
                 errors.append(message)
             elif message['importance'] == 'warning':
                 warnings.append(message)            
-            message = dict()
+            message = {'source':'APE'}
         elif m := re.match(regexPatterns['messagePattern'],line): 
             k,v = m.groups()
             v = v.replace("&lt;>","<!>",1)
             message[k] = v
             
-    return (errors,warnings)
+    return {'errors':errors,'warnings':warnings}
     
 def interpretationErrorCheck(ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules,messages,makeLogFiles):
     
@@ -1759,7 +1770,7 @@ def interpret_ace(ace,makeLogFiles=False):
     for rule in rules: print(rule)
         
     # reason over rules
-    reasonerFacts,groundRules = runProlog([x.copy() for x in facts],[x.copy() for x in rules],makeLogFiles)
+    reasonerFacts,groundRules,messages = runProlog([x.copy() for x in facts],[x.copy() for x in rules],makeLogFiles,messages)
     
     if makeLogFiles:
         for fact in facts: print(fact)
