@@ -1,20 +1,47 @@
-import re
-
 from interpreter import Interpreter
 from ontology import OntologyMemory
-from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query, Vision)
+from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
+                   Vision)
+
+
+SYNONYMS = [
+    ('number', 'digit'),
+    ('press', 'click'),
+    ('target', 'letter'),
+]
+
+SYNONYM_DICT = {}
+for (x, y) in SYNONYMS:
+    SYNONYM_DICT[x] = y
+    SYNONYM_DICT[y] = x
 
 
 class Handler:
 
     def __init__(self, agent):
         self.agent = agent
+        self.knowledge = agent.knowledge
 
-    def _has(self, name):
-        return hasattr(self, name)
+    def _find_synonym(self, word):
+        if word in SYNONYM_DICT:
+            synonym_chunk = self.knowledge.recall(isa='synonym', word=word)
+            if synonym_chunk:
+                synonym = synonym_chunk.get('synonym')
+                self.log(
+                    f"[did not understand '{word}', trying synonym '{synonym}']")
+                return synonym
+        return None
 
-    def _get(self, name):
-        return getattr(self, name, None)
+    def _get(self, name, find_synonyms=True):
+        handler = getattr(self, name, None)
+        if handler is None and find_synonyms:
+            synonym = self._find_synonym(name)
+            if synonym:
+                handler = getattr(self, synonym, None)
+        return handler
+
+    def _has(self, name, find_synonyms=True):
+        return self._get(name, find_synonyms=find_synonyms) is not None
 
     def _arg(self, chunk, i):
         return chunk['ofItem'][i]['asString']
@@ -73,9 +100,9 @@ class ConditionHandler(Handler):
     # subject/agent/you/participant - self-awareness to know that an instruction involves an agent action
 
 
-#CONTROLLLED VOCABULARY 
+#CONTROLLLED VOCABULARY
 # class PerceptionHandler(Handler):
-    
+
     # def visible(self, action, context):
 
     # target/stimulus - recognize something as the goal/trigger in a task
@@ -127,11 +154,12 @@ class ActionHandler(Handler):
             print("TARGET!")
         else:
             print("BOO!")
-            target="target"
+            target = "target"
 
         self.agent.vision.wait_for(isa='letter', seen=False)
-        visual = self.agent.vision.search_for(Query(isa='letter', color='red', region='vs'), target)
-        context.set('search-visual',visual)
+        visual = self.agent.vision.search_for(
+            Query(isa='letter', color='red', region='vs'), target)
+        context.set('search-visual', visual)
 
         if visual:
             context.set('search-state', True)
@@ -146,7 +174,6 @@ class ActionHandler(Handler):
         #     # self.log('target absent')
         #     self.agent.motor.type('r')
         #     self.agent.wait(1.0)
-
 
     #STOLEN FROM VISION.PY
     # def search_for(self, query, target):
@@ -163,7 +190,6 @@ class ActionHandler(Handler):
     #     else:
     #         return None
 
-
         # #Not used at the moment.
         # self.item_role_list = ['target','stimulus','distractor','responseButton','infoButton']
         # #"ItemRole" in the Ontology.
@@ -171,13 +197,26 @@ class ActionHandler(Handler):
         # #For future implementations (trying to use other labs' instructions)
         # self.agent_synonym_list = ['subject','participant','you']
 
+
 class UndifferentiatedAgent(Agent):
 
-    def __init__(self, env, output=True,stopOldServer=False,owlFile='uagent.owl', simulateRules=False):
+    def __init__(self, env, output=True, stopOldServer=False, owlFile='uagent.owl', simulateRules=False):
         super().__init__(output=output)
 
         #basic pass-ins for now for speed of testing
-        self.memory = OntologyMemory(self,stopOldServer=stopOldServer,owlFile=owlFile)
+        self.memory = OntologyMemory(
+            self, stopOldServer=stopOldServer, owlFile=owlFile)
+
+        # create ACT-R-like knowledge memory for synonyms
+        self.knowledge = Memory(self, Memory.OPTIMIZED_DECAY)
+        self.knowledge.decay_rate = .5
+        self.knowledge.activation_noise = .5
+        self.knowledge.retrieval_threshold = -1.8
+        self.knowledge.latency_factor = .450
+        for word, synonym in SYNONYM_DICT.items():
+            chunk = Chunk(isa='synonym', word=word, synonym=synonym)
+            self.knowledge.store(chunk, boost=10000)
+
         self.vision = Vision(self, env.display)
         self.audition = Audition(self, env.speakers)
         self.motor = Motor(self, self.vision, env)
@@ -191,15 +230,14 @@ class UndifferentiatedAgent(Agent):
         self.condition_handler = ConditionHandler(self)
         self.action_handler = ActionHandler(self)
 
-        #for testing updated Ground Rules focusing on CV 
+        #for testing updated Ground Rules focusing on CV
         self.simulateRules = simulateRules
-
 
     def is_action(self, rule):
         for action in rule.actions:
             if self.action_handler._has(action['name']):
                 return True
-        return False    
+        return False
 
     def check_condition(self, cond, context):
         handler = self.condition_handler._get(cond['name'])
@@ -243,27 +281,27 @@ class UndifferentiatedAgent(Agent):
             for rule in self.memory.recall_ground_rules():
                 self.process_rule(rule, context)
 
-# VS-AGENT
-# def run(self, time):
-#     while self.time() < time:
-#         self.vision.wait_for(isa='letter', seen=False)
-#         visual = self.vision.search_for(
-#             Query(isa='letter', color='red', region='vs'), 'X')
-#         if visual:
-#             # self.log('target present')
-#             self.motor.type('w')
-#             self.wait(1.0)
-#         else:
-#             # self.log('target absent')
-#             self.motor.type('r')
-#             self.wait(1.0)
-#
-# PVT-AGENT
-# def run(self, time=60):
-#     while self.time() < time:
-#         visual = self.vision.wait_for(
-#             isa='letter', region='pvt', seen=False)
-#         self.vision.start_encode(visual)
-#         self.motor.type(' ')
-#         self.vision.get_encoded()
-#         
+    # VS-AGENT
+    # def run(self, time):
+    #     while self.time() < time:
+    #         self.vision.wait_for(isa='letter', seen=False)
+    #         visual = self.vision.search_for(
+    #             Query(isa='letter', color='red', region='vs'), 'X')
+    #         if visual:
+    #             # self.log('target present')
+    #             self.motor.type('w')
+    #             self.wait(1.0)
+    #         else:
+    #             # self.log('target absent')
+    #             self.motor.type('r')
+    #             self.wait(1.0)
+    #
+    # PVT-AGENT
+    # def run(self, time=60):
+    #     while self.time() < time:
+    #         visual = self.vision.wait_for(
+    #             isa='letter', region='pvt', seen=False)
+    #         self.vision.start_encode(visual)
+    #         self.motor.type(' ')
+    #         self.vision.get_encoded()
+    #
