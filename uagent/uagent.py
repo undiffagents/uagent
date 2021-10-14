@@ -5,9 +5,9 @@ from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
 
 
 SYNONYMS = [
-    ('number', 'digit'),
-    ('press', 'click'),
+    ('press', 'type'),
     ('target', 'letter'),
+    ('number', 'digit'),
 ]
 
 SYNONYM_DICT = {}
