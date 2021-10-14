@@ -6,6 +6,7 @@
 *.DS_Store
 *.exe
 build/
+data/
 dist/
 __pycache__
 playground.py
