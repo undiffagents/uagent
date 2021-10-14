@@ -1,0 +1,512 @@
+       0.000      agent                   wait for [isa=text]
+       0.050      agent.vision            found {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.050      agent                   encode {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.235      agent.vision            encoded p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+There is a subject that is in the task.
+There is a letter that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If the letter appears on the screen then the subject responds.
+       0.235      agent.language          interpreting "p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+There is a subject that is in the task.
+There is a letter that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If the letter appears on the screen then the subject responds."
+       0.235      agent                   recall ground rules
+       0.285      agent.memory            recalling ground rules
+       0.485      agent.memory            recalled ground rules
+       0.485      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       0.535      agent                   processed rule: not an action
+       0.585      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       0.635      agent                   processed rule: not an action
+       0.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       0.735      agent                   processed rule: not an action
+       0.785      agent                   recall ground rules
+       0.835      agent.memory            recalling ground rules
+       1.035      agent.memory            recalled ground rules
+       1.035      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       1.085      agent                   processed rule: not an action
+       1.135      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       1.185      agent                   processed rule: not an action
+       1.235      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       1.285      agent                   processed rule: not an action
+       1.335      agent                   recall ground rules
+       1.385      agent.memory            recalling ground rules
+       1.585      agent.memory            recalled ground rules
+       1.585      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       1.635      agent                   processed rule: not an action
+       1.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       1.735      agent                   processed rule: not an action
+       1.785      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       1.835      agent                   processed rule: not an action
+       1.885      agent                   recall ground rules
+       1.935      agent.memory            recalling ground rules
+       2.135      agent.memory            recalled ground rules
+       2.135      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       2.185      agent                   processed rule: not an action
+       2.235      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       2.285      agent                   processed rule: not an action
+       2.335      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       2.385      agent                   processed rule: not an action
+       2.435      agent                   recall ground rules
+       2.485      agent.memory            recalling ground rules
+       2.685      agent.memory            recalled ground rules
+       2.685      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       2.735      agent                   processed rule: not an action
+       2.785      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       2.835      agent                   processed rule: not an action
+       2.885      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       2.935      agent                   processed rule: not an action
+       2.985      agent                   recall ground rules
+       3.035      agent.memory            recalling ground rules
+       3.235      agent.memory            recalled ground rules
+       3.235      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       3.285      agent                   processed rule: not an action
+       3.335      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       3.385      agent                   processed rule: not an action
+       3.435      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       3.485      agent                   processed rule: not an action
+       3.535      agent                   recall ground rules
+       3.585      agent.memory            recalling ground rules
+       3.785      agent.memory            recalled ground rules
+       3.785      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       3.835      agent                   processed rule: not an action
+       3.885      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       3.935      agent                   processed rule: not an action
+       3.985      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       4.035      agent                   processed rule: not an action
+       4.085      agent                   recall ground rules
+       4.135      agent.memory            recalling ground rules
+       4.335      agent.memory            recalled ground rules
+       4.335      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       4.385      agent                   processed rule: not an action
+       4.435      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       4.485      agent                   processed rule: not an action
+       4.535      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       4.585      agent                   processed rule: not an action
+       4.635      agent                   recall ground rules
+       4.685      agent.memory            recalling ground rules
+       4.885      agent.memory            recalled ground rules
+       4.885      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       4.935      agent                   processed rule: not an action
+       4.985      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       5.035      agent                   processed rule: not an action
+       5.085      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       5.135      agent                   processed rule: not an action
+       5.185      agent                   recall ground rules
+       5.235      agent.memory            recalling ground rules
+       5.435      agent.memory            recalled ground rules
+       5.435      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       5.485      agent                   processed rule: not an action
+       5.535      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       5.585      agent                   processed rule: not an action
+       5.635      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       5.685      agent                   processed rule: not an action
+       5.735      agent                   recall ground rules
+       5.785      agent.memory            recalling ground rules
+       5.985      agent.memory            recalled ground rules
+       5.985      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       6.035      agent                   processed rule: not an action
+       6.085      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       6.135      agent                   processed rule: not an action
+       6.185      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       6.235      agent                   processed rule: not an action
+       6.285      agent                   recall ground rules
+       6.335      agent.memory            recalling ground rules
+       6.535      agent.memory            recalled ground rules
+       6.535      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       6.585      agent                   processed rule: not an action
+       6.635      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       6.685      agent                   processed rule: not an action
+       6.735      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       6.785      agent                   processed rule: not an action
+       6.835      agent                   recall ground rules
+       6.885      agent.memory            recalling ground rules
+       7.085      agent.memory            recalled ground rules
+       7.085      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       7.135      agent                   processed rule: not an action
+       7.185      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       7.235      agent                   processed rule: not an action
+       7.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       7.335      agent                   processed rule: not an action
+       7.385      agent                   recall ground rules
+       7.435      agent.memory            recalling ground rules
+       7.635      agent.memory            recalled ground rules
+       7.635      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       7.685      agent                   processed rule: not an action
+       7.735      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       7.785      agent                   processed rule: not an action
+       7.835      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       7.885      agent                   processed rule: not an action
+       7.935      agent                   recall ground rules
+       7.985      agent.memory            recalling ground rules
+       8.185      agent.memory            recalled ground rules
+       8.185      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       8.235      agent                   processed rule: not an action
+       8.285      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       8.335      agent                   processed rule: not an action
+       8.385      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       8.435      agent                   processed rule: not an action
+       8.485      agent                   recall ground rules
+       8.535      agent.memory            recalling ground rules
+       8.735      agent.memory            recalled ground rules
+       8.735      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       8.785      agent                   processed rule: not an action
+       8.835      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       8.885      agent                   processed rule: not an action
+       8.935      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       8.985      agent                   processed rule: not an action
+       9.035      agent                   recall ground rules
+       9.085      agent.memory            recalling ground rules
+       9.285      agent.memory            recalled ground rules
+       9.285      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       9.335      agent                   processed rule: not an action
+       9.385      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       9.435      agent                   processed rule: not an action
+       9.485      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+       9.535      agent                   processed rule: not an action
+       9.585      agent                   recall ground rules
+       9.635      agent.memory            recalling ground rules
+       9.835      agent.memory            recalled ground rules
+       9.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+       9.885      agent                   processed rule: not an action
+       9.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+       9.985      agent                   processed rule: not an action
+      10.035      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      10.085      agent                   processed rule: not an action
+      10.135      agent                   recall ground rules
+      10.185      agent.memory            recalling ground rules
+      10.385      agent.memory            recalled ground rules
+      10.385      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      10.435      agent                   processed rule: not an action
+      10.485      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      10.535      agent                   processed rule: not an action
+      10.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      10.635      agent                   processed rule: not an action
+      10.685      agent                   recall ground rules
+      10.735      agent.memory            recalling ground rules
+      10.935      agent.memory            recalled ground rules
+      10.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      10.985      agent                   processed rule: not an action
+      11.035      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      11.085      agent                   processed rule: not an action
+      11.135      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      11.185      agent                   processed rule: not an action
+      11.235      agent                   recall ground rules
+      11.285      agent.memory            recalling ground rules
+      11.485      agent.memory            recalled ground rules
+      11.485      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      11.535      agent                   processed rule: not an action
+      11.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      11.635      agent                   processed rule: not an action
+      11.685      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      11.735      agent                   processed rule: not an action
+      11.785      agent                   recall ground rules
+      11.835      agent.memory            recalling ground rules
+      12.035      agent.memory            recalled ground rules
+      12.035      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      12.085      agent                   processed rule: not an action
+      12.135      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      12.185      agent                   processed rule: not an action
+      12.235      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      12.285      agent                   processed rule: not an action
+      12.335      agent                   recall ground rules
+      12.385      agent.memory            recalling ground rules
+      12.585      agent.memory            recalled ground rules
+      12.585      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      12.635      agent                   processed rule: not an action
+      12.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      12.735      agent                   processed rule: not an action
+      12.785      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      12.835      agent                   processed rule: not an action
+      12.885      agent                   recall ground rules
+      12.935      agent.memory            recalling ground rules
+      13.135      agent.memory            recalled ground rules
+      13.135      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      13.185      agent                   processed rule: not an action
+      13.235      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      13.285      agent                   processed rule: not an action
+      13.335      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      13.385      agent                   processed rule: not an action
+      13.435      agent                   recall ground rules
+      13.485      agent.memory            recalling ground rules
+      13.685      agent.memory            recalled ground rules
+      13.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      13.735      agent                   processed rule: not an action
+      13.785      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      13.835      agent                   processed rule: not an action
+      13.885      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      13.935      agent                   processed rule: not an action
+      13.985      agent                   recall ground rules
+      14.035      agent.memory            recalling ground rules
+      14.235      agent.memory            recalled ground rules
+      14.235      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      14.285      agent                   processed rule: not an action
+      14.335      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      14.385      agent                   processed rule: not an action
+      14.435      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      14.485      agent                   processed rule: not an action
+      14.535      agent                   recall ground rules
+      14.585      agent.memory            recalling ground rules
+      14.785      agent.memory            recalled ground rules
+      14.785      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      14.835      agent                   processed rule: not an action
+      14.885      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      14.935      agent                   processed rule: not an action
+      14.985      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      15.035      agent                   processed rule: not an action
+      15.085      agent                   recall ground rules
+      15.135      agent.memory            recalling ground rules
+      15.335      agent.memory            recalled ground rules
+      15.335      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      15.385      agent                   processed rule: not an action
+      15.435      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      15.485      agent                   processed rule: not an action
+      15.535      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      15.585      agent                   processed rule: not an action
+      15.635      agent                   recall ground rules
+      15.685      agent.memory            recalling ground rules
+      15.885      agent.memory            recalled ground rules
+      15.885      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      15.935      agent                   processed rule: not an action
+      15.985      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      16.035      agent                   processed rule: not an action
+      16.085      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      16.135      agent                   processed rule: not an action
+      16.185      agent                   recall ground rules
+      16.235      agent.memory            recalling ground rules
+      16.435      agent.memory            recalled ground rules
+      16.435      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      16.485      agent                   processed rule: not an action
+      16.535      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      16.585      agent                   processed rule: not an action
+      16.635      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      16.685      agent                   processed rule: not an action
+      16.735      agent                   recall ground rules
+      16.785      agent.memory            recalling ground rules
+      16.985      agent.memory            recalled ground rules
+      16.985      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      17.035      agent                   processed rule: not an action
+      17.085      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      17.135      agent                   processed rule: not an action
+      17.185      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      17.235      agent                   processed rule: not an action
+      17.285      agent                   recall ground rules
+      17.335      agent.memory            recalling ground rules
+      17.535      agent.memory            recalled ground rules
+      17.535      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      17.585      agent                   processed rule: not an action
+      17.635      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      17.685      agent                   processed rule: not an action
+      17.735      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      17.785      agent                   processed rule: not an action
+      17.835      agent                   recall ground rules
+      17.885      agent.memory            recalling ground rules
+      18.085      agent.memory            recalled ground rules
+      18.085      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      18.135      agent                   processed rule: not an action
+      18.185      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      18.235      agent                   processed rule: not an action
+      18.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      18.335      agent                   processed rule: not an action
+      18.385      agent                   recall ground rules
+      18.435      agent.memory            recalling ground rules
+      18.635      agent.memory            recalled ground rules
+      18.635      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      18.685      agent                   processed rule: not an action
+      18.735      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      18.785      agent                   processed rule: not an action
+      18.835      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      18.885      agent                   processed rule: not an action
+      18.935      agent                   recall ground rules
+      18.985      agent.memory            recalling ground rules
+      19.185      agent.memory            recalled ground rules
+      19.185      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      19.235      agent                   processed rule: not an action
+      19.285      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      19.335      agent                   processed rule: not an action
+      19.385      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      19.435      agent                   processed rule: not an action
+      19.485      agent                   recall ground rules
+      19.535      agent.memory            recalling ground rules
+      19.735      agent.memory            recalled ground rules
+      19.735      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      19.785      agent                   processed rule: not an action
+      19.835      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      19.885      agent                   processed rule: not an action
+      19.935      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      19.985      agent                   processed rule: not an action
+      20.035      agent                   recall ground rules
+      20.085      agent.memory            recalling ground rules
+      20.285      agent.memory            recalled ground rules
+      20.285      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      20.335      agent                   processed rule: not an action
+      20.385      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      20.435      agent                   processed rule: not an action
+      20.485      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      20.535      agent                   processed rule: not an action
+      20.585      agent                   recall ground rules
+      20.635      agent.memory            recalling ground rules
+      20.835      agent.memory            recalled ground rules
+      20.835      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      20.885      agent                   processed rule: not an action
+      20.935      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      20.985      agent                   processed rule: not an action
+      21.035      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      21.085      agent                   processed rule: not an action
+      21.135      agent                   recall ground rules
+      21.185      agent.memory            recalling ground rules
+      21.385      agent.memory            recalled ground rules
+      21.385      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      21.435      agent                   processed rule: not an action
+      21.485      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      21.535      agent                   processed rule: not an action
+      21.585      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      21.635      agent                   processed rule: not an action
+      21.685      agent                   recall ground rules
+      21.735      agent.memory            recalling ground rules
+      21.935      agent.memory            recalled ground rules
+      21.935      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      21.985      agent                   processed rule: not an action
+      22.035      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      22.085      agent                   processed rule: not an action
+      22.135      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      22.185      agent                   processed rule: not an action
+      22.235      agent                   recall ground rules
+      22.285      agent.memory            recalling ground rules
+      22.485      agent.memory            recalled ground rules
+      22.485      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      22.535      agent                   processed rule: not an action
+      22.585      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      22.635      agent                   processed rule: not an action
+      22.685      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      22.735      agent                   processed rule: not an action
+      22.785      agent                   recall ground rules
+      22.835      agent.memory            recalling ground rules
+      23.035      agent.memory            recalled ground rules
+      23.035      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      23.085      agent                   processed rule: not an action
+      23.135      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      23.185      agent                   processed rule: not an action
+      23.235      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      23.285      agent                   processed rule: not an action
+      23.335      agent                   recall ground rules
+      23.385      agent.memory            recalling ground rules
+      23.585      agent.memory            recalled ground rules
+      23.585      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      23.635      agent                   processed rule: not an action
+      23.685      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      23.735      agent                   processed rule: not an action
+      23.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      23.835      agent                   processed rule: not an action
+      23.885      agent                   recall ground rules
+      23.935      agent.memory            recalling ground rules
+      24.135      agent.memory            recalled ground rules
+      24.135      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      24.185      agent                   processed rule: not an action
+      24.235      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      24.285      agent                   processed rule: not an action
+      24.335      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      24.385      agent                   processed rule: not an action
+      24.435      agent                   recall ground rules
+      24.485      agent.memory            recalling ground rules
+      24.685      agent.memory            recalled ground rules
+      24.685      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      24.735      agent                   processed rule: not an action
+      24.785      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      24.835      agent                   processed rule: not an action
+      24.885      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      24.935      agent                   processed rule: not an action
+      24.985      agent                   recall ground rules
+      25.035      agent.memory            recalling ground rules
+      25.235      agent.memory            recalled ground rules
+      25.235      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      25.285      agent                   processed rule: not an action
+      25.335      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      25.385      agent                   processed rule: not an action
+      25.435      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      25.485      agent                   processed rule: not an action
+      25.535      agent                   recall ground rules
+      25.585      agent.memory            recalling ground rules
+      25.785      agent.memory            recalled ground rules
+      25.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      25.835      agent                   processed rule: not an action
+      25.885      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      25.935      agent                   processed rule: not an action
+      25.985      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      26.035      agent                   processed rule: not an action
+      26.085      agent                   recall ground rules
+      26.135      agent.memory            recalling ground rules
+      26.335      agent.memory            recalled ground rules
+      26.335      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      26.385      agent                   processed rule: not an action
+      26.435      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      26.485      agent                   processed rule: not an action
+      26.535      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      26.585      agent                   processed rule: not an action
+      26.635      agent                   recall ground rules
+      26.685      agent.memory            recalling ground rules
+      26.885      agent.memory            recalled ground rules
+      26.885      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      26.935      agent                   processed rule: not an action
+      26.985      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      27.035      agent                   processed rule: not an action
+      27.085      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      27.135      agent                   processed rule: not an action
+      27.185      agent                   recall ground rules
+      27.235      agent.memory            recalling ground rules
+      27.435      agent.memory            recalled ground rules
+      27.435      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      27.485      agent                   processed rule: not an action
+      27.535      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      27.585      agent                   processed rule: not an action
+      27.635      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      27.685      agent                   processed rule: not an action
+      27.735      agent                   recall ground rules
+      27.785      agent.memory            recalling ground rules
+      27.985      agent.memory            recalled ground rules
+      27.985      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      28.035      agent                   processed rule: not an action
+      28.085      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      28.135      agent                   processed rule: not an action
+      28.185      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      28.235      agent                   processed rule: not an action
+      28.285      agent                   recall ground rules
+      28.335      agent.memory            recalling ground rules
+      28.535      agent.memory            recalled ground rules
+      28.535      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      28.585      agent                   processed rule: not an action
+      28.635      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      28.685      agent                   processed rule: not an action
+      28.735      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      28.785      agent                   processed rule: not an action
+      28.835      agent                   recall ground rules
+      28.885      agent.memory            recalling ground rules
+      29.085      agent.memory            recalled ground rules
+      29.085      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      29.135      agent                   processed rule: not an action
+      29.185      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      29.235      agent                   processed rule: not an action
+      29.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      29.335      agent                   processed rule: not an action
+      29.385      agent                   recall ground rules
+      29.435      agent.memory            recalling ground rules
+      29.635      agent.memory            recalled ground rules
+      29.635      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      29.685      agent                   processed rule: not an action
+      29.735      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      29.785      agent                   processed rule: not an action
+      29.835      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      29.885      agent                   processed rule: not an action
+      29.935      agent                   recall ground rules
+      29.985      agent.memory            recalling ground rules
+      30.185      agent.memory            recalled ground rules
+      30.185      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),subject(subject) => respond(subject)"
+      30.235      agent                   processed rule: not an action
+      30.285      agent                   processing rule "be(subject,in(psychomotor-vigilance)),task(psychomotor-vigilance),subject(subject) => hasProperty(psychomotor-vigilance,active)"
+      30.335      agent                   processed rule: not an action
+      30.385      agent                   processing rule "hasProperty(psychomotor-vigilance,active),task(psychomotor-vigilance),screen(screen),letter(letter) => appear(letter,on(screen))"
+      30.435      agent                   processed rule: not an action

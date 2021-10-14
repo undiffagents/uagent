@@ -1,9 +1,17 @@
 p:visual-search is a task.
-There is a button that is in the task.
-There is a subject that is in the task.
 There is a screen that is in the task.
-There is a target and it is a letter and is correct.
-There is a n:distractor and it is a letter and is incorrect.
-If the subject is in the task then the task is active.
+The n:w_key is a button and is in the task.
+The n:r_key is a button and is in the task.
+There is a subject that is in the task.
+There is a letter that is in the task.
+There is a target that is in the task.
+There is a n:distractor that is in the task.
+If a subject is in the task then the task is active.
 If the task is active then a letter appears on the screen.
-If a letter appears on the screen and it is correct then the subject presses the button.
+If the task is active then a target appears on the screen.
+If the task is active then a n:distractor appears on the screen.
+If the letter appears on the screen then the subject searches the target.
+If the subject finds the target then the subject presses the n:w_key.
+If the subject fails the target then the subject presses the n:r_key. 
+The subject finds the target.
+The subject fails the target.
