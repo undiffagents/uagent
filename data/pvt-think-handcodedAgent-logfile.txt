@@ -1,0 +1,28 @@
+       0.000      agent                   wait for [isa=letter, region=pvt, seen=False]
+       1.000      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+       1.000      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+       1.050      agent                   type " "
+       1.100      agent.motor             typing " "
+       1.185      agent.vision            encoded O
+       1.185      agent                   wait for [isa=letter, region=pvt, seen=False]
+       1.309      agent.motor             typed " "
+       4.000      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+       4.000      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+       4.050      agent                   type " "
+       4.100      agent.motor             typing " "
+       4.185      agent.vision            encoded X
+       4.185      agent                   wait for [isa=letter, region=pvt, seen=False]
+       4.309      agent.motor             typed " "
+       9.000      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+       9.000      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+       9.050      agent                   type " "
+       9.100      agent.motor             typing " "
+       9.185      agent.vision            encoded O
+       9.185      agent                   wait for [isa=letter, region=pvt, seen=False]
+       9.309      agent.motor             typed " "
+      13.000      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      13.000      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      13.050      agent                   type " "
+      13.100      agent.motor             typing " "
+      13.185      agent.vision            encoded X
+      13.309      agent.motor             typed " "
