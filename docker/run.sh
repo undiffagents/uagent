@@ -15,6 +15,7 @@ echo "Running container..."
 docker run \
     -it \
     -p 4321:4321 \
+    -v "$(pwd)"/data:/usr/src/uagent/data \
     uagent
 
 eval $(docker-machine env -u)
