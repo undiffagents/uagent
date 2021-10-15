@@ -1,19 +1,12 @@
 from interpreter import Interpreter
-from ontology import OntologyMemory
+from ontology import OntologyMemory, read_synonyms
 from think import (Agent, Audition, Chunk, Language, Memory, Motor, Query,
                    Vision)
 
-
-SYNONYMS = [
-    ('press', 'type'),
-    ('target', 'letter'),
-    ('number', 'digit'),
-]
-
 SYNONYM_DICT = {}
-for (x, y) in SYNONYMS:
-    SYNONYM_DICT[x] = y
-    SYNONYM_DICT[y] = x
+for word1, word2 in read_synonyms():
+    SYNONYM_DICT[word1] = word2
+    SYNONYM_DICT[word2] = word1
 
 
 class Handler:
@@ -27,7 +20,7 @@ class Handler:
             synonym_chunk = self.knowledge.recall(isa='synonym', word=word)
             if synonym_chunk:
                 synonym = synonym_chunk.get('synonym')
-                self.log(
+                self.agent.log(
                     f"[did not understand '{word}', trying synonym '{synonym}']")
                 return synonym
         return None
