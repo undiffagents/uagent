@@ -967,8 +967,8 @@ def writePrologFile(facts,rules,newRules,prologfile,factFile,groundFile,errFile)
     
     writer = lambda thing: '({},{})'.format(groundWriter(thing),factWriter(thing))
     
-    output = ['\n   forall({},{})'.format(selector(thing),writer(thing)) for thing in rules] if 0 < len(rules) else ['throw(error(warning(empty_program),context(ace_is_not_in_rule_format)))']
-    f = open(prologfile, "w").write('{}\nhandleError(X,Stream,Stream2,Stream3) :- write("Prolog Error:"),nl,write(X),nl,nl,write(Stream3,X).\n\nwriteFiles(Stream,Stream2,Stream3) :-{}.\n\n:- open("{}",write, Stream),open("{}",write, Stream2),open("{}",write, Stream3),\n   catch(writeFiles(Stream,Stream2,Stream3),X,handleError(X,Stream,Stream2,Stream3)),\n   close(Stream),close(Stream2),close(Stream3),\n   halt.'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]),','.join(output),factFile,groundFile,errFile))
+    output = ['\n   forall({},{})'.format(selector(thing),writer(thing)) for thing in rules] if 0 < len(rules) else ['true(Stream),true(Stream2),throw(error(warning(empty_program),context(ace_is_malformed)))']
+    f = open(prologfile, "w").write('{}\ntrue(_):-true.\n\nhandleError(X,Stream3) :- write("Prolog Error:"),nl,write(X),nl,nl,write(Stream3,X).\n\nwriteFiles(Stream,Stream2) :-{}.\n\n:- open("{}",write, Stream),open("{}",write, Stream2),open("{}",write, Stream3),\n   catch(writeFiles(Stream,Stream2),X,handleError(X,Stream3)),\n   close(Stream),close(Stream2),close(Stream3),\n   halt.'.format(''.join(['{}\n'.format('{} :- {}.'.format(thing[0], ",".join(thing[1])) if isinstance(thing, list) else "{}.".format(thing)) for thing in program]),','.join(output),factFile,groundFile,errFile))
 
 def cutCounter(thing):
     thing = re.split(",(?:ZZZ|ZZ)\)$",thing)
