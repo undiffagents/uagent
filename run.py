@@ -18,13 +18,13 @@ if __name__ == '__main__':
 
     do_gaptest = 0 #1 for gap-testing, 0 for normal run
 
-    # gap_name = 'pvtgap_original'
+    gap_name = 'pvtgap_original'
     # gap_name = 'pvtgap_lexical1' #rare lexical variant (replace 'letter' with 'stimulus')
     # gap_name = 'pvtgap_lexical2' #non-word (replace 'letter' with 'slook')
     # gap_name = 'pvtgap_context1' #remove 'screen' (would be inferred by most)
     # gap_name = 'pvtgap_context2' #remove specification of 'press space_bar to respond'
     # gap_name = 'pvtgap_context3' #remove 'screen' (would be inferred by most)
-    # curInst = ''.join(['tasks/pvt/gaptests/', gap_name, '.txt'])
+    curInst = ''.join(['tasks/pvt/gaptests/', gap_name, '.txt'])
 
     #script control flags
     do_outlog = 1 # 0 prints to console, 1 records to /data/logs
