@@ -25,7 +25,7 @@ class Handler:
                 return synonym
         return None
 
-    def _get(self, name, find_synonyms=True):
+    def _get(self, name, find_synonyms=False):
         handler = getattr(self, name, None)
         if handler is None and find_synonyms:
             synonym = self._find_synonym(name)
@@ -33,7 +33,7 @@ class Handler:
                 handler = getattr(self, synonym, None)
         return handler
 
-    def _has(self, name, find_synonyms=True):
+    def _has(self, name, find_synonyms=False):
         return self._get(name, find_synonyms=find_synonyms) is not None
 
     def _arg(self, chunk, i):
@@ -49,6 +49,11 @@ class ConditionHandler(Handler):
 
         # vision.find is non-blocking: it checks and returns immediately
         visual = self.agent.vision.find(isa=isa, seen=False)
+        if not visual:
+            print('APPEAR2')
+            synonym = self._find_synonym(isa)
+            if synonym:
+                visual = self.agent.vision.find(isa=synonym, seen=False)
 
         # vision.wait_for is blocking: it waits for the item to appear
         # visual = self.agent.vision.wait_for(isa=isa, seen=False)
@@ -247,9 +252,9 @@ class UndifferentiatedAgent(Agent):
             handler(action, context)
 
     def process_rule(self, rule, context):
-        self.think('processing rule "{}"'.format(rule))
         if self.is_action(rule):
-            self.think('processing: rule is an action, check conditions')
+            self.think('processing rule "{}"'.format(rule))
+            # self.think('processing: rule is an action, check conditions')
             for cond in rule.conditions:
                 if not self.check_condition(cond, context):
                     self.think('processed rule: conditions not met')
@@ -258,8 +263,9 @@ class UndifferentiatedAgent(Agent):
             for action in rule.actions:
                 self.execute_action(action, context)
             return True
-        else:
-            self.think('processed rule: not an action')
+        # else:
+        #     self.think('processing rule "{}"'.format(rule))
+        #     self.think('processed rule: not an action')
 
     def run(self, time=60):
 
