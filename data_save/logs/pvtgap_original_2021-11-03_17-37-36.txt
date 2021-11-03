@@ -1,0 +1,745 @@
+       0.000      agent                   store <synonym>{'isa': 'synonym', 'word': 'press', 'synonym': 'type'}
+       0.050      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'press', 'synonym': 'type'}
+       0.050      agent.memory            boosted 10000 times
+       0.050      agent                   store <synonym>{'isa': 'synonym', 'word': 'type', 'synonym': 'press'}
+       0.100      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'type', 'synonym': 'press'}
+       0.100      agent.memory            boosted 10000 times
+       0.100      agent                   store <synonym>{'isa': 'synonym', 'word': 'target', 'synonym': 'letter'}
+       0.150      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'target', 'synonym': 'letter'}
+       0.150      agent.memory            boosted 10000 times
+       0.150      agent                   store <synonym>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       0.200      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       0.200      agent.memory            boosted 10000 times
+       0.200      agent                   store <synonym>{'isa': 'synonym', 'word': 'number', 'synonym': 'digit'}
+       0.250      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'number', 'synonym': 'digit'}
+       0.250      agent.memory            boosted 10000 times
+       0.250      agent                   store <synonym>{'isa': 'synonym', 'word': 'digit', 'synonym': 'number'}
+       0.300      agent.memory            stored <synonym>{'isa': 'synonym', 'word': 'digit', 'synonym': 'number'}
+       0.300      agent.memory            boosted 10000 times
+       0.300      agent                   wait for [isa=text]
+       0.350      agent.vision            found {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.350      agent                   encode {'isa': 'text', 'x': 50, 'y': 50, 'w': 200, 'h': 200, 'seen': False, 'multiline': True}
+       0.535      agent.vision            encoded p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+The n:space_bar is a button and is in the task.
+There is a subject that is in the task.
+There is a letter that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If the letter appears on the screen then the subject presses the n:space_bar.
+       0.535      agent.language          interpreting "p:psychomotor-vigilance is a task.
+There is a screen that is in the task.
+The n:space_bar is a button and is in the task.
+There is a subject that is in the task.
+There is a letter that is in the task.
+If a subject is in the task then the task is active.
+If the task is active then a letter appears on the screen.
+If the letter appears on the screen then the subject presses the n:space_bar."
+       0.535      agent                   recall ground rules
+       0.585      agent.memory            recalling ground rules
+       0.785      agent.memory            recalled ground rules
+       0.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       0.835      agent                   recall [isa=synonym, word=letter]
+       0.885      agent.memory            recalling [isa=synonym, word=letter]
+       0.885      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       0.885      agent                   [did not understand 'letter', trying synonym 'target']
+       0.885      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       0.935      agent                   find [isa=letter, seen=False]
+       0.985      agent.vision            find failed
+       0.985      agent                   processed rule: conditions not met
+       1.035      agent                   recall ground rules
+       1.085      agent.memory            recalling ground rules
+       1.285      agent.memory            recalled ground rules
+       1.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       1.335      agent                   recall [isa=synonym, word=letter]
+       1.385      agent.memory            recalling [isa=synonym, word=letter]
+       1.385      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       1.385      agent                   [did not understand 'letter', trying synonym 'target']
+       1.385      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       1.435      agent                   find [isa=letter, seen=False]
+       1.485      agent.vision            find failed
+       1.485      agent                   processed rule: conditions not met
+       1.535      agent                   recall ground rules
+       1.585      agent.memory            recalling ground rules
+       1.785      agent.memory            recalled ground rules
+       1.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       1.835      agent                   recall [isa=synonym, word=letter]
+       1.885      agent.memory            recalling [isa=synonym, word=letter]
+       1.885      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       1.885      agent                   [did not understand 'letter', trying synonym 'target']
+       1.885      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       1.935      agent                   find [isa=letter, seen=False]
+       1.985      agent.vision            find failed
+       1.985      agent                   processed rule: conditions not met
+       2.035      agent                   recall ground rules
+       2.085      agent.memory            recalling ground rules
+       2.285      agent.memory            recalled ground rules
+       2.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       2.335      agent                   recall [isa=synonym, word=letter]
+       2.385      agent.memory            recalling [isa=synonym, word=letter]
+       2.385      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       2.385      agent                   [did not understand 'letter', trying synonym 'target']
+       2.385      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       2.435      agent                   find [isa=letter, seen=False]
+       2.485      agent.vision            find failed
+       2.485      agent                   processed rule: conditions not met
+       2.535      agent                   recall ground rules
+       2.585      agent.memory            recalling ground rules
+       2.785      agent.memory            recalled ground rules
+       2.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       2.835      agent                   recall [isa=synonym, word=letter]
+       2.885      agent.memory            recalling [isa=synonym, word=letter]
+       2.885      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       2.885      agent                   [did not understand 'letter', trying synonym 'target']
+       2.885      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       2.935      agent                   find [isa=letter, seen=False]
+       2.985      agent.vision            find failed
+       2.985      agent                   processed rule: conditions not met
+       3.035      agent                   recall ground rules
+       3.085      agent.memory            recalling ground rules
+       3.285      agent.memory            recalled ground rules
+       3.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       3.335      agent                   recall [isa=synonym, word=letter]
+       3.385      agent.memory            recalling [isa=synonym, word=letter]
+       3.385      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       3.385      agent                   [did not understand 'letter', trying synonym 'target']
+       3.385      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       3.435      agent                   find [isa=letter, seen=False]
+       3.485      agent.vision            find failed
+       3.485      agent                   processed rule: conditions not met
+       3.535      agent                   recall ground rules
+       3.585      agent.memory            recalling ground rules
+       3.785      agent.memory            recalled ground rules
+       3.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       3.835      agent                   recall [isa=synonym, word=letter]
+       3.885      agent.memory            recalling [isa=synonym, word=letter]
+       3.885      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       3.885      agent                   [did not understand 'letter', trying synonym 'target']
+       3.885      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       3.935      agent                   find [isa=letter, seen=False]
+       3.985      agent.vision            find failed
+       3.985      agent                   processed rule: conditions not met
+       4.035      agent                   recall ground rules
+       4.085      agent.memory            recalling ground rules
+       4.285      agent.memory            recalled ground rules
+       4.285      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       4.335      agent                   recall [isa=synonym, word=letter]
+       4.385      agent.memory            recalling [isa=synonym, word=letter]
+       4.385      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       4.385      agent                   [did not understand 'letter', trying synonym 'target']
+       4.385      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       4.435      agent                   find [isa=letter, seen=False]
+       4.485      agent.vision            find failed
+       4.485      agent                   processed rule: conditions not met
+       4.535      agent                   recall ground rules
+       4.585      agent.memory            recalling ground rules
+       4.785      agent.memory            recalled ground rules
+       4.785      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       4.835      agent                   recall [isa=synonym, word=letter]
+       4.885      agent.memory            recalling [isa=synonym, word=letter]
+       4.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       4.886      agent                   [did not understand 'letter', trying synonym 'target']
+       4.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       4.936      agent                   find [isa=letter, seen=False]
+       4.986      agent.vision            find failed
+       4.986      agent                   processed rule: conditions not met
+       5.036      agent                   recall ground rules
+       5.086      agent.memory            recalling ground rules
+       5.286      agent.memory            recalled ground rules
+       5.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       5.336      agent                   recall [isa=synonym, word=letter]
+       5.386      agent.memory            recalling [isa=synonym, word=letter]
+       5.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       5.386      agent                   [did not understand 'letter', trying synonym 'target']
+       5.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       5.436      agent                   find [isa=letter, seen=False]
+       5.486      agent.vision            find failed
+       5.486      agent                   processed rule: conditions not met
+       5.536      agent                   recall ground rules
+       5.586      agent.memory            recalling ground rules
+       5.786      agent.memory            recalled ground rules
+       5.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       5.836      agent                   recall [isa=synonym, word=letter]
+       5.886      agent.memory            recalling [isa=synonym, word=letter]
+       5.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       5.886      agent                   [did not understand 'letter', trying synonym 'target']
+       5.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       5.936      agent                   find [isa=letter, seen=False]
+       5.986      agent.vision            find failed
+       5.986      agent                   processed rule: conditions not met
+       6.036      agent                   recall ground rules
+       6.086      agent.memory            recalling ground rules
+       6.286      agent.memory            recalled ground rules
+       6.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       6.336      agent                   recall [isa=synonym, word=letter]
+       6.386      agent.memory            recalling [isa=synonym, word=letter]
+       6.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       6.386      agent                   [did not understand 'letter', trying synonym 'target']
+       6.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       6.436      agent                   find [isa=letter, seen=False]
+       6.486      agent.vision            find failed
+       6.486      agent                   processed rule: conditions not met
+       6.536      agent                   recall ground rules
+       6.586      agent.memory            recalling ground rules
+       6.786      agent.memory            recalled ground rules
+       6.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       6.836      agent                   recall [isa=synonym, word=letter]
+       6.886      agent.memory            recalling [isa=synonym, word=letter]
+       6.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       6.886      agent                   [did not understand 'letter', trying synonym 'target']
+       6.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       6.936      agent                   find [isa=letter, seen=False]
+       6.986      agent.vision            find failed
+       6.986      agent                   processed rule: conditions not met
+       7.036      agent                   recall ground rules
+       7.086      agent.memory            recalling ground rules
+       7.286      agent.memory            recalled ground rules
+       7.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       7.336      agent                   recall [isa=synonym, word=letter]
+       7.386      agent.memory            recalling [isa=synonym, word=letter]
+       7.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       7.386      agent                   [did not understand 'letter', trying synonym 'target']
+       7.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       7.436      agent                   find [isa=letter, seen=False]
+       7.486      agent.vision            find failed
+       7.486      agent                   processed rule: conditions not met
+       7.536      agent                   recall ground rules
+       7.586      agent.memory            recalling ground rules
+       7.786      agent.memory            recalled ground rules
+       7.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       7.836      agent                   recall [isa=synonym, word=letter]
+       7.886      agent.memory            recalling [isa=synonym, word=letter]
+       7.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       7.886      agent                   [did not understand 'letter', trying synonym 'target']
+       7.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       7.936      agent                   find [isa=letter, seen=False]
+       7.986      agent.vision            find failed
+       7.986      agent                   processed rule: conditions not met
+       8.036      agent                   recall ground rules
+       8.086      agent.memory            recalling ground rules
+       8.286      agent.memory            recalled ground rules
+       8.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       8.336      agent                   recall [isa=synonym, word=letter]
+       8.386      agent.memory            recalling [isa=synonym, word=letter]
+       8.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       8.386      agent                   [did not understand 'letter', trying synonym 'target']
+       8.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       8.436      agent                   find [isa=letter, seen=False]
+       8.486      agent.vision            find failed
+       8.486      agent                   processed rule: conditions not met
+       8.536      agent                   recall ground rules
+       8.586      agent.memory            recalling ground rules
+       8.786      agent.memory            recalled ground rules
+       8.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       8.836      agent                   recall [isa=synonym, word=letter]
+       8.886      agent.memory            recalling [isa=synonym, word=letter]
+       8.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       8.886      agent                   [did not understand 'letter', trying synonym 'target']
+       8.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       8.936      agent                   find [isa=letter, seen=False]
+       8.986      agent.vision            find failed
+       8.986      agent                   processed rule: conditions not met
+       9.036      agent                   recall ground rules
+       9.086      agent.memory            recalling ground rules
+       9.286      agent.memory            recalled ground rules
+       9.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       9.336      agent                   recall [isa=synonym, word=letter]
+       9.386      agent.memory            recalling [isa=synonym, word=letter]
+       9.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       9.386      agent                   [did not understand 'letter', trying synonym 'target']
+       9.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       9.436      agent                   find [isa=letter, seen=False]
+       9.486      agent.vision            find failed
+       9.486      agent                   processed rule: conditions not met
+       9.536      agent                   recall ground rules
+       9.586      agent.memory            recalling ground rules
+       9.786      agent.memory            recalled ground rules
+       9.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+       9.836      agent                   recall [isa=synonym, word=letter]
+       9.886      agent.memory            recalling [isa=synonym, word=letter]
+       9.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+       9.886      agent                   [did not understand 'letter', trying synonym 'target']
+       9.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+       9.936      agent                   find [isa=letter, seen=False]
+       9.986      agent.vision            find failed
+       9.986      agent                   processed rule: conditions not met
+      10.036      agent                   recall ground rules
+      10.086      agent.memory            recalling ground rules
+      10.286      agent.memory            recalled ground rules
+      10.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      10.336      agent                   recall [isa=synonym, word=letter]
+      10.386      agent.memory            recalling [isa=synonym, word=letter]
+      10.386      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      10.386      agent                   [did not understand 'letter', trying synonym 'target']
+      10.386      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      10.436      agent                   find [isa=letter, seen=False]
+      10.486      agent.vision            find failed
+      10.486      agent                   processed rule: conditions not met
+      10.536      agent                   recall ground rules
+      10.586      agent.memory            recalling ground rules
+      10.786      agent.memory            recalled ground rules
+      10.786      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      10.836      agent                   recall [isa=synonym, word=letter]
+      10.886      agent.memory            recalling [isa=synonym, word=letter]
+      10.886      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      10.886      agent                   [did not understand 'letter', trying synonym 'target']
+      10.886      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      10.936      agent                   find [isa=letter, seen=False]
+      10.986      agent.vision            find failed
+      10.986      agent                   processed rule: conditions not met
+      11.036      agent                   recall ground rules
+      11.086      agent.memory            recalling ground rules
+      11.286      agent.memory            recalled ground rules
+      11.286      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      11.336      agent                   recall [isa=synonym, word=letter]
+      11.386      agent.memory            recalling [isa=synonym, word=letter]
+      11.387      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      11.387      agent                   [did not understand 'letter', trying synonym 'target']
+      11.387      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      11.437      agent                   find [isa=letter, seen=False]
+      11.487      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      11.487      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      11.672      agent.vision            encoded O
+      11.672      agent                   processing: condition(s) met, execute action(s)
+      11.722      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      11.772      agent                   type " "
+      11.822      agent.motor             typing " "
+      11.822      agent                   recall ground rules
+      11.872      agent.memory            recalling ground rules
+      12.030      agent.motor             typed " "
+      12.072      agent.memory            recalled ground rules
+      12.072      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      12.122      agent                   recall [isa=synonym, word=letter]
+      12.172      agent.memory            recalling [isa=synonym, word=letter]
+      12.172      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      12.172      agent                   [did not understand 'letter', trying synonym 'target']
+      12.172      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      12.222      agent                   find [isa=letter, seen=False]
+      12.272      agent.vision            find failed
+      12.272      agent                   processed rule: conditions not met
+      12.322      agent                   recall ground rules
+      12.372      agent.memory            recalling ground rules
+      12.572      agent.memory            recalled ground rules
+      12.572      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      12.622      agent                   recall [isa=synonym, word=letter]
+      12.672      agent.memory            recalling [isa=synonym, word=letter]
+      12.672      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      12.672      agent                   [did not understand 'letter', trying synonym 'target']
+      12.672      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      12.722      agent                   find [isa=letter, seen=False]
+      12.772      agent.vision            find failed
+      12.772      agent                   processed rule: conditions not met
+      12.822      agent                   recall ground rules
+      12.872      agent.memory            recalling ground rules
+      13.072      agent.memory            recalled ground rules
+      13.072      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      13.122      agent                   recall [isa=synonym, word=letter]
+      13.172      agent.memory            recalling [isa=synonym, word=letter]
+      13.172      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      13.172      agent                   [did not understand 'letter', trying synonym 'target']
+      13.172      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      13.222      agent                   find [isa=letter, seen=False]
+      13.272      agent.vision            find failed
+      13.272      agent                   processed rule: conditions not met
+      13.322      agent                   recall ground rules
+      13.372      agent.memory            recalling ground rules
+      13.572      agent.memory            recalled ground rules
+      13.572      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      13.622      agent                   recall [isa=synonym, word=letter]
+      13.672      agent.memory            recalling [isa=synonym, word=letter]
+      13.672      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      13.672      agent                   [did not understand 'letter', trying synonym 'target']
+      13.672      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      13.722      agent                   find [isa=letter, seen=False]
+      13.772      agent.vision            find failed
+      13.772      agent                   processed rule: conditions not met
+      13.822      agent                   recall ground rules
+      13.872      agent.memory            recalling ground rules
+      14.072      agent.memory            recalled ground rules
+      14.072      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      14.122      agent                   recall [isa=synonym, word=letter]
+      14.172      agent.memory            recalling [isa=synonym, word=letter]
+      14.172      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      14.172      agent                   [did not understand 'letter', trying synonym 'target']
+      14.172      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      14.222      agent                   find [isa=letter, seen=False]
+      14.272      agent.vision            find failed
+      14.272      agent                   processed rule: conditions not met
+      14.322      agent                   recall ground rules
+      14.372      agent.memory            recalling ground rules
+      14.572      agent.memory            recalled ground rules
+      14.572      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      14.622      agent                   recall [isa=synonym, word=letter]
+      14.672      agent.memory            recalling [isa=synonym, word=letter]
+      14.672      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      14.672      agent                   [did not understand 'letter', trying synonym 'target']
+      14.672      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      14.722      agent                   find [isa=letter, seen=False]
+      14.772      agent.vision            find failed
+      14.772      agent                   processed rule: conditions not met
+      14.822      agent                   recall ground rules
+      14.872      agent.memory            recalling ground rules
+      15.072      agent.memory            recalled ground rules
+      15.072      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      15.122      agent                   recall [isa=synonym, word=letter]
+      15.172      agent.memory            recalling [isa=synonym, word=letter]
+      15.172      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      15.172      agent                   [did not understand 'letter', trying synonym 'target']
+      15.172      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      15.222      agent                   find [isa=letter, seen=False]
+      15.272      agent.vision            find failed
+      15.272      agent                   processed rule: conditions not met
+      15.322      agent                   recall ground rules
+      15.372      agent.memory            recalling ground rules
+      15.572      agent.memory            recalled ground rules
+      15.572      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      15.622      agent                   recall [isa=synonym, word=letter]
+      15.672      agent.memory            recalling [isa=synonym, word=letter]
+      15.672      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      15.672      agent                   [did not understand 'letter', trying synonym 'target']
+      15.672      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      15.722      agent                   find [isa=letter, seen=False]
+      15.772      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      15.772      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      15.957      agent.vision            encoded O
+      15.957      agent                   processing: condition(s) met, execute action(s)
+      16.007      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      16.057      agent                   type " "
+      16.107      agent.motor             typing " "
+      16.107      agent                   recall ground rules
+      16.157      agent.memory            recalling ground rules
+      16.316      agent.motor             typed " "
+      16.357      agent.memory            recalled ground rules
+      16.357      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      16.407      agent                   recall [isa=synonym, word=letter]
+      16.457      agent.memory            recalling [isa=synonym, word=letter]
+      16.457      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      16.457      agent                   [did not understand 'letter', trying synonym 'target']
+      16.457      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      16.507      agent                   find [isa=letter, seen=False]
+      16.557      agent.vision            find failed
+      16.557      agent                   processed rule: conditions not met
+      16.607      agent                   recall ground rules
+      16.657      agent.memory            recalling ground rules
+      16.857      agent.memory            recalled ground rules
+      16.857      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      16.907      agent                   recall [isa=synonym, word=letter]
+      16.957      agent.memory            recalling [isa=synonym, word=letter]
+      16.957      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      16.957      agent                   [did not understand 'letter', trying synonym 'target']
+      16.957      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      17.007      agent                   find [isa=letter, seen=False]
+      17.057      agent.vision            find failed
+      17.057      agent                   processed rule: conditions not met
+      17.107      agent                   recall ground rules
+      17.157      agent.memory            recalling ground rules
+      17.357      agent.memory            recalled ground rules
+      17.357      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      17.407      agent                   recall [isa=synonym, word=letter]
+      17.457      agent.memory            recalling [isa=synonym, word=letter]
+      17.457      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      17.457      agent                   [did not understand 'letter', trying synonym 'target']
+      17.457      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      17.507      agent                   find [isa=letter, seen=False]
+      17.557      agent.vision            find failed
+      17.557      agent                   processed rule: conditions not met
+      17.607      agent                   recall ground rules
+      17.657      agent.memory            recalling ground rules
+      17.857      agent.memory            recalled ground rules
+      17.857      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      17.907      agent                   recall [isa=synonym, word=letter]
+      17.957      agent.memory            recalling [isa=synonym, word=letter]
+      17.958      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      17.958      agent                   [did not understand 'letter', trying synonym 'target']
+      17.958      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      18.008      agent                   find [isa=letter, seen=False]
+      18.058      agent.vision            find failed
+      18.058      agent                   processed rule: conditions not met
+      18.108      agent                   recall ground rules
+      18.158      agent.memory            recalling ground rules
+      18.358      agent.memory            recalled ground rules
+      18.358      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      18.408      agent                   recall [isa=synonym, word=letter]
+      18.458      agent.memory            recalling [isa=synonym, word=letter]
+      18.458      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      18.458      agent                   [did not understand 'letter', trying synonym 'target']
+      18.458      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      18.508      agent                   find [isa=letter, seen=False]
+      18.558      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      18.558      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      18.743      agent.vision            encoded X
+      18.743      agent                   processing: condition(s) met, execute action(s)
+      18.793      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      18.843      agent                   type " "
+      18.893      agent.motor             typing " "
+      18.893      agent                   recall ground rules
+      18.943      agent.memory            recalling ground rules
+      19.101      agent.motor             typed " "
+      19.143      agent.memory            recalled ground rules
+      19.143      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      19.193      agent                   recall [isa=synonym, word=letter]
+      19.243      agent.memory            recalling [isa=synonym, word=letter]
+      19.243      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      19.243      agent                   [did not understand 'letter', trying synonym 'target']
+      19.243      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      19.293      agent                   find [isa=letter, seen=False]
+      19.343      agent.vision            find failed
+      19.343      agent                   processed rule: conditions not met
+      19.393      agent                   recall ground rules
+      19.443      agent.memory            recalling ground rules
+      19.643      agent.memory            recalled ground rules
+      19.643      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      19.693      agent                   recall [isa=synonym, word=letter]
+      19.743      agent.memory            recalling [isa=synonym, word=letter]
+      19.743      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      19.743      agent                   [did not understand 'letter', trying synonym 'target']
+      19.743      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      19.793      agent                   find [isa=letter, seen=False]
+      19.843      agent.vision            find failed
+      19.843      agent                   processed rule: conditions not met
+      19.893      agent                   recall ground rules
+      19.943      agent.memory            recalling ground rules
+      20.143      agent.memory            recalled ground rules
+      20.143      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      20.193      agent                   recall [isa=synonym, word=letter]
+      20.243      agent.memory            recalling [isa=synonym, word=letter]
+      20.243      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      20.243      agent                   [did not understand 'letter', trying synonym 'target']
+      20.243      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      20.293      agent                   find [isa=letter, seen=False]
+      20.343      agent.vision            find failed
+      20.343      agent                   processed rule: conditions not met
+      20.393      agent                   recall ground rules
+      20.443      agent.memory            recalling ground rules
+      20.643      agent.memory            recalled ground rules
+      20.643      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      20.693      agent                   recall [isa=synonym, word=letter]
+      20.743      agent.memory            recalling [isa=synonym, word=letter]
+      20.743      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      20.743      agent                   [did not understand 'letter', trying synonym 'target']
+      20.743      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      20.793      agent                   find [isa=letter, seen=False]
+      20.843      agent.vision            find failed
+      20.843      agent                   processed rule: conditions not met
+      20.893      agent                   recall ground rules
+      20.943      agent.memory            recalling ground rules
+      21.143      agent.memory            recalled ground rules
+      21.143      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      21.193      agent                   recall [isa=synonym, word=letter]
+      21.243      agent.memory            recalling [isa=synonym, word=letter]
+      21.243      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      21.243      agent                   [did not understand 'letter', trying synonym 'target']
+      21.243      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      21.293      agent                   find [isa=letter, seen=False]
+      21.343      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+      21.343      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+      21.528      agent.vision            encoded O
+      21.528      agent                   processing: condition(s) met, execute action(s)
+      21.578      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      21.628      agent                   type " "
+      21.678      agent.motor             typing " "
+      21.678      agent                   recall ground rules
+      21.728      agent.memory            recalling ground rules
+      21.887      agent.motor             typed " "
+      21.928      agent.memory            recalled ground rules
+      21.928      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      21.978      agent                   recall [isa=synonym, word=letter]
+      22.028      agent.memory            recalling [isa=synonym, word=letter]
+      22.028      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      22.028      agent                   [did not understand 'letter', trying synonym 'target']
+      22.028      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      22.078      agent                   find [isa=letter, seen=False]
+      22.128      agent.vision            find failed
+      22.128      agent                   processed rule: conditions not met
+      22.178      agent                   recall ground rules
+      22.228      agent.memory            recalling ground rules
+      22.428      agent.memory            recalled ground rules
+      22.428      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      22.478      agent                   recall [isa=synonym, word=letter]
+      22.528      agent.memory            recalling [isa=synonym, word=letter]
+      22.528      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      22.528      agent                   [did not understand 'letter', trying synonym 'target']
+      22.528      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      22.578      agent                   find [isa=letter, seen=False]
+      22.628      agent.vision            find failed
+      22.628      agent                   processed rule: conditions not met
+      22.678      agent                   recall ground rules
+      22.728      agent.memory            recalling ground rules
+      22.928      agent.memory            recalled ground rules
+      22.928      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      22.978      agent                   recall [isa=synonym, word=letter]
+      23.028      agent.memory            recalling [isa=synonym, word=letter]
+      23.029      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      23.029      agent                   [did not understand 'letter', trying synonym 'target']
+      23.029      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      23.079      agent                   find [isa=letter, seen=False]
+      23.129      agent.vision            find failed
+      23.129      agent                   processed rule: conditions not met
+      23.179      agent                   recall ground rules
+      23.229      agent.memory            recalling ground rules
+      23.429      agent.memory            recalled ground rules
+      23.429      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      23.479      agent                   recall [isa=synonym, word=letter]
+      23.529      agent.memory            recalling [isa=synonym, word=letter]
+      23.529      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      23.529      agent                   [did not understand 'letter', trying synonym 'target']
+      23.529      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      23.579      agent                   find [isa=letter, seen=False]
+      23.629      agent.vision            find failed
+      23.629      agent                   processed rule: conditions not met
+      23.679      agent                   recall ground rules
+      23.729      agent.memory            recalling ground rules
+      23.929      agent.memory            recalled ground rules
+      23.929      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      23.979      agent                   recall [isa=synonym, word=letter]
+      24.029      agent.memory            recalling [isa=synonym, word=letter]
+      24.029      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      24.029      agent                   [did not understand 'letter', trying synonym 'target']
+      24.029      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      24.079      agent                   find [isa=letter, seen=False]
+      24.129      agent.vision            find failed
+      24.129      agent                   processed rule: conditions not met
+      24.179      agent                   recall ground rules
+      24.229      agent.memory            recalling ground rules
+      24.429      agent.memory            recalled ground rules
+      24.429      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      24.479      agent                   recall [isa=synonym, word=letter]
+      24.529      agent.memory            recalling [isa=synonym, word=letter]
+      24.529      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      24.529      agent                   [did not understand 'letter', trying synonym 'target']
+      24.529      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      24.579      agent                   find [isa=letter, seen=False]
+      24.629      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+      24.629      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'red'}
+      24.814      agent.vision            encoded O
+      24.814      agent                   processing: condition(s) met, execute action(s)
+      24.864      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      24.914      agent                   type " "
+      24.964      agent.motor             typing " "
+      24.964      agent                   recall ground rules
+      25.014      agent.memory            recalling ground rules
+      25.172      agent.motor             typed " "
+      25.214      agent.memory            recalled ground rules
+      25.214      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      25.264      agent                   recall [isa=synonym, word=letter]
+      25.314      agent.memory            recalling [isa=synonym, word=letter]
+      25.314      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      25.314      agent                   [did not understand 'letter', trying synonym 'target']
+      25.314      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      25.364      agent                   find [isa=letter, seen=False]
+      25.414      agent.vision            find failed
+      25.414      agent                   processed rule: conditions not met
+      25.464      agent                   recall ground rules
+      25.514      agent.memory            recalling ground rules
+      25.714      agent.memory            recalled ground rules
+      25.714      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      25.764      agent                   recall [isa=synonym, word=letter]
+      25.814      agent.memory            recalling [isa=synonym, word=letter]
+      25.814      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      25.814      agent                   [did not understand 'letter', trying synonym 'target']
+      25.814      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      25.864      agent                   find [isa=letter, seen=False]
+      25.914      agent.vision            find failed
+      25.914      agent                   processed rule: conditions not met
+      25.964      agent                   recall ground rules
+      26.014      agent.memory            recalling ground rules
+      26.214      agent.memory            recalled ground rules
+      26.214      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      26.264      agent                   recall [isa=synonym, word=letter]
+      26.314      agent.memory            recalling [isa=synonym, word=letter]
+      26.314      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      26.314      agent                   [did not understand 'letter', trying synonym 'target']
+      26.314      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      26.364      agent                   find [isa=letter, seen=False]
+      26.414      agent.vision            found {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      26.414      agent                   encode {'isa': 'letter', 'x': 140, 'y': 130, 'w': 20, 'h': 20, 'seen': False, 'region': 'pvt', 'color': 'black'}
+      26.599      agent.vision            encoded O
+      26.599      agent                   processing: condition(s) met, execute action(s)
+      26.649      agent                   execute action "{'asString': 'press(subject,space_bar)', 'name': 'press', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'subject', 'isa': 'Item'}, {'asString': 'space_bar', 'isa': 'Item'}]}"
+      26.699      agent                   type " "
+      26.749      agent.motor             typing " "
+      26.749      agent                   recall ground rules
+      26.799      agent.memory            recalling ground rules
+      26.958      agent.motor             typed " "
+      26.999      agent.memory            recalled ground rules
+      26.999      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      27.049      agent                   recall [isa=synonym, word=letter]
+      27.099      agent.memory            recalling [isa=synonym, word=letter]
+      27.099      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      27.099      agent                   [did not understand 'letter', trying synonym 'target']
+      27.099      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      27.149      agent                   find [isa=letter, seen=False]
+      27.199      agent.vision            find failed
+      27.199      agent                   processed rule: conditions not met
+      27.249      agent                   recall ground rules
+      27.299      agent.memory            recalling ground rules
+      27.499      agent.memory            recalled ground rules
+      27.499      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      27.549      agent                   recall [isa=synonym, word=letter]
+      27.599      agent.memory            recalling [isa=synonym, word=letter]
+      27.599      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      27.599      agent                   [did not understand 'letter', trying synonym 'target']
+      27.599      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      27.649      agent                   find [isa=letter, seen=False]
+      27.699      agent.vision            find failed
+      27.699      agent                   processed rule: conditions not met
+      27.749      agent                   recall ground rules
+      27.799      agent.memory            recalling ground rules
+      27.999      agent.memory            recalled ground rules
+      27.999      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      28.049      agent                   recall [isa=synonym, word=letter]
+      28.099      agent.memory            recalling [isa=synonym, word=letter]
+      28.100      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      28.100      agent                   [did not understand 'letter', trying synonym 'target']
+      28.100      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      28.150      agent                   find [isa=letter, seen=False]
+      28.200      agent.vision            find failed
+      28.200      agent                   processed rule: conditions not met
+      28.250      agent                   recall ground rules
+      28.300      agent.memory            recalling ground rules
+      28.500      agent.memory            recalled ground rules
+      28.500      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      28.550      agent                   recall [isa=synonym, word=letter]
+      28.600      agent.memory            recalling [isa=synonym, word=letter]
+      28.600      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      28.600      agent                   [did not understand 'letter', trying synonym 'target']
+      28.600      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      28.650      agent                   find [isa=letter, seen=False]
+      28.700      agent.vision            find failed
+      28.700      agent                   processed rule: conditions not met
+      28.750      agent                   recall ground rules
+      28.800      agent.memory            recalling ground rules
+      29.000      agent.memory            recalled ground rules
+      29.000      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      29.050      agent                   recall [isa=synonym, word=letter]
+      29.100      agent.memory            recalling [isa=synonym, word=letter]
+      29.100      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      29.100      agent                   [did not understand 'letter', trying synonym 'target']
+      29.100      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      29.150      agent                   find [isa=letter, seen=False]
+      29.200      agent.vision            find failed
+      29.200      agent                   processed rule: conditions not met
+      29.250      agent                   recall ground rules
+      29.300      agent.memory            recalling ground rules
+      29.500      agent.memory            recalled ground rules
+      29.500      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      29.550      agent                   recall [isa=synonym, word=letter]
+      29.600      agent.memory            recalling [isa=synonym, word=letter]
+      29.600      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      29.600      agent                   [did not understand 'letter', trying synonym 'target']
+      29.600      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      29.650      agent                   find [isa=letter, seen=False]
+      29.700      agent.vision            find failed
+      29.700      agent                   processed rule: conditions not met
+      29.750      agent                   recall ground rules
+      29.800      agent.memory            recalling ground rules
+      30.000      agent.memory            recalled ground rules
+      30.000      agent                   processing rule "appear(letter,on(screen)),screen(screen),letter(letter),button(space_bar),subject(subject) => press(subject,space_bar)"
+      30.050      agent                   recall [isa=synonym, word=letter]
+      30.100      agent.memory            recalling [isa=synonym, word=letter]
+      30.100      agent.memory            recalled <synonym~4>{'isa': 'synonym', 'word': 'letter', 'synonym': 'target'}
+      30.100      agent                   [did not understand 'letter', trying synonym 'target']
+      30.100      agent                   check condition "{'asString': 'appear(letter,on(screen))', 'name': 'appear', 'arity': 2, 'isa': 'ItemDescription', 'ofItem': [{'asString': 'letter', 'isa': 'Item'}, {'asString': 'on(screen)', 'name': 'on', 'isa': 'Function', 'ofItem': [{'asString': 'screen', 'isa': 'Item'}]}]}"
+      30.150      agent                   find [isa=letter, seen=False]
+      30.200      agent.vision            find failed
+      30.200      agent                   processed rule: conditions not met
