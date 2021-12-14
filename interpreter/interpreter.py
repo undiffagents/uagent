@@ -3,8 +3,12 @@ import re
 import subprocess
 import sys
 
-sys.path.insert(1, os.getcwd()+'/ontology')
-from ontology import Ontology
+sys.path.insert(1, os.getcwd())
+
+from errorHandler import Messages
+
+#sys.path.insert(1, os.getcwd()+'/ontology')
+from ontology.ontology import Ontology
 
 class Term:
 
@@ -1024,8 +1028,13 @@ def runProlog(facts,rules,makeLogFiles,messages):
     errors = []
     for x in open(proErr, "r").read().splitlines():
         pcs = re.match( r'(.*?)\((.*?)\)(?:,(.*?)\((.*?)\))*' ,x[6:-1]).groups()
-        msg = pairwiseListToDict(pcs,'prolog')
-        messages['warnings' if pcs[0] == 'warning' else 'errors'].append(msg)
+        msg = pairwiseListToDict(pcs,'Prolog')
+        if msg['warning']:
+            messages.appendWarning(msg)
+        elif msg['error']:
+            messages.appendError(msg)
+        else:
+            raise Exception("Undefined Prolog Error",msg)
 
     if not makeLogFiles: os.remove(factFile)
     if not makeLogFiles: os.remove(groundFile)
@@ -1648,7 +1657,7 @@ def readNestedExpression(drs,globalLineIndex,regexPatterns,makeLogFiles):
             # just need to define the behavior to fix this exception
             raise Exception("Undefined Interpretation for DRS Expression",line)        
 
-def readExpressions(drs,regexPatterns,makeLogFiles):
+def readExpressions(drs,regexPatterns,makeLogFiles,messages):
         
     factsExpression = Expression()
     nestedExpressions = NestedExpressionList()
@@ -1704,11 +1713,11 @@ def readExpressions(drs,regexPatterns,makeLogFiles):
             # just need to define the behavior to fix this exception
             raise Exception("Undefined Interpretation for DRS Expression",line)
     
-    messages = readMessages(currentReadingIndex,drs,regexPatterns)
+    readMessages(currentReadingIndex,drs,regexPatterns,messages)
     
-    return factsExpression,nestedExpressions,messages
+    return factsExpression,nestedExpressions
 
-def readMessages(drsIndex,drs,regexPatterns):
+def readMessages(drsIndex,drs,regexPatterns,messages):
 
     errors = []
     warnings = []
@@ -1725,23 +1734,21 @@ def readMessages(drsIndex,drs,regexPatterns):
             v = v.replace("&lt;>","<!>",1)
             message[k] = v            
             if message['importance'] == 'error':
-                errors.append(message)
+                messages.appendError(message)
             elif message['importance'] == 'warning':
-                warnings.append(message)            
+                messages.appendWarning(message)            
             message = {'source':'APE'}
         elif m := re.match(regexPatterns['messagePattern'],line): 
             k,v = m.groups()
             v = v.replace("&lt;>","<!>",1)
             message[k] = v
             
-    return {'errors':errors,'warnings':warnings}
-    
 def interpretationErrorCheck(ace,drs,factsExpression,nestedExpressions,facts,rules,reasonerFacts,groundRules,messages,makeLogFiles):
     
-    if makeLogFiles: [print("APE Warning (Non-Fatal):\n{}\n".format("\n".join(["{:15}{}".format(k,message[k]) for k in message]))) for message in messages[1]]
+    if makeLogFiles: [print("APE Warning (Non-Fatal):\n{}\n".format("\n".join(["\t{:15}{}".format(k,message[k]) for k in message]))) for message in list(filter(lambda x: x["source"]=="APE",messages.warnings))]
     
-    if len(messages[0]) > 0:
-        for message in messages[0]: print("APE Fatal Error:\n{}\n".format("\n".join(["{:15}{}".format(k,message[k]) for k in message])))
+    if len(messages.errors) > 0:
+        for message in messages.errors: print("APE Fatal Error:\n{}\n".format("\n".join(["\t{:15}{}".format(k,message[k]) for k in message])))
         return Exception("ACE/APE Error\n(could not create an interpretation of this ACE)")
     
     if len(facts) == 0 and len(rules) == 0: return Exception("No facts or rules were found to interpret\n(empty ACE or interpreter error)")
@@ -1757,9 +1764,10 @@ def interpret_ace(ace,makeLogFiles=False):
 
     # get ready to read
     initEmpties()
+    messages = Messages()
 
     # read DRS
-    factsExpression,nestedExpressions,messages = readExpressions(drs,compileRegexes(),makeLogFiles)
+    factsExpression,nestedExpressions = readExpressions(drs,compileRegexes(),makeLogFiles,messages)
     
     # interpret expressions as rules
     facts,interpretedFactsExpression = makeFacts(factsExpression.copy())
